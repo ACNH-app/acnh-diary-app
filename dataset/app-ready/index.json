@@ -33,6 +33,26 @@
         "content/museum/sea.acnhapi.json",
         "content/museum/fossils.acnhapi.json",
         "content/museum/art_name_map_ko.json"
+      ],
+      "asset_path": "assets/encyclopedia"
+    },
+    {
+      "key": "encyclopedia",
+      "path": "content/encyclopedia",
+      "expected_count": 316,
+      "primary_files": [
+        "content/encyclopedia/bugs.json",
+        "content/encyclopedia/fish.json",
+        "content/encyclopedia/sea.json",
+        "content/encyclopedia/fossils.json",
+        "content/encyclopedia/art.json"
+      ],
+      "asset_paths": [
+        "assets/encyclopedia/art",
+        "assets/encyclopedia/bugs",
+        "assets/encyclopedia/fish",
+        "assets/encyclopedia/fossils",
+        "assets/encyclopedia/sea"
       ]
     },
     {
@@ -94,7 +114,7 @@
         "content/catalog/music/music_name_map_ko.json",
         "content/catalog/music/music_image_manifest.json"
       ],
-      "asset_path": "assets/music"
+      "asset_path": "assets/catalog/music/items"
     },
     {
       "key": "catalog_recipes",
@@ -126,8 +146,26 @@
   ],
   "assets": [
     {
-      "key": "music",
-      "path": "assets/music"
+      "key": "encyclopedia",
+      "path": "assets/encyclopedia",
+      "categories": ["art", "bugs", "fish", "fossils", "sea"]
+    },
+    {
+      "key": "catalog",
+      "path": "assets/catalog",
+      "categories": [
+        "furniture",
+        "interior",
+        "clothing",
+        "music",
+        "items",
+        "tools",
+        "special_items",
+        "gyroids",
+        "photos",
+        "recipes",
+        "reactions"
+      ]
     },
     {
       "key": "villagers",

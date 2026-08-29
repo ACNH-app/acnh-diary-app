@@ -314,11 +314,15 @@ def load_music_assets() -> dict[str, dict]:
         name = row.get("name")
         if not name:
             continue
-        local_file = ROOT / "dataset/app-ready/assets/music" / f"{music_id}.png"
+        local_file = ROOT / "dataset/app-ready/assets/catalog/music/items" / f"{music_id}.png"
         assets[name] = {
             "id": music_id,
             "image_url": row.get("image_url"),
-            "local_path": f"assets/music/{music_id}.png" if local_file.exists() else None,
+            "local_path": (
+                f"assets/catalog/music/items/{music_id}.png"
+                if local_file.exists()
+                else None
+            ),
         }
     return assets
 

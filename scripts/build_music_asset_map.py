@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "dataset/app-ready/content/catalog/music/music_image_manifest.json"
-ASSET_DIR = ROOT / "dataset/app-ready/assets/music"
+ASSET_DIR = ROOT / "dataset/app-ready/assets/catalog/music/items"
 OUTPUT = ROOT / "acnh-diary-mobile/src/data/music-assets.ts"
 
 
@@ -25,7 +25,9 @@ def main() -> None:
         asset = ASSET_DIR / f"{music_id}.png"
         if not asset.exists():
             raise SystemExit(f"Missing local music image: {asset}")
-        lines.append(f"  '{music_id}': require('./assets/music/{music_id}.png'),")
+        lines.append(
+            f"  '{music_id}': require('./assets/catalog/music/items/{music_id}.png'),"
+        )
 
     lines.extend(["};", ""])
     OUTPUT.write_text("\n".join(lines), encoding="utf-8")

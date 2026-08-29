@@ -63,7 +63,8 @@
 | 도메인 | 기준 파일 | 현재 상태 | 앱 사용 방식 |
 | --- | --- | --- | --- |
 | 주민 | `content/villagers/villagers.normalized.json` | 417명 정규화 완료 | 직접 사용 가능 |
-| 박물관 | `content/museum/*.acnhapi.json` | 원본형 | 앱 어댑터 필요 |
+| 도감 | `content/encyclopedia/{bugs,fish,sea,fossils,art}.json` | 316개 정규화 완료 | 직접 사용 가능 |
+| 박물관 원본 | `content/museum/*.acnhapi.json` | 원본형 보관 | 도감 생성 보조 데이터 |
 | 의류 | `content/catalog/clothing/clothing.normalized.json` | 정규화 완료 | 직접 사용 가능 |
 | 가구 | `content/catalog/furniture/*.acnhapi.json` | 원본형 | 앱 어댑터 또는 추가 정규화 권장 |
 | 인테리어 | `content/catalog/interior/*.norviah.json` | 원본형 | 앱 어댑터 또는 추가 정규화 권장 |
@@ -221,7 +222,7 @@
 
 - `acnh-diary-mobile/src/data/content/villagers/villagers.json`
 - `acnh-diary-mobile/src/data/assets/villagers/{icon,full,poster,framed_photo,house_exterior,house_interior}/`
-- `acnh-diary-mobile/src/data/assets/music/`
+- `acnh-diary-mobile/src/data/assets/catalog/music/items/`
 
 현재 앱 기준 구조:
 
@@ -288,7 +289,7 @@
   "house_music_note": null,
   "house_music_id": "43",
   "house_music_image_url": "https://dodo.ac/np/images/music.png",
-  "house_music_local_image_path": "assets/music/43.png",
+  "house_music_local_image_path": "assets/catalog/music/items/43.png",
   "icon_url": "https://dodo.ac/np/images/b/b4/Cyrano_NH_Villager_Icon.png",
   "image_url": "https://dodo.ac/np/images/4/48/Cyrano_NH.png",
   "photo_url": "https://dodo.ac/np/images/0/02/Cyrano%27s_Photo_NH_Texture.png",
@@ -397,7 +398,25 @@
 - `villagers.filter-options.json`: 종족, 성격, 취미, 성별, 생일 월, subtype 집계
 - `villagers.summary.json`: 데이터 개수, 상세 필드 채움 현황, 다국어 source 보유 현황, 로컬 이미지 보유 현황
 
-## 5.6 Museum Creatures
+## 5.6 Encyclopedia
+
+파일:
+
+- `content/encyclopedia/bugs.json` (80)
+- `content/encyclopedia/fish.json` (80)
+- `content/encyclopedia/sea.json` (40)
+- `content/encyclopedia/fossils.json` (73)
+- `content/encyclopedia/art.json` (43)
+
+앱 사용 규칙:
+
+- 기준 데이터의 `id`는 사용자 `collection_records.item_id`와 연결하는 고정 키다.
+- 모든 항목은 `image.localPath`를 가지며, 앱은 `encyclopedia-assets.ts` 정적 맵을 통해 로컬 이미지를 사용한다.
+- 생물 `tankImage.localPath`는 tank 전시 이미지를, 미술품 `artwork.realImageLocalPath`와 `artwork.fakeImageLocalPath`는 진품·가품 비교 이미지를 가리킨다.
+- `availability.north`와 `availability.south`는 반구별 월·시간을 보관한다. 월별 추천은 앱의 게임 날짜와 활성 섬 반구로 계산한다.
+- 미술품은 `artwork`에 작품 정보와 진품·가품 설명을 보관하며 `hasFake`에 따라 진품/가품 보유 상태를 독립적으로 기록한다.
+
+## 5.7 Museum Source Archives
 
 파일:
 
@@ -408,8 +427,8 @@
 
 앱 사용 규칙:
 
-- 현재는 원본 배열을 그대로 읽어도 됨
-- 필터를 많이 쓸 예정이면 별도 정규화 권장
+- 도감 앱 데이터 생성 시 박물관 설명과 이름 보조 정보의 source archive로 사용한다.
+- 화면은 `content/museum/`의 원본 키를 직접 읽지 않고 `content/encyclopedia/` 정규화 결과를 사용한다.
 
 추천 공통 필드:
 
@@ -463,13 +482,13 @@
 - `content/catalog/music/music.acnhapi.json`
 - `content/catalog/music/music-extra.norviah.json`
 - `content/catalog/music/music_name_map_ko.json`
-- 자산: `assets/music/`
+- 자산: `assets/catalog/music/items/`
 
 앱 사용 규칙:
 
 - 기본 목록은 `music.acnhapi.json`
 - 추가 메타는 `music-extra.norviah.json`
-- 로컬 앨범아트가 필요하면 `assets/music/` 우선
+- 로컬 앨범아트가 필요하면 `assets/catalog/music/items/` 우선
 
 ## 5.9 Recipes
 
@@ -534,9 +553,13 @@
 - 주민 하우스 외관: `assets/villagers/house_exterior/`
 - 주민 하우스 내부: `assets/villagers/house_interior/`
 - 기존 256px 주민 이미지 보관: `assets/villagers/legacy/` (앱 미사용)
-- 음악 이미지: `assets/music/`
+- 도감 이미지: `assets/encyclopedia/{art,bugs,fish,fossils,sea}/`
+- 도감 상세 이미지: `assets/encyclopedia/{bugs,fish,sea}/tank/`, `assets/encyclopedia/art/{real,fake}/`
+- 카탈로그 이미지: `assets/catalog/{furniture,interior,clothing,music,items,tools,special_items,gyroids,photos,recipes,reactions}/`
+- 음악 이미지: `assets/catalog/music/items/`
 - 오프라인 캐시: `assets/offline_cache/`
 - 오프라인 캐시 분류 매니페스트: `manifests/offline_asset_manifests/offline_cache.classified.json`
+- 카탈로그 이미지 경로 매니페스트: `manifests/offline_asset_manifests/catalog_asset_paths.json`
 
 ### 7.2 이미지 사용 우선순위
 
@@ -571,7 +594,7 @@
 현재 바로 앱에 쓰기 가장 좋은 순서는 아래와 같다.
 
 1. 의류: 완료
-2. 박물관 생물: 다음 정규화 대상
+2. 도감 5종: 완료
 3. 가구/인테리어: 화면 범위 확정 후 정규화
 4. 음악/레시피/리액션: 필요할 때 얕은 정규화
 
@@ -584,6 +607,9 @@
 - 주민 이미지 준비/점검 명령(캐시 우선, 기본값은 네트워크를 사용하지 않음): `python3 scripts/download_villager_assets.py`
 - 주민 이미지 다운로드 명령(네트워크 사용 명시): `python3 scripts/download_villager_assets.py --allow-network`
 - 오프라인 캐시 분류 명령: `python3 scripts/classify_offline_cache.py`
+- 카탈로그 이미지 정리 명령: `python3 scripts/materialize_catalog_assets.py`
+- 카탈로그 이미지 정적 맵 생성 명령: `python3 scripts/build_catalog_asset_map.py`
+- 누락 도감·카탈로그 이미지 다운로드 명령: `python3 scripts/download_catalog_assets.py --workers 8`
 - 향후 다른 도메인도 동일하게 `build_*_app_dataset.py` 패턴으로 추가
 - 새 정규화 파일을 만들면 `index.json`의 `primary_files`에 반영
 

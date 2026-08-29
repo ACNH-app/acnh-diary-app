@@ -96,7 +96,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "43",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/43.png",
+    "house_music_local_image_path": "assets/catalog/music/items/43.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "02abd809952819a3",
@@ -277,7 +277,7 @@
     "house_music_note": "",
     "house_music_id": "55",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/55.png",
+    "house_music_local_image_path": "assets/catalog/music/items/55.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "02b4c0064c99a836",
@@ -461,7 +461,7 @@
     "house_music_note": "",
     "house_music_id": "53",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/53.png",
+    "house_music_local_image_path": "assets/catalog/music/items/53.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3cc22c4f5ceb4ef7",
@@ -642,7 +642,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "2",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/2.png",
+    "house_music_local_image_path": "assets/catalog/music/items/2.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f073cd400a08c38c",
@@ -799,7 +799,7 @@
     "house_music_note": "",
     "house_music_id": "97",
     "house_music_image_url": "https://dodo.ac/np/images/a/af/K.K._Polka_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/97.png",
+    "house_music_local_image_path": "assets/catalog/music/items/97.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d100192f22826708",
@@ -977,7 +977,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "35",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/35.png",
+    "house_music_local_image_path": "assets/catalog/music/items/35.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "4ae36272e49839d5",
@@ -1155,7 +1155,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "75",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/75.png",
+    "house_music_local_image_path": "assets/catalog/music/items/75.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9626eba06c222837",
@@ -1334,7 +1334,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "51",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/51.png",
+    "house_music_local_image_path": "assets/catalog/music/items/51.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1c2a20318f89dac5",
@@ -1517,7 +1517,7 @@
     "house_music_note": "",
     "house_music_id": "79",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/79.png",
+    "house_music_local_image_path": "assets/catalog/music/items/79.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ad2ae77da55649b1",
@@ -1703,7 +1703,7 @@
     "house_music_note": "",
     "house_music_id": "14",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/14.png",
+    "house_music_local_image_path": "assets/catalog/music/items/14.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "638847ef723aa285",
@@ -1884,7 +1884,7 @@
     "house_music_note": "",
     "house_music_id": "6",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/6.png",
+    "house_music_local_image_path": "assets/catalog/music/items/6.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a3b8e3f89e7f1070",
@@ -2068,7 +2068,7 @@
     "house_music_note": "",
     "house_music_id": "14",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/14.png",
+    "house_music_local_image_path": "assets/catalog/music/items/14.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "40224d270801e8ac",
@@ -2250,7 +2250,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0832bafcc2fc35f0",
@@ -2433,7 +2433,7 @@
     "house_music_note": "",
     "house_music_id": "50",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/50.png",
+    "house_music_local_image_path": "assets/catalog/music/items/50.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fed7715c5771d5aa",
@@ -2616,7 +2616,7 @@
     "house_music_note": "",
     "house_music_id": "4",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/4.png",
+    "house_music_local_image_path": "assets/catalog/music/items/4.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a22ed083a6339c23",
@@ -2796,7 +2796,7 @@
     "house_music_note": "",
     "house_music_id": "5",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/5.png",
+    "house_music_local_image_path": "assets/catalog/music/items/5.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9af32d019692b569",
@@ -2981,7 +2981,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "25",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/25.png",
+    "house_music_local_image_path": "assets/catalog/music/items/25.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6c120a5b1c3220cb",
@@ -3161,7 +3161,7 @@
     "house_music_note": "",
     "house_music_id": "30",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/30.png",
+    "house_music_local_image_path": "assets/catalog/music/items/30.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fa457ea341f7e0e6",
@@ -3338,7 +3338,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "58",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/58.png",
+    "house_music_local_image_path": "assets/catalog/music/items/58.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8b0f85eb029c13d0",
@@ -3518,7 +3518,7 @@
     "house_music_note": "",
     "house_music_id": "79",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/79.png",
+    "house_music_local_image_path": "assets/catalog/music/items/79.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7967111893f147df",
@@ -3696,7 +3696,7 @@
     "house_music_note": "",
     "house_music_id": "51",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/51.png",
+    "house_music_local_image_path": "assets/catalog/music/items/51.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b62fdcc24ec04b57",
@@ -3874,7 +3874,7 @@
     "house_music_note": "",
     "house_music_id": "64",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/64.png",
+    "house_music_local_image_path": "assets/catalog/music/items/64.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "aa66dc89e72e8595",
@@ -4050,7 +4050,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "5c13fe1da321374e",
@@ -4233,7 +4233,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "26",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/26.png",
+    "house_music_local_image_path": "assets/catalog/music/items/26.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d720d7339ba04b22",
@@ -4417,7 +4417,7 @@
     "house_music_note": "",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "79215777bb757f0a",
@@ -4602,7 +4602,7 @@
     "house_music_note": "",
     "house_music_id": "55",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/55.png",
+    "house_music_local_image_path": "assets/catalog/music/items/55.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f2c669653dc0e0a7",
@@ -4786,7 +4786,7 @@
     "house_music_note": "",
     "house_music_id": "4",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/4.png",
+    "house_music_local_image_path": "assets/catalog/music/items/4.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "22bd19b4f81e3a90",
@@ -4966,7 +4966,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "15",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/15.png",
+    "house_music_local_image_path": "assets/catalog/music/items/15.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6e6af4c19f56b670",
@@ -5146,7 +5146,7 @@
     "house_music_note": "",
     "house_music_id": "70",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/70.png",
+    "house_music_local_image_path": "assets/catalog/music/items/70.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "33f771324ee838f2",
@@ -5325,7 +5325,7 @@
     "house_music_note": "",
     "house_music_id": "89",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/89.png",
+    "house_music_local_image_path": "assets/catalog/music/items/89.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9d5431a81cbd1798",
@@ -5507,7 +5507,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e4a14e42593c009f",
@@ -5662,7 +5662,7 @@
     "house_music_note": "",
     "house_music_id": "104",
     "house_music_image_url": "https://dodo.ac/np/images/a/a9/K.K._Hop_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/104.png",
+    "house_music_local_image_path": "assets/catalog/music/items/104.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3b16c8d345157ca3",
@@ -5838,7 +5838,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "65",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/65.png",
+    "house_music_local_image_path": "assets/catalog/music/items/65.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "36854b19c61c1fda",
@@ -6017,7 +6017,7 @@
     "house_music_note": "",
     "house_music_id": "74",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/74.png",
+    "house_music_local_image_path": "assets/catalog/music/items/74.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "36cbd5cc2877175b",
@@ -6196,7 +6196,7 @@
     "house_music_note": "",
     "house_music_id": "72",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/72.png",
+    "house_music_local_image_path": "assets/catalog/music/items/72.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3971b2ea527cbac0",
@@ -6375,7 +6375,7 @@
     "house_music_note": "",
     "house_music_id": "80",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/80.png",
+    "house_music_local_image_path": "assets/catalog/music/items/80.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cbed1d2430d8d05d",
@@ -6554,7 +6554,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "13",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/13.png",
+    "house_music_local_image_path": "assets/catalog/music/items/13.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c08eb1d9740e152c",
@@ -6705,7 +6705,7 @@
     "house_music_note": "",
     "house_music_id": "103",
     "house_music_image_url": "https://dodo.ac/np/images/b/b9/K.K._Bashment_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/103.png",
+    "house_music_local_image_path": "assets/catalog/music/items/103.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "58eac269ea73a4e7",
@@ -6885,7 +6885,7 @@
     "house_music_note": "",
     "house_music_id": "22",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/22.png",
+    "house_music_local_image_path": "assets/catalog/music/items/22.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3d38ac7e508b94e3",
@@ -7066,7 +7066,7 @@
     "house_music_note": "",
     "house_music_id": "72",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/72.png",
+    "house_music_local_image_path": "assets/catalog/music/items/72.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c8fc7cb4839dbcb8",
@@ -7247,7 +7247,7 @@
     "house_music_note": "",
     "house_music_id": "59",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/59.png",
+    "house_music_local_image_path": "assets/catalog/music/items/59.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6de5ffb19d2c8e31",
@@ -7429,7 +7429,7 @@
     "house_music_note": "",
     "house_music_id": "67",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/67.png",
+    "house_music_local_image_path": "assets/catalog/music/items/67.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "88a7843c19420c37",
@@ -7607,7 +7607,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "79",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/79.png",
+    "house_music_local_image_path": "assets/catalog/music/items/79.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b55ed863840ab0a2",
@@ -7786,7 +7786,7 @@
     "house_music_note": "",
     "house_music_id": "48",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/48.png",
+    "house_music_local_image_path": "assets/catalog/music/items/48.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0eb5ec69a32a7b48",
@@ -7970,7 +7970,7 @@
     "house_music_note": "",
     "house_music_id": "81",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/81.png",
+    "house_music_local_image_path": "assets/catalog/music/items/81.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "585483ab1f0cf423",
@@ -8153,7 +8153,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "44",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/44.png",
+    "house_music_local_image_path": "assets/catalog/music/items/44.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f9a38e425dab2868",
@@ -8337,7 +8337,7 @@
     "house_music_note": "",
     "house_music_id": "4",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/4.png",
+    "house_music_local_image_path": "assets/catalog/music/items/4.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e13bf7e4eee093a1",
@@ -8521,7 +8521,7 @@
     "house_music_note": "",
     "house_music_id": "64",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/64.png",
+    "house_music_local_image_path": "assets/catalog/music/items/64.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "19bde4af6adceb6e",
@@ -8706,7 +8706,7 @@
     "house_music_note": "",
     "house_music_id": "82",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/82.png",
+    "house_music_local_image_path": "assets/catalog/music/items/82.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "adb29bec0788fee3",
@@ -8890,7 +8890,7 @@
     "house_music_note": "",
     "house_music_id": "13",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/13.png",
+    "house_music_local_image_path": "assets/catalog/music/items/13.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c2b0fe153120ebe3",
@@ -9072,7 +9072,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b353918b7fde0b07",
@@ -9256,7 +9256,7 @@
     "house_music_note": "",
     "house_music_id": "24",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/24.png",
+    "house_music_local_image_path": "assets/catalog/music/items/24.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "52416d815bc1f4c7",
@@ -9438,7 +9438,7 @@
     "house_music_note": "",
     "house_music_id": "93",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/93.png",
+    "house_music_local_image_path": "assets/catalog/music/items/93.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "00990de249cd4a33",
@@ -9621,7 +9621,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "42",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/42.png",
+    "house_music_local_image_path": "assets/catalog/music/items/42.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "90cd4854a4212ca2",
@@ -9802,7 +9802,7 @@
     "house_music_note": "",
     "house_music_id": "11",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/11.png",
+    "house_music_local_image_path": "assets/catalog/music/items/11.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "24538be28cece4ab",
@@ -9986,7 +9986,7 @@
     "house_music_note": "",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cb25bd570e9d51ab",
@@ -10170,7 +10170,7 @@
     "house_music_note": "",
     "house_music_id": "7",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/7.png",
+    "house_music_local_image_path": "assets/catalog/music/items/7.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "970db76ebd1127ba",
@@ -10353,7 +10353,7 @@
     "house_music_note": "",
     "house_music_id": "34",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/34.png",
+    "house_music_local_image_path": "assets/catalog/music/items/34.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8393043c869ad022",
@@ -10536,7 +10536,7 @@
     "house_music_note": "",
     "house_music_id": "24",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/24.png",
+    "house_music_local_image_path": "assets/catalog/music/items/24.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3783d36c5c1351c1",
@@ -10719,7 +10719,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "58",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/58.png",
+    "house_music_local_image_path": "assets/catalog/music/items/58.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b8e75269f26da1c5",
@@ -10899,7 +10899,7 @@
     "house_music_note": "",
     "house_music_id": "81",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/81.png",
+    "house_music_local_image_path": "assets/catalog/music/items/81.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cf2a3d5a94a6a1d1",
@@ -11079,7 +11079,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c0b96478b5f9e773",
@@ -11259,7 +11259,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "005d34cdbc8d5d2c",
@@ -11441,7 +11441,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "18",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/18.png",
+    "house_music_local_image_path": "assets/catalog/music/items/18.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ff5752d16dffbb14",
@@ -11620,7 +11620,7 @@
     "house_music_note": "",
     "house_music_id": "20",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/20.png",
+    "house_music_local_image_path": "assets/catalog/music/items/20.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "89e88be3b6fd4a0b",
@@ -11798,7 +11798,7 @@
     "house_music_note": "",
     "house_music_id": "30",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/30.png",
+    "house_music_local_image_path": "assets/catalog/music/items/30.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f08d43d08e71d846",
@@ -11974,7 +11974,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d24fdd3f44e94c03",
@@ -12158,7 +12158,7 @@
     "house_music_note": "",
     "house_music_id": "82",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/82.png",
+    "house_music_local_image_path": "assets/catalog/music/items/82.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2792b7fe8ecb3618",
@@ -12342,7 +12342,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "96954e0b81830fee",
@@ -12525,7 +12525,7 @@
     "house_music_note": "",
     "house_music_id": "20",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/20.png",
+    "house_music_local_image_path": "assets/catalog/music/items/20.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d47c208c79cb97a8",
@@ -12710,7 +12710,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0cb205408bbafe6d",
@@ -12897,7 +12897,7 @@
     "house_music_note": "",
     "house_music_id": "80",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/80.png",
+    "house_music_local_image_path": "assets/catalog/music/items/80.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e56abece5a4ca847",
@@ -13078,7 +13078,7 @@
     "house_music_note": "",
     "house_music_id": "13",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/13.png",
+    "house_music_local_image_path": "assets/catalog/music/items/13.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e49e6e821927e689",
@@ -13261,7 +13261,7 @@
     "house_music_note": "",
     "house_music_id": "1",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/1.png",
+    "house_music_local_image_path": "assets/catalog/music/items/1.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8707e41e1df0616d",
@@ -13443,7 +13443,7 @@
     "house_music_note": "",
     "house_music_id": "60",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/60.png",
+    "house_music_local_image_path": "assets/catalog/music/items/60.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e0682c610655b99e",
@@ -13622,7 +13622,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "81",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/81.png",
+    "house_music_local_image_path": "assets/catalog/music/items/81.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "eef2fe700d2424e4",
@@ -13803,7 +13803,7 @@
     "house_music_note": "",
     "house_music_id": "30",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/30.png",
+    "house_music_local_image_path": "assets/catalog/music/items/30.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "de0286012f8c15be",
@@ -13982,7 +13982,7 @@
     "house_music_note": "",
     "house_music_id": "40",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/40.png",
+    "house_music_local_image_path": "assets/catalog/music/items/40.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "574fdd3487154e3e",
@@ -14162,7 +14162,7 @@
     "house_music_note": "",
     "house_music_id": "14",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/14.png",
+    "house_music_local_image_path": "assets/catalog/music/items/14.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2bbdf763c9e84a83",
@@ -14341,7 +14341,7 @@
     "house_music_note": "",
     "house_music_id": "14",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/14.png",
+    "house_music_local_image_path": "assets/catalog/music/items/14.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "5314429d23579452",
@@ -14520,7 +14520,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "65",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/65.png",
+    "house_music_local_image_path": "assets/catalog/music/items/65.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "df41565b91cd13ee",
@@ -14699,7 +14699,7 @@
     "house_music_note": "",
     "house_music_id": "7",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/7.png",
+    "house_music_local_image_path": "assets/catalog/music/items/7.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0525d11bfa2a4f91",
@@ -14852,7 +14852,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "80",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/80.png",
+    "house_music_local_image_path": "assets/catalog/music/items/80.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "19a1e8105fba0825",
@@ -15027,7 +15027,7 @@
     "house_music_note": "",
     "house_music_id": "45",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/45.png",
+    "house_music_local_image_path": "assets/catalog/music/items/45.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a815fa91a12394fa",
@@ -15211,7 +15211,7 @@
     "house_music_note": "",
     "house_music_id": "26",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/26.png",
+    "house_music_local_image_path": "assets/catalog/music/items/26.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d9290be6eece495f",
@@ -15392,7 +15392,7 @@
     "house_music_note": "",
     "house_music_id": "13",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/13.png",
+    "house_music_local_image_path": "assets/catalog/music/items/13.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d3aeb7f4140185f7",
@@ -15575,7 +15575,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "76",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/76.png",
+    "house_music_local_image_path": "assets/catalog/music/items/76.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d6e4f70df5406452",
@@ -15757,7 +15757,7 @@
     "house_music_note": "",
     "house_music_id": "44",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/44.png",
+    "house_music_local_image_path": "assets/catalog/music/items/44.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "36d74862989f3de8",
@@ -15938,7 +15938,7 @@
     "house_music_note": "",
     "house_music_id": "24",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/24.png",
+    "house_music_local_image_path": "assets/catalog/music/items/24.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "4fd309f07f0ac3a3",
@@ -16119,7 +16119,7 @@
     "house_music_note": "",
     "house_music_id": "40",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/40.png",
+    "house_music_local_image_path": "assets/catalog/music/items/40.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "777278a6262958d5",
@@ -16299,7 +16299,7 @@
     "house_music_note": "",
     "house_music_id": "24",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/24.png",
+    "house_music_local_image_path": "assets/catalog/music/items/24.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cadb4841d4f8f0a8",
@@ -16478,7 +16478,7 @@
     "house_music_note": "",
     "house_music_id": "34",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/34.png",
+    "house_music_local_image_path": "assets/catalog/music/items/34.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "4f5b27461ec6294f",
@@ -16657,7 +16657,7 @@
     "house_music_note": "",
     "house_music_id": "56",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/56.png",
+    "house_music_local_image_path": "assets/catalog/music/items/56.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a6393e308bd47c8d",
@@ -16843,7 +16843,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "22",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/22.png",
+    "house_music_local_image_path": "assets/catalog/music/items/22.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "db94b1e07f20577c",
@@ -17024,7 +17024,7 @@
     "house_music_note": "",
     "house_music_id": "85",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/85.png",
+    "house_music_local_image_path": "assets/catalog/music/items/85.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "342b02be1ea22db9",
@@ -17202,7 +17202,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "78",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/78.png",
+    "house_music_local_image_path": "assets/catalog/music/items/78.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "eaee3462c718f7a3",
@@ -17381,7 +17381,7 @@
     "house_music_note": "",
     "house_music_id": "51",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/51.png",
+    "house_music_local_image_path": "assets/catalog/music/items/51.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "34cf2e2cd6639b8b",
@@ -17567,7 +17567,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e24122b4e8de012d",
@@ -17751,7 +17751,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d9c13d0a25060e01",
@@ -17931,7 +17931,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "94",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/94.png",
+    "house_music_local_image_path": "assets/catalog/music/items/94.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "152fe595711d9c87",
@@ -18112,7 +18112,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "83",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/83.png",
+    "house_music_local_image_path": "assets/catalog/music/items/83.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c20c0f45910353eb",
@@ -18265,7 +18265,7 @@
     "house_music_note": "",
     "house_music_id": "106",
     "house_music_image_url": "https://dodo.ac/np/images/8/8d/K.K._Khoomei_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/106.png",
+    "house_music_local_image_path": "assets/catalog/music/items/106.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6b821372245a87ce",
@@ -18443,7 +18443,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "60",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/60.png",
+    "house_music_local_image_path": "assets/catalog/music/items/60.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8f9487c599891f1c",
@@ -18621,7 +18621,7 @@
     "house_music_note": "",
     "house_music_id": "4",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/4.png",
+    "house_music_local_image_path": "assets/catalog/music/items/4.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "601cd5cc27a25024",
@@ -18800,7 +18800,7 @@
     "house_music_note": "",
     "house_music_id": "14",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/14.png",
+    "house_music_local_image_path": "assets/catalog/music/items/14.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c5ae77eac5cc5775",
@@ -18979,7 +18979,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "236bb100a04dbef6",
@@ -19161,7 +19161,7 @@
     "house_music_note": "",
     "house_music_id": "20",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/20.png",
+    "house_music_local_image_path": "assets/catalog/music/items/20.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1e01b61b65342b33",
@@ -19340,7 +19340,7 @@
     "house_music_note": "",
     "house_music_id": "69",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/69.png",
+    "house_music_local_image_path": "assets/catalog/music/items/69.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cf3c708dcc3ffdf1",
@@ -19519,7 +19519,7 @@
     "house_music_note": "",
     "house_music_id": "20",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/20.png",
+    "house_music_local_image_path": "assets/catalog/music/items/20.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ab3ee9f43719a594",
@@ -19696,7 +19696,7 @@
     "house_music_note": "",
     "house_music_id": "21",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/21.png",
+    "house_music_local_image_path": "assets/catalog/music/items/21.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8636632c6346ac79",
@@ -19875,7 +19875,7 @@
     "house_music_note": "",
     "house_music_id": "41",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/41.png",
+    "house_music_local_image_path": "assets/catalog/music/items/41.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c41241b312a064f6",
@@ -20054,7 +20054,7 @@
     "house_music_note": "",
     "house_music_id": "58",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/58.png",
+    "house_music_local_image_path": "assets/catalog/music/items/58.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "611e7819f4f936ff",
@@ -20233,7 +20233,7 @@
     "house_music_note": "",
     "house_music_id": "78",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/78.png",
+    "house_music_local_image_path": "assets/catalog/music/items/78.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "46da6b479f23784e",
@@ -20412,7 +20412,7 @@
     "house_music_note": "",
     "house_music_id": "9",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/9.png",
+    "house_music_local_image_path": "assets/catalog/music/items/9.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7674ffba0f31e902",
@@ -20590,7 +20590,7 @@
     "house_music_note": "",
     "house_music_id": "8",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/8.png",
+    "house_music_local_image_path": "assets/catalog/music/items/8.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cf557f7bb1ae200d",
@@ -20743,7 +20743,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e0006b4cd55d9613",
@@ -20894,7 +20894,7 @@
     "house_music_note": "",
     "house_music_id": "75",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/75.png",
+    "house_music_local_image_path": "assets/catalog/music/items/75.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "23784e847f629fe0",
@@ -21044,7 +21044,7 @@
     "house_music_note": "",
     "house_music_id": "82",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/82.png",
+    "house_music_local_image_path": "assets/catalog/music/items/82.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b5e4ee4069d83ebb",
@@ -21227,7 +21227,7 @@
     "house_music_note": "",
     "house_music_id": "21",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/21.png",
+    "house_music_local_image_path": "assets/catalog/music/items/21.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "28d9ada09025e3e4",
@@ -21411,7 +21411,7 @@
     "house_music_note": "",
     "house_music_id": "74",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/74.png",
+    "house_music_local_image_path": "assets/catalog/music/items/74.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "04b847b8d99bebae",
@@ -21594,7 +21594,7 @@
     "house_music_note": "",
     "house_music_id": "29",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/29.png",
+    "house_music_local_image_path": "assets/catalog/music/items/29.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "803582f343b824e9",
@@ -21778,7 +21778,7 @@
     "house_music_note": "",
     "house_music_id": "46",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/46.png",
+    "house_music_local_image_path": "assets/catalog/music/items/46.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1d2f99e719b81e23",
@@ -21962,7 +21962,7 @@
     "house_music_note": "",
     "house_music_id": "32",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/32.png",
+    "house_music_local_image_path": "assets/catalog/music/items/32.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "afe624194c3063de",
@@ -22146,7 +22146,7 @@
     "house_music_note": "",
     "house_music_id": "30",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/30.png",
+    "house_music_local_image_path": "assets/catalog/music/items/30.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3c46a0ad4b181346",
@@ -22327,7 +22327,7 @@
     "house_music_note": "",
     "house_music_id": "93",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/93.png",
+    "house_music_local_image_path": "assets/catalog/music/items/93.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "dce62d564dc78637",
@@ -22513,7 +22513,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "342877a06b2d8af3",
@@ -22695,7 +22695,7 @@
     "house_music_note": "",
     "house_music_id": "4",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/4.png",
+    "house_music_local_image_path": "assets/catalog/music/items/4.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "74181791617578da",
@@ -22876,7 +22876,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6efcefaaa09f7b92",
@@ -23056,7 +23056,7 @@
     "house_music_note": "",
     "house_music_id": "8",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/8.png",
+    "house_music_local_image_path": "assets/catalog/music/items/8.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fbab27017fcadf27",
@@ -23209,7 +23209,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "6",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/6.png",
+    "house_music_local_image_path": "assets/catalog/music/items/6.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1fa3f8b68dbb0ed8",
@@ -23388,7 +23388,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "80",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/80.png",
+    "house_music_local_image_path": "assets/catalog/music/items/80.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6294e0707d2f6591",
@@ -23568,7 +23568,7 @@
     "house_music_note": "",
     "house_music_id": "6",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/6.png",
+    "house_music_local_image_path": "assets/catalog/music/items/6.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1104c1c438a9c708",
@@ -23746,7 +23746,7 @@
     "house_music_note": "",
     "house_music_id": "79",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/79.png",
+    "house_music_local_image_path": "assets/catalog/music/items/79.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "95ddb93fa4043b4b",
@@ -23925,7 +23925,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "28",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/28.png",
+    "house_music_local_image_path": "assets/catalog/music/items/28.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2da4eba70d0c7ea0",
@@ -24106,7 +24106,7 @@
     "house_music_note": "",
     "house_music_id": "69",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/69.png",
+    "house_music_local_image_path": "assets/catalog/music/items/69.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "18593900b8ec0f3a",
@@ -24289,7 +24289,7 @@
     "house_music_note": "",
     "house_music_id": "14",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/14.png",
+    "house_music_local_image_path": "assets/catalog/music/items/14.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "462bdfd7f6b6d8ba",
@@ -24472,7 +24472,7 @@
     "house_music_note": "",
     "house_music_id": "77",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/77.png",
+    "house_music_local_image_path": "assets/catalog/music/items/77.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "da36c91c25386b98",
@@ -24656,7 +24656,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f154857f63a0fa0c",
@@ -24839,7 +24839,7 @@
     "house_music_note": "",
     "house_music_id": "5",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/5.png",
+    "house_music_local_image_path": "assets/catalog/music/items/5.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "426f67595846bb34",
@@ -25025,7 +25025,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "79",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/79.png",
+    "house_music_local_image_path": "assets/catalog/music/items/79.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "764d2212cd3325fe",
@@ -25209,7 +25209,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0a25affe9f28d8ef",
@@ -25393,7 +25393,7 @@
     "house_music_note": "",
     "house_music_id": "21",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/21.png",
+    "house_music_local_image_path": "assets/catalog/music/items/21.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "74b130954bfd178f",
@@ -25577,7 +25577,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "77",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/77.png",
+    "house_music_local_image_path": "assets/catalog/music/items/77.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ebe991f467b6c46e",
@@ -25761,7 +25761,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d6129c43f6213d2e",
@@ -25942,7 +25942,7 @@
     "house_music_note": "",
     "house_music_id": "20",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/20.png",
+    "house_music_local_image_path": "assets/catalog/music/items/20.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7b82015cf9ea4598",
@@ -26125,7 +26125,7 @@
     "house_music_note": "",
     "house_music_id": "80",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/80.png",
+    "house_music_local_image_path": "assets/catalog/music/items/80.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "048ba605b7011aa0",
@@ -26305,7 +26305,7 @@
     "house_music_note": "",
     "house_music_id": "36",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/36.png",
+    "house_music_local_image_path": "assets/catalog/music/items/36.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b1086157a3f7f4a5",
@@ -26486,7 +26486,7 @@
     "house_music_note": "",
     "house_music_id": "64",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/64.png",
+    "house_music_local_image_path": "assets/catalog/music/items/64.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3246a68b9caada0c",
@@ -26663,7 +26663,7 @@
     "house_music_note": "",
     "house_music_id": "81",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/81.png",
+    "house_music_local_image_path": "assets/catalog/music/items/81.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6fced4278abdaae2",
@@ -26843,7 +26843,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "3",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/3.png",
+    "house_music_local_image_path": "assets/catalog/music/items/3.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "31b6424f68807b4f",
@@ -27022,7 +27022,7 @@
     "house_music_note": "",
     "house_music_id": "17",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/17.png",
+    "house_music_local_image_path": "assets/catalog/music/items/17.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "65558769bc8b0d6b",
@@ -27201,7 +27201,7 @@
     "house_music_note": "",
     "house_music_id": "37",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/37.png",
+    "house_music_local_image_path": "assets/catalog/music/items/37.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "000d37278f65f6db",
@@ -27385,7 +27385,7 @@
     "house_music_note": "",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2d470d6add605daa",
@@ -27568,7 +27568,7 @@
     "house_music_note": "",
     "house_music_id": "93",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/93.png",
+    "house_music_local_image_path": "assets/catalog/music/items/93.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "79255d14c7814d27",
@@ -27749,7 +27749,7 @@
     "house_music_note": "",
     "house_music_id": "11",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/11.png",
+    "house_music_local_image_path": "assets/catalog/music/items/11.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fb422f16d6f45bee",
@@ -27933,7 +27933,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2858fc78ef0a6d7c",
@@ -28116,7 +28116,7 @@
     "house_music_note": "",
     "house_music_id": "47",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/47.png",
+    "house_music_local_image_path": "assets/catalog/music/items/47.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c46bb4e9d9b8fdab",
@@ -28296,7 +28296,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "92",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/92.png",
+    "house_music_local_image_path": "assets/catalog/music/items/92.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fb1bdabeaa5027e5",
@@ -28479,7 +28479,7 @@
     "house_music_note": "",
     "house_music_id": "31",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/31.png",
+    "house_music_local_image_path": "assets/catalog/music/items/31.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "5e61c6ae1d6ebb58",
@@ -28661,7 +28661,7 @@
     "house_music_note": "",
     "house_music_id": "17",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/17.png",
+    "house_music_local_image_path": "assets/catalog/music/items/17.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "35ac32a678408162",
@@ -28840,7 +28840,7 @@
     "house_music_note": "",
     "house_music_id": "60",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/60.png",
+    "house_music_local_image_path": "assets/catalog/music/items/60.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e05f9f4b89464e78",
@@ -29019,7 +29019,7 @@
     "house_music_note": "",
     "house_music_id": "21",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/21.png",
+    "house_music_local_image_path": "assets/catalog/music/items/21.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b4913e96ecb5457a",
@@ -29172,7 +29172,7 @@
     "house_music_note": "",
     "house_music_id": "21",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/21.png",
+    "house_music_local_image_path": "assets/catalog/music/items/21.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "de842d0eb7152903",
@@ -29347,7 +29347,7 @@
     "house_music_note": "",
     "house_music_id": "50",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/50.png",
+    "house_music_local_image_path": "assets/catalog/music/items/50.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "4aac0c52cd30d4c0",
@@ -29533,7 +29533,7 @@
     "house_music_note": "",
     "house_music_id": "9",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/9.png",
+    "house_music_local_image_path": "assets/catalog/music/items/9.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6b89faeaab31f347",
@@ -29719,7 +29719,7 @@
     "house_music_note": "",
     "house_music_id": "72",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/72.png",
+    "house_music_local_image_path": "assets/catalog/music/items/72.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b2db3c58a84c005e",
@@ -29901,7 +29901,7 @@
     "house_music_note": "",
     "house_music_id": "55",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/55.png",
+    "house_music_local_image_path": "assets/catalog/music/items/55.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "72b993dac38e611f",
@@ -30085,7 +30085,7 @@
     "house_music_note": "",
     "house_music_id": "60",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/60.png",
+    "house_music_local_image_path": "assets/catalog/music/items/60.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0fff2ddfbf70292b",
@@ -30270,7 +30270,7 @@
     "house_music_note": "",
     "house_music_id": "50",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/50.png",
+    "house_music_local_image_path": "assets/catalog/music/items/50.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "62b1a7ea73b62614",
@@ -30453,7 +30453,7 @@
     "house_music_note": "",
     "house_music_id": "89",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/89.png",
+    "house_music_local_image_path": "assets/catalog/music/items/89.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "66a8b53c5a4e01a2",
@@ -30637,7 +30637,7 @@
     "house_music_note": "",
     "house_music_id": "30",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/30.png",
+    "house_music_local_image_path": "assets/catalog/music/items/30.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "14e01d73981782eb",
@@ -30820,7 +30820,7 @@
     "house_music_note": "",
     "house_music_id": "12",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/12.png",
+    "house_music_local_image_path": "assets/catalog/music/items/12.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b25380a4b6dda02e",
@@ -31000,7 +31000,7 @@
     "house_music_note": "",
     "house_music_id": "94",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/94.png",
+    "house_music_local_image_path": "assets/catalog/music/items/94.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ae20bd09f31ca242",
@@ -31183,7 +31183,7 @@
     "house_music_note": "",
     "house_music_id": "14",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/14.png",
+    "house_music_local_image_path": "assets/catalog/music/items/14.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2325edd4827f5c0a",
@@ -31363,7 +31363,7 @@
     "house_music_note": "",
     "house_music_id": "92",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/92.png",
+    "house_music_local_image_path": "assets/catalog/music/items/92.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "eb751d9ade2ca924",
@@ -31546,7 +31546,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "82",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/82.png",
+    "house_music_local_image_path": "assets/catalog/music/items/82.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7c8908fd8ab1333c",
@@ -31727,7 +31727,7 @@
     "house_music_note": "",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d7f562fc96d7ee2d",
@@ -31905,7 +31905,7 @@
     "house_music_note": "",
     "house_music_id": "79",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/79.png",
+    "house_music_local_image_path": "assets/catalog/music/items/79.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7c09d49d9430996b",
@@ -32085,7 +32085,7 @@
     "house_music_note": "",
     "house_music_id": "69",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/69.png",
+    "house_music_local_image_path": "assets/catalog/music/items/69.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d4f92f6e7a1d188b",
@@ -32264,7 +32264,7 @@
     "house_music_note": "",
     "house_music_id": "35",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/35.png",
+    "house_music_local_image_path": "assets/catalog/music/items/35.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "452721f6cfff3c2c",
@@ -32443,7 +32443,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "53",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/53.png",
+    "house_music_local_image_path": "assets/catalog/music/items/53.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "be5fe58138589ee9",
@@ -32622,7 +32622,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6c7c08cdcc806f37",
@@ -32806,7 +32806,7 @@
     "house_music_note": "",
     "house_music_id": "24",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/24.png",
+    "house_music_local_image_path": "assets/catalog/music/items/24.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fac89d225cdb9b80",
@@ -32988,7 +32988,7 @@
     "house_music_note": "",
     "house_music_id": "32",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/32.png",
+    "house_music_local_image_path": "assets/catalog/music/items/32.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2fb034492051610e",
@@ -33168,7 +33168,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "65",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/65.png",
+    "house_music_local_image_path": "assets/catalog/music/items/65.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f28c1740befa08cb",
@@ -33350,7 +33350,7 @@
     "house_music_note": "",
     "house_music_id": "59",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/59.png",
+    "house_music_local_image_path": "assets/catalog/music/items/59.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "bc7d5dd42007790d",
@@ -33532,7 +33532,7 @@
     "house_music_note": "",
     "house_music_id": "79",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/79.png",
+    "house_music_local_image_path": "assets/catalog/music/items/79.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7855e354a1c9eb09",
@@ -33712,7 +33712,7 @@
     "house_music_note": "",
     "house_music_id": "71",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/71.png",
+    "house_music_local_image_path": "assets/catalog/music/items/71.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ce2196f383686382",
@@ -33891,7 +33891,7 @@
     "house_music_note": "",
     "house_music_id": "30",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/30.png",
+    "house_music_local_image_path": "assets/catalog/music/items/30.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d8afe61d29b79280",
@@ -34067,7 +34067,7 @@
     "house_music_note": "",
     "house_music_id": "12",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/12.png",
+    "house_music_local_image_path": "assets/catalog/music/items/12.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2636684499e67a8f",
@@ -34252,7 +34252,7 @@
     "house_music_note": "",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "936aac28acccee14",
@@ -34438,7 +34438,7 @@
     "house_music_note": "",
     "house_music_id": "58",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/58.png",
+    "house_music_local_image_path": "assets/catalog/music/items/58.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "43e57f51b762d9fb",
@@ -34619,7 +34619,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "78",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/78.png",
+    "house_music_local_image_path": "assets/catalog/music/items/78.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "134243bf62fc7317",
@@ -34803,7 +34803,7 @@
     "house_music_note": "",
     "house_music_id": "36",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/36.png",
+    "house_music_local_image_path": "assets/catalog/music/items/36.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ce08cb6733b9bdbc",
@@ -34981,7 +34981,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "37",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/37.png",
+    "house_music_local_image_path": "assets/catalog/music/items/37.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "77994aa12eb54418",
@@ -35164,7 +35164,7 @@
     "house_music_note": "",
     "house_music_id": "18",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/18.png",
+    "house_music_local_image_path": "assets/catalog/music/items/18.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8f8323655f9841a7",
@@ -35345,7 +35345,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "11",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/11.png",
+    "house_music_local_image_path": "assets/catalog/music/items/11.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "32c8a45ccd477e1d",
@@ -35524,7 +35524,7 @@
     "house_music_note": "",
     "house_music_id": "15",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/15.png",
+    "house_music_local_image_path": "assets/catalog/music/items/15.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "884d215fc3faa968",
@@ -35703,7 +35703,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "64",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/64.png",
+    "house_music_local_image_path": "assets/catalog/music/items/64.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e3617c9902dfafcf",
@@ -35856,7 +35856,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "4",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/4.png",
+    "house_music_local_image_path": "assets/catalog/music/items/4.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b9641e4aef7f0567",
@@ -36034,7 +36034,7 @@
     "house_music_note": "",
     "house_music_id": "57",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/57.png",
+    "house_music_local_image_path": "assets/catalog/music/items/57.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0ec54b69535f8306",
@@ -36213,7 +36213,7 @@
     "house_music_note": "",
     "house_music_id": "13",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/13.png",
+    "house_music_local_image_path": "assets/catalog/music/items/13.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "5020579bc70a3642",
@@ -36392,7 +36392,7 @@
     "house_music_note": "",
     "house_music_id": "4",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/4.png",
+    "house_music_local_image_path": "assets/catalog/music/items/4.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "01f0732c613fc2a9",
@@ -36571,7 +36571,7 @@
     "house_music_note": "",
     "house_music_id": "59",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/59.png",
+    "house_music_local_image_path": "assets/catalog/music/items/59.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b906f2f3d9eecdd6",
@@ -36750,7 +36750,7 @@
     "house_music_note": "",
     "house_music_id": "53",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/53.png",
+    "house_music_local_image_path": "assets/catalog/music/items/53.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ab31027dc49ae556",
@@ -36929,7 +36929,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "60",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/60.png",
+    "house_music_local_image_path": "assets/catalog/music/items/60.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "768eff157ff5f2e9",
@@ -37108,7 +37108,7 @@
     "house_music_note": "",
     "house_music_id": "12",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/12.png",
+    "house_music_local_image_path": "assets/catalog/music/items/12.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "00a4f37a52e2805d",
@@ -37287,7 +37287,7 @@
     "house_music_note": "",
     "house_music_id": "6",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/6.png",
+    "house_music_local_image_path": "assets/catalog/music/items/6.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6ed40d8b611867f6",
@@ -37439,7 +37439,7 @@
     "house_music_note": "",
     "house_music_id": "105",
     "house_music_image_url": "https://dodo.ac/np/images/d/db/K.K._Break_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/105.png",
+    "house_music_local_image_path": "assets/catalog/music/items/105.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "42ad37e58efbdd17",
@@ -37622,7 +37622,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "43",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/43.png",
+    "house_music_local_image_path": "assets/catalog/music/items/43.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ef09d1905f027484",
@@ -37804,7 +37804,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "5e40d36d64d9410e",
@@ -37986,7 +37986,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "93",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/93.png",
+    "house_music_local_image_path": "assets/catalog/music/items/93.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a5fa6e28ab7c5da0",
@@ -38168,7 +38168,7 @@
     "house_music_note": "",
     "house_music_id": "91",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/91.png",
+    "house_music_local_image_path": "assets/catalog/music/items/91.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9dc5241f8b2532fb",
@@ -38348,7 +38348,7 @@
     "house_music_note": "",
     "house_music_id": "30",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/30.png",
+    "house_music_local_image_path": "assets/catalog/music/items/30.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f0b6462f0cf9b86b",
@@ -38529,7 +38529,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "56",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/56.png",
+    "house_music_local_image_path": "assets/catalog/music/items/56.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "efa5d75ae5633804",
@@ -38708,7 +38708,7 @@
     "house_music_note": "",
     "house_music_id": "64",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/64.png",
+    "house_music_local_image_path": "assets/catalog/music/items/64.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6198d722bfb3827a",
@@ -38892,7 +38892,7 @@
     "house_music_note": "",
     "house_music_id": "80",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/80.png",
+    "house_music_local_image_path": "assets/catalog/music/items/80.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "eab71d0b11d173dd",
@@ -39074,7 +39074,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "15",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/15.png",
+    "house_music_local_image_path": "assets/catalog/music/items/15.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "34cc8d4765a5fd3d",
@@ -39258,7 +39258,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "715c65034b65df12",
@@ -39442,7 +39442,7 @@
     "house_music_note": "",
     "house_music_id": "26",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/26.png",
+    "house_music_local_image_path": "assets/catalog/music/items/26.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b0332a1d2e25a755",
@@ -39624,7 +39624,7 @@
     "house_music_note": "",
     "house_music_id": "28",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/28.png",
+    "house_music_local_image_path": "assets/catalog/music/items/28.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "eea9393bf6f7c0aa",
@@ -39807,7 +39807,7 @@
     "house_music_note": "",
     "house_music_id": "26",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/26.png",
+    "house_music_local_image_path": "assets/catalog/music/items/26.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7d99b365e8228c7f",
@@ -39990,7 +39990,7 @@
     "house_music_note": "",
     "house_music_id": "17",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/17.png",
+    "house_music_local_image_path": "assets/catalog/music/items/17.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c6cbd8b8534c7e96",
@@ -40170,7 +40170,7 @@
     "house_music_note": "",
     "house_music_id": "36",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/36.png",
+    "house_music_local_image_path": "assets/catalog/music/items/36.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "03217b8660cde252",
@@ -40353,7 +40353,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "326831c76b1d554f",
@@ -40534,7 +40534,7 @@
     "house_music_note": "",
     "house_music_id": "2",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/2.png",
+    "house_music_local_image_path": "assets/catalog/music/items/2.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6591e96dbce08a5a",
@@ -40714,7 +40714,7 @@
     "house_music_note": "",
     "house_music_id": "81",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/81.png",
+    "house_music_local_image_path": "assets/catalog/music/items/81.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "103d8184ac9807fa",
@@ -40893,7 +40893,7 @@
     "house_music_note": "",
     "house_music_id": "24",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/24.png",
+    "house_music_local_image_path": "assets/catalog/music/items/24.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6977c107ddabe528",
@@ -41071,7 +41071,7 @@
     "house_music_note": "",
     "house_music_id": "12",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/12.png",
+    "house_music_local_image_path": "assets/catalog/music/items/12.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9f1301a0db166d47",
@@ -41250,7 +41250,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "86",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/86.png",
+    "house_music_local_image_path": "assets/catalog/music/items/86.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fd18dd04c5fb503e",
@@ -41426,7 +41426,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "70",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/70.png",
+    "house_music_local_image_path": "assets/catalog/music/items/70.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "344642131c60a784",
@@ -41610,7 +41610,7 @@
     "house_music_note": "",
     "house_music_id": "85",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/85.png",
+    "house_music_local_image_path": "assets/catalog/music/items/85.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "899d00ff24c3b376",
@@ -41791,7 +41791,7 @@
     "house_music_note": "",
     "house_music_id": "2",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/2.png",
+    "house_music_local_image_path": "assets/catalog/music/items/2.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "62e23c420c1e47c4",
@@ -41971,7 +41971,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7bdb3ad88dde2e60",
@@ -42154,7 +42154,7 @@
     "house_music_note": "",
     "house_music_id": "8",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/8.png",
+    "house_music_local_image_path": "assets/catalog/music/items/8.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9cf686b6ec59c7e6",
@@ -42334,7 +42334,7 @@
     "house_music_note": "",
     "house_music_id": "90",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/90.png",
+    "house_music_local_image_path": "assets/catalog/music/items/90.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "275bf3421dfcee86",
@@ -42516,7 +42516,7 @@
     "house_music_note": "",
     "house_music_id": "79",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/79.png",
+    "house_music_local_image_path": "assets/catalog/music/items/79.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3cdbe918999ac5e0",
@@ -42670,7 +42670,7 @@
     "house_music_note": "",
     "house_music_id": "98",
     "house_music_image_url": "https://dodo.ac/np/images/5/5a/K.K._Slack-Key_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/98.png",
+    "house_music_local_image_path": "assets/catalog/music/items/98.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a9fe99758502c43f",
@@ -42848,7 +42848,7 @@
     "house_music_note": "",
     "house_music_id": "40",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/40.png",
+    "house_music_local_image_path": "assets/catalog/music/items/40.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "979e817d90bd0242",
@@ -43027,7 +43027,7 @@
     "house_music_note": "",
     "house_music_id": "60",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/60.png",
+    "house_music_local_image_path": "assets/catalog/music/items/60.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1cb9ffb806d72821",
@@ -43206,7 +43206,7 @@
     "house_music_note": "",
     "house_music_id": "1",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/1.png",
+    "house_music_local_image_path": "assets/catalog/music/items/1.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "152e8b00d6012ff4",
@@ -43390,7 +43390,7 @@
     "house_music_note": "",
     "house_music_id": "88",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/88.png",
+    "house_music_local_image_path": "assets/catalog/music/items/88.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fb3daaa8e36556a1",
@@ -43574,7 +43574,7 @@
     "house_music_note": "",
     "house_music_id": "24",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/24.png",
+    "house_music_local_image_path": "assets/catalog/music/items/24.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1f8a29b3068dfb8c",
@@ -43754,7 +43754,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "13",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/13.png",
+    "house_music_local_image_path": "assets/catalog/music/items/13.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "08b16c4dcbb6d61b",
@@ -43937,7 +43937,7 @@
     "house_music_note": "",
     "house_music_id": "38",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/38.png",
+    "house_music_local_image_path": "assets/catalog/music/items/38.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cfe0b965ea4a3d95",
@@ -44119,7 +44119,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "7",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/7.png",
+    "house_music_local_image_path": "assets/catalog/music/items/7.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "73c77ad8a5323f7a",
@@ -44297,7 +44297,7 @@
     "house_music_note": "",
     "house_music_id": "43",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/43.png",
+    "house_music_local_image_path": "assets/catalog/music/items/43.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b9457b881836c706",
@@ -44475,7 +44475,7 @@
     "house_music_note": "",
     "house_music_id": "15",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/15.png",
+    "house_music_local_image_path": "assets/catalog/music/items/15.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e60b70f32af9e557",
@@ -44654,7 +44654,7 @@
     "house_music_note": "",
     "house_music_id": "16",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/16.png",
+    "house_music_local_image_path": "assets/catalog/music/items/16.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d8dd7a80f773db0c",
@@ -44840,7 +44840,7 @@
     "house_music_note": "",
     "house_music_id": "2",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/2.png",
+    "house_music_local_image_path": "assets/catalog/music/items/2.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8253c4bd9510c4a1",
@@ -45021,7 +45021,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "23",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/23.png",
+    "house_music_local_image_path": "assets/catalog/music/items/23.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6ceaaa0dcb783206",
@@ -45201,7 +45201,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "94",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/94.png",
+    "house_music_local_image_path": "assets/catalog/music/items/94.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "79e4fcd9a31c5bbd",
@@ -45381,7 +45381,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "79",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/79.png",
+    "house_music_local_image_path": "assets/catalog/music/items/79.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9418a2df3bfc0351",
@@ -45561,7 +45561,7 @@
     "house_music_note": "",
     "house_music_id": "36",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/36.png",
+    "house_music_local_image_path": "assets/catalog/music/items/36.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cd4b7c144376f2d5",
@@ -45740,7 +45740,7 @@
     "house_music_note": "",
     "house_music_id": "33",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/33.png",
+    "house_music_local_image_path": "assets/catalog/music/items/33.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c9bdcfcc78ae116a",
@@ -45919,7 +45919,7 @@
     "house_music_note": "",
     "house_music_id": "52",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/52.png",
+    "house_music_local_image_path": "assets/catalog/music/items/52.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "db1bf15eaac88941",
@@ -46099,7 +46099,7 @@
     "house_music_note": "",
     "house_music_id": "17",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/17.png",
+    "house_music_local_image_path": "assets/catalog/music/items/17.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6c38d9c0ae884815",
@@ -46280,7 +46280,7 @@
     "house_music_note": "",
     "house_music_id": "60",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/60.png",
+    "house_music_local_image_path": "assets/catalog/music/items/60.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3e3151c1538ac8cb",
@@ -46461,7 +46461,7 @@
     "house_music_note": "",
     "house_music_id": "14",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/14.png",
+    "house_music_local_image_path": "assets/catalog/music/items/14.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "5eba082e9db216aa",
@@ -46641,7 +46641,7 @@
     "house_music_note": "",
     "house_music_id": "92",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/92.png",
+    "house_music_local_image_path": "assets/catalog/music/items/92.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2f67a126514a6d41",
@@ -46822,7 +46822,7 @@
     "house_music_note": "",
     "house_music_id": "21",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/21.png",
+    "house_music_local_image_path": "assets/catalog/music/items/21.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c85e596a255cd514",
@@ -47001,7 +47001,7 @@
     "house_music_note": "",
     "house_music_id": "56",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/56.png",
+    "house_music_local_image_path": "assets/catalog/music/items/56.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d671d2566a4a826c",
@@ -47180,7 +47180,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d825b0312188f1f1",
@@ -47359,7 +47359,7 @@
     "house_music_note": "",
     "house_music_id": "32",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/32.png",
+    "house_music_local_image_path": "assets/catalog/music/items/32.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e4cb7befee512c26",
@@ -47511,7 +47511,7 @@
     "house_music_note": "",
     "house_music_id": "14",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/14.png",
+    "house_music_local_image_path": "assets/catalog/music/items/14.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f337fb3edb12412a",
@@ -47694,7 +47694,7 @@
     "house_music_note": "",
     "house_music_id": "33",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/33.png",
+    "house_music_local_image_path": "assets/catalog/music/items/33.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2c2e0838a11e89bb",
@@ -47878,7 +47878,7 @@
     "house_music_note": "",
     "house_music_id": "35",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/35.png",
+    "house_music_local_image_path": "assets/catalog/music/items/35.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "764aeead784df186",
@@ -48060,7 +48060,7 @@
     "house_music_note": "",
     "house_music_id": "50",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/50.png",
+    "house_music_local_image_path": "assets/catalog/music/items/50.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "09aac6085850c554",
@@ -48242,7 +48242,7 @@
     "house_music_note": "",
     "house_music_id": "21",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/21.png",
+    "house_music_local_image_path": "assets/catalog/music/items/21.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "782d6649c4646d38",
@@ -48426,7 +48426,7 @@
     "house_music_note": "",
     "house_music_id": "84",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/84.png",
+    "house_music_local_image_path": "assets/catalog/music/items/84.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d1ea292aad594d92",
@@ -48608,7 +48608,7 @@
     "house_music_note": "",
     "house_music_id": "48",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/48.png",
+    "house_music_local_image_path": "assets/catalog/music/items/48.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "067b4bfc82c1a033",
@@ -48788,7 +48788,7 @@
     "house_music_note": "",
     "house_music_id": "81",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/81.png",
+    "house_music_local_image_path": "assets/catalog/music/items/81.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e08b0935e6e0c8aa",
@@ -48971,7 +48971,7 @@
     "house_music_note": "",
     "house_music_id": "35",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/35.png",
+    "house_music_local_image_path": "assets/catalog/music/items/35.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0fe71f4f2f19fabf",
@@ -49153,7 +49153,7 @@
     "house_music_note": "",
     "house_music_id": "81",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/81.png",
+    "house_music_local_image_path": "assets/catalog/music/items/81.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "32d01709cb265a74",
@@ -49334,7 +49334,7 @@
     "house_music_note": "",
     "house_music_id": "13",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/13.png",
+    "house_music_local_image_path": "assets/catalog/music/items/13.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c74ff9106e1688cf",
@@ -49514,7 +49514,7 @@
     "house_music_note": "",
     "house_music_id": "59",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/59.png",
+    "house_music_local_image_path": "assets/catalog/music/items/59.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "26f0baa52726cd02",
@@ -49694,7 +49694,7 @@
     "house_music_note": "",
     "house_music_id": "3",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/3.png",
+    "house_music_local_image_path": "assets/catalog/music/items/3.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "648cb2e8021c50b0",
@@ -49873,7 +49873,7 @@
     "house_music_note": "",
     "house_music_id": "6",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/6.png",
+    "house_music_local_image_path": "assets/catalog/music/items/6.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b73800f2e9019b59",
@@ -50052,7 +50052,7 @@
     "house_music_note": "",
     "house_music_id": "4",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/4.png",
+    "house_music_local_image_path": "assets/catalog/music/items/4.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c2549dfcfa8f7a5d",
@@ -50231,7 +50231,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e6985b5e94e253b3",
@@ -50383,7 +50383,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "83",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/83.png",
+    "house_music_local_image_path": "assets/catalog/music/items/83.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "94c55ce1eae090a7",
@@ -50566,7 +50566,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "28",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/28.png",
+    "house_music_local_image_path": "assets/catalog/music/items/28.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f234156d79ff38cc",
@@ -50747,7 +50747,7 @@
     "house_music_note": "",
     "house_music_id": "85",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/85.png",
+    "house_music_local_image_path": "assets/catalog/music/items/85.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "eaee605e12dbbc30",
@@ -50926,7 +50926,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "87",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/87.png",
+    "house_music_local_image_path": "assets/catalog/music/items/87.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "57ee3a4ad93090ed",
@@ -51078,7 +51078,7 @@
     "house_music_note": "",
     "house_music_id": "107",
     "house_music_image_url": "https://dodo.ac/np/images/8/8e/K.K._Robot_Synth_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/107.png",
+    "house_music_local_image_path": "assets/catalog/music/items/107.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "33577011d7e349af",
@@ -51261,7 +51261,7 @@
     "house_music_note": "",
     "house_music_id": "38",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/38.png",
+    "house_music_local_image_path": "assets/catalog/music/items/38.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0289715b40482417",
@@ -51443,7 +51443,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "35",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/35.png",
+    "house_music_local_image_path": "assets/catalog/music/items/35.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1ff7a4a0b599f35c",
@@ -51623,7 +51623,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "5f6b64680bc521ce",
@@ -51803,7 +51803,7 @@
     "house_music_note": "",
     "house_music_id": "50",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/50.png",
+    "house_music_local_image_path": "assets/catalog/music/items/50.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9bece2fa4dd69ec8",
@@ -51958,7 +51958,7 @@
     "house_music_note": "",
     "house_music_id": "99",
     "house_music_image_url": "https://dodo.ac/np/images/2/28/K.K._Chorinho_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/99.png",
+    "house_music_local_image_path": "assets/catalog/music/items/99.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "85d92d43afc16d73",
@@ -52135,7 +52135,7 @@
     "house_music_note": "",
     "house_music_id": "64",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/64.png",
+    "house_music_local_image_path": "assets/catalog/music/items/64.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e7cc0e5c7c384f35",
@@ -52314,7 +52314,7 @@
     "house_music_note": "",
     "house_music_id": "33",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/33.png",
+    "house_music_local_image_path": "assets/catalog/music/items/33.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2985cb76bd423c8f",
@@ -52493,7 +52493,7 @@
     "house_music_note": "",
     "house_music_id": "52",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/52.png",
+    "house_music_local_image_path": "assets/catalog/music/items/52.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6187eb1c168d7121",
@@ -52672,7 +52672,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "42",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/42.png",
+    "house_music_local_image_path": "assets/catalog/music/items/42.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "bb881021f1edff2c",
@@ -52851,7 +52851,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "25",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/25.png",
+    "house_music_local_image_path": "assets/catalog/music/items/25.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7408aa37fdb669c3",
@@ -53030,7 +53030,7 @@
     "house_music_note": "",
     "house_music_id": "34",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/34.png",
+    "house_music_local_image_path": "assets/catalog/music/items/34.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "111676e6084f5fc4",
@@ -53214,7 +53214,7 @@
     "house_music_note": "",
     "house_music_id": "58",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/58.png",
+    "house_music_local_image_path": "assets/catalog/music/items/58.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9b391ddccb9b77df",
@@ -53400,7 +53400,7 @@
     "house_music_note": "",
     "house_music_id": "25",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/25.png",
+    "house_music_local_image_path": "assets/catalog/music/items/25.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fa9e2e464eadd071",
@@ -53586,7 +53586,7 @@
     "house_music_note": "",
     "house_music_id": "38",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/38.png",
+    "house_music_local_image_path": "assets/catalog/music/items/38.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "dec7252781f3f974",
@@ -53766,7 +53766,7 @@
     "house_music_note": "",
     "house_music_id": "8",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/8.png",
+    "house_music_local_image_path": "assets/catalog/music/items/8.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "50d810ef9dca2169",
@@ -53947,7 +53947,7 @@
     "house_music_note": "",
     "house_music_id": "25",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/25.png",
+    "house_music_local_image_path": "assets/catalog/music/items/25.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "4586cc77d2efc8f5",
@@ -54127,7 +54127,7 @@
     "house_music_note": "",
     "house_music_id": "23",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/23.png",
+    "house_music_local_image_path": "assets/catalog/music/items/23.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f19d63e37f3db4ae",
@@ -54307,7 +54307,7 @@
     "house_music_note": "",
     "house_music_id": "29",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/29.png",
+    "house_music_local_image_path": "assets/catalog/music/items/29.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "984248d5a260ff1f",
@@ -54486,7 +54486,7 @@
     "house_music_note": "",
     "house_music_id": "8",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/8.png",
+    "house_music_local_image_path": "assets/catalog/music/items/8.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a832fc6079e61e7a",
@@ -54665,7 +54665,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3e782f364c39cef3",
@@ -54817,7 +54817,7 @@
     "house_music_note": "",
     "house_music_id": "103",
     "house_music_image_url": "https://dodo.ac/np/images/b/b9/K.K._Bashment_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/103.png",
+    "house_music_local_image_path": "assets/catalog/music/items/103.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ab6bb39baa4fca7b",
@@ -55000,7 +55000,7 @@
     "house_music_note": "",
     "house_music_id": "88",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/88.png",
+    "house_music_local_image_path": "assets/catalog/music/items/88.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "05a89aca8adaf951",
@@ -55184,7 +55184,7 @@
     "house_music_note": "",
     "house_music_id": "48",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/48.png",
+    "house_music_local_image_path": "assets/catalog/music/items/48.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1c5036b688a396a8",
@@ -55370,7 +55370,7 @@
     "house_music_note": "",
     "house_music_id": "9",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/9.png",
+    "house_music_local_image_path": "assets/catalog/music/items/9.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b1cfc7c21a257acd",
@@ -55555,7 +55555,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "6",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/6.png",
+    "house_music_local_image_path": "assets/catalog/music/items/6.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cb46f646722ca8cd",
@@ -55739,7 +55739,7 @@
     "house_music_note": "",
     "house_music_id": "9",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/9.png",
+    "house_music_local_image_path": "assets/catalog/music/items/9.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0dc2f77b6de0b7d2",
@@ -55923,7 +55923,7 @@
     "house_music_note": "",
     "house_music_id": "8",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/8.png",
+    "house_music_local_image_path": "assets/catalog/music/items/8.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "376147d4ab323198",
@@ -56106,7 +56106,7 @@
     "house_music_note": "",
     "house_music_id": "48",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/48.png",
+    "house_music_local_image_path": "assets/catalog/music/items/48.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "848c2903e2598c04",
@@ -56259,7 +56259,7 @@
     "house_music_note": "",
     "house_music_id": "101",
     "house_music_image_url": "https://dodo.ac/np/images/9/9b/K.K._Dub_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/101.png",
+    "house_music_local_image_path": "assets/catalog/music/items/101.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "4c2889d68a3d4a14",
@@ -56436,7 +56436,7 @@
     "house_music_note": "",
     "house_music_id": "88",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/88.png",
+    "house_music_local_image_path": "assets/catalog/music/items/88.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d1f3bfd345540892",
@@ -56618,7 +56618,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "9",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/9.png",
+    "house_music_local_image_path": "assets/catalog/music/items/9.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "6711c3a2e843c289",
@@ -56798,7 +56798,7 @@
     "house_music_note": "",
     "house_music_id": "13",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/13.png",
+    "house_music_local_image_path": "assets/catalog/music/items/13.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "4861bde797b3981b",
@@ -56977,7 +56977,7 @@
     "house_music_note": "",
     "house_music_id": "28",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/28.png",
+    "house_music_local_image_path": "assets/catalog/music/items/28.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "32120079d741b623",
@@ -57156,7 +57156,7 @@
     "house_music_note": "",
     "house_music_id": "86",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/86.png",
+    "house_music_local_image_path": "assets/catalog/music/items/86.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7644656ebd0af41d",
@@ -57335,7 +57335,7 @@
     "house_music_note": "",
     "house_music_id": "47",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/47.png",
+    "house_music_local_image_path": "assets/catalog/music/items/47.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0da376fc12bb59e7",
@@ -57519,7 +57519,7 @@
     "house_music_note": "",
     "house_music_id": "57",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/57.png",
+    "house_music_local_image_path": "assets/catalog/music/items/57.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8e2ba077fa07b603",
@@ -57703,7 +57703,7 @@
     "house_music_note": "",
     "house_music_id": "81",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/81.png",
+    "house_music_local_image_path": "assets/catalog/music/items/81.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f580c880861df341",
@@ -57887,7 +57887,7 @@
     "house_music_note": "",
     "house_music_id": "59",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/59.png",
+    "house_music_local_image_path": "assets/catalog/music/items/59.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "efa837f81c4423ff",
@@ -58071,7 +58071,7 @@
     "house_music_note": "",
     "house_music_id": "80",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/80.png",
+    "house_music_local_image_path": "assets/catalog/music/items/80.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f9fcc338f75fd57e",
@@ -58255,7 +58255,7 @@
     "house_music_note": "",
     "house_music_id": "64",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/64.png",
+    "house_music_local_image_path": "assets/catalog/music/items/64.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "5e805e3da9796eb6",
@@ -58438,7 +58438,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "64503feae943d3da",
@@ -58620,7 +58620,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "83",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/83.png",
+    "house_music_local_image_path": "assets/catalog/music/items/83.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "22494750a6bfccff",
@@ -58800,7 +58800,7 @@
     "house_music_note": "",
     "house_music_id": "53",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/53.png",
+    "house_music_local_image_path": "assets/catalog/music/items/53.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c0279848b362783c",
@@ -58978,7 +58978,7 @@
     "house_music_note": "",
     "house_music_id": "8",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/8.png",
+    "house_music_local_image_path": "assets/catalog/music/items/8.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "72d582d1bd136c4b",
@@ -59159,7 +59159,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "21",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/21.png",
+    "house_music_local_image_path": "assets/catalog/music/items/21.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "af684301a3fc1df9",
@@ -59339,7 +59339,7 @@
     "house_music_note": "",
     "house_music_id": "3",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/3.png",
+    "house_music_local_image_path": "assets/catalog/music/items/3.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "31f4ae58bf224e88",
@@ -59518,7 +59518,7 @@
     "house_music_note": "",
     "house_music_id": "52",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/52.png",
+    "house_music_local_image_path": "assets/catalog/music/items/52.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "761f8943353a069f",
@@ -59697,7 +59697,7 @@
     "house_music_note": "",
     "house_music_id": "59",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/59.png",
+    "house_music_local_image_path": "assets/catalog/music/items/59.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "651650ac5ae8ba19",
@@ -59876,7 +59876,7 @@
     "house_music_note": "",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d7a7dfcae29d3eb4",
@@ -60055,7 +60055,7 @@
     "house_music_note": "",
     "house_music_id": "39",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/39.png",
+    "house_music_local_image_path": "assets/catalog/music/items/39.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "994b43a3d493fb55",
@@ -60238,7 +60238,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9267d536d2298dac",
@@ -60422,7 +60422,7 @@
     "house_music_note": "",
     "house_music_id": "8",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/8.png",
+    "house_music_local_image_path": "assets/catalog/music/items/8.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "51f9411b860b69ef",
@@ -60606,7 +60606,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "42",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/42.png",
+    "house_music_local_image_path": "assets/catalog/music/items/42.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "98f9178831cab356",
@@ -60790,7 +60790,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "75",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/75.png",
+    "house_music_local_image_path": "assets/catalog/music/items/75.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "88302f8304a0b17b",
@@ -60974,7 +60974,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "65",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/65.png",
+    "house_music_local_image_path": "assets/catalog/music/items/65.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "968282e69e4e7360",
@@ -61158,7 +61158,7 @@
     "house_music_note": "",
     "house_music_id": "81",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/81.png",
+    "house_music_local_image_path": "assets/catalog/music/items/81.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2847a689f57c6239",
@@ -61342,7 +61342,7 @@
     "house_music_note": "",
     "house_music_id": "8",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/8.png",
+    "house_music_local_image_path": "assets/catalog/music/items/8.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "df3c75d2fcf9e2fc",
@@ -61524,7 +61524,7 @@
     "house_music_note": "",
     "house_music_id": "55",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/55.png",
+    "house_music_local_image_path": "assets/catalog/music/items/55.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "182ddbcf6327d4b2",
@@ -61710,7 +61710,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "75",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/75.png",
+    "house_music_local_image_path": "assets/catalog/music/items/75.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "01732e17d5ae4c55",
@@ -61891,7 +61891,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "88",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/88.png",
+    "house_music_local_image_path": "assets/catalog/music/items/88.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e491cd771797464f",
@@ -62073,7 +62073,7 @@
     "house_music_note": "",
     "house_music_id": "83",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/83.png",
+    "house_music_local_image_path": "assets/catalog/music/items/83.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "9b91397adc903c28",
@@ -62253,7 +62253,7 @@
     "house_music_note": "",
     "house_music_id": "83",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/83.png",
+    "house_music_local_image_path": "assets/catalog/music/items/83.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3a57c5aa9f1e3fcb",
@@ -62434,7 +62434,7 @@
     "house_music_note": "",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8f972cc9d1c8ec05",
@@ -62614,7 +62614,7 @@
     "house_music_note": "",
     "house_music_id": "4",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/4.png",
+    "house_music_local_image_path": "assets/catalog/music/items/4.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "3f2531d00891bcb9",
@@ -62792,7 +62792,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "83",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/83.png",
+    "house_music_local_image_path": "assets/catalog/music/items/83.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "26161586b664ac16",
@@ -62973,7 +62973,7 @@
     "house_music_note": "",
     "house_music_id": "40",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/40.png",
+    "house_music_local_image_path": "assets/catalog/music/items/40.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ba260e2eed43bc23",
@@ -63153,7 +63153,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "97bf2f40eb6b1aff",
@@ -63332,7 +63332,7 @@
     "house_music_note": "",
     "house_music_id": "4",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/4.png",
+    "house_music_local_image_path": "assets/catalog/music/items/4.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b69fa87770e3ab45",
@@ -63513,7 +63513,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "33",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/33.png",
+    "house_music_local_image_path": "assets/catalog/music/items/33.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8fc2e7f823f0c773",
@@ -63692,7 +63692,7 @@
     "house_music_note": "",
     "house_music_id": "11",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/11.png",
+    "house_music_local_image_path": "assets/catalog/music/items/11.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "48257700a1916562",
@@ -63845,7 +63845,7 @@
     "house_music_note": "",
     "house_music_id": "75",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/75.png",
+    "house_music_local_image_path": "assets/catalog/music/items/75.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a064ebb0c67a2ec9",
@@ -63996,7 +63996,7 @@
     "house_music_note": "",
     "house_music_id": "102",
     "house_music_image_url": "https://dodo.ac/np/images/6/62/K.K._Lovers_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/102.png",
+    "house_music_local_image_path": "assets/catalog/music/items/102.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f62efba11fbb7801",
@@ -64179,7 +64179,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "43",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/43.png",
+    "house_music_local_image_path": "assets/catalog/music/items/43.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2dfafc45536717ab",
@@ -64360,7 +64360,7 @@
     "house_music_note": "",
     "house_music_id": "17",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/17.png",
+    "house_music_local_image_path": "assets/catalog/music/items/17.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "63b67c476734ce24",
@@ -64540,7 +64540,7 @@
     "house_music_note": "",
     "house_music_id": "39",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/39.png",
+    "house_music_local_image_path": "assets/catalog/music/items/39.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1fd320ade8e86c1d",
@@ -64719,7 +64719,7 @@
     "house_music_note": "",
     "house_music_id": "43",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/43.png",
+    "house_music_local_image_path": "assets/catalog/music/items/43.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "dc1e10092f57c703",
@@ -64872,7 +64872,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "102",
     "house_music_image_url": "https://dodo.ac/np/images/6/62/K.K._Lovers_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/102.png",
+    "house_music_local_image_path": "assets/catalog/music/items/102.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2e7f4413f670f860",
@@ -65050,7 +65050,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "17",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/17.png",
+    "house_music_local_image_path": "assets/catalog/music/items/17.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "99b1789055a5d37f",
@@ -65229,7 +65229,7 @@
     "house_music_note": "",
     "house_music_id": "90",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/90.png",
+    "house_music_local_image_path": "assets/catalog/music/items/90.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "aaa6e1d879c79077",
@@ -65413,7 +65413,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "d960ec2673bd829b",
@@ -65597,7 +65597,7 @@
     "house_music_note": "",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "10041f56c313e231",
@@ -65780,7 +65780,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "30",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/30.png",
+    "house_music_local_image_path": "assets/catalog/music/items/30.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c1f9317df650762e",
@@ -65959,7 +65959,7 @@
     "house_music_note": "",
     "house_music_id": "82",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/82.png",
+    "house_music_local_image_path": "assets/catalog/music/items/82.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c9e0291ec0ed8449",
@@ -66139,7 +66139,7 @@
     "house_music_note": "",
     "house_music_id": "9",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/9.png",
+    "house_music_local_image_path": "assets/catalog/music/items/9.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "91e4d1fe456a5622",
@@ -66320,7 +66320,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "487bedd7753a9611",
@@ -66500,7 +66500,7 @@
     "house_music_note": "",
     "house_music_id": "61",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/61.png",
+    "house_music_local_image_path": "assets/catalog/music/items/61.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e849aff674b85360",
@@ -66680,7 +66680,7 @@
     "house_music_note": "",
     "house_music_id": "86",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/86.png",
+    "house_music_local_image_path": "assets/catalog/music/items/86.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "5c4bed031acb6b27",
@@ -66859,7 +66859,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "44",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/44.png",
+    "house_music_local_image_path": "assets/catalog/music/items/44.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "75eb0abc1211cf97",
@@ -67038,7 +67038,7 @@
     "house_music_note": "",
     "house_music_id": "59",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/59.png",
+    "house_music_local_image_path": "assets/catalog/music/items/59.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a0aea06173288fa3",
@@ -67217,7 +67217,7 @@
     "house_music_note": "",
     "house_music_id": "64",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/64.png",
+    "house_music_local_image_path": "assets/catalog/music/items/64.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b5fac282e71411c1",
@@ -67396,7 +67396,7 @@
     "house_music_note": "",
     "house_music_id": "54",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/54.png",
+    "house_music_local_image_path": "assets/catalog/music/items/54.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "698782b7957079ed",
@@ -67549,7 +67549,7 @@
     "house_music_note": "",
     "house_music_id": "45",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/45.png",
+    "house_music_local_image_path": "assets/catalog/music/items/45.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a83b5d126ed195ba",
@@ -67724,7 +67724,7 @@
     "house_music_note": "",
     "house_music_id": "26",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/26.png",
+    "house_music_local_image_path": "assets/catalog/music/items/26.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "564c86b1e0b29dff",
@@ -67907,7 +67907,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cf1e7f1788df13e7",
@@ -68091,7 +68091,7 @@
     "house_music_note": "",
     "house_music_id": "21",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/21.png",
+    "house_music_local_image_path": "assets/catalog/music/items/21.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fd30c86f11935082",
@@ -68275,7 +68275,7 @@
     "house_music_note": "",
     "house_music_id": "88",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/88.png",
+    "house_music_local_image_path": "assets/catalog/music/items/88.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b0d2d3582c7fff3d",
@@ -68459,7 +68459,7 @@
     "house_music_note": "",
     "house_music_id": "44",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/44.png",
+    "house_music_local_image_path": "assets/catalog/music/items/44.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "c6036f735a46abc8",
@@ -68643,7 +68643,7 @@
     "house_music_note": "",
     "house_music_id": "30",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/30.png",
+    "house_music_local_image_path": "assets/catalog/music/items/30.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "cd7451ca9d1fbf5c",
@@ -68825,7 +68825,7 @@
     "house_music_note": "",
     "house_music_id": "11",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/11.png",
+    "house_music_local_image_path": "assets/catalog/music/items/11.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "7b6992982f35bb66",
@@ -69008,7 +69008,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "83",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/83.png",
+    "house_music_local_image_path": "assets/catalog/music/items/83.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "eeec1a598879deb2",
@@ -69192,7 +69192,7 @@
     "house_music_note": "",
     "house_music_id": "82",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/82.png",
+    "house_music_local_image_path": "assets/catalog/music/items/82.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "4f00b2a541a9ae93",
@@ -69376,7 +69376,7 @@
     "house_music_note": "",
     "house_music_id": "90",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/90.png",
+    "house_music_local_image_path": "assets/catalog/music/items/90.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "0306f2378edeb98f",
@@ -69560,7 +69560,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1f569f7fa9299b3e",
@@ -69742,7 +69742,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "60",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/60.png",
+    "house_music_local_image_path": "assets/catalog/music/items/60.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fcc8fccfca1a81f1",
@@ -69924,7 +69924,7 @@
     "house_music_note": "",
     "house_music_id": "68",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/68.png",
+    "house_music_local_image_path": "assets/catalog/music/items/68.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "bca7e5838993adf1",
@@ -70102,7 +70102,7 @@
     "house_music_note": "",
     "house_music_id": "70",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/70.png",
+    "house_music_local_image_path": "assets/catalog/music/items/70.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e8b59957d88fd94f",
@@ -70280,7 +70280,7 @@
     "house_music_note": "",
     "house_music_id": "87",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/87.png",
+    "house_music_local_image_path": "assets/catalog/music/items/87.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "189d4f04c141e512",
@@ -70460,7 +70460,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b3d4fc5ebb3a367d",
@@ -70639,7 +70639,7 @@
     "house_music_note": "",
     "house_music_id": "26",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/26.png",
+    "house_music_local_image_path": "assets/catalog/music/items/26.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "8a5489ea90f0fe73",
@@ -70818,7 +70818,7 @@
     "house_music_note": "",
     "house_music_id": "21",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/21.png",
+    "house_music_local_image_path": "assets/catalog/music/items/21.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e66c76aaab7c68db",
@@ -70997,7 +70997,7 @@
     "house_music_note": "",
     "house_music_id": "7",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/7.png",
+    "house_music_local_image_path": "assets/catalog/music/items/7.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "f213d86dfa95d645",
@@ -71151,7 +71151,7 @@
     "house_music_note": "",
     "house_music_id": "56",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/56.png",
+    "house_music_local_image_path": "assets/catalog/music/items/56.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "22cb546f9398c073",
@@ -71304,7 +71304,7 @@
     "house_music_note": "",
     "house_music_id": "30",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/30.png",
+    "house_music_local_image_path": "assets/catalog/music/items/30.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "1bb922430597d20c",
@@ -71455,7 +71455,7 @@
     "house_music_note": "",
     "house_music_id": "100",
     "house_music_image_url": "https://dodo.ac/np/images/a/a2/Chillwave_NH_Texture.png",
-    "house_music_local_image_path": "assets/music/100.png",
+    "house_music_local_image_path": "assets/catalog/music/items/100.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "278b16a93df32a72",
@@ -71638,7 +71638,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "25",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/25.png",
+    "house_music_local_image_path": "assets/catalog/music/items/25.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "a75cab690ebd0dcf",
@@ -71821,7 +71821,7 @@
     "house_music_note": "",
     "house_music_id": "90",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/90.png",
+    "house_music_local_image_path": "assets/catalog/music/items/90.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "497a9019b2a96f0e",
@@ -72001,7 +72001,7 @@
     "house_music_note": "",
     "house_music_id": "37",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/37.png",
+    "house_music_local_image_path": "assets/catalog/music/items/37.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "ae5311c449282ee8",
@@ -72183,7 +72183,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "26821fe7d77f2c6f",
@@ -72363,7 +72363,7 @@
     "house_music_note": "",
     "house_music_id": "50",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/50.png",
+    "house_music_local_image_path": "assets/catalog/music/items/50.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "854528a63bc316f1",
@@ -72542,7 +72542,7 @@
     "house_music_note": "",
     "house_music_id": "70",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/70.png",
+    "house_music_local_image_path": "assets/catalog/music/items/70.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "dcad6a7e463e8cb5",
@@ -72720,7 +72720,7 @@
     "house_music_note": "Does not contain a stereo initially",
     "house_music_id": "39",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/39.png",
+    "house_music_local_image_path": "assets/catalog/music/items/39.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "fab8f8d842e5f6fb",
@@ -72904,7 +72904,7 @@
     "house_music_note": "",
     "house_music_id": "84",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/84.png",
+    "house_music_local_image_path": "assets/catalog/music/items/84.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "506a7ed4d5a725f0",
@@ -73088,7 +73088,7 @@
     "house_music_note": "",
     "house_music_id": "58",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/58.png",
+    "house_music_local_image_path": "assets/catalog/music/items/58.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "5ddb7cef5901d6e3",
@@ -73272,7 +73272,7 @@
     "house_music_note": "",
     "house_music_id": "28",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/28.png",
+    "house_music_local_image_path": "assets/catalog/music/items/28.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "e3ebbbc476b3bf28",
@@ -73454,7 +73454,7 @@
     "house_music_note": "",
     "house_music_id": "66",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/66.png",
+    "house_music_local_image_path": "assets/catalog/music/items/66.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b87f0467d02b2392",
@@ -73635,7 +73635,7 @@
     "house_music_note": "",
     "house_music_id": "1",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/1.png",
+    "house_music_local_image_path": "assets/catalog/music/items/1.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "b1c460e2a77be820",
@@ -73818,7 +73818,7 @@
     "house_music_note": "",
     "house_music_id": "76",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/76.png",
+    "house_music_local_image_path": "assets/catalog/music/items/76.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "30b08d34bad3e703",
@@ -74001,7 +74001,7 @@
     "house_music_note": "",
     "house_music_id": "67",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/67.png",
+    "house_music_local_image_path": "assets/catalog/music/items/67.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "069699a2a129d253",
@@ -74179,7 +74179,7 @@
     "house_music_note": "",
     "house_music_id": "27",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/27.png",
+    "house_music_local_image_path": "assets/catalog/music/items/27.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "2fd9f034ea437a4e",
@@ -74357,7 +74357,7 @@
     "house_music_note": "",
     "house_music_id": "10",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/10.png",
+    "house_music_local_image_path": "assets/catalog/music/items/10.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "15eab77da06c0142",
@@ -74536,7 +74536,7 @@
     "house_music_note": "",
     "house_music_id": "50",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/50.png",
+    "house_music_local_image_path": "assets/catalog/music/items/50.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "681b4cd5d4829ffb",
@@ -74712,7 +74712,7 @@
     "house_music_note": "",
     "house_music_id": "40",
     "house_music_image_url": null,
-    "house_music_local_image_path": "assets/music/40.png",
+    "house_music_local_image_path": "assets/catalog/music/items/40.png",
     "collectibles": {
       "framed_photo": {
         "item_id": "01aa28393675ba93",
