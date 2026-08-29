@@ -1,0 +1,432 @@
+{
+  "categories": [
+    {
+      "key": "Accessories",
+      "count": 95
+    },
+    {
+      "key": "Bags",
+      "count": 97
+    },
+    {
+      "key": "Bottoms",
+      "count": 154
+    },
+    {
+      "key": "Dress-Up",
+      "count": 287
+    },
+    {
+      "key": "Headwear",
+      "count": 284
+    },
+    {
+      "key": "Other",
+      "count": 3
+    },
+    {
+      "key": "Shoes",
+      "count": 113
+    },
+    {
+      "key": "Socks",
+      "count": 65
+    },
+    {
+      "key": "Tops",
+      "count": 360
+    },
+    {
+      "key": "Umbrellas",
+      "count": 69
+    }
+  ],
+  "styles": [
+    {
+      "key": "Active",
+      "count": 474
+    },
+    {
+      "key": "Cool",
+      "count": 299
+    },
+    {
+      "key": "Cute",
+      "count": 420
+    },
+    {
+      "key": "Elegant",
+      "count": 328
+    },
+    {
+      "key": "Gorgeous",
+      "count": 174
+    },
+    {
+      "key": "Simple",
+      "count": 629
+    }
+  ],
+  "label_themes": [
+    {
+      "key": "Comfy",
+      "count": 324
+    },
+    {
+      "key": "Everyday",
+      "count": 611
+    },
+    {
+      "key": "Fairy tale",
+      "count": 439
+    },
+    {
+      "key": "Formal",
+      "count": 248
+    },
+    {
+      "key": "Goth",
+      "count": 92
+    },
+    {
+      "key": "Outdoorsy",
+      "count": 236
+    },
+    {
+      "key": "Party",
+      "count": 386
+    },
+    {
+      "key": "Sporty",
+      "count": 178
+    },
+    {
+      "key": "Theatrical",
+      "count": 323
+    },
+    {
+      "key": "Vacation",
+      "count": 233
+    },
+    {
+      "key": "Work",
+      "count": 268
+    }
+  ],
+  "colors": [
+    {
+      "key": "Aqua",
+      "count": 446
+    },
+    {
+      "key": "Beige",
+      "count": 280
+    },
+    {
+      "key": "Black",
+      "count": 669
+    },
+    {
+      "key": "Blue",
+      "count": 727
+    },
+    {
+      "key": "Brown",
+      "count": 284
+    },
+    {
+      "key": "Colorful",
+      "count": 59
+    },
+    {
+      "key": "Gray",
+      "count": 332
+    },
+    {
+      "key": "Green",
+      "count": 792
+    },
+    {
+      "key": "Orange",
+      "count": 368
+    },
+    {
+      "key": "Pink",
+      "count": 541
+    },
+    {
+      "key": "Purple",
+      "count": 404
+    },
+    {
+      "key": "Red",
+      "count": 706
+    },
+    {
+      "key": "White",
+      "count": 652
+    },
+    {
+      "key": "Yellow",
+      "count": 567
+    }
+  ],
+  "seasons": [
+    {
+      "key": "all_year",
+      "count": 1042
+    },
+    {
+      "key": "fall",
+      "count": 111
+    },
+    {
+      "key": "spring",
+      "count": 104
+    },
+    {
+      "key": "summer",
+      "count": 175
+    },
+    {
+      "key": "winter",
+      "count": 95
+    }
+  ],
+  "sources": [
+    {
+      "key": "고순, 에이블 시스터즈",
+      "count": 447
+    },
+    {
+      "key": "너굴",
+      "count": 2
+    },
+    {
+      "key": "너굴 쇼핑",
+      "count": 128
+    },
+    {
+      "key": "너굴, 너굴포트",
+      "count": 1
+    },
+    {
+      "key": "너굴링크",
+      "count": 2
+    },
+    {
+      "key": "너굴상점",
+      "count": 55
+    },
+    {
+      "key": "너굴포트",
+      "count": 14
+    },
+    {
+      "key": "도도항공",
+      "count": 9
+    },
+    {
+      "key": "레온",
+      "count": 4
+    },
+    {
+      "key": "리포",
+      "count": 5
+    },
+    {
+      "key": "생일",
+      "count": 2
+    },
+    {
+      "key": "신발가게 킥스",
+      "count": 112
+    },
+    {
+      "key": "신발가게 킥스, 에이블 시스터즈",
+      "count": 1
+    },
+    {
+      "key": "엄마",
+      "count": 3
+    },
+    {
+      "key": "에이블 시스터즈",
+      "count": 429
+    },
+    {
+      "key": "에이블 시스터즈, 병원",
+      "count": 4
+    },
+    {
+      "key": "에이블 시스터즈, 의류점",
+      "count": 123
+    },
+    {
+      "key": "여울",
+      "count": 4
+    },
+    {
+      "key": "워델",
+      "count": 3
+    },
+    {
+      "key": "의류점",
+      "count": 2
+    },
+    {
+      "key": "재활용함",
+      "count": 7
+    },
+    {
+      "key": "저스틴",
+      "count": 4
+    },
+    {
+      "key": "제작",
+      "count": 103
+    },
+    {
+      "key": "죠니",
+      "count": 16
+    },
+    {
+      "key": "케이트, 에이블 시스터즈",
+      "count": 12
+    },
+    {
+      "key": "펌킹",
+      "count": 2
+    },
+    {
+      "key": "해적 죠니",
+      "count": 11
+    },
+    {
+      "key": "해탈한",
+      "count": 4
+    },
+    {
+      "key": "호텔 기념품점",
+      "count": 8
+    },
+    {
+      "key": "획득 불가",
+      "count": 10
+    }
+  ],
+  "availability_from": [
+    {
+      "key": "Able Sisters",
+      "count": 1016
+    },
+    {
+      "key": "Birthday",
+      "count": 2
+    },
+    {
+      "key": "C.J.",
+      "count": 4
+    },
+    {
+      "key": "Cyrus",
+      "count": 5
+    },
+    {
+      "key": "Dodo Airlines",
+      "count": 9
+    },
+    {
+      "key": "Flick",
+      "count": 4
+    },
+    {
+      "key": "Gullivarrr",
+      "count": 11
+    },
+    {
+      "key": "Gulliver",
+      "count": 16
+    },
+    {
+      "key": "Isabelle",
+      "count": 4
+    },
+    {
+      "key": "Jack",
+      "count": 2
+    },
+    {
+      "key": "Kicks",
+      "count": 113
+    },
+    {
+      "key": "Label",
+      "count": 12
+    },
+    {
+      "key": "Mabel",
+      "count": 447
+    },
+    {
+      "key": "Mom",
+      "count": 3
+    },
+    {
+      "key": "Nook Shopping",
+      "count": 128
+    },
+    {
+      "key": "Nook Stop",
+      "count": 15
+    },
+    {
+      "key": "Nook's Cranny",
+      "count": 32
+    },
+    {
+      "key": "Nook's Cranny (upgraded)",
+      "count": 23
+    },
+    {
+      "key": "NookLink",
+      "count": 2
+    },
+    {
+      "key": "Pascal",
+      "count": 4
+    },
+    {
+      "key": "Tom Nook",
+      "count": 3
+    },
+    {
+      "key": "Unobtainable",
+      "count": 10
+    },
+    {
+      "key": "Wardell",
+      "count": 3
+    },
+    {
+      "key": "apparel shop",
+      "count": 125
+    },
+    {
+      "key": "crafting",
+      "count": 103
+    },
+    {
+      "key": "hospital",
+      "count": 4
+    },
+    {
+      "key": "hotel souvenir shop",
+      "count": 8
+    },
+    {
+      "key": "recycle box",
+      "count": 7
+    }
+  ]
+}

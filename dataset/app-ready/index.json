@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "description": "App-oriented ACNH dataset index",
+  "sections": [
+    {
+      "key": "villagers",
+      "path": "content/villagers",
+      "primary_files": [
+        "content/villagers/villagers.normalized.json",
+        "content/villagers/villagers.filter-options.json",
+        "content/villagers/villagers.summary.json",
+        "content/villagers/villagers.acnhapi.json",
+        "content/villagers/name_map_ko.json",
+        "content/villagers/species_map_ko.json",
+        "content/villagers/personality_map_ko.json",
+        "content/villagers/villager_saying_map_ko.json"
+      ]
+    },
+    {
+      "key": "museum",
+      "path": "content/museum",
+      "primary_files": [
+        "content/museum/bugs.acnhapi.json",
+        "content/museum/fish.acnhapi.json",
+        "content/museum/sea.acnhapi.json",
+        "content/museum/fossils.acnhapi.json",
+        "content/museum/art_name_map_ko.json"
+      ]
+    },
+    {
+      "key": "catalog_furniture",
+      "path": "content/catalog/furniture",
+      "primary_files": [
+        "content/catalog/furniture/houseware.acnhapi.json",
+        "content/catalog/furniture/misc.acnhapi.json",
+        "content/catalog/furniture/wallmounted.acnhapi.json",
+        "content/catalog/furniture/furniture_name_map_ko.json"
+      ]
+    },
+    {
+      "key": "catalog_interior",
+      "path": "content/catalog/interior",
+      "primary_files": [
+        "content/catalog/interior/wallpaper.norviah.json",
+        "content/catalog/interior/floors.norviah.json",
+        "content/catalog/interior/rugs.norviah.json",
+        "content/catalog/interior/wall-mounted.norviah.json",
+        "content/catalog/interior/ceiling-decor.norviah.json",
+        "content/catalog/interior/interior-structures.norviah.json",
+        "content/catalog/interior/interior_name_map_ko.json"
+      ]
+    },
+    {
+      "key": "catalog_special_items",
+      "path": "content/catalog/special-items",
+      "primary_files": [
+        "content/catalog/special-items/construction.norviah.json",
+        "content/catalog/special-items/fencing.norviah.json",
+        "content/catalog/special-items/miscellaneous.norviah.json",
+        "content/catalog/special-items/other.norviah.json",
+        "content/catalog/special-items/items_name_map_ko.json",
+        "content/catalog/special-items/tools_name_map_ko.json",
+        "content/catalog/special-items/gyroid_name_map_ko.json"
+      ]
+    },
+    {
+      "key": "catalog_clothing",
+      "path": "content/catalog/clothing",
+      "primary_files": [
+        "content/catalog/clothing/clothing.normalized.json",
+        "content/catalog/clothing/clothing.variations.json",
+        "content/catalog/clothing/clothing.filter-options.json",
+        "content/catalog/clothing/clothing.summary.json",
+        "content/catalog/clothing/clothing_name_map_ko.json",
+        "content/catalog/clothing/clothing_category_map_ko.json",
+        "content/catalog/clothing/clothing_style_map_ko.json",
+        "content/catalog/clothing/clothing_label_theme_map_ko.json"
+      ]
+    },
+    {
+      "key": "catalog_music",
+      "path": "content/catalog/music",
+      "primary_files": [
+        "content/catalog/music/music.acnhapi.json",
+        "content/catalog/music/music-extra.norviah.json",
+        "content/catalog/music/music_name_map_ko.json",
+        "content/catalog/music/music_image_manifest.json"
+      ],
+      "asset_path": "assets/music"
+    },
+    {
+      "key": "catalog_recipes",
+      "path": "content/catalog/recipes",
+      "primary_files": [
+        "content/catalog/recipes/recipes.norviah.json",
+        "content/catalog/recipes/recipe_name_map_ko.json"
+      ]
+    },
+    {
+      "key": "catalog_reactions",
+      "path": "content/catalog/reactions",
+      "primary_files": [
+        "content/catalog/reactions/reactions.norviah.json",
+        "content/catalog/reactions/reactions-translation.norviah.json",
+        "content/catalog/reactions/reaction_name_map_ko.json"
+      ]
+    },
+    {
+      "key": "localization",
+      "path": "content/localization",
+      "primary_files": [
+        "content/localization/english_display_allowlist.json",
+        "content/localization/text_data_snapshot.json",
+        "content/localization/event_name_map_ko.json",
+        "content/localization/event_country_map_ko.json"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "key": "music",
+      "path": "assets/music"
+    },
+    {
+      "key": "villagers",
+      "path": "assets/villagers"
+    },
+    {
+      "key": "offline_cache",
+      "path": "assets/offline_cache"
+    }
+  ],
+  "support_data": [
+    {
+      "key": "offline_asset_manifests",
+      "path": "manifests/offline_asset_manifests"
+    },
+    {
+      "key": "supabase_seed",
+      "path": "seed/supabase_seed"
+    },
+    {
+      "key": "upload_status",
+      "path": "seed/upload_status"
+    }
+  ]
+}

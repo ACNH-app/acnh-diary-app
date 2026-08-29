@@ -1,0 +1,274 @@
+{
+  "species": [
+    {
+      "key": "Alligator",
+      "count": 7
+    },
+    {
+      "key": "Anteater",
+      "count": 7
+    },
+    {
+      "key": "Bear",
+      "count": 15
+    },
+    {
+      "key": "Bird",
+      "count": 13
+    },
+    {
+      "key": "Bull",
+      "count": 6
+    },
+    {
+      "key": "Cat",
+      "count": 23
+    },
+    {
+      "key": "Chicken",
+      "count": 9
+    },
+    {
+      "key": "Cow",
+      "count": 4
+    },
+    {
+      "key": "Cub",
+      "count": 16
+    },
+    {
+      "key": "Deer",
+      "count": 10
+    },
+    {
+      "key": "Dog",
+      "count": 16
+    },
+    {
+      "key": "Duck",
+      "count": 17
+    },
+    {
+      "key": "Eagle",
+      "count": 9
+    },
+    {
+      "key": "Elephant",
+      "count": 11
+    },
+    {
+      "key": "Frog",
+      "count": 18
+    },
+    {
+      "key": "Goat",
+      "count": 8
+    },
+    {
+      "key": "Gorilla",
+      "count": 9
+    },
+    {
+      "key": "Hamster",
+      "count": 8
+    },
+    {
+      "key": "Hippo",
+      "count": 7
+    },
+    {
+      "key": "Horse",
+      "count": 15
+    },
+    {
+      "key": "Kangaroo",
+      "count": 8
+    },
+    {
+      "key": "Koala",
+      "count": 9
+    },
+    {
+      "key": "Lion",
+      "count": 7
+    },
+    {
+      "key": "Monkey",
+      "count": 8
+    },
+    {
+      "key": "Mouse",
+      "count": 15
+    },
+    {
+      "key": "Octopus",
+      "count": 3
+    },
+    {
+      "key": "Ostrich",
+      "count": 10
+    },
+    {
+      "key": "Penguin",
+      "count": 13
+    },
+    {
+      "key": "Pig",
+      "count": 15
+    },
+    {
+      "key": "Rabbit",
+      "count": 20
+    },
+    {
+      "key": "Rhino",
+      "count": 6
+    },
+    {
+      "key": "Sheep",
+      "count": 13
+    },
+    {
+      "key": "Squirrel",
+      "count": 18
+    },
+    {
+      "key": "Tiger",
+      "count": 7
+    },
+    {
+      "key": "Wolf",
+      "count": 11
+    }
+  ],
+  "personalities": [
+    {
+      "key": "Cranky",
+      "count": 55
+    },
+    {
+      "key": "Jock",
+      "count": 55
+    },
+    {
+      "key": "Lazy",
+      "count": 60
+    },
+    {
+      "key": "Normal",
+      "count": 59
+    },
+    {
+      "key": "Peppy",
+      "count": 49
+    },
+    {
+      "key": "Smug",
+      "count": 34
+    },
+    {
+      "key": "Snooty",
+      "count": 55
+    },
+    {
+      "key": "Uchi",
+      "count": 24
+    }
+  ],
+  "hobbies": [
+    {
+      "key": "Education",
+      "count": 64
+    },
+    {
+      "key": "Fashion",
+      "count": 66
+    },
+    {
+      "key": "Fitness",
+      "count": 66
+    },
+    {
+      "key": "Music",
+      "count": 64
+    },
+    {
+      "key": "Nature",
+      "count": 66
+    },
+    {
+      "key": "Play",
+      "count": 65
+    }
+  ],
+  "genders": [
+    {
+      "key": "Female",
+      "count": 187
+    },
+    {
+      "key": "Male",
+      "count": 204
+    }
+  ],
+  "birth_months": [
+    {
+      "key": "01",
+      "count": 32
+    },
+    {
+      "key": "02",
+      "count": 29
+    },
+    {
+      "key": "03",
+      "count": 33
+    },
+    {
+      "key": "04",
+      "count": 29
+    },
+    {
+      "key": "05",
+      "count": 31
+    },
+    {
+      "key": "06",
+      "count": 33
+    },
+    {
+      "key": "07",
+      "count": 35
+    },
+    {
+      "key": "08",
+      "count": 36
+    },
+    {
+      "key": "09",
+      "count": 32
+    },
+    {
+      "key": "10",
+      "count": 37
+    },
+    {
+      "key": "11",
+      "count": 30
+    },
+    {
+      "key": "12",
+      "count": 34
+    }
+  ],
+  "subtypes": [
+    {
+      "key": "A",
+      "count": 160
+    },
+    {
+      "key": "B",
+      "count": 231
+    }
+  ]
+}
