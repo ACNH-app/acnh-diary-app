@@ -75,6 +75,7 @@ def classify() -> dict[str, object]:
     for filename, variation in (
         ("catalog_remote_images.csv", False),
         ("catalog_variation_remote_images.csv", True),
+        ("encyclopedia_detail_images.csv", False),
     ):
         for row in read_rows(filename):
             url = row.get("image_url", "")
@@ -82,6 +83,8 @@ def classify() -> dict[str, object]:
                 continue
             catalog_name = catalog_names.get(row.get("item_id", ""))
             asset_type = "catalog_image"
+            if row.get("asset_variant"):
+                asset_type = f"encyclopedia_{row['asset_variant']}"
             if row.get("catalog_type") == "photos":
                 if catalog_name and "'s photo" in catalog_name.lower():
                     asset_type = "framed_photo"
@@ -100,6 +103,8 @@ def classify() -> dict[str, object]:
                 details["entity_name_en"] = catalog_name
             if variation:
                 details["variation_id"] = row.get("variation_id")
+            if row.get("asset_variant"):
+                details["asset_variant"] = row["asset_variant"]
             add_match(matches, url, details)
 
     files = {
@@ -149,6 +154,7 @@ def classify() -> dict[str, object]:
             "villager_remote_images.csv",
             "catalog_remote_images.csv",
             "catalog_variation_remote_images.csv",
+            "encyclopedia_detail_images.csv",
         ],
         "summary": summary,
         "unmapped_files": unmapped,

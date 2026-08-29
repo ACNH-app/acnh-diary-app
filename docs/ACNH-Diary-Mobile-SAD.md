@@ -1,8 +1,8 @@
 # 모동숲 다이어리 모바일 앱 아키텍처 설계서
 
-문서 상태: Draft v1.3
+문서 상태: Draft v1.4
 최종 수정일: 2026-08-29  
-기준 문서: 모바일 SRS v1.3
+기준 문서: 모바일 SRS v1.4
 
 ## 1. 목적과 범위
 
@@ -13,7 +13,7 @@
 - 오프라인 우선 조회·기록
 - 여러 섬의 사용자 데이터 완전 격리
 - 기준 데이터와 사용자 기록의 독립 배포·마이그레이션
-- 오늘·주민·도감 MVP의 빠른 화면 전환
+- 오늘·주민·도감·카탈로그 MVP의 빠른 화면 전환
 - JSON 백업·복원과 데이터 버전 호환
 - 카탈로그·공략·날씨를 나중에 추가할 수 있는 확장 경계
 
@@ -132,20 +132,22 @@ Screen
 - `src/app/(tabs)/today.tsx` — 오늘 화면
 - `src/app/(tabs)/villagers.tsx` — 주민 화면
 - `src/app/(tabs)/encyclopedia.tsx` — 도감 화면
-- `src/app/(tabs)/catalog.tsx`, `guides.tsx` — 준비 중 화면
+- `src/app/(tabs)/catalog.tsx` — 카탈로그 목록 화면
+- `src/app/(tabs)/guides.tsx` — 준비 중 화면
 - `src/app/villagers/[villagerId].tsx` — 주민 상세 화면
 - `src/app/encyclopedia/[category]/[itemId].tsx` — 도감 상세 화면
-- `src/app/catalog/[category]/[itemId].tsx` — 카탈로그 상세 화면(후속 단계)
+- `src/app/catalog/[category]/index.tsx` — 카탈로그 분류별 목록 화면
+- `src/app/catalog/[category]/[itemId].tsx` — 카탈로그 상세 화면
 - Modal은 route group 또는 `presentation: "modal"` 옵션으로 구성한다.
 
-현재 Phase 0에서는 온보딩·오늘과 5개 탭 route만 구현한다. 주민·도감 상세 route와 설정 route는 Phase 2·3에서 추가하며, 설계된 route가 존재하지 않는 동안 placeholder route로 대체하지 않는다.
+현재 구현된 도감 route는 홈, 카테고리 목록, 독립 상세 화면이며 카탈로그 route는 분류 목록·상세 화면까지 제공한다. 목록·상세의 상태 변경은 활성 섬 기준으로 SQLite에 저장한다. 공략 상세와 설정 route는 후속 단계에서 추가하며, 설계된 route가 존재하지 않는 동안 placeholder route로 대체하지 않는다.
 
 ### 6.2 탭 구조
 
 - `TodayTab`: 오늘 홈, 날짜 선택, 루틴·생물·NPC·캘린더
 - `VillagersTab`: 주민 목록, 주민 상세
 - `EncyclopediaTab`: 도감 홈, 카테고리 목록, 도감 상세
-- `CatalogTab`: Post-MVP placeholder와 향후 카탈로그 스택
+- `CatalogTab`: 11개 분류 탭, 검색·보유 필터·정렬·카탈로그 상세
 - `GuideTab`: Post-MVP placeholder와 향후 공략 스택
 
 ### 6.3 모바일 상세 화면
@@ -170,6 +172,8 @@ SQLite에 다음 데이터를 저장한다.
 ### 7.2 기준 데이터
 
 기준 데이터는 읽기 전용이다. 권장 구성은 카테고리별 압축 JSON이며, 데이터가 커지면 읽기 전용 SQLite로 전환한다. 기준 데이터의 `itemId`는 사용자 `collection_records`와 연결되는 안정적인 키여야 한다.
+
+카탈로그는 `src/data/content/catalog/catalog.json`에 11개 분류의 기본 아이템 7,443개를 저장하고, `catalog-variations.json`에 24,897개 변형을 표시용으로 저장한다. 기본 아이템은 `catalogType/itemId`로 식별하고 `assetType/assetId`를 통해 Metro 정적 로컬 이미지에 연결한다. 변형은 MVP에서 기본 아이템의 보유 상태에 포함하며, 별도 변형별 수집은 후속 migration으로 확장한다.
 
 각 원천 데이터의 원문 키와 화면 표시명은 분리 관리한다. raw 데이터는 내부 필드명 그대로 유지하고, UI 라벨은 locale 기반 `ui-labels.json` 또는 `labels.ko.json`/`labels.en.json` 맵을 통해 해석한다. 해당 맵은 같은 key 구조를 재사용해 영어 확장을 가능하게 한다.
 
@@ -282,7 +286,7 @@ TypeScript 도메인 모듈, `src/data` 기준 데이터 adapter, SQLite migrati
 
 ### Phase 2
 
-온보딩·섬 관리·오늘·주민·도감·상태 기록·독립 상세 화면
+온보딩·섬 관리·오늘·주민·도감·카탈로그·상태 기록·독립 상세 화면
 
 ### Phase 3
 
@@ -290,7 +294,7 @@ TypeScript 도메인 모듈, `src/data` 기준 데이터 adapter, SQLite migrati
 
 ### Phase 4
 
-카탈로그·공략·날씨·무값·변형 수집과 통계
+카탈로그 변형 수집·공략·날씨·무값과 통계
 
 ## 14. 미정 또는 별도 결정
 
@@ -305,3 +309,4 @@ TypeScript 도메인 모듈, `src/data` 기준 데이터 adapter, SQLite migrati
 - v1.1 · 2026-08-29 · Expo Router, 실제 앱 경로, 앱용 데이터셋 출처, 백업 계약과 실행 기준선 확정
 - v1.2 · 2026-08-29 · iOS 우선 실행 기준과 Xcode·expo-modules-jsi 호환성 패치 기준 확정
 - v1.3 · 2026-08-29 · SRS·SAD·SDS 버전 정렬, 초기화 위치와 Phase 0·1 경계 명시
+- v1.4 · 2026-08-29 · 카탈로그 목록·상세·로컬 자산·기본 아이템 수집 구조를 MVP 범위에 반영
