@@ -62,7 +62,7 @@
 
 | 도메인 | 기준 파일 | 현재 상태 | 앱 사용 방식 |
 | --- | --- | --- | --- |
-| 주민 | `content/villagers/villagers.normalized.json` | 정규화 완료 | 직접 사용 가능 |
+| 주민 | `content/villagers/villagers.normalized.json` | 417명 정규화 완료 | 직접 사용 가능 |
 | 박물관 | `content/museum/*.acnhapi.json` | 원본형 | 앱 어댑터 필요 |
 | 의류 | `content/catalog/clothing/clothing.normalized.json` | 정규화 완료 | 직접 사용 가능 |
 | 가구 | `content/catalog/furniture/*.acnhapi.json` | 원본형 | 앱 어댑터 또는 추가 정규화 권장 |
@@ -217,21 +217,33 @@
 - `content/villagers/villagers.summary.json`
 - 원본 보관: `content/villagers/villagers.acnhapi.json`
 
+앱 번들 복사 경로:
+
+- `acnh-diary-mobile/src/data/content/villagers/villagers.json`
+- `acnh-diary-mobile/src/data/assets/villagers/{icon,full,poster,framed_photo}/`
+
 현재 앱 기준 구조:
 
 - 배열 기반 정규화 완료
-- 원본 ACNHAPI 구조는 보관용
-- 로컬 이미지 경로까지 연결 가능
+- 전체 주민 수는 417명으로 고정한다.
+- 기준 입력은 `seed/supabase_seed/content_db/villagers.json` export이며, 앱 번들에서는 생성된 정규화 파일을 `villagers.json`으로 복사해 읽는다.
+- `villager_id`를 문자열 `id`와 `key`로 사용한다. 숫자 ID는 앱의 주민 식별자로 사용하지 않는다.
+- ACNHAPI 파일은 391명에 대한 보조 enrichment source로만 사용한다. 주민 수·식별자·기본값의 기준은 417명 seed이며, ACNHAPI에 없는 26명은 seed 값을 사용한다.
+- 주민 417명의 아이콘·전체·포스터·액자 사진을 `assets/villagers/{icon,full,poster,framed_photo}/`에 보관한다. 기존 `local_image_path`는 전체 이미지 경로의 호환용 alias이며, 상세 타입별 경로는 `images` 객체에서 제공한다.
 
 기준 스키마:
 
 ```json
 {
-  "id": 1,
+  "id": "ant00",
   "key": "ant00",
   "file_name": "ant00",
   "name_ko": "사지마",
   "name_en": "Cyrano",
+  "name_locales": {
+    "name-KRko": "사지마",
+    "name-USen": "Cyrano"
+  },
   "species": "Anteater",
   "species_ko": "개미핥기",
   "personality": "Cranky",
@@ -239,24 +251,72 @@
   "gender": "Male",
   "subtype": "B",
   "hobby": "Education",
-  "birthday": "9/3",
-  "birthday_string": "March 9th",
+  "sign": "Pisces",
+  "birthday": "March 9",
   "birth_month": 3,
   "birth_day": 9,
   "birth_month_key": "03",
   "catch_phrase_en": "ah-CHOO",
   "catch_phrase_ko": "임돠",
+  "catchphrase_locales": {
+    "catch-KRko": "임돠",
+    "catch-USen": "ah-CHOO"
+  },
   "saying_en": "Don't punch your nose to spite your face.",
   "saying_ko": "개미를 핥지 않고 먹는 개미핥기",
-  "icon_url": "https://acnhapi.com/v1/icons/villagers/1",
-  "image_url": "https://acnhapi.com/v1/images/villagers/1",
-  "local_image_path": "assets/villagers/ant00.png",
+  "debut": "DNM",
+  "phrase": "ah-CHOO",
+  "previous_phrases": [],
+  "icon_url": "https://dodo.ac/np/images/b/b4/Cyrano_NH_Villager_Icon.png",
+  "image_url": "https://dodo.ac/np/images/4/48/Cyrano_NH.png",
+  "photo_url": "https://dodo.ac/np/images/0/02/Cyrano%27s_Photo_NH_Texture.png",
+  "poster_url": "https://dodo.ac/np/images/1/16/Cyrano%27s_Poster_NH_Icon.png",
+  "framed_photo_url": "https://dodo.ac/np/images/4/4c/Cyrano%27s_Photo_%28Natural_Wood%29_NH_Icon.png",
+  "house_exterior_url": "https://dodo.ac/np/images/2/25/House_of_Cyrano_NH_Model.png",
+  "house_interior_url": "https://dodo.ac/np/images/f/f5/House_of_Cyrano_NH.jpg",
+  "images": {
+    "icon": {
+      "url": "https://dodo.ac/np/images/b/b4/Cyrano_NH_Villager_Icon.png",
+      "local_path": "assets/villagers/icon/ant00.png",
+      "has_local_image": true
+    },
+    "full": {
+      "url": "https://dodo.ac/np/images/4/48/Cyrano_NH.png",
+      "local_path": "assets/villagers/full/ant00.png",
+      "has_local_image": true
+    },
+    "poster": {
+      "url": "https://dodo.ac/np/images/1/16/Cyrano%27s_Poster_NH_Icon.png",
+      "local_path": "assets/villagers/poster/ant00.png",
+      "has_local_image": true
+    },
+    "framed_photo": {
+      "url": "https://dodo.ac/np/images/4/4c/Cyrano%27s_Photo_%28Natural_Wood%29_NH_Icon.png",
+      "local_path": "assets/villagers/framed_photo/ant00.png",
+      "has_local_image": true
+    }
+  },
+  "local_image_path": "assets/villagers/full/ant00.png",
   "has_local_image": true,
+  "icon_local_image_path": "assets/villagers/icon/ant00.png",
+  "full_image_local_path": "assets/villagers/full/ant00.png",
+  "poster_local_image_path": "assets/villagers/poster/ant00.png",
+  "framed_photo_local_image_path": "assets/villagers/framed_photo/ant00.png",
   "bubble_color": "#194c89",
   "text_color": "#fffad4",
+  "title_color": "#194c89",
   "search_tokens": ["사지마", "Cyrano", "Anteater", "개미핥기"]
 }
 ```
+
+추가 데이터 규칙:
+
+- `name_locales`와 `catchphrase_locales`는 원본 locale key를 보존한다. ACNHAPI에 없는 26명은 dataset에서 제공되는 한국어·영어 값만 기록한다.
+- `debut`, `phrase`, `previous_phrases`, `title_color`는 seed 원본의 주민 상세 속성을 표준 필드로 노출한다.
+- `icon_url`은 아이콘, `image_url`은 전체 이미지, `poster_url`은 포스터, `framed_photo_url`은 기본 액자 사진 이미지다. 기존 `photo_url`은 액자 없는 원본 사진 텍스처로 보존한다.
+- `images`는 각 이미지 타입의 원격 URL과 로컬 경로를 함께 제공한다. `local_image_path`는 전체 이미지 경로의 하위 호환용 alias다.
+- `previous_phrases`가 빈 배열인 것은 원본에 과거 말버릇이 없는 정상 상태다.
+- 원본 `raw_json` 전체는 앱 번들에 포함하지 않고, 앱 상세·검색에 필요한 속성만 명시적 필드로 변환한다.
 
 필수 필드:
 
@@ -279,7 +339,7 @@
 보조 파일:
 
 - `villagers.filter-options.json`: 종족, 성격, 취미, 성별, 생일 월, subtype 집계
-- `villagers.summary.json`: 데이터 개수와 로컬 이미지 보유 현황
+- `villagers.summary.json`: 데이터 개수, 상세 필드 채움 현황, 다국어 source 보유 현황, 로컬 이미지 보유 현황
 
 ## 5.6 Museum Creatures
 
@@ -411,7 +471,10 @@
 
 ### 7.1 로컬 자산 위치
 
-- 주민 이미지: `assets/villagers/`
+- 주민 아이콘: `assets/villagers/icon/`
+- 주민 전체 이미지: `assets/villagers/full/`
+- 주민 포스터: `assets/villagers/poster/`
+- 주민 액자 사진: `assets/villagers/framed_photo/`
 - 음악 이미지: `assets/music/`
 - 오프라인 캐시: `assets/offline_cache/`
 
@@ -455,13 +518,17 @@
 ## 10. 생성 및 유지보수
 
 - 의류 정규화 생성 스크립트: `scripts/build_clothing_app_dataset.py`
-- 주민 정규화 생성 스크립트: `scripts/build_villager_app_dataset.py`
+- 주민 417명 정규화 생성 스크립트: `scripts/build_villager_app_dataset.py`
+- 주민 4종 이미지 다운로드 스크립트: `scripts/download_villager_assets.py`
+- 주민 기준 생성 명령: `python3 scripts/build_villager_app_dataset.py`
+- 주민 이미지 다운로드 명령: `python3 scripts/download_villager_assets.py`
 - 향후 다른 도메인도 동일하게 `build_*_app_dataset.py` 패턴으로 추가
 - 새 정규화 파일을 만들면 `index.json`의 `primary_files`에 반영
 
 ## 11. 현재 기준 결론
 
 - 앱의 1차 기준 데이터 루트는 `dataset/app-ready/`
-- 의류와 주민은 이미 앱 직접 사용 가능
+- 의류와 주민 417명은 앱 직접 사용 가능한 정규화 산출물이다.
+- 주민 417명의 아이콘·전체·포스터·액자 사진을 모두 로컬에 확보했으며, 모든 레코드에 각 원격 URL도 예비 경로로 유지한다.
 - 다른 도메인은 원본형 JSON이므로 화면별 어댑터 또는 추가 정규화가 필요
 - 복합 필터는 SQL보다 먼저 정규화 JSON 설계가 우선이다

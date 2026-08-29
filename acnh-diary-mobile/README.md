@@ -17,7 +17,7 @@ acnh-diary-mobile/
   src/components/ 공용 UI 컴포넌트
   src/db/         SQLite 연결과 migration
   src/domain/     예정: 순수 TypeScript 도메인 규칙
-  src/data/       예정: 앱에 번들되는 기준 데이터 adapter와 manifest
+  src/data/       앱에 번들되는 기준 데이터와 이미지 자산
   src/storage/    예정: Repository와 SQLite 변환 계층
   src/features/   예정: 기능별 hook·ViewModel
   src/backup/     예정: JSON 백업·복원
@@ -65,6 +65,6 @@ Android는 현재 수용 기준에서 제외하고 후속 단계에서 별도로
 
 1. 스플래시 → 온보딩 → 오늘 화면의 Router 흐름을 완성한다.
 2. SQLite migration과 섬·주민대표 저장을 연결한다.
-3. `../dataset/app-ready/`에서 주민·박물관 기준 데이터를 앱 번들로 연결한다.
+3. `../dataset/app-ready/`에서 417명 주민·박물관 기준 데이터를 앱 번들로 연결한다.
 4. 주민·도감·상세 화면과 상태 저장을 구현한다.
 5. 백업·복원, 접근성, 실제 기기 테스트를 추가한다.

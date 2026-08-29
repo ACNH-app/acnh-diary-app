@@ -5,6 +5,14 @@
     {
       "key": "villagers",
       "path": "content/villagers",
+      "source_file": "seed/supabase_seed/content_db/villagers.json",
+      "expected_count": 417,
+      "asset_paths": [
+        "assets/villagers/icon",
+        "assets/villagers/full",
+        "assets/villagers/poster",
+        "assets/villagers/framed_photo"
+      ],
       "primary_files": [
         "content/villagers/villagers.normalized.json",
         "content/villagers/villagers.filter-options.json",

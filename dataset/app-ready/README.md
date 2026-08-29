@@ -4,7 +4,7 @@ This folder reorganizes the project data for app development.
 
 ## Start Here
 
-- Villager screens: `content/villagers/`
+- Villager screens: `content/villagers/` (417 entries)
 - Museum screens: `content/museum/`
 - Furniture and catalog screens: `content/catalog/`
 - Shared localization and helper data: `content/localization/`
@@ -21,7 +21,7 @@ This folder reorganizes the project data for app development.
 
 ## Section Guide
 
-- `content/villagers/`: normalized villager data, filter options, summary, raw source, and helper maps
+- `content/villagers/`: 417-entry normalized villager data, filter options, summary, 391-entry ACNHAPI source archive, and helper maps
 - `content/museum/`: bugs, fish, sea creatures, fossils, and art naming helpers
 - `content/catalog/furniture/`: furniture-like catalog sources from ACNHAPI
 - `content/catalog/interior/`: wallpaper, floors, rugs, ceiling decor, wall-mounted, and interior structures
@@ -36,4 +36,5 @@ This folder reorganizes the project data for app development.
 
 - JSON files here are copied and renamed for easier app consumption.
 - Asset folders here now contain the moved original image directories, so this folder can be treated as the main app-facing dataset root.
+- `assets/villagers/{icon,full,poster,framed_photo}/` contains four local image types for all 417 normalized villagers; the remote image manifest remains available as a fallback/source record.
 - Clothing data is currently normalized from `seed/supabase_seed/content_db/` export JSON because no root-level `content.db` file is present in this workspace.

@@ -72,6 +72,7 @@ SQLite 쿼리와 migration은 `src/db`(Phase 0) 또는 `src/storage`(Phase 1 이
 ### 3.3 `acnh-diary-mobile/src/data`
 
 - `dataset/app-ready/`의 앱용 기준 데이터를 도메인 모델로 정규화
+- 주민 기준 데이터는 `villager_id` 문자열 키를 사용하는 417명으로 고정
 - ACNHAPI·Norviah·Nookipedia 등 파일별 원천 출처와 데이터 버전 보존
 - 원문 필드명과 UI 표시명 분리: raw key 유지, locale label map으로 한국어/영어 라벨 제공
 - `dataVersion`, `sources`, `sourceUrls`, `updatedAt` 메타데이터

@@ -33,7 +33,7 @@ acnh-diary-mobile/
     db/
       database.ts
     domain/       # planned
-    data/         # planned
+    data/         # bundled reference data and assets
     storage/      # planned
     features/     # planned
     hooks/        # planned
@@ -459,7 +459,7 @@ interface Artwork {
 - 화석은 객체의 key 또는 `file-name`을 안정적인 `id`로 사용한다. 현재 원본에 번호가 없으므로 `number`는 `null`이며 기본 정렬은 표시 순서와 이름을 사용한다.
 - 출현 시간·월·위치·가격은 Domain이 사용할 정규화 필드로 변환하고, 원본에 없는 값은 `null`로 둔다.
 - 미술품은 현재 `art_name_map_ko.json`만 있고 앱용 원천 목록 파일이 없으므로, 원천 파일이 추가되기 전까지 미술품 목록·상세의 MVP 수용을 완료로 처리하지 않는다.
-- 앱 번들에는 검증된 파일 목록만 포함한다. `dataset/app-ready/seed`와 저장소 루트의 원본 경로는 런타임에서 직접 import하지 않는다.
+- 앱 번들에는 `src/data/content/villagers/villagers.json`과 검증된 417명 주민 이미지가 포함된다. `dataset/app-ready/seed`와 저장소 루트의 원본 경로는 런타임에서 직접 import하지 않는다.
 
 ## 4. SQLite 스키마
 
