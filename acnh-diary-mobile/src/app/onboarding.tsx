@@ -3,17 +3,12 @@ import { Alert } from 'react-native';
 
 import { createIsland, initializeDatabase } from '../db/database';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
+import type { IslandInput } from '../types/island';
 
 export default function OnboardingRoute() {
   const router = useRouter();
 
-  const handleComplete = (island: {
-    name: string;
-    fruit: string;
-    flower: string;
-    hemisphere: string;
-    timezone: string;
-  }) => {
+  const handleComplete = (island: IslandInput) => {
     try {
       initializeDatabase();
       createIsland(island);

@@ -2,7 +2,10 @@ import * as SQLite from 'expo-sqlite';
 
 import type { Island, IslandInput, Routine } from '../types/island';
 
-export const db = SQLite.openDatabaseSync('acnh_diary.db');
+// Keep the old Phase 0 database untouched while the onboarding flow is verified.
+const DATABASE_NAME = __DEV__ ? 'acnh_diary_onboarding_v1.db' : 'acnh_diary.db';
+
+export const db = SQLite.openDatabaseSync(DATABASE_NAME);
 
 export const TEST_ISLAND: IslandInput = {
   name: '수원삼섬',

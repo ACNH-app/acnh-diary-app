@@ -1,6 +1,6 @@
 # 모동숲 다이어리 모바일 앱 상세 설계서
 
-문서 상태: Draft v1.4
+문서 상태: Draft v1.5
 최종 수정일: 2026-08-29  
 기준 문서: 모바일 SRS v1.3 · 모바일 SAD v1.3
 
@@ -668,6 +668,10 @@ Migration 실행 규칙:
 
 Phase 0에는 주민대표 생일 정보와 루틴 유효기간이 없으므로, 보존 전환 시 주민대표 입력을 다시 받아 `player_profiles`를 완성하고 기존 루틴에는 `effective_from`을 전환 날짜로 설정한다. 매핑할 수 없는 값은 임의로 추정하지 않고 복구 화면에서 사용자에게 알린다.
 
+이번 Phase 0 테스트에서는 사용자가 제공한 생일 값이 없으므로 `player_profiles.birthday_month`와 `birthday_day`를 `NULL`로 저장한다. Phase 1 온보딩 수용 전에는 생일 입력·유효성 검사를 추가해 목표 스키마의 `NOT NULL` 계약으로 승격한다.
+
+개발 빌드는 기존 Phase 0 테스트 DB를 덮어쓰지 않기 위해 `acnh_diary_onboarding_v1.db`를 사용한다. 따라서 다음 개발 실행에서는 기존 `acnh_diary.db`의 섬이 온보딩을 우회시키지 않으며, 운영 빌드의 DB 이름은 `acnh_diary.db`를 유지한다.
+
 ### 5.3 첫 섬 생성 transaction
 
 `IslandRepository.create`는 아래 작업을 하나의 transaction으로 묶는다. 어느 단계라도 실패하면 섬·프로필·루틴이 모두 생성되지 않아야 한다.
@@ -680,6 +684,19 @@ Phase 0에는 주민대표 생일 정보와 루틴 유효기간이 없으므로,
 6. 새 섬을 활성 섬으로 유지하고 commit한다.
 
 기본 루틴 목록과 이름·아이콘·목표 횟수는 제품 결정 전까지 `DEFAULT_ROUTINE_DEFINITIONS` 상수로 격리한다. 화면 컴포넌트에 기본 루틴을 하드코딩하지 않는다.
+
+개발용 첫 섬 fixture는 다음 값으로 시작한다.
+
+```typescript
+const TEST_ISLAND = {
+  name: "수원삼섬",
+  hemisphere: "north",
+  flower: "장미",
+  fruit: "사과",
+  playerName: "그랑",
+  timezone: "Asia/Seoul",
+};
+```
 
 ## 6. Repository 계약
 
@@ -1274,3 +1291,4 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 - v1.2 · 2026-08-29 · 현재 구현 트리와 iOS 우선 빌드·호환성 기준을 정합화
 - v1.3 · 2026-08-29 · SRS·SAD·SDS 버전 정렬, 공통 타입·데이터 어댑터·온보딩·설정 계약 구체화
 - v1.4 · 2026-08-29 · 첫 수직 슬라이스, 게임 날짜·루틴 정책, Migration v1, Repository 동작, ViewModel·테스트·요구사항 추적 구체화
+- v1.5 · 2026-08-29 · 온보딩 테스트 fixture와 개발 DB 분리 규칙 반영
