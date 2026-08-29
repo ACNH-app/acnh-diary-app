@@ -1,5 +1,11 @@
 import * as SQLite from 'expo-sqlite';
 
+import type {
+  EncyclopediaCategory,
+  EncyclopediaState,
+  EncyclopediaStatus,
+} from '../types/encyclopedia';
+import type { CatalogCategory } from '../types/catalog';
 import type { Island, IslandInput, Routine } from '../types/island';
 import type { VillagerState, VillagerStatus } from '../types/villager-state';
 
@@ -59,6 +65,16 @@ type CampsiteVisitRow = {
   visit_date: string;
 };
 
+type CollectionRecordRow = {
+  item_type: EncyclopediaCategory | CatalogCategory;
+  item_id: string;
+  caught: number;
+  owned: number;
+  donated: number;
+  genuine_owned: number;
+  fake_owned: number;
+};
+
 const VILLAGER_STATUS_COLUMNS: Record<VillagerStatus, keyof Omit<VillagerStateRow, 'villager_id'>> = {
   wishlist: 'wishlist',
   campsiteVisited: 'campsite_visited',
@@ -66,6 +82,14 @@ const VILLAGER_STATUS_COLUMNS: Record<VillagerStatus, keyof Omit<VillagerStateRo
   movedOut: 'moved_out',
   photoReceived: 'photo_received',
   posterOwned: 'poster_owned',
+};
+
+const COLLECTION_STATUS_COLUMNS: Record<EncyclopediaStatus, keyof Omit<CollectionRecordRow, 'item_type' | 'item_id'>> = {
+  caught: 'caught',
+  owned: 'owned',
+  donated: 'donated',
+  genuineOwned: 'genuine_owned',
+  fakeOwned: 'fake_owned',
 };
 
 function createId(prefix: string) {
@@ -198,6 +222,22 @@ export function initializeDatabase() {
       created_at TEXT DEFAULT CURRENT_TIMESTAMP,
       UNIQUE(island_id, villager_id, visit_date)
     );
+
+    CREATE TABLE IF NOT EXISTS collection_records (
+      island_id TEXT NOT NULL REFERENCES islands(id) ON DELETE CASCADE,
+      item_type TEXT NOT NULL,
+      item_id TEXT NOT NULL,
+      caught INTEGER NOT NULL DEFAULT 0 CHECK(caught IN (0, 1)),
+      owned INTEGER NOT NULL DEFAULT 0 CHECK(owned IN (0, 1)),
+      donated INTEGER NOT NULL DEFAULT 0 CHECK(donated IN (0, 1)),
+      genuine_owned INTEGER NOT NULL DEFAULT 0 CHECK(genuine_owned IN (0, 1)),
+      fake_owned INTEGER NOT NULL DEFAULT 0 CHECK(fake_owned IN (0, 1)),
+      updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY(island_id, item_type, item_id)
+    );
+
+    CREATE INDEX IF NOT EXISTS collection_records_island_type
+    ON collection_records(island_id, item_type);
   `);
 
   // Existing Phase 0 databases need these columns before the active-island index is created.
@@ -301,6 +341,61 @@ export function setVillagerStatus(
        updated_at = CURRENT_TIMESTAMP;`,
     [islandId, villagerId, value ? 1 : 0],
   );
+}
+
+export function getCollectionStatesForIsland(islandId: string): Record<string, EncyclopediaState> {
+  const rows = db.getAllSync<CollectionRecordRow>(
+    `SELECT item_type, item_id, caught, owned, donated, genuine_owned, fake_owned
+     FROM collection_records
+     WHERE island_id = ?;`,
+    [islandId],
+  );
+
+  return Object.fromEntries(
+    rows.map((row) => [
+      `${row.item_type}/${row.item_id}`,
+      {
+        caught: row.caught === 1,
+        owned: row.owned === 1,
+        donated: row.donated === 1,
+        genuineOwned: row.genuine_owned === 1,
+        fakeOwned: row.fake_owned === 1,
+      },
+    ]),
+  );
+}
+
+export function setCollectionStatus(
+  islandId: string,
+  itemType: EncyclopediaCategory | CatalogCategory,
+  itemId: string,
+  status: EncyclopediaStatus,
+  value: boolean,
+) {
+  const column = COLLECTION_STATUS_COLUMNS[status];
+  db.runSync(
+    `INSERT INTO collection_records (island_id, item_type, item_id, ${column})
+     VALUES (?, ?, ?, ?)
+     ON CONFLICT(island_id, item_type, item_id) DO UPDATE SET
+       ${column} = excluded.${column},
+       updated_at = CURRENT_TIMESTAMP;`,
+    [islandId, itemType, itemId, value ? 1 : 0],
+  );
+}
+
+export function setCollectionStatusForItems(
+  islandId: string,
+  itemType: EncyclopediaCategory | CatalogCategory,
+  itemIds: string[],
+  status: EncyclopediaStatus,
+  value: boolean,
+) {
+  if (itemIds.length === 0) return;
+  db.withTransactionSync(() => {
+    for (const itemId of itemIds) {
+      setCollectionStatus(islandId, itemType, itemId, status, value);
+    }
+  });
 }
 
 export function getCampsiteVisitsForIsland(islandId: string): Record<string, string[]> {
