@@ -1,6 +1,6 @@
 # 모동숲 다이어리 모바일 앱 요구사항 정의서
 
-문서 상태: Draft v1.2
+문서 상태: Draft v1.3
 최종 수정일: 2026-08-29  
 대상: React Native + Expo SDK 57 + Expo Router + TypeScript 기반 모바일 앱
 기준 데이터: 저장소의 `dataset/app-ready/` 앱용 데이터셋
@@ -93,6 +93,7 @@
 - **MOB-ISL-001**: 사용자는 섬 이름, 대표과일, 자생꽃, 반구, 시간대를 입력할 수 있어야 한다.
 - **MOB-ISL-002**: 사용자는 주민대표 이름과 생일을 입력할 수 있어야 한다.
 - **MOB-ISL-003**: 섬 이름과 주민대표 이름은 최대 10자로 제한한다.
+- **MOB-ISL-008**: 첫 섬 생성은 섬 정보, 주민대표 정보, 기본 루틴 생성을 하나의 저장 작업으로 처리하고 생성한 섬을 활성 섬으로 지정한다.
 - **MOB-ISL-004**: 섬을 여러 개 등록하고 활성 섬을 변경할 수 있어야 한다.
 - **MOB-ISL-005**: 활성 섬을 변경하면 오늘·주민·도감·루틴·NPC 기록을 선택한 섬 기준으로 다시 표시해야 한다.
 - **MOB-ISL-006**: 섬별 사용자 기록은 다른 섬의 기록과 섞여 표시되지 않아야 한다.
@@ -176,12 +177,14 @@
 
 - **MOB-FOS-001**: 화석을 조회한다.
 - **MOB-FOS-002**: 기증 여부와 보유 여부를 필터 칩으로 제공한다.
-- **MOB-FOS-003**: 번호순을 기본으로 하고 이름순과 화석 그룹순으로 정렬할 수 있어야 한다.
+- **MOB-FOS-003**: 기준 데이터에 번호가 있으면 번호순을 기본으로 하고 이름순과 화석 그룹순으로 정렬한다. 현재 `app-ready` 원본에 번호가 없으므로 번호는 `null`로 보존하고 이름순·화석 그룹순을 제공한다.
 - **MOB-FOS-004**: 카드에 박물관 기증 여부와 보유 여부를 표시한다.
 - **MOB-FOS-005**: 상세에 이름, 이미지, 판매가, `fossil_group`, 길이·너비를 표시한다.
 - **MOB-FOS-006**: `interactable` 여부를 칩으로 표시한다.
 
 #### 4.4.6 미술품
+
+현재 `dataset/app-ready/content/museum/`에는 미술품 이름 맵만 있고 원천 목록 파일이 없다. 미술품 목록·상세 기능은 원천 목록과 이미지가 앱 번들에 추가된 후 MVP 수용 대상으로 전환한다.
 
 - **MOB-ART-001**: 미술품을 조회한다.
 - **MOB-ART-002**: 조각·그림, 진품만 있는 작품·가품도 있는 작품 탭을 제공한다.
@@ -226,7 +229,7 @@
 ### 5.3 백업·복원
 
 - 전체 섬과 사용자 기록을 버전 포함 JSON 파일로 내보낸다.
-- 백업 파일에는 `schemaVersion`, `appVersion`, `exportedAt`, `dataVersion`, `islands`, `profiles`, `routines`, `routineLogs`, `collectionRecords`, `villagerStates`, `residencies`, `campsiteVisits`, `npcVisits`, `appSettings`를 포함한다.
+- 백업 파일에는 `schemaVersion`, `appVersion`, `exportedAt`, `dataVersion`, `islands`, `profiles`, `routines`, `routineLogs`, `collectionRecords`, `villagerStates`, `residencies`, `campsiteVisits`, `npcVisits`, `appSettings`를 포함한다. `appSettings.manual_date`는 수동 날짜가 없을 때 `null`로 저장한다.
 - 가져오기 전에 JSON 형식, 스키마 버전, 중복 ID, 외래키 관계를 검증한다.
 - 복원은 기존 로컬 데이터 교체 여부를 확인한 후 하나의 SQLite 트랜잭션으로 수행한다.
 - 복원 실패 시 전체 rollback하고 기존 데이터를 유지한다.
@@ -291,7 +294,7 @@ Phase 0의 완료 기준은 스플래시 → 온보딩 → 오늘 화면의 이�
 
 ### Phase 1 · 공통 기반
 
-Expo Router 프로젝트, TypeScript 도메인 모듈, 앱용 기준 데이터 adapter, SQLite migration, 디자인 토큰, 날짜·출현·월별 추천 테스트
+TypeScript 도메인 타입·정책, 주민·박물관 기준 데이터 adapter, 앱용 데이터 복사·검증 스크립트, SQLite migration v1, Repository 계약과 테스트 실행 기반, 디자인 토큰
 
 ### Phase 2 · 모바일 MVP 핵심
 
@@ -315,13 +318,16 @@ JSON 백업·복원, 앱 정보·라이선스 화면, 접근성·성능·기기 
 - 하단 탭은 오늘·주민·도감·카탈로그·공략
 - MVP 핵심은 오늘·주민·도감
 - 기준 데이터 입력 원본은 `dataset/app-ready/`이며 ACNHAPI·Norviah·Nookipedia 등 파일별 출처를 보존
+- 앱 번들 기준 데이터는 Phase 1에서 검증된 파일 목록만 `acnh-diary-mobile/src/data/`로 복사하며, `seed/`와 원본 저장소 경로는 런타임에서 직접 읽지 않음
 - 도감 필터는 복수 선택 가능한 칩
-- 화석 정렬은 번호·이름·화석 그룹
+- 화석 정렬은 기준 데이터에 번호가 있을 때 번호·이름·화석 그룹을 사용하고, 번호가 없으면 이름·화석 그룹을 사용
 - 사진·포스터는 액자 사진과 포스터 탭으로 분리
 - 액자 사진 보유와 주민 액자 상태를 연동
 - 루틴 정의 변경은 오늘 이후 적용하고 과거 기록 보존
 - 모바일 첫 출시부터 버전 포함 JSON 백업·복원 제공
 - 앱 정보 화면과 앱 스토어에 출처·라이선스 표시
+- 도메인 내부의 반구 값은 `north`/`south`, 시간대 값은 IANA time zone 문자열을 사용하고 화면 표시명은 별도 라벨 맵으로 변환
+- `app_settings.manual_date`가 `null`이면 기기 시각과 게임 날짜 경계를 사용
 
 ### 10.2 세부 확정 사항
 
@@ -333,3 +339,4 @@ JSON 백업·복원, 앱 정보·라이선스 화면, 접근성·성능·기기 
 - v1.0 · 2026-08-29 · 모바일 앱 기준으로 SRS를 새로 작성하고 로컬 저장, 백업·복원, 모바일 MVP 범위를 명시
 - v1.1 · 2026-08-29 · Expo Router, 실제 저장소 경로, 앱용 데이터셋, 모바일 실행 기준선과 백업 계약을 확정
 - v1.2 · 2026-08-29 · iOS 우선 출시 기준과 Xcode·expo-modules-jsi 호환성 패치 기준 확정
+- v1.3 · 2026-08-29 · SRS·SAD·SDS 버전 정렬, 온보딩 transaction과 데이터 번들 기준 명시

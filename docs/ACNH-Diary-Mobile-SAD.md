@@ -1,8 +1,8 @@
 # 모동숲 다이어리 모바일 앱 아키텍처 설계서
 
-문서 상태: Draft v1.2
+문서 상태: Draft v1.3
 최종 수정일: 2026-08-29  
-기준 문서: 모바일 SRS v1.1
+기준 문서: 모바일 SRS v1.3
 
 ## 1. 목적과 범위
 
@@ -53,8 +53,10 @@ flowchart TB
 - Expo Router route root
 - Expo Router route와 layout
 - 화면·컴포넌트·접근성
-- SQLite 연결과 앱 lifecycle
+- 앱 초기화 흐름과 lifecycle orchestration
 - 파일 선택·공유·백업 UI
+
+SQLite 쿼리와 migration은 `src/db`(Phase 0) 또는 `src/storage`(Phase 1 이후)에 두며, `src/app`의 route는 초기화 Use Case만 호출한다.
 
 ### 3.2 `acnh-diary-mobile/src/domain`
 
@@ -122,15 +124,20 @@ Screen
 
 ### 6.1 Expo Router 루트 레이아웃
 
-- `src/app/_layout.tsx` — 초기화와 공통 Stack
+- `src/app/_layout.tsx` — ThemeProvider와 공통 Stack
+- `src/app/index.tsx` — SQLite 초기화 결과에 따른 스플래시·온보딩·오늘 redirect
 - `src/app/onboarding.tsx` — 온보딩 화면
 - `src/app/(tabs)/_layout.tsx` — 하단 탭 레이아웃
 - `src/app/(tabs)/today.tsx` — 오늘 화면
 - `src/app/(tabs)/villagers.tsx` — 주민 화면
 - `src/app/(tabs)/encyclopedia.tsx` — 도감 화면
 - `src/app/(tabs)/catalog.tsx`, `guides.tsx` — 준비 중 화면
-- `src/app/**/[id].tsx` — 상세 화면과 동적 route
+- `src/app/villagers/[villagerId].tsx` — 주민 상세 화면
+- `src/app/encyclopedia/[category]/[itemId].tsx` — 도감 상세 화면
+- `src/app/catalog/[category]/[itemId].tsx` — 카탈로그 상세 화면(후속 단계)
 - Modal은 route group 또는 `presentation: "modal"` 옵션으로 구성한다.
+
+현재 Phase 0에서는 온보딩·오늘과 5개 탭 route만 구현한다. 주민·도감 상세 route와 설정 route는 Phase 2·3에서 추가하며, 설계된 route가 존재하지 않는 동안 placeholder route로 대체하지 않는다.
 
 ### 6.2 탭 구조
 
@@ -296,3 +303,4 @@ TypeScript 도메인 모듈, `src/data` 기준 데이터 adapter, SQLite migrati
 - v1.0 · 2026-08-29 · 모바일 앱 전용 아키텍처, SQLite·오프라인·백업·복원·출처 고지 설계 작성
 - v1.1 · 2026-08-29 · Expo Router, 실제 앱 경로, 앱용 데이터셋 출처, 백업 계약과 실행 기준선 확정
 - v1.2 · 2026-08-29 · iOS 우선 실행 기준과 Xcode·expo-modules-jsi 호환성 패치 기준 확정
+- v1.3 · 2026-08-29 · SRS·SAD·SDS 버전 정렬, 초기화 위치와 Phase 0·1 경계 명시
