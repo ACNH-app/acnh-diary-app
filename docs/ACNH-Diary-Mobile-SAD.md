@@ -1,6 +1,6 @@
 # 모동숲 다이어리 모바일 앱 아키텍처 설계서
 
-문서 상태: Draft v1.1
+문서 상태: Draft v1.2
 최종 수정일: 2026-08-29  
 기준 문서: 모바일 SRS v1.1
 
@@ -27,7 +27,11 @@
 6. 상세 화면은 모바일 독립 스크린으로 제공한다.
 7. 라우팅은 Expo Router를 사용하고 `acnh-diary-mobile/src/app/`을 공식 화면 루트로 사용한다.
 8. 기준 데이터 원문 필드명과 각 원천 데이터의 키는 유지하고, 사용자 화면 표시명은 locale 기반 UI 라벨 맵 JSON으로 관리한다.
-9. 최초 출시 기준 최소 지원 OS는 iOS 16.0+, Android 9.0(API 28+)로 설정한다.
+9. 현재 출시 검증 대상은 iOS 16.0+이며 Android 9.0(API 28+)는 후속 플랫폼으로 둔다.
+
+### 1.3 iOS 실행 기준
+
+현재 Phase 0은 iOS만 검증한다. React Native 0.86.3 네이티브 빌드에는 Xcode 16.1 이상이 필요하며, 저장소에서 Xcode 26.3 빌드를 확인했다. Xcode 26 계열에서는 `patches/expo-modules-jsi+57.0.6.patch`를 `patch-package`로 자동 적용한다. Android 네이티브 빌드는 후속 플랫폼 단계에서 추가한다.
 
 ## 2. 시스템 컨텍스트
 
@@ -262,7 +266,7 @@ Mobile ViewModel(item, state, displayFlags)
 
 ### Phase 0
 
-`acnh-diary-mobile/`에서 npm 의존성 설치, Expo 설정 확인, TypeScript 검사, 오프라인 Metro 시작, iOS·Android 개발 빌드 실행을 검증한다. 웹은 최초 출시 플랫폼이 아니므로 모바일 기준선에 포함하지 않는다.
+`acnh-diary-mobile/`에서 npm 의존성 설치, Expo 설정 확인, TypeScript 검사, 오프라인 Metro 시작, iOS 개발 빌드 실행을 검증한다. 웹은 최초 출시 플랫폼이 아니므로 모바일 기준선에 포함하지 않으며 Android는 후속 플랫폼 단계에서 검증한다.
 
 ### Phase 1
 
@@ -291,3 +295,4 @@ TypeScript 도메인 모듈, `src/data` 기준 데이터 adapter, SQLite migrati
 
 - v1.0 · 2026-08-29 · 모바일 앱 전용 아키텍처, SQLite·오프라인·백업·복원·출처 고지 설계 작성
 - v1.1 · 2026-08-29 · Expo Router, 실제 앱 경로, 앱용 데이터셋 출처, 백업 계약과 실행 기준선 확정
+- v1.2 · 2026-08-29 · iOS 우선 실행 기준과 Xcode·expo-modules-jsi 호환성 패치 기준 확정

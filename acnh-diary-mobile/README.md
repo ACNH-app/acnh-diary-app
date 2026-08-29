@@ -13,14 +13,15 @@ React Native + Expo SDK 57 + Expo Router + TypeScript로 만드는 오프라인 
 ```text
 acnh-diary-mobile/
   src/app/        Expo Router route와 layout
-  src/domain/     순수 TypeScript 도메인 규칙
-  src/data/       앱에 번들되는 기준 데이터 adapter와 manifest
-  src/storage/    Repository와 SQLite 변환 계층
-  src/features/   기능별 hook·ViewModel
+  src/screens/    온보딩·스플래시·오늘·준비 중 화면
   src/components/ 공용 UI 컴포넌트
   src/db/         SQLite 연결과 migration
-  src/backup/     JSON 백업·복원
-  src/ui/tokens/  디자인 토큰
+  src/domain/     예정: 순수 TypeScript 도메인 규칙
+  src/data/       예정: 앱에 번들되는 기준 데이터 adapter와 manifest
+  src/storage/    예정: Repository와 SQLite 변환 계층
+  src/features/   예정: 기능별 hook·ViewModel
+  src/backup/     예정: JSON 백업·복원
+  src/ui/tokens/  예정: 디자인 토큰
 ```
 
 라우팅 진입점은 `expo-router/entry`이며 `src/app/`이 유일한 route root다. 루트 `App.tsx`와 사용자 정의 `index.ts`를 앱 라우팅 진입점으로 사용하지 않는다.
@@ -29,7 +30,7 @@ acnh-diary-mobile/
 
 ```bash
 cd acnh-diary-mobile
-npm ci
+npm ci --legacy-peer-deps
 npx expo config --json
 npx tsc --noEmit
 ```
@@ -42,14 +43,21 @@ npx tsc --noEmit
 npx expo start --offline
 ```
 
-네이티브 개발 빌드는 다음 명령으로 확인한다.
+현재 개발·검증 대상은 iOS다. React Native 0.86.3 네이티브 빌드에는 Xcode 16.1 이상이 필요하며, 현재 저장소는 Xcode 26.3에서도 빌드를 확인했다. 기본 `xcode-select` 경로의 Xcode를 사용한다.
 
 ```bash
 npx expo run:ios
-npx expo run:android
 ```
 
-Android 네이티브 프로젝트가 없는 경우 먼저 프로젝트 설정에 맞춰 생성한다. iOS·Android 실행은 해당 시뮬레이터 또는 실제 기기와 네이티브 개발 환경이 필요하다.
+Xcode 26 계열을 사용하는 경우 `patches/expo-modules-jsi+57.0.6.patch`가 `npm install` 후 자동 적용된다. 실제 기기 또는 시뮬레이터가 필요하며, 시뮬레이터 없이 컴파일만 확인하려면 다음 명령을 사용한다.
+
+```bash
+npx expo run:ios --no-install --no-bundler --device generic
+```
+
+여러 Xcode가 설치되어 있어 특정 버전을 선택해야 할 때만 `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`처럼 기본 경로를 변경한다.
+
+Android는 현재 수용 기준에서 제외하고 후속 단계에서 별도로 활성화한다.
 
 웹은 최초 출시 플랫폼이 아니므로 `npm run web`을 모바일 빌드의 성공 기준으로 사용하지 않는다.
 

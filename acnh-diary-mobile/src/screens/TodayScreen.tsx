@@ -2,7 +2,11 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ScreenHeader } from '../components/ScreenHeader';
 
-export function TodayScreen() {
+type TodayScreenProps = {
+  islandName?: string;
+};
+
+export function TodayScreen({ islandName = '내 섬' }: TodayScreenProps) {
   const todayDate = new Date().toLocaleDateString('ko-KR', {
     month: 'long',
     day: 'numeric',
@@ -15,7 +19,7 @@ export function TodayScreen() {
 
       <View style={styles.card}>
         <Text style={styles.cardLabel}>활성 섬</Text>
-        <Text style={styles.cardValue}>달빛섬</Text>
+        <Text style={styles.cardValue}>{islandName}</Text>
       </View>
 
       <View style={styles.card}>
