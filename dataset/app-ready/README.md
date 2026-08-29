@@ -36,5 +36,8 @@ This folder reorganizes the project data for app development.
 
 - JSON files here are copied and renamed for easier app consumption.
 - Asset folders here now contain the moved original image directories, so this folder can be treated as the main app-facing dataset root.
-- `assets/villagers/{icon,full,poster,framed_photo}/` contains four local image types for all 417 normalized villagers; the remote image manifest remains available as a fallback/source record.
+- `assets/villagers/{icon,full,poster,framed_photo,house_exterior,house_interior}/` contains six local image types for all 417 normalized villagers; the remote image manifest remains available as a fallback/source record.
+- `assets/villagers/legacy/` keeps the older 256px resident image dump outside the app asset paths.
+- `manifests/offline_asset_manifests/offline_cache.classified.json` maps each hashed offline-cache file to its resident or catalog source URL. It is generated from the existing cache and does not download files.
+- Resident house wallpaper, flooring, music, and house image URLs are available in the normalized data. Activity times and resident house furniture lists are not present in the current dataset, so those fields remain empty until a source is added.
 - Clothing data is currently normalized from `seed/supabase_seed/content_db/` export JSON because no root-level `content.db` file is present in this workspace.

@@ -12,6 +12,7 @@
     "src/app/**/*.ts",
     "src/app/**/*.tsx",
     "src/db/**/*.ts",
+    "src/data/**/*.ts",
     "src/screens/**/*.tsx",
     "src/components/ScreenHeader.tsx",
     "src/screens/**/*.ts",

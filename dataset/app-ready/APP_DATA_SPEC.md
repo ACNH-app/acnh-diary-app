@@ -220,16 +220,18 @@
 앱 번들 복사 경로:
 
 - `acnh-diary-mobile/src/data/content/villagers/villagers.json`
-- `acnh-diary-mobile/src/data/assets/villagers/{icon,full,poster,framed_photo}/`
+- `acnh-diary-mobile/src/data/assets/villagers/{icon,full,poster,framed_photo,house_exterior,house_interior}/`
+- `acnh-diary-mobile/src/data/assets/music/`
 
 현재 앱 기준 구조:
 
 - 배열 기반 정규화 완료
 - 전체 주민 수는 417명으로 고정한다.
 - 기준 입력은 `seed/supabase_seed/content_db/villagers.json` export이며, 앱 번들에서는 생성된 정규화 파일을 `villagers.json`으로 복사해 읽는다.
-- `villager_id`를 문자열 `id`와 `key`로 사용한다. 숫자 ID는 앱의 주민 식별자로 사용하지 않는다.
+- `villager_id`를 문자열 `id`와 `key`로 사용한다. `number`는 번호순 정렬용 보조 필드이며 앱의 주민 식별자로 사용하지 않는다. ACNHAPI에 없는 26명은 `number: null`이다.
 - ACNHAPI 파일은 391명에 대한 보조 enrichment source로만 사용한다. 주민 수·식별자·기본값의 기준은 417명 seed이며, ACNHAPI에 없는 26명은 seed 값을 사용한다.
-- 주민 417명의 아이콘·전체·포스터·액자 사진을 `assets/villagers/{icon,full,poster,framed_photo}/`에 보관한다. 기존 `local_image_path`는 전체 이미지 경로의 호환용 alias이며, 상세 타입별 경로는 `images` 객체에서 제공한다.
+- 주민 417명의 아이콘·전체·포스터·액자 사진·하우스 외관·하우스 내부 이미지를 `assets/villagers/{icon,full,poster,framed_photo,house_exterior,house_interior}/`에 보관한다. 기존 `local_image_path`는 전체 이미지 경로의 호환용 alias이며, 상세 타입별 경로는 `images` 객체에서 제공한다.
+- 주민의 포스터·액자 사진은 `collectibles` 객체에서 가격·획득 방법·아이템 식별자를 함께 제공한다. 하우스 음악은 `house_music_id`와 `house_music_local_image_path`로 음악 이미지 자산과 연결한다.
 
 기준 스키마:
 
@@ -238,6 +240,7 @@
   "id": "ant00",
   "key": "ant00",
   "file_name": "ant00",
+  "number": 1,
   "name_ko": "사지마",
   "name_en": "Cyrano",
   "name_locales": {
@@ -256,6 +259,7 @@
   "birth_month": 3,
   "birth_day": 9,
   "birth_month_key": "03",
+  "activity_time": null,
   "catch_phrase_en": "ah-CHOO",
   "catch_phrase_ko": "임돠",
   "catchphrase_locales": {
@@ -267,6 +271,24 @@
   "debut": "DNM",
   "phrase": "ah-CHOO",
   "previous_phrases": [],
+  "favorite_colors": ["Blue"],
+  "favorite_styles": ["Simple"],
+  "default_clothing": "Hanten coat",
+  "default_clothing_ko": "한텐 코트",
+  "default_clothing_variation": null,
+  "default_umbrella": "paper parasol",
+  "default_umbrella_ko": "종이 우산",
+  "house_wallpaper": "Chain-Link Fence",
+  "house_wallpaper_ko": "공터 벽",
+  "house_flooring": "Dirt Flooring",
+  "house_flooring_ko": "흙 바닥",
+  "house_furniture": [],
+  "house_music": "K.K. Song",
+  "house_music_ko": null,
+  "house_music_note": null,
+  "house_music_id": "43",
+  "house_music_image_url": "https://dodo.ac/np/images/music.png",
+  "house_music_local_image_path": "assets/music/43.png",
   "icon_url": "https://dodo.ac/np/images/b/b4/Cyrano_NH_Villager_Icon.png",
   "image_url": "https://dodo.ac/np/images/4/48/Cyrano_NH.png",
   "photo_url": "https://dodo.ac/np/images/0/02/Cyrano%27s_Photo_NH_Texture.png",
@@ -294,6 +316,38 @@
       "url": "https://dodo.ac/np/images/4/4c/Cyrano%27s_Photo_%28Natural_Wood%29_NH_Icon.png",
       "local_path": "assets/villagers/framed_photo/ant00.png",
       "has_local_image": true
+    },
+    "house_exterior": {
+      "url": "https://dodo.ac/np/images/2/25/House_of_Cyrano_NH_Model.png",
+      "local_path": "assets/villagers/house_exterior/ant00.png",
+      "has_local_image": true
+    },
+    "house_interior": {
+      "url": "https://dodo.ac/np/images/f/f5/House_of_Cyrano_NH.jpg",
+      "local_path": "assets/villagers/house_interior/ant00.jpg",
+      "has_local_image": true
+    }
+  },
+  "collectibles": {
+    "poster": {
+      "item_id": "...",
+      "name_ko": "사지마의 포스터",
+      "name_en": "Cyrano's poster",
+      "image_url": "https://dodo.ac/np/images/1/16/Cyrano%27s_Poster_NH_Icon.png",
+      "buy": 0,
+      "sell": 0,
+      "source": "너굴 쇼핑",
+      "source_notes": null
+    },
+    "framed_photo": {
+      "item_id": "...",
+      "name_ko": "사지마의 사진",
+      "name_en": "Cyrano's photo",
+      "image_url": "https://dodo.ac/np/images/4/4c/Cyrano%27s_Photo_%28Natural_Wood%29_NH_Icon.png",
+      "buy": 0,
+      "sell": 0,
+      "source": "주민에게 받기",
+      "source_notes": null
     }
   },
   "local_image_path": "assets/villagers/full/ant00.png",
@@ -312,9 +366,11 @@
 추가 데이터 규칙:
 
 - `name_locales`와 `catchphrase_locales`는 원본 locale key를 보존한다. ACNHAPI에 없는 26명은 dataset에서 제공되는 한국어·영어 값만 기록한다.
+- 기본 옷·우산·벽지·바닥·음악은 각 `*_ko` 값이 있으면 한국어 표시값으로 사용하고, 없으면 영문 기준값으로 대체한다.
 - `debut`, `phrase`, `previous_phrases`, `title_color`는 seed 원본의 주민 상세 속성을 표준 필드로 노출한다.
 - `icon_url`은 아이콘, `image_url`은 전체 이미지, `poster_url`은 포스터, `framed_photo_url`은 기본 액자 사진 이미지다. 기존 `photo_url`은 액자 없는 원본 사진 텍스처로 보존한다.
 - `images`는 각 이미지 타입의 원격 URL과 로컬 경로를 함께 제공한다. `local_image_path`는 전체 이미지 경로의 하위 호환용 alias다.
+- `activity_time`과 `house_furniture`는 원본에 값이 있을 때만 채운다. 현재 기준 데이터에는 값이 없어 앱에서 해당 행을 숨긴다.
 - `previous_phrases`가 빈 배열인 것은 원본에 과거 말버릇이 없는 정상 상태다.
 - 원본 `raw_json` 전체는 앱 번들에 포함하지 않고, 앱 상세·검색에 필요한 속성만 명시적 필드로 변환한다.
 
@@ -475,8 +531,12 @@
 - 주민 전체 이미지: `assets/villagers/full/`
 - 주민 포스터: `assets/villagers/poster/`
 - 주민 액자 사진: `assets/villagers/framed_photo/`
+- 주민 하우스 외관: `assets/villagers/house_exterior/`
+- 주민 하우스 내부: `assets/villagers/house_interior/`
+- 기존 256px 주민 이미지 보관: `assets/villagers/legacy/` (앱 미사용)
 - 음악 이미지: `assets/music/`
 - 오프라인 캐시: `assets/offline_cache/`
+- 오프라인 캐시 분류 매니페스트: `manifests/offline_asset_manifests/offline_cache.classified.json`
 
 ### 7.2 이미지 사용 우선순위
 
@@ -519,9 +579,11 @@
 
 - 의류 정규화 생성 스크립트: `scripts/build_clothing_app_dataset.py`
 - 주민 417명 정규화 생성 스크립트: `scripts/build_villager_app_dataset.py`
-- 주민 4종 이미지 다운로드 스크립트: `scripts/download_villager_assets.py`
+- 주민 6종 이미지 다운로드 스크립트: `scripts/download_villager_assets.py`
 - 주민 기준 생성 명령: `python3 scripts/build_villager_app_dataset.py`
-- 주민 이미지 다운로드 명령: `python3 scripts/download_villager_assets.py`
+- 주민 이미지 준비/점검 명령(캐시 우선, 기본값은 네트워크를 사용하지 않음): `python3 scripts/download_villager_assets.py`
+- 주민 이미지 다운로드 명령(네트워크 사용 명시): `python3 scripts/download_villager_assets.py --allow-network`
+- 오프라인 캐시 분류 명령: `python3 scripts/classify_offline_cache.py`
 - 향후 다른 도메인도 동일하게 `build_*_app_dataset.py` 패턴으로 추가
 - 새 정규화 파일을 만들면 `index.json`의 `primary_files`에 반영
 

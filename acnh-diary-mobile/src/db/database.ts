@@ -1,6 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 
 import type { Island, IslandInput, Routine } from '../types/island';
+import type { VillagerState, VillagerStatus } from '../types/villager-state';
 
 // Keep the old Phase 0 database untouched while the onboarding flow is verified.
 const DATABASE_NAME = __DEV__ ? 'acnh_diary_onboarding_v1.db' : 'acnh_diary.db';
@@ -41,6 +42,30 @@ type RoutineRow = {
   goal_count: number;
   repeat_type: 'daily';
   created_at: string | null;
+};
+
+type VillagerStateRow = {
+  villager_id: string;
+  wishlist: number;
+  campsite_visited: number;
+  island_resident: number;
+  moved_out: number;
+  photo_received: number;
+  poster_owned: number;
+};
+
+type CampsiteVisitRow = {
+  villager_id: string;
+  visit_date: string;
+};
+
+const VILLAGER_STATUS_COLUMNS: Record<VillagerStatus, keyof Omit<VillagerStateRow, 'villager_id'>> = {
+  wishlist: 'wishlist',
+  campsiteVisited: 'campsite_visited',
+  islandResident: 'island_resident',
+  movedOut: 'moved_out',
+  photoReceived: 'photo_received',
+  posterOwned: 'poster_owned',
 };
 
 function createId(prefix: string) {
@@ -151,11 +176,34 @@ export function initializeDatabase() {
       created_at TEXT DEFAULT CURRENT_TIMESTAMP,
       UNIQUE(island_id, routine_id, log_date)
     );
+
+    CREATE TABLE IF NOT EXISTS villager_states (
+      island_id TEXT NOT NULL REFERENCES islands(id) ON DELETE CASCADE,
+      villager_id TEXT NOT NULL,
+      wishlist INTEGER NOT NULL DEFAULT 0 CHECK(wishlist IN (0, 1)),
+      campsite_visited INTEGER NOT NULL DEFAULT 0 CHECK(campsite_visited IN (0, 1)),
+      island_resident INTEGER NOT NULL DEFAULT 0 CHECK(island_resident IN (0, 1)),
+      moved_out INTEGER NOT NULL DEFAULT 0 CHECK(moved_out IN (0, 1)),
+      photo_received INTEGER NOT NULL DEFAULT 0 CHECK(photo_received IN (0, 1)),
+      poster_owned INTEGER NOT NULL DEFAULT 0 CHECK(poster_owned IN (0, 1)),
+      updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY(island_id, villager_id)
+    );
+
+    CREATE TABLE IF NOT EXISTS campsite_visits (
+      id TEXT PRIMARY KEY,
+      island_id TEXT NOT NULL REFERENCES islands(id) ON DELETE CASCADE,
+      villager_id TEXT NOT NULL,
+      visit_date TEXT NOT NULL,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE(island_id, villager_id, visit_date)
+    );
   `);
 
   // Existing Phase 0 databases need these columns before the active-island index is created.
   ensureColumn('islands', 'is_active', 'INTEGER NOT NULL DEFAULT 0');
   ensureColumn('islands', 'updated_at', 'TEXT');
+  ensureColumn('villager_states', 'poster_owned', 'INTEGER NOT NULL DEFAULT 0');
 
   const islands = db.getAllSync<{ id: string; is_active: number }>(
     'SELECT id, is_active FROM islands ORDER BY created_at ASC, id ASC;'
@@ -211,6 +259,124 @@ export function getRoutinesForIsland(islandId: string) {
     [islandId]
   );
   return result.map(toRoutine);
+}
+
+export function getVillagerStatesForIsland(islandId: string): Record<string, VillagerState> {
+  const result = db.getAllSync<VillagerStateRow>(
+    `SELECT villager_id, wishlist, campsite_visited, island_resident, moved_out, photo_received,
+            poster_owned
+     FROM villager_states
+     WHERE island_id = ?;`,
+    [islandId],
+  );
+
+  return Object.fromEntries(
+    result.map((row) => [
+      row.villager_id,
+      {
+        wishlist: row.wishlist === 1,
+        campsiteVisited: row.campsite_visited === 1,
+        islandResident: row.island_resident === 1,
+        movedOut: row.moved_out === 1,
+        photoReceived: row.photo_received === 1,
+        posterOwned: row.poster_owned === 1,
+      },
+    ]),
+  );
+}
+
+export function setVillagerStatus(
+  islandId: string,
+  villagerId: string,
+  status: VillagerStatus,
+  value: boolean,
+) {
+  const column = VILLAGER_STATUS_COLUMNS[status];
+
+  db.runSync(
+    `INSERT INTO villager_states (island_id, villager_id, ${column})
+     VALUES (?, ?, ?)
+     ON CONFLICT(island_id, villager_id) DO UPDATE SET
+       ${column} = excluded.${column},
+       updated_at = CURRENT_TIMESTAMP;`,
+    [islandId, villagerId, value ? 1 : 0],
+  );
+}
+
+export function getCampsiteVisitsForIsland(islandId: string): Record<string, string[]> {
+  const result = db.getAllSync<CampsiteVisitRow>(
+    `SELECT villager_id, visit_date
+     FROM campsite_visits
+     WHERE island_id = ?
+     ORDER BY visit_date DESC;`,
+    [islandId],
+  );
+  const visits: Record<string, string[]> = {};
+
+  for (const row of result) {
+    (visits[row.villager_id] ??= []).push(row.visit_date);
+  }
+
+  return visits;
+}
+
+function validateVisitDate(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) throw new Error('VALIDATION_ERROR');
+  const [year, month, day] = value.split('-').map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  ) {
+    throw new Error('VALIDATION_ERROR');
+  }
+}
+
+export function addCampsiteVisit(islandId: string, villagerId: string, visitDate: string) {
+  validateVisitDate(visitDate);
+
+  db.withTransactionSync(() => {
+    db.runSync(
+      `INSERT OR IGNORE INTO campsite_visits (id, island_id, villager_id, visit_date)
+       VALUES (?, ?, ?, ?);`,
+      [createId('campsite-visit'), islandId, villagerId, visitDate],
+    );
+    db.runSync(
+      `INSERT INTO villager_states (island_id, villager_id, campsite_visited)
+       VALUES (?, ?, 1)
+       ON CONFLICT(island_id, villager_id) DO UPDATE SET
+         campsite_visited = 1,
+         updated_at = CURRENT_TIMESTAMP;`,
+      [islandId, villagerId],
+    );
+  });
+}
+
+export function removeCampsiteVisit(islandId: string, villagerId: string, visitDate: string) {
+  validateVisitDate(visitDate);
+
+  db.withTransactionSync(() => {
+    db.runSync(
+      `DELETE FROM campsite_visits
+       WHERE island_id = ? AND villager_id = ? AND visit_date = ?;`,
+      [islandId, villagerId, visitDate],
+    );
+    const remaining = db.getAllSync<{ count: number }>(
+      `SELECT COUNT(*) AS count
+       FROM campsite_visits
+       WHERE island_id = ? AND villager_id = ?;`,
+      [islandId, villagerId],
+    )[0]?.count;
+    if (!remaining) {
+      db.runSync(
+        `UPDATE villager_states
+         SET campsite_visited = 0, updated_at = CURRENT_TIMESTAMP
+         WHERE island_id = ? AND villager_id = ?;`,
+        [islandId, villagerId],
+      );
+    }
+  });
 }
 
 export function createIsland(input: IslandInput) {

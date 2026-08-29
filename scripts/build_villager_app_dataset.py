@@ -7,6 +7,7 @@ import json
 import re
 from collections import Counter
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,10 +15,15 @@ SOURCE = ROOT / "dataset/app-ready/seed/supabase_seed/content_db/villagers.json"
 ACNHAPI_SOURCE = ROOT / "dataset/app-ready/content/villagers/villagers.acnhapi.json"
 SAYING_MAP_SOURCE = ROOT / "dataset/app-ready/content/villagers/villager_saying_map_ko.json"
 CATALOG_SOURCE = ROOT / "dataset/app-ready/seed/supabase_seed/content_db/catalog_items.json"
+MUSIC_MANIFEST_SOURCE = ROOT / "dataset/app-ready/content/catalog/music/music_image_manifest.json"
+CLOTHING_NAME_MAP_SOURCE = ROOT / "dataset/app-ready/content/catalog/clothing/clothing_name_map_ko.json"
+INTERIOR_NAME_MAP_SOURCE = ROOT / "dataset/app-ready/content/catalog/interior/interior_name_map_ko.json"
+MUSIC_NAME_MAP_SOURCE = ROOT / "dataset/app-ready/content/catalog/music/music_name_map_ko.json"
 OUTPUT_DIR = ROOT / "dataset/app-ready/content/villagers"
 LOCAL_ASSET_DIR = ROOT / "dataset/app-ready/assets/villagers"
 RAW_REQUIRED_FIELDS = ("debut", "phrase", "prev_phrases", "title_color")
-IMAGE_TYPES = ("icon", "full", "poster", "framed_photo")
+IMAGE_TYPES = ("icon", "full", "poster", "framed_photo", "house_exterior", "house_interior")
+CATALOG_IMAGE_TYPES = ("poster", "framed_photo")
 
 
 def load_json(path: Path):
@@ -87,12 +93,22 @@ def locale_map(values: object, fallback: dict[str, str | None]) -> dict[str, str
     return result
 
 
+def load_translation_map(path: Path) -> dict[str, str]:
+    return {str(key).lower(): str(value) for key, value in load_json(path).items()}
+
+
+def translate(mapping: dict[str, str], value: str | None) -> str | None:
+    return mapping.get(value.lower()) if value else None
+
+
 def image_asset(villager_id: str, image_type: str, url: str | None) -> dict:
-    local_image = LOCAL_ASSET_DIR / image_type / f"{villager_id}.png"
+    suffix = Path(urlparse(url).path).suffix.lower() if url else ""
+    extension = ".jpg" if suffix in {".jpg", ".jpeg"} else ".png"
+    local_image = LOCAL_ASSET_DIR / image_type / f"{villager_id}{extension}"
     return {
         "url": url,
         "local_path": (
-            f"assets/villagers/{image_type}/{villager_id}.png"
+            f"assets/villagers/{image_type}/{villager_id}{extension}"
             if local_image.exists()
             else None
         ),
@@ -104,7 +120,11 @@ def normalize(
     row: dict,
     acnhapi_row: dict | None,
     saying_map: dict,
-    catalog_image_urls: dict[str, dict[str, str]],
+    catalog_items: dict[str, dict[str, dict]],
+    music_assets: dict[str, dict],
+    clothing_names: dict[str, str],
+    interior_names: dict[str, str],
+    music_names: dict[str, str],
 ) -> dict:
     villager_id = row["villager_id"]
     birthday = row.get("birthday")
@@ -125,7 +145,15 @@ def normalize(
             "catch-USen": row.get("catchphrase"),
         },
     )
-    catalog_images = catalog_image_urls[row["name_en"]]
+    catalog_data = catalog_items[row["name_en"]]
+    catalog_images = {
+        image_type: catalog_data[image_type]["image_url"]
+        for image_type in CATALOG_IMAGE_TYPES
+    }
+    music_asset = music_assets.get(raw_row.get("house_music"))
+    house_furniture = raw_row.get("house_furniture")
+    if not isinstance(house_furniture, list):
+        house_furniture = []
     icon_asset = image_asset(villager_id, "icon", row.get("icon_url"))
     full_asset = image_asset(villager_id, "full", row.get("image_url"))
     poster_asset = image_asset(villager_id, "poster", catalog_images["poster"])
@@ -139,6 +167,7 @@ def normalize(
         "id": villager_id,
         "key": villager_id,
         "file_name": villager_id,
+        "number": (acnhapi_row or {}).get("id"),
         "name_ko": row["name_ko"],
         "name_en": row["name_en"],
         "species": row["species"],
@@ -148,6 +177,7 @@ def normalize(
         "gender": row["gender"],
         "subtype": row["sub_personality"],
         "hobby": row["hobby"],
+        "activity_time": raw_row.get("activity_time") or raw_row.get("activity_times"),
         "sign": row.get("sign"),
         "birthday": birthday,
         "birthday_string": (acnhapi_row or {}).get("birthday-string")
@@ -169,18 +199,38 @@ def normalize(
         "favorite_colors": raw_row.get("favorite_colors", []),
         "favorite_styles": raw_row.get("favorite_styles", []),
         "default_clothing": raw_row.get("default_clothing"),
+        "default_clothing_ko": translate(clothing_names, raw_row.get("default_clothing")),
         "default_clothing_variation": raw_row.get("default_clothing_variation"),
         "default_umbrella": raw_row.get("default_umbrella"),
+        "default_umbrella_ko": translate(clothing_names, raw_row.get("default_umbrella")),
         "house_wallpaper": raw_row.get("house_wallpaper"),
+        "house_wallpaper_ko": translate(interior_names, raw_row.get("house_wallpaper")),
         "house_flooring": raw_row.get("house_flooring"),
+        "house_flooring_ko": translate(interior_names, raw_row.get("house_flooring")),
+        "house_furniture": house_furniture,
         "house_music": raw_row.get("house_music"),
-        "house_music_ko": raw_row.get("house_music_ko"),
+        "house_music_ko": raw_row.get("house_music_ko")
+        or translate(music_names, raw_row.get("house_music")),
         "house_music_note": raw_row.get("house_music_note"),
+        "house_music_id": music_asset["id"] if music_asset else None,
+        "house_music_image_url": music_asset["image_url"] if music_asset else None,
+        "house_music_local_image_path": music_asset["local_path"] if music_asset else None,
+        "collectibles": catalog_data,
         "images": {
             "icon": icon_asset,
             "full": full_asset,
             "poster": poster_asset,
             "framed_photo": framed_photo_asset,
+            "house_exterior": image_asset(
+                villager_id,
+                "house_exterior",
+                row.get("house_exterior_url"),
+            ),
+            "house_interior": image_asset(
+                villager_id,
+                "house_interior",
+                row.get("house_interior_url"),
+            ),
         },
         "icon_url": row.get("icon_url"),
         "image_url": row.get("image_url"),
@@ -201,12 +251,15 @@ def normalize(
         "search_tokens": unique_tokens(
             row.get("name_ko"),
             row.get("name_en"),
+            str((acnhapi_row or {}).get("id")) if (acnhapi_row or {}).get("id") else None,
             row.get("species"),
             row.get("species_ko"),
             row.get("personality"),
             row.get("personality_ko"),
             row.get("gender"),
             row.get("hobby"),
+            row.get("sub_personality"),
+            raw_row.get("sign"),
             birthday,
             row.get("catchphrase"),
             row.get("catchphrase_ko"),
@@ -220,8 +273,8 @@ def options(rows: list[dict], field: str) -> list[dict]:
     return [{"key": key, "count": counts[key]} for key in sorted(counts)]
 
 
-def load_catalog_image_urls(villager_names: set[str]) -> dict[str, dict[str, str]]:
-    image_urls: dict[str, dict[str, str]] = {name: {} for name in villager_names}
+def load_catalog_items(villager_names: set[str]) -> dict[str, dict[str, dict]]:
+    items: dict[str, dict[str, dict]] = {name: {} for name in villager_names}
     for row in load_json(CATALOG_SOURCE):
         if row.get("catalog_type") != "photos":
             continue
@@ -231,17 +284,43 @@ def load_catalog_image_urls(villager_names: set[str]) -> dict[str, dict[str, str
             for villager_name in villager_names:
                 if item_name == f"{villager_name}'s {suffix}":
                     if item.get("image_url"):
-                        image_urls[villager_name][image_type] = item["image_url"]
+                        items[villager_name][image_type] = {
+                            "item_id": row.get("item_id"),
+                            "name_ko": row.get("name_ko") or item.get("name_ko"),
+                            "name_en": row.get("name_en") or item.get("name_en"),
+                            "image_url": item["image_url"],
+                            "buy": row.get("buy", 0),
+                            "sell": row.get("sell", 0),
+                            "source": row.get("source_ko") or row.get("source") or None,
+                            "source_notes": row.get("source_notes_ko")
+                            or row.get("source_notes")
+                            or None,
+                        }
                     break
 
     missing = {
-        name: sorted(set(IMAGE_TYPES[2:]) - set(values))
-        for name, values in image_urls.items()
-        if not all(image_type in values for image_type in IMAGE_TYPES[2:])
+        name: sorted(set(CATALOG_IMAGE_TYPES) - set(values))
+        for name, values in items.items()
+        if not all(image_type in values for image_type in CATALOG_IMAGE_TYPES)
     }
     if missing:
-        raise SystemExit(f"Missing catalog images: {missing}")
-    return image_urls
+        raise SystemExit(f"Missing catalog items: {missing}")
+    return items
+
+
+def load_music_assets() -> dict[str, dict]:
+    assets: dict[str, dict] = {}
+    for music_id, row in load_json(MUSIC_MANIFEST_SOURCE).items():
+        name = row.get("name")
+        if not name:
+            continue
+        local_file = ROOT / "dataset/app-ready/assets/music" / f"{music_id}.png"
+        assets[name] = {
+            "id": music_id,
+            "image_url": row.get("image_url"),
+            "local_path": f"assets/music/{music_id}.png" if local_file.exists() else None,
+        }
+    return assets
 
 
 def main() -> None:
@@ -263,7 +342,11 @@ def main() -> None:
                 f"Villager {row.get('villager_id')} is missing raw fields: {missing_fields}"
             )
 
-    catalog_image_urls = load_catalog_image_urls({row["name_en"] for row in source_rows})
+    catalog_items = load_catalog_items({row["name_en"] for row in source_rows})
+    music_assets = load_music_assets()
+    clothing_names = load_translation_map(CLOTHING_NAME_MAP_SOURCE)
+    interior_names = load_translation_map(INTERIOR_NAME_MAP_SOURCE)
+    music_names = load_translation_map(MUSIC_NAME_MAP_SOURCE)
     acnhapi_rows = {
         row["file-name"]: row for row in load_json(ACNHAPI_SOURCE).values()
     }
@@ -273,7 +356,11 @@ def main() -> None:
             row,
             acnhapi_rows.get(row["villager_id"]),
             saying_map,
-            catalog_image_urls,
+            catalog_items,
+            music_assets,
+            clothing_names,
+            interior_names,
+            music_names,
         )
         for row in source_rows
     ]
@@ -321,6 +408,13 @@ def main() -> None:
             "framed_photo_local_image_count": sum(
                 row["images"]["framed_photo"]["has_local_image"] for row in rows
             ),
+            "house_exterior_url_count": sum(bool(row["house_exterior_url"]) for row in rows),
+            "house_interior_url_count": sum(bool(row["house_interior_url"]) for row in rows),
+            "house_wallpaper_count": sum(bool(row["house_wallpaper"]) for row in rows),
+            "house_flooring_count": sum(bool(row["house_flooring"]) for row in rows),
+            "house_music_count": sum(bool(row["house_music"]) for row in rows),
+            "house_furniture_count": sum(bool(row["house_furniture"]) for row in rows),
+            "activity_time_count": sum(bool(row["activity_time"]) for row in rows),
             "local_image_count": sum(row["has_local_image"] for row in rows),
             "remote_image_count": sum(bool(row["image_url"]) for row in rows),
             "poster_url_count": sum(bool(row["poster_url"]) for row in rows),

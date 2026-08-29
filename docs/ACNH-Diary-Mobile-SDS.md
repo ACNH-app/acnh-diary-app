@@ -546,18 +546,14 @@ CREATE TABLE collection_records (
 CREATE TABLE villager_states (
   island_id TEXT NOT NULL REFERENCES islands(id) ON DELETE CASCADE,
   villager_id TEXT NOT NULL,
-  state_type TEXT NOT NULL CHECK(state_type IN (
-    'wishlist', 'resident', 'former_resident', 'campsite'
-  )),
-  PRIMARY KEY(island_id, villager_id, state_type)
-);
-
-CREATE TABLE villager_residencies (
-  id TEXT PRIMARY KEY NOT NULL,
-  island_id TEXT NOT NULL REFERENCES islands(id) ON DELETE CASCADE,
-  villager_id TEXT NOT NULL,
-  moved_in_on TEXT,
-  moved_out_on TEXT
+  wishlist INTEGER NOT NULL DEFAULT 0 CHECK(wishlist IN (0, 1)),
+  campsite_visited INTEGER NOT NULL DEFAULT 0 CHECK(campsite_visited IN (0, 1)),
+  island_resident INTEGER NOT NULL DEFAULT 0 CHECK(island_resident IN (0, 1)),
+  moved_out INTEGER NOT NULL DEFAULT 0 CHECK(moved_out IN (0, 1)),
+  photo_received INTEGER NOT NULL DEFAULT 0 CHECK(photo_received IN (0, 1)),
+  poster_owned INTEGER NOT NULL DEFAULT 0 CHECK(poster_owned IN (0, 1)),
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(island_id, villager_id)
 );
 
 CREATE TABLE campsite_visits (
@@ -572,8 +568,14 @@ CREATE INDEX collection_lookup
 ON collection_records(island_id, item_type, item_id);
 
 CREATE INDEX villager_state_lookup
-ON villager_states(island_id, state_type);
+ON villager_states(island_id, villager_id);
 ```
+
+`island_resident`, `moved_out`, `wishlist`, `campsite_visited`, and `photo_received`
+are independent flags, so a villager can belong to multiple categories. `outside`
+is calculated when none of those resident-related flags is set; `poster_owned` is
+collection metadata and does not affect that calculation. `campsite_visits` keeps
+the visit-date history and sets `campsite_visited` while at least one date remains.
 
 ### 4.4 오늘 기록
 
@@ -1040,10 +1042,16 @@ VillagersScreen
   VillagerCardList
     VillagerCard
       VillagerStateToggleGroup
-  VillagerDetailScreen
+  VillagerDetailModal
+    VillagerImageTabs
+    VillagerStateToggleGroup
+    VillagerInfoSections
+    HouseInfo
+    VillagerCollectibles
+    CampsiteVisitEditor
 ```
 
-액자 사진 보유 토글은 `CollectionRepository(itemType = "photo")`를 호출하고, 성공 후 주민 selector를 갱신한다.
+주민 목록은 417명 번들 데이터를 메모리에서 검색·필터·정렬한다. 상세에는 아이콘·전체·포스터·액자·하우스 외관·하우스 내부 이미지를 제공하고, 기준 데이터에 없는 활동 시간·가구 값은 행을 숨긴다. 액자 사진 보유 토글은 주민 상태의 `photo_received`와 연결하며, 포스터 보유는 `poster_owned`로 별도 저장한다. 캠핑장 방문일은 `YYYY-MM-DD`로 검증한 뒤 `campsite_visits`에 중복 없이 저장한다.
 
 ### 9.4 EncyclopediaScreen
 
@@ -1292,3 +1300,4 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 - v1.3 · 2026-08-29 · SRS·SAD·SDS 버전 정렬, 공통 타입·데이터 어댑터·온보딩·설정 계약 구체화
 - v1.4 · 2026-08-29 · 첫 수직 슬라이스, 게임 날짜·루틴 정책, Migration v1, Repository 동작, ViewModel·테스트·요구사항 추적 구체화
 - v1.5 · 2026-08-29 · 온보딩 테스트 fixture와 개발 DB 분리 규칙 반영
+- v1.6 · 2026-08-29 · 주민 417명 조회·상세·상태·캠핑장 이력·오프라인 이미지 구현 기준 반영
