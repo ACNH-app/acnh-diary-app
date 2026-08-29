@@ -1,9 +1,9 @@
 # 모동숲 다이어리 모바일 앱 요구사항 정의서
 
-문서 상태: Draft v1.0  
+문서 상태: Draft v1.1
 최종 수정일: 2026-08-29  
-대상: React Native + Expo 기반 모바일 앱  
-기준 데이터: 확보된 Nookipedia API 데이터
+대상: React Native + Expo SDK 57 + Expo Router + TypeScript 기반 모바일 앱
+기준 데이터: 저장소의 `dataset/app-ready/` 앱용 데이터셋
 
 ## 1. 문서 개요
 
@@ -18,7 +18,7 @@
 - 주민 검색·상세·상태 및 이력 관리
 - 곤충·물고기·해산물·화석·미술품 도감과 수집·기증 관리
 - 모바일 기기에서의 JSON 백업·복원
-- Nookipedia 출처·기준 데이터 버전·오픈소스 라이선스 고지
+- 기준 데이터별 원 출처·기준 데이터 버전·오픈소스 라이선스 고지
 - 카탈로그와 공략은 내비게이션 자리와 확장 계약만 제공하고 후속 단계에서 구현
 
 ### 1.3 제외 범위
@@ -47,6 +47,12 @@
 6. 기준 데이터가 갱신되어도 사용자의 기록은 유지한다.
 
 ## 3. 정보 구조와 내비게이션
+
+### 3.0 라우팅 결정
+
+앱 라우팅은 Expo Router를 사용한다. `acnh-diary-mobile/src/app/`의 파일과 폴더가 화면 경로를 정의하고, `_layout.tsx`에서 Stack·Tab·Modal 레이아웃을 구성한다. Expo Router가 내부적으로 React Navigation을 사용하더라도 앱 코드에서 React Navigation navigator를 별도로 구성하지 않는다.
+
+앱 번들 진입점은 `expo-router/entry`로 고정한다. `App.tsx`와 사용자 정의 `index.ts`는 앱 라우팅 진입점으로 사용하지 않는다.
 
 ### 3.1 최초 진입
 
@@ -205,7 +211,9 @@
 ### 5.1 저장 방식
 
 - 모바일 앱은 로그인 없이 기기 내 SQLite를 사용한다.
-- 기준 데이터는 앱 번들 또는 읽기 전용 로컬 데이터베이스에 저장한다.
+- 저장소의 `dataset/app-ready/`를 기준 데이터 입력 원본으로 사용한다.
+- 빌드 전에 앱에서 사용하는 `content/`와 `assets/`만 `acnh-diary-mobile/src/data/` 아래로 복사·검증해 번들한다. 앱 런타임이 저장소의 `seed/`를 직접 읽지 않는다.
+- 원본 출처는 ACNHAPI, Norviah, Nookipedia 등 파일별 출처 메타데이터로 관리하며, 특정 단일 API를 런타임 의존성으로 두지 않는다.
 - 사용자 기록은 기준 데이터와 별도 테이블에 저장한다.
 - 웹앱과 모바일앱 사이의 자동 동기화는 제공하지 않는다.
 - 앱 삭제나 기기 변경에 대비해 모바일 첫 출시부터 수동 백업·복원을 제공한다.
@@ -217,7 +225,7 @@
 ### 5.3 백업·복원
 
 - 전체 섬과 사용자 기록을 버전 포함 JSON 파일로 내보낸다.
-- 백업 파일에는 `schemaVersion`, `appVersion`, `exportedAt`, `dataVersion`, `islands`, `records`를 포함한다.
+- 백업 파일에는 `schemaVersion`, `appVersion`, `exportedAt`, `dataVersion`, `islands`, `profiles`, `routines`, `routineLogs`, `collectionRecords`, `villagerStates`, `residencies`, `campsiteVisits`, `npcVisits`, `appSettings`를 포함한다.
 - 가져오기 전에 JSON 형식, 스키마 버전, 중복 ID, 외래키 관계를 검증한다.
 - 복원은 기존 로컬 데이터 교체 여부를 확인한 후 하나의 SQLite 트랜잭션으로 수행한다.
 - 복원 실패 시 전체 rollback하고 기존 데이터를 유지한다.
@@ -232,7 +240,7 @@
 - **NFR-MOB-005 성능**: 첫 유효 화면 표시 목표는 일반 기기에서 2초 이내로 측정한다.
 - **NFR-MOB-006 데이터 보호**: 백업 파일 공유·삭제·복원에는 사용자 확인을 요구한다.
 - **NFR-MOB-007 호환성**: 최초 출시 기준 최소 지원 OS는 iOS 16.0+, Android 9.0(API 28+)로 한다. 이후 지원 범위는 필요 시 확장 또는 축소할 수 있다.
-- **NFR-MOB-008 출처 고지**: `설정 → 앱 정보 → 데이터 출처 및 라이선스`에서 Nookipedia 출처·이용 조건 링크, 기준 데이터 버전·갱신일, 오픈소스 라이선스를 표시한다.
+- **NFR-MOB-008 출처 고지**: `설정 → 앱 정보 → 데이터 출처 및 라이선스`에서 기준 데이터별 원 출처·이용 조건 링크, 기준 데이터 버전·갱신일, 오픈소스 라이선스를 표시한다.
 - **NFR-MOB-009 UI 일관성**: 둥근 형태와 파스텔 계열 디자인 토큰을 사용하되 텍스트와 아이콘의 대비를 확보한다.
 
 ## 7. 오류 및 예외 요구사항
@@ -266,9 +274,21 @@
 
 ## 9. 개발 단계
 
+### Phase 0 · 실행 기준선
+
+- 프로젝트 루트는 저장소의 `acnh-diary-mobile/`이다.
+- 패키지 관리자는 npm이며 `package-lock.json`을 기준으로 `npm ci`를 수행한다.
+- Expo SDK 57과 호환되는 패키지만 `npx expo install`로 추가한다.
+- `npx tsc --noEmit`과 `npx expo config --json`이 통과해야 한다.
+- 개발 서버 확인은 `npx expo start --offline`으로 수행한다.
+- iOS는 `npx expo run:ios`, Android는 네이티브 프로젝트를 생성한 후 `npx expo run:android`로 확인한다.
+- 웹은 최초 출시 플랫폼이 아니므로 `npm run web`을 모바일 빌드의 수용 기준으로 사용하지 않는다.
+
+Phase 0의 완료 기준은 스플래시 → 온보딩 → 오늘 화면의 이동, SQLite 초기화, 앱 재실행 시 섬 존재 여부 복원, iOS·Android 개발 빌드 실행이다.
+
 ### Phase 1 · 공통 기반
 
-Expo 프로젝트, TypeScript 도메인 패키지, Nookipedia 기준 데이터 정규화, SQLite migration, 디자인 토큰, 날짜·출현·월별 추천 테스트
+Expo Router 프로젝트, TypeScript 도메인 모듈, 앱용 기준 데이터 adapter, SQLite migration, 디자인 토큰, 날짜·출현·월별 추천 테스트
 
 ### Phase 2 · 모바일 MVP 핵심
 
@@ -287,10 +307,11 @@ JSON 백업·복원, 앱 정보·라이선스 화면, 접근성·성능·기기 
 ### 10.1 확정
 
 - 모바일은 React Native + Expo + TypeScript + SQLite 로컬 우선
+- 라우팅은 Expo Router를 사용하고 `src/app`을 공식 화면 루트로 사용
 - 로그인·서버·웹·모바일 자동 동기화 없음
 - 하단 탭은 오늘·주민·도감·카탈로그·공략
 - MVP 핵심은 오늘·주민·도감
-- 기준 데이터는 Nookipedia API 데이터
+- 기준 데이터 입력 원본은 `dataset/app-ready/`이며 ACNHAPI·Norviah·Nookipedia 등 파일별 출처를 보존
 - 도감 필터는 복수 선택 가능한 칩
 - 화석 정렬은 번호·이름·화석 그룹
 - 사진·포스터는 액자 사진과 포스터 탭으로 분리
@@ -299,11 +320,12 @@ JSON 백업·복원, 앱 정보·라이선스 화면, 접근성·성능·기기 
 - 모바일 첫 출시부터 버전 포함 JSON 백업·복원 제공
 - 앱 정보 화면과 앱 스토어에 출처·라이선스 표시
 
-### 10.2 후속 확정 사항
+### 10.2 세부 확정 사항
 
-- 도감 원본 필드명과 Nookipedia 원문은 내부 데이터에서 유지하고, 사용자 화면 표시명은 별도 UI 라벨 맵 JSON으로 관리한다. 최초 출시 기준은 한국어를 기본으로 하며, 이후 영어 locale 확장을 위해 동일한 키 구조를 재사용한다.
+- 도감 원본 필드명과 각 원천 데이터의 원문 키는 내부 데이터에서 유지하고, 사용자 화면 표시명은 별도 UI 라벨 맵 JSON으로 관리한다. 최초 출시 기준은 한국어를 기본으로 하며, 이후 영어 locale 확장을 위해 동일한 키 구조를 재사용한다.
 - 모바일 최소 지원 OS 버전은 최초 출시 기준으로 iOS 16.0+, Android 9.0(API 28+)를 기본값으로 설정한다. 이후 지원 범위는 필요 시 확장 또는 축소할 수 있다.
 
 ## 11. 변경 이력
 
 - v1.0 · 2026-08-29 · 모바일 앱 기준으로 SRS를 새로 작성하고 로컬 저장, 백업·복원, 모바일 MVP 범위를 명시
+- v1.1 · 2026-08-29 · Expo Router, 실제 저장소 경로, 앱용 데이터셋, 모바일 실행 기준선과 백업 계약을 확정

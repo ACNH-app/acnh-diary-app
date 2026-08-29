@@ -1,48 +1,54 @@
 # 모동숲 다이어리 모바일 앱 상세 설계서
 
-문서 상태: Draft v1.0  
+문서 상태: Draft v1.1
 최종 수정일: 2026-08-29  
-기준 문서: 모바일 SRS v1.0 · 모바일 SAD v1.0
+기준 문서: 모바일 SRS v1.1 · 모바일 SAD v1.1
 
 ## 1. 구현 기준
 
-모바일 앱은 Expo + React Native + TypeScript로 만들고, 사용자 기록은 `expo-sqlite`에 저장한다. FastAPI·Supabase·로그인·클라우드 동기화는 모바일 런타임에 포함하지 않는다. 최초 출시 기준 최소 지원 OS는 iOS 16.0+, Android 9.0(API 28+)이다.
+모바일 앱은 Expo SDK 57 + React Native + TypeScript + Expo Router로 만들고, 사용자 기록은 `expo-sqlite`에 저장한다. FastAPI·Supabase·로그인·클라우드 동기화는 모바일 런타임에 포함하지 않는다. 최초 출시 기준 최소 지원 OS는 iOS 16.0+, Android 9.0(API 28+)이다.
 
 ### 1.1 디렉터리 구조
 
 ```text
-apps/mobile/
-  app/
-    _layout.tsx
-    onboarding.tsx
-    (tabs)/
-      today.tsx
-      villagers.tsx
-      encyclopedia.tsx
-      catalog.tsx
-      guides.tsx
-    villagers/[villagerId].tsx
-    encyclopedia/[category]/index.tsx
-    encyclopedia/[category]/[itemId].tsx
-    settings/index.tsx
-    settings/data-license.tsx
-    backup/export.tsx
-    backup/import.tsx
+acnh-diary-mobile/
   src/
-    screens/
-    components/
+    app/
+      _layout.tsx
+      index.tsx
+      onboarding.tsx
+      (tabs)/
+        _layout.tsx
+        today.tsx
+        villagers.tsx
+        encyclopedia.tsx
+        catalog.tsx
+        guides.tsx
+      villagers/[villagerId].tsx
+      encyclopedia/[category]/index.tsx
+      encyclopedia/[category]/[itemId].tsx
+      settings/index.tsx
+      settings/data-license.tsx
+      backup/export.tsx
+      backup/import.tsx
+    domain/
+    data/
+    storage/
     features/
-    navigation/
+    components/
     hooks/
     db/
     backup/
-    assets/
-packages/
-  domain/
-  game-data/
-  storage/
-  ui-tokens/
+    ui/tokens/
+  assets/
+  scripts/
 ```
+
+현재 단계에서는 별도 monorepo `packages/`를 만들지 않는다. 도메인·기준 데이터·저장소 모듈은 앱 내부에서 분리하고, 여러 앱에서 공유할 필요가 생길 때만 별도 패키지로 추출한다.
+
+### 1.2 앱 진입점 및 라우팅
+
+`package.json`의 `main`은 `expo-router/entry`로 설정한다. `src/app/`이 유일한 route root이며, 루트 `App.tsx`와 사용자 정의 `index.ts`는 앱 라우팅 진입점으로 사용하지 않는다. Expo Router 내부에서 사용하는 React Navigation navigator를 앱에서 중복 구성하지 않는다.
 
 ## 2. TypeScript 도메인 타입
 
@@ -148,13 +154,15 @@ interface RoutineLog {
 
 `photo_received`는 별도 `VillagerStateType`으로 저장하지 않는다. 주민 액자 사진의 `CollectionRecord(itemType = "photo", owned = true)`를 selector에서 읽어 액자 상태를 계산한다. 사진과 포스터는 서로 다른 `itemType`으로 저장한다.
 
+TypeScript 모델은 camelCase를 사용하고 SQLite 컬럼은 snake_case를 사용한다. Repository가 두 표현 사이를 변환하며, 화면과 Domain이 SQL 컬럼명을 직접 사용하지 않는다.
+
 ## 3. 기준 데이터 타입
 
 ```typescript
 interface DataManifest {
   dataVersion: string;
-  source: "nookipedia-api";
-  sourceUrl: string;
+  sources: Array<"acnhapi" | "norviah" | "nookipedia">;
+  sourceUrls: string[];
   updatedAt: string;
   schemaVersion: number;
 }
@@ -609,7 +617,7 @@ SettingsScreen
   ManualDateSetting
 
 DataLicenseScreen
-  NookipediaSource
+  DataSources
   DataVersion
   LastUpdatedAt
   OpenSourceNotices
@@ -713,6 +721,15 @@ Import validation:
 
 ## 13. 구현 완료 정의
 
+구현은 먼저 Phase 0 실행 기준선을 통과해야 한다.
+
+- `acnh-diary-mobile/`에서 `npm ci` 수행
+- `npx expo config --json`과 `npx tsc --noEmit` 통과
+- `npx expo start --offline`으로 번들러 시작
+- iOS 개발 빌드 실행 확인
+- Android 네이티브 프로젝트 생성 후 개발 빌드 실행 확인
+- 웹 빌드는 최초 출시 수용 기준에서 제외
+
 - 모바일 SRS의 Must 요구사항이 코드·단위 테스트·화면 테스트에 연결된다.
 - 앱 재실행 후 모든 사용자 기록이 유지된다.
 - MVP 화면이 네트워크 없이 조회·수정된다.
@@ -725,7 +742,6 @@ Import validation:
 
 ## 14. 미정 항목
 
-- 최소 지원 iOS·Android 버전
 - 기준 데이터 자동 업데이트 방식
 - 백업 파일 암호화 여부
 - 오늘·주민 상세에 남은 물음표 필드의 최종 표시 여부
@@ -733,3 +749,4 @@ Import validation:
 ## 15. 변경 이력
 
 - v1.0 · 2026-08-29 · 모바일 앱 전용 코드 구조, 도메인 타입, SQLite schema, Repository, Use Case, 화면, 백업·복원, 테스트 설계 작성
+- v1.1 · 2026-08-29 · Expo Router, 실제 앱 경로, 앱용 데이터셋 출처, 백업 계약과 실행 기준선 확정

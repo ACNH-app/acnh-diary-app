@@ -1,12 +1,12 @@
 # 모동숲 다이어리 모바일 앱 아키텍처 설계서
 
-문서 상태: Draft v1.0  
+문서 상태: Draft v1.1
 최종 수정일: 2026-08-29  
-기준 문서: 모바일 SRS v1.0
+기준 문서: 모바일 SRS v1.1
 
 ## 1. 목적과 범위
 
-본 문서는 React Native + Expo 기반 모동숲 다이어리 모바일 앱의 아키텍처를 정의한다. 모바일 앱은 서버와 로그인 없이 SQLite에 기록을 저장하며, 웹앱의 HTTP·FastAPI 계층을 포함하지 않는다.
+본 문서는 React Native + Expo 기반 모동숲 다이어리 모바일 앱의 아키텍처를 정의한다. 모바일 앱은 서버와 로그인 없이 SQLite에 기록을 저장하며, 웹앱의 HTTP·FastAPI 계층을 포함하지 않는다. 현재 저장소에서는 `acnh-diary-mobile/`을 단일 Expo 앱으로 사용한다.
 
 ### 1.1 아키텍처 목표
 
@@ -25,15 +25,16 @@
 4. 모바일 앱은 인증·FastAPI·Supabase·웹 자동 동기화를 사용하지 않는다.
 5. 날짜·출현·월별 추천·필터·상태 규칙은 순수 TypeScript 도메인 모듈에 둔다.
 6. 상세 화면은 모바일 독립 스크린으로 제공한다.
-7. 기준 데이터 원문 필드명과 Nookipedia 키는 유지하고, 사용자 화면 표시명은 locale 기반 UI 라벨 맵 JSON으로 관리한다.
-8. 최초 출시 기준 최소 지원 OS는 iOS 16.0+, Android 9.0(API 28+)로 설정한다.
+7. 라우팅은 Expo Router를 사용하고 `acnh-diary-mobile/src/app/`을 공식 화면 루트로 사용한다.
+8. 기준 데이터 원문 필드명과 각 원천 데이터의 키는 유지하고, 사용자 화면 표시명은 locale 기반 UI 라벨 맵 JSON으로 관리한다.
+9. 최초 출시 기준 최소 지원 OS는 iOS 16.0+, Android 9.0(API 28+)로 설정한다.
 
 ## 2. 시스템 컨텍스트
 
 ```mermaid
 flowchart TB
   U["사용자"] --> A["Expo 모바일 앱"]
-  A --> D["공용 TypeScript 도메인"]
+  A --> D["TypeScript 도메인 모듈"]
   A --> R["SQLite Repository"]
   A --> G["읽기 전용 게임 기준 데이터"]
   A --> B["JSON 백업·복원 파일"]
@@ -43,15 +44,15 @@ flowchart TB
 
 ## 3. 모듈 경계
 
-### 3.1 `apps/mobile`
+### 3.1 `acnh-diary-mobile/src/app`
 
-- Expo 앱 진입점
-- React Navigation 탭·스택
+- Expo Router route root
+- Expo Router route와 layout
 - 화면·컴포넌트·접근성
 - SQLite 연결과 앱 lifecycle
 - 파일 선택·공유·백업 UI
 
-### 3.2 `packages/domain`
+### 3.2 `acnh-diary-mobile/src/domain`
 
 - 게임 날짜 계산
 - 반구·월·전월 순환
@@ -62,22 +63,23 @@ flowchart TB
 - 루틴 유효기간과 완료 상태
 - 컬렉션 상태 허용 필드 검증
 
-### 3.3 `packages/game-data`
+### 3.3 `acnh-diary-mobile/src/data`
 
-- Nookipedia API 원천 데이터를 앱 도메인 모델로 정규화
+- `dataset/app-ready/`의 앱용 기준 데이터를 도메인 모델로 정규화
+- ACNHAPI·Norviah·Nookipedia 등 파일별 원천 출처와 데이터 버전 보존
 - 원문 필드명과 UI 표시명 분리: raw key 유지, locale label map으로 한국어/영어 라벨 제공
-- `dataVersion`, `source`, `updatedAt` 메타데이터
+- `dataVersion`, `sources`, `sourceUrls`, `updatedAt` 메타데이터
 - 곤충·물고기·해산물·화석·미술품·주민·카탈로그 데이터
 - 이미지 URI와 상세 필드의 nullable 처리
 
-### 3.4 `packages/storage`
+### 3.4 `acnh-diary-mobile/src/storage`
 
 - SQLite schema와 migration
 - 기준 데이터 reader
 - 사용자 기록 Repository
 - 백업 export/import serializer
 
-### 3.5 `packages/ui-tokens`
+### 3.5 `acnh-diary-mobile/src/ui/tokens`
 
 - 둥근 모서리
 - 파스텔 계열 색상
@@ -103,7 +105,7 @@ Screen
 ## 5. 오프라인 우선 데이터 흐름
 
 1. 앱 시작 시 SQLite 연결과 migration을 완료한다.
-2. 기준 데이터 manifest의 버전과 로컬 기준 데이터 버전을 확인한다.
+2. `src/data/`에 번들된 기준 데이터 manifest의 버전과 원천 출처를 확인한다.
 3. 활성 섬을 조회한다.
 4. 화면은 기준 데이터와 islandId별 사용자 기록을 결합한다.
 5. 사용자가 상태를 변경하면 Use Case가 먼저 입력을 검증한다.
@@ -114,12 +116,17 @@ Screen
 
 ## 6. 화면 아키텍처
 
-### 6.1 루트 네비게이터
+### 6.1 Expo Router 루트 레이아웃
 
-- `SplashScreen`
-- `OnboardingStack`
-- `MainTabNavigator`
-- `ModalStack` — 아이템 선택·확인·필터·백업 복원
+- `src/app/_layout.tsx` — 초기화와 공통 Stack
+- `src/app/onboarding.tsx` — 온보딩 화면
+- `src/app/(tabs)/_layout.tsx` — 하단 탭 레이아웃
+- `src/app/(tabs)/today.tsx` — 오늘 화면
+- `src/app/(tabs)/villagers.tsx` — 주민 화면
+- `src/app/(tabs)/encyclopedia.tsx` — 도감 화면
+- `src/app/(tabs)/catalog.tsx`, `guides.tsx` — 준비 중 화면
+- `src/app/**/[id].tsx` — 상세 화면과 동적 route
+- Modal은 route group 또는 `presentation: "modal"` 옵션으로 구성한다.
 
 ### 6.2 탭 구조
 
@@ -146,13 +153,13 @@ SQLite에 다음 데이터를 저장한다.
 - npc_visits
 - app_settings, schema_meta
 
-모든 사용자 테이블은 islandId를 포함한다. 앱 전역 설정과 기준 데이터 manifest만 섬과 무관하다.
+섬에 종속된 사용자 테이블은 모두 `islandId`를 포함한다. `app_settings`, `schema_meta`, 기준 데이터 manifest는 앱 전역이므로 섬과 무관하다.
 
 ### 7.2 기준 데이터
 
 기준 데이터는 읽기 전용이다. 권장 구성은 카테고리별 압축 JSON이며, 데이터가 커지면 읽기 전용 SQLite로 전환한다. 기준 데이터의 `itemId`는 사용자 `collection_records`와 연결되는 안정적인 키여야 한다.
 
-원문 Nookipedia 키와 화면 표시명은 분리 관리한다. raw 데이터는 내부 필드명 그대로 유지하고, UI 라벨은 locale 기반 `ui-labels.json` 또는 `labels.ko.json`/`labels.en.json` 맵을 통해 해석한다. 해당 맵은 같은 key 구조를 재사용해 영어 확장을 가능하게 한다.
+각 원천 데이터의 원문 키와 화면 표시명은 분리 관리한다. raw 데이터는 내부 필드명 그대로 유지하고, UI 라벨은 locale 기반 `ui-labels.json` 또는 `labels.ko.json`/`labels.en.json` 맵을 통해 해석한다. 해당 맵은 같은 key 구조를 재사용해 영어 확장을 가능하게 한다.
 
 ### 7.3 기록과 기준 데이터 결합
 
@@ -198,9 +205,17 @@ Mobile ViewModel(item, state, displayFlags)
   "schemaVersion": 1,
   "appVersion": "1.0.0",
   "exportedAt": "2026-08-29T12:00:00.000Z",
-  "dataVersion": "nookipedia-2026-08",
+  "dataVersion": "app-data-2026-08",
   "islands": [],
-  "records": {}
+  "profiles": [],
+  "routines": [],
+  "routineLogs": [],
+  "collectionRecords": [],
+  "villagerStates": [],
+  "residencies": [],
+  "campsiteVisits": [],
+  "npcVisits": [],
+  "appSettings": {}
 }
 ```
 
@@ -245,9 +260,13 @@ Mobile ViewModel(item, state, displayFlags)
 
 ## 13. 출시 단계
 
+### Phase 0
+
+`acnh-diary-mobile/`에서 npm 의존성 설치, Expo 설정 확인, TypeScript 검사, 오프라인 Metro 시작, iOS·Android 개발 빌드 실행을 검증한다. 웹은 최초 출시 플랫폼이 아니므로 모바일 기준선에 포함하지 않는다.
+
 ### Phase 1
 
-공용 TypeScript 도메인, 기준 데이터 adapter, SQLite migration, 디자인 토큰
+TypeScript 도메인 모듈, `src/data` 기준 데이터 adapter, SQLite migration, 디자인 토큰
 
 ### Phase 2
 
@@ -263,7 +282,6 @@ Mobile ViewModel(item, state, displayFlags)
 
 ## 14. 미정 또는 별도 결정
 
-- 최소 지원 iOS·Android 버전
 - 오늘 화면에 남은 `출현시간/월???`, 이벤트 범위 물음표
 - 주민 상세의 데뷔작·섬 주민 가능 여부·색상 물음표
 - 기준 데이터 자동 업데이트 배포 방식
@@ -272,3 +290,4 @@ Mobile ViewModel(item, state, displayFlags)
 ## 15. 변경 이력
 
 - v1.0 · 2026-08-29 · 모바일 앱 전용 아키텍처, SQLite·오프라인·백업·복원·출처 고지 설계 작성
+- v1.1 · 2026-08-29 · Expo Router, 실제 앱 경로, 앱용 데이터셋 출처, 백업 계약과 실행 기준선 확정
