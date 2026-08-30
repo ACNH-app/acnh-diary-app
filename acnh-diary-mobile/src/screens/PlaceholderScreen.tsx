@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppChrome } from '@/components/AppChrome';
+import { AppColors } from '@/constants/theme';
 
 type PlaceholderScreenProps = {
   title: string;
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 24,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: AppColors.background,
   },
   description: {
     color: '#6b7280',

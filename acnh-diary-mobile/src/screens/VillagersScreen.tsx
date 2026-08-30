@@ -16,6 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 
 import { AppChrome } from '@/components/AppChrome';
+import { AppColors } from '@/constants/theme';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import {
   ListFilterChip,
@@ -77,19 +78,19 @@ const hobbyOptions = Array.from(new Set(villagers.map((villager) => villager.hob
 
 const subtypeOptions = Array.from(new Set(villagers.map((villager) => villager.subtype))).sort();
 
-const categoryOptions: Array<{ category: Category; label: string }> = [
+const categoryOptions: Array<{ category: Category; icon?: string; label: string }> = [
   { category: 'all', label: '전체' },
-  { category: 'wishlist', label: '위시' },
-  { category: 'islandResident', label: '우리 섬' },
-  { category: 'movedOut', label: '이사 감' },
-  { category: 'campsiteVisited', label: '캠핑장' },
+  { category: 'wishlist', icon: '♡', label: '위시' },
+  { category: 'islandResident', icon: '⌂', label: '우리 섬' },
+  { category: 'movedOut', icon: '↗', label: '이사 감' },
+  { category: 'campsiteVisited', icon: '?', label: '캠핑장' },
   { category: 'outside', label: '섬 외' },
-  { category: 'photoReceived', label: '액자' },
+  { category: 'photoReceived', icon: '▣', label: '액자' },
 ];
 
 const statusOptions: Array<{ status: VillagerStatus; icon: string; label: string }> = [
   { status: 'wishlist', icon: '♡', label: '위시 주민' },
-  { status: 'campsiteVisited', icon: '⛺', label: '캠핑장 방문' },
+  { status: 'campsiteVisited', icon: '?', label: '캠핑장 방문' },
   { status: 'islandResident', icon: '⌂', label: '섬 주민' },
   { status: 'movedOut', icon: '↗', label: '이사 감' },
   { status: 'photoReceived', icon: '▣', label: '액자 선물' },
@@ -356,8 +357,9 @@ export function VillagersScreen() {
           <View>
             <UnderlineTabs
               accessibilityLabel={(tab) => `${tab.label} 주민 보기`}
+              fitToWidth
               onChange={setCategory}
-              tabs={categoryOptions.map((option) => ({ key: option.category, label: option.label }))}
+              tabs={categoryOptions.map(({ category, icon, label }) => ({ key: category, icon, label }))}
               value={category}
             />
 
@@ -425,19 +427,6 @@ export function VillagersScreen() {
               totalCount={categoryVillagers.length}
             />
 
-            <ScrollView
-              contentContainerStyle={styles.statusLegendContent}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={styles.statusLegend}>
-              <Text style={styles.statusLegendTitle}>상태 아이콘</Text>
-              {statusOptions.map((option) => (
-                <View key={option.status} style={styles.statusLegendItem}>
-                  <Text style={styles.statusLegendIcon}>{option.icon}</Text>
-                  <Text style={styles.statusLegendText}>{option.label}</Text>
-                </View>
-              ))}
-            </ScrollView>
           </View>
         }
         numColumns={2}
@@ -538,7 +527,7 @@ export function VillagerDetailScreen({ villagerId }: { villagerId: string }) {
   if (!villager) {
     return (
       <View style={styles.screenRoot}>
-        <AppChrome showBack title="주민" />
+        <AppChrome breadcrumbs={['주민']} showBack title="주민" />
         <SafeAreaView edges={[]} style={styles.safeArea}>
           <View style={styles.emptyState}>
             <Text style={styles.emptyTitle}>주민을 찾을 수 없어요</Text>
@@ -551,7 +540,7 @@ export function VillagerDetailScreen({ villagerId }: { villagerId: string }) {
 
   return (
     <View style={styles.screenRoot}>
-      <AppChrome showBack title={villager.name_ko} />
+      <AppChrome breadcrumbs={['주민']} showBack title={villager.name_ko} />
       <SafeAreaView edges={[]} style={styles.safeArea}>
         <VillagerDetailContent
           campsiteVisits={campsiteVisits}
@@ -1001,7 +990,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   safeArea: {
-    backgroundColor: '#F7F8F2',
+    backgroundColor: AppColors.background,
     flex: 1,
   },
   listContent: {
@@ -1085,34 +1074,6 @@ const styles = StyleSheet.create({
   heroLeafText: {
     color: '#D7E9C8',
     fontSize: 24,
-  },
-  statusLegend: {
-    marginBottom: 13,
-  },
-  statusLegendContent: {
-    alignItems: 'center',
-    gap: 10,
-    paddingRight: 8,
-  },
-  statusLegendTitle: {
-    color: '#7C897E',
-    fontSize: 10,
-    fontWeight: '800',
-    marginRight: 2,
-  },
-  statusLegendItem: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: 4,
-  },
-  statusLegendIcon: {
-    color: '#587A5D',
-    fontSize: 15,
-    fontWeight: '700',
-  },
-  statusLegendText: {
-    color: '#8C978D',
-    fontSize: 10,
   },
   villagerCard: {
     backgroundColor: '#FFFFFF',

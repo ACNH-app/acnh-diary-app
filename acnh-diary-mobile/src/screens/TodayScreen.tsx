@@ -14,6 +14,7 @@ import { useFocusEffect } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppChrome } from '@/components/AppChrome';
+import { AppColors } from '@/constants/theme';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
 import { getCatalogItems } from '@/data/catalog';
 import { getEncyclopediaItems } from '@/data/encyclopedia';
@@ -303,7 +304,7 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
     return (
       <View style={styles.screenRoot}>
         <AppChrome title="오늘" />
-        <SafeAreaView edges={[]} style={styles.emptyContainer}>
+        <SafeAreaView edges={[]} style={[styles.emptyContainer, { backgroundColor: AppColors.background }]}>
           <Text style={styles.emptyTitle}>아직 섬이 없어요</Text>
           <Text style={styles.emptyDescription}>온보딩에서 첫 섬을 만들어 주세요.</Text>
         </SafeAreaView>
@@ -315,7 +316,7 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   return (
     <View style={styles.screenRoot}>
       <AppChrome title="오늘" />
-      <SafeAreaView edges={[]} style={styles.safeArea}>
+      <SafeAreaView edges={[]} style={[styles.safeArea, { backgroundColor: AppColors.background }]}>
         <ScrollView contentContainerStyle={styles.content} ref={scrollRef} showsVerticalScrollIndicator={false}>
         <View style={styles.islandCard}><Text style={styles.cardEyebrow}>ACTIVE ISLAND</Text><Text style={styles.islandName}>{island.name}</Text><View style={styles.islandRule} /><Text style={styles.profileText}>{island.playerName ?? '주민대표 미입력'} · {island.hemisphere === 'south' ? '남반구' : '북반구'}</Text></View>
         <View style={styles.dateCard}><View style={styles.dateCopy}><Text style={styles.sectionTitle}>{formatDate(gameDate)}{manualDate ? ' · 수동 날짜' : ''}</Text><Text style={styles.dateHint}>오전 5시 기준 · {island.timezone ?? 'Asia/Seoul'}</Text></View><View style={styles.dateActions}><Pressable accessibilityLabel="하루 전" onPress={() => setDate(shiftIsoDate(gameDate, -1))} style={styles.dateButton}><Text style={styles.dateButtonText}>‹</Text></Pressable><Pressable accessibilityLabel="오늘 날짜로 돌아가기" onPress={() => setDate(null)} style={styles.todayButton}><Text style={styles.todayButtonText}>오늘</Text></Pressable><Pressable accessibilityLabel="하루 뒤" onPress={() => setDate(shiftIsoDate(gameDate, 1))} style={styles.dateButton}><Text style={styles.dateButtonText}>›</Text></Pressable></View></View>

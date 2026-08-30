@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useRouter } from 'expo-router';
 
 import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
+import { AppColors } from '@/constants/theme';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
@@ -339,7 +340,7 @@ function InfoRow({ label, value }: { label: string; value: string }) {
 
 const styles = StyleSheet.create({
   screenRoot: { flex: 1 },
-  safeArea: { backgroundColor: '#F6F8F2', flex: 1 },
+  safeArea: { backgroundColor: AppColors.background, flex: 1 },
   content: { padding: 18, paddingBottom: 40 },
   headerRow: { alignItems: 'center', flexDirection: 'row', marginBottom: 18 },
   backButton: { alignItems: 'center', backgroundColor: '#E5EEE0', borderRadius: 20, height: 40, justifyContent: 'center', marginRight: 12, width: 40 },

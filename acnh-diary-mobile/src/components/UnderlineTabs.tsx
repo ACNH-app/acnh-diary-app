@@ -1,12 +1,14 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export type UnderlineTab<T extends string> = {
+  icon?: string;
   key: T;
   label: string;
 };
 
 type UnderlineTabsProps<T extends string> = {
   accessibilityLabel?: (tab: UnderlineTab<T>) => string;
+  fitToWidth?: boolean;
   onChange: (key: T) => void;
   tabs: readonly UnderlineTab<T>[];
   value: T;
@@ -14,6 +16,7 @@ type UnderlineTabsProps<T extends string> = {
 
 export function UnderlineTabs<T extends string>({
   accessibilityLabel,
+  fitToWidth = false,
   onChange,
   tabs,
   value,
@@ -31,8 +34,17 @@ export function UnderlineTabs<T extends string>({
               accessibilityState={{ selected }}
               key={tab.key}
               onPress={() => onChange(tab.key)}
-              style={[styles.tab, selected && styles.tabActive]}>
-              <Text style={[styles.tabText, selected && styles.tabTextActive]}>{tab.label}</Text>
+              style={[styles.tab, fitToWidth && styles.tabFitToWidth, selected && styles.tabActive]}>
+              <View style={[styles.tabLabelRow, fitToWidth && styles.tabLabelRowCompact]}>
+                {tab.icon ? (
+                  <Text style={[styles.tabIcon, fitToWidth && styles.tabIconCompact, selected && styles.tabTextActive]}>
+                    {tab.icon}
+                  </Text>
+                ) : null}
+                <Text style={[styles.tabText, fitToWidth && styles.tabTextCompact, selected && styles.tabTextActive]}>
+                  {tab.label}
+                </Text>
+              </View>
             </Pressable>
           );
         })}
@@ -61,6 +73,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     paddingVertical: 13,
   },
+  tabFitToWidth: {
+    minWidth: 44,
+    paddingHorizontal: 2,
+  },
   tabActive: {
     borderBottomColor: '#55A487',
   },
@@ -68,6 +84,25 @@ const styles = StyleSheet.create({
     color: '#728074',
     fontSize: 13,
     fontWeight: '800',
+  },
+  tabTextCompact: {
+    fontSize: 11,
+  },
+  tabLabelRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 4,
+  },
+  tabLabelRowCompact: {
+    gap: 0,
+  },
+  tabIcon: {
+    color: '#728074',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  tabIconCompact: {
+    fontSize: 12,
   },
   tabTextActive: {
     color: '#398A6D',

@@ -24,6 +24,23 @@ export const Colors = {
   },
 } as const;
 
+export const AppColors = {
+  background: '#FFF9EC',
+  border: '#EADCC8',
+  topBar: '#FFFDF8',
+  tabBar: '#FFFDF8',
+  tabBarBorder: '#E9E2D8',
+  tabBarActive: '#83B6C7',
+  tabBarActiveSurface: '#E8F3F6',
+  tabBarInactive: '#A5AAA3',
+} as const;
+
+export const AppTabBarStyle = {
+  backgroundColor: AppColors.tabBar,
+  borderTopColor: AppColors.tabBarBorder,
+  borderTopWidth: 1,
+};
+
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 
 export const Fonts = Platform.select({

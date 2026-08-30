@@ -12,6 +12,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
+import { AppColors } from '@/constants/theme';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import {
@@ -485,7 +486,7 @@ function EncyclopediaCard({
 
 const styles = StyleSheet.create({
   screenRoot: { flex: 1 },
-  safeArea: { backgroundColor: '#F6F8F2', flex: 1 },
+  safeArea: { backgroundColor: AppColors.background, flex: 1 },
   listContent: { padding: 18, paddingBottom: 32 },
   columnWrapper: { gap: 8 },
   headerRow: { alignItems: 'center', flexDirection: 'row', marginBottom: 20 },

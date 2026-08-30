@@ -13,6 +13,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
+import { AppColors } from '@/constants/theme';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import {
   ListFilterChip,
@@ -496,7 +497,7 @@ function CatalogCard({
 
 const styles = StyleSheet.create({
   screenRoot: { flex: 1 },
-  safeArea: { backgroundColor: '#F6F8F2', flex: 1 },
+  safeArea: { backgroundColor: AppColors.background, flex: 1 },
   listContent: { paddingBottom: 8, paddingHorizontal: 18 },
   columnWrapper: { gap: 10 },
   searchBar: { flex: 1, minWidth: 0 },

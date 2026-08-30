@@ -14,6 +14,7 @@ import {
 } from '@/db/database';
 import type { Hemisphere, Island, IslandInput } from '@/types/island';
 import { AppChrome } from '@/components/AppChrome';
+import { AppColors } from '@/constants/theme';
 
 type FormState = {
   name: string;
@@ -220,7 +221,7 @@ function Field({ label, value, onChangeText, keyboardType }: { label: string; va
 
 const styles = StyleSheet.create({
   screenRoot: { flex: 1 },
-  safeArea: { backgroundColor: '#F6F8F2', flex: 1 },
+  safeArea: { backgroundColor: AppColors.background, flex: 1 },
   content: { padding: 20, paddingBottom: 48 },
   addButton: { backgroundColor: '#31573D', borderRadius: 14, paddingHorizontal: 12, paddingVertical: 9 },
   addButtonText: { color: '#FFF', fontSize: 12, fontWeight: '800' },

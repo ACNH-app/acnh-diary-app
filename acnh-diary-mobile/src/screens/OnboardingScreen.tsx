@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { AppColors } from '@/constants/theme';
+
 import type { Hemisphere, IslandInput } from '../types/island';
 
 type OnboardingScreenProps = {
@@ -316,7 +318,7 @@ function FormField({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F7F8F2',
+    backgroundColor: AppColors.background,
   },
   keyboardView: {
     flex: 1,
@@ -586,7 +588,7 @@ const styles = StyleSheet.create({
     marginBottom: 9,
   },
   bottomBar: {
-    backgroundColor: '#F7F8F2',
+    backgroundColor: AppColors.background,
     borderTopColor: '#E5E8DE',
     borderTopWidth: 1,
     paddingHorizontal: 22,

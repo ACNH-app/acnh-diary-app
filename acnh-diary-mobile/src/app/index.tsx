@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { getIslandCount, initializeDatabase } from '../db/database';
 import { SplashScreen } from '../screens/SplashScreen';
+import { AppColors } from '@/constants/theme';
 
 type BootstrapState = 'loading' | 'ready' | 'error';
 
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 24,
-    backgroundColor: '#f9fafb',
+    backgroundColor: AppColors.background,
   },
   errorTitle: {
     color: '#111827',

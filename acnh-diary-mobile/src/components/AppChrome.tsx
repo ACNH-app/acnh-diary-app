@@ -4,6 +4,7 @@ import { useNavigation, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppTopBar } from '@/components/AppTopBar';
+import { AppColors, AppTabBarStyle } from '@/constants/theme';
 import { getActiveIsland } from '@/db/database';
 import type { Island } from '@/types/island';
 
@@ -47,11 +48,11 @@ export function useTabBarVisibility(navigationVisible: boolean) {
 
     parent.setOptions({
       // Remove the tab bar from layout while hidden so list content can fill the viewport.
-      tabBarStyle: navigationVisible ? undefined : { display: 'none' },
+      tabBarStyle: navigationVisible ? AppTabBarStyle : { display: 'none' },
     });
 
     return () => {
-      parent.setOptions({ tabBarStyle: undefined });
+      parent.setOptions({ tabBarStyle: AppTabBarStyle });
     };
   }, [navigation, navigationVisible]);
 }
@@ -64,7 +65,13 @@ type AppChromeProps = {
   onBack?: () => void;
 };
 
-export function AppChrome({ title, breadcrumbs, showBack, showMenu = true, onBack }: AppChromeProps) {
+export function AppChrome({
+  title,
+  breadcrumbs,
+  showBack,
+  showMenu = true,
+  onBack,
+}: AppChromeProps) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
@@ -178,7 +185,7 @@ export function AppChrome({ title, breadcrumbs, showBack, showMenu = true, onBac
 const styles = StyleSheet.create({
   modalBackdrop: { flex: 1 },
   backdropPressable: { backgroundColor: 'rgba(20, 38, 25, 0.35)', bottom: 0, left: 0, position: 'absolute', right: 0, top: 0, zIndex: 0 },
-  drawer: { backgroundColor: '#F7F8F2', borderBottomLeftRadius: 28, borderTopLeftRadius: 28, bottom: 0, elevation: 12, overflow: 'hidden', position: 'absolute', right: 0, shadowColor: '#1D3826', shadowOffset: { height: 0, width: -4 }, shadowOpacity: 0.18, shadowRadius: 12, top: 0, zIndex: 1 },
+  drawer: { backgroundColor: AppColors.background, borderBottomLeftRadius: 28, borderTopLeftRadius: 28, bottom: 0, elevation: 12, overflow: 'hidden', position: 'absolute', right: 0, shadowColor: '#1D3826', shadowOffset: { height: 0, width: -4 }, shadowOpacity: 0.18, shadowRadius: 12, top: 0, zIndex: 1 },
   drawerContent: { flex: 1, paddingHorizontal: 21 },
   drawerHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
   drawerKicker: { color: '#799078', fontSize: 10, fontWeight: '800', letterSpacing: 1.5 },

@@ -1,8 +1,8 @@
 # 모동숲 다이어리 모바일 앱 상세 설계서
 
-문서 상태: Draft v2.8
+문서 상태: Draft v3.2
 최종 수정일: 2026-08-30
-기준 문서: 모바일 SRS v2.0 · 모바일 SAD v1.8
+기준 문서: 모바일 SRS v2.4 · 모바일 SAD v2.3
 
 ## 1. 구현 기준
 
@@ -39,6 +39,9 @@ acnh-diary-mobile/
       CatalogDetailScreen.tsx
     components/
       CollectionStatusIcon.tsx
+      CollectionHomeShell.tsx
+      AppChrome.tsx
+      AppTopBar.tsx
     db/
       database.ts
     domain/       # planned
@@ -64,7 +67,7 @@ acnh-diary-mobile/
   scripts/
 ```
 
-현재 구현은 Phase 0 실행 골격 위에 온보딩·섬 관리·오늘·주민·도감·카탈로그 MVP를 수직 슬라이스로 추가한 상태다. 도감과 카탈로그는 카테고리별 앱용 JSON, 고정 ID 기반 로컬 이미지 맵, SQLite 수집 상태 저장을 사용한다. 카탈로그는 11개 분류의 기본 아이템과 변형을 제공하며 가구 변형은 보유 여부·수량까지 기록한다. `domain`·`storage`·`backup`의 전체 Repository 추상화와 클라우드 기능은 후속 단계로 남긴다. 별도 monorepo `packages/`는 만들지 않는다.
+현재 구현은 Phase 0 실행 골격 위에 온보딩·섬 관리·오늘·주민·도감·카탈로그 MVP를 수직 슬라이스로 추가한 상태다. 도감과 카탈로그는 카테고리별 앱용 JSON, 고정 ID 기반 로컬 이미지 맵, SQLite 수집 상태 저장을 사용한다. 카탈로그는 12개 분류의 기본 아이템과 변형을 제공하며 가구 변형은 보유 여부·수량까지 기록한다. `domain`·`storage`·`backup`의 전체 Repository 추상화와 클라우드 기능은 후속 단계로 남긴다. 별도 monorepo `packages/`는 만들지 않는다.
 
 ### 1.2 앱 진입점 및 라우팅
 
@@ -89,7 +92,7 @@ acnh-diary-mobile/
 - 현재 월·시간의 생물 목록과 채집·기증 상태
 - 주간 NPC 기록, 기본 주말 NPC, 주간 초기화, 주간·월간 생일 캘린더
 - 섬 관리 화면의 전환·추가·수정·삭제 및 마지막 섬 삭제 차단
-- 카탈로그 11개 대분류, 고정 소분류 순서, 목록 필터·정렬·상세·로컬 이미지
+- 카탈로그 12개 대분류, 고정 소분류 순서, 목록 필터·정렬·상세·로컬 이미지
 - 레시피 재료·시즌·이벤트·재료별 필터와 가구 변형별 보유·수량 기록
 
 후속 범위:
@@ -502,7 +505,7 @@ interface Artwork {
 - 출현 시간·월·위치·가격은 Domain이 사용할 정규화 필드로 변환하고, 원본에 없는 값은 `null`로 둔다.
 - 미술품은 `dataset/app-ready/seed/supabase_seed/content_db/catalog_items.json`의 `catalog_type = "art"` 레코드를 앱용 `content/encyclopedia/art.json`으로 정규화한다. 진품·가품 이미지 URL과 구별 설명은 artwork 하위 필드로 보존한다.
 - 도감 기준 데이터는 `content/encyclopedia/{bugs,fish,sea,fossils,art}.json`으로 분리하고, `encyclopedia-assets.ts`가 `{category}/{itemId}` 고정 키를 Metro 정적 자산으로 연결한다.
-- 카탈로그 기준 데이터는 `catalog_items.json`에서 `furniture`, `interior`, `clothing`, `music`, `items`, `tools`, `special_items`, `gyroids`, `photos`, `recipes`, `reactions` 11개 유형만 추려 `content/catalog/catalog.json`으로 만든다. 변형은 `content/catalog/catalog-variations.json`으로 분리한다.
+- 카탈로그 기준 데이터는 `catalog_items.json`에서 `furniture`, `interior`, `clothing`, `music`, `items`, `tools`, `special_items`, `gyroids`, `photos`, `recipes`, `seasonal_recipes`, `reactions` 12개 유형만 추려 `content/catalog/catalog.json`으로 만든다. 변형은 `content/catalog/catalog-variations.json`으로 분리한다.
 - 카탈로그 기본 항목은 `id`, `catalogType`, 한국어·영어 이름, 분류, 획득 방법, 구매·판매가, 통화 코드, 이벤트 정보, nullable 상세 필드, `assetType`·`assetId`를 가진다. 상세 필드가 비어 있으면 화면에서 행을 만들지 않는다. 레시피는 `details.materials`와 `details.recipeFilters`를 추가로 가진다.
 - 카탈로그 생성 스크립트는 `node scripts/build_mobile_catalog_data.js`이며 raw JSON은 앱 번들에 포함하지 않는다. 현재 생성 결과는 기본 항목 7,443개와 변형 24,897개다.
 - 카탈로그 이미지는 `catalog-assets.ts`와 `music-assets.ts`의 Metro 정적 require 맵을 통해 로컬에서 해석한다. 이미지가 없는 항목은 데이터의 원격 URL을 기준 정보로 보존하되 오프라인 화면에서는 안전한 placeholder를 사용한다. NPC 전용 이미지는 현재 앱용 오프라인 캐시에 없어 이름 이니셜 fallback을 사용한다.
@@ -703,7 +706,7 @@ Migration은 번호가 증가해야 하고, 사용자 기록을 삭제하지 않
 | v1 | `routine_logs` | 섬·루틴·게임 날짜별 진행 상태 |
 | v1 | `app_settings` | 수동 날짜와 데이터 버전 |
 
-현재 실행 기준선은 `collection_records`와 주민 상태·캠핑장 방문·NPC 방문·앱 설정 테이블까지 생성한다. `collection_records`는 `(island_id, item_type, item_id)`를 복합 키로 사용하고 `caught`, `owned`, `donated`, `genuine_owned`, `fake_owned`, `quantity`를 독립 필드로 저장한다. 화면에서 허용하는 상태는 카테고리별로 다르며, 생물은 `caught`·`donated`, 화석은 `owned`·`donated`, 미술품은 `genuine_owned`·`fake_owned`·`donated`, 카탈로그는 `owned`만 사용한다. 카탈로그의 `item_type`은 11개 `CatalogCategory` 값이고 `item_id`는 기본 아이템의 고정 ID다. 가구 변형은 `item_id::variationId`와 `quantity`를 사용한다. 기존 `owned` 컬럼은 화석과 이전 데이터 호환성을 위해 유지한다. 정식 비동기 migration과 백업 Repository는 후속 단계에서 목표 스키마에 맞춰 확장한다.
+현재 실행 기준선은 `collection_records`와 주민 상태·캠핑장 방문·NPC 방문·앱 설정 테이블까지 생성한다. `collection_records`는 `(island_id, item_type, item_id)`를 복합 키로 사용하고 `caught`, `owned`, `donated`, `genuine_owned`, `fake_owned`, `quantity`를 독립 필드로 저장한다. 화면에서 허용하는 상태는 카테고리별로 다르며, 생물은 `caught`·`donated`, 화석은 `owned`·`donated`, 미술품은 `genuine_owned`·`fake_owned`·`donated`, 카탈로그는 `owned`만 사용한다. 카탈로그의 `item_type`은 12개 `CatalogCategory` 값이고 `item_id`는 기본 아이템의 고정 ID다. 가구 변형은 `item_id::variationId`와 `quantity`를 사용한다. 기존 `owned` 컬럼은 화석과 이전 데이터 호환성을 위해 유지한다. 정식 비동기 migration과 백업 Repository는 후속 단계에서 목표 스키마에 맞춰 확장한다.
 
 Migration 실행 규칙:
 
@@ -1110,6 +1113,7 @@ interface GameDatePickerProps {
 ```text
 VillagersScreen
   UnderlineTabs
+    StatusIcon + Label
   ListSearchRow
     SearchBar
     ListFilterToggle
@@ -1134,8 +1138,23 @@ VillagersScreen
 ### 9.4 EncyclopediaScreen
 
 ```text
+CollectionHomeShell
+  AppChrome
+  CollectionHomeSummaryCard
+  CollectionHomeSectionHeading
+  CollectionHomeCategoryGrid
+    CollectionHomeCategoryCard
+      CategoryIcon
+      CollectionMetrics
+      ProgressBar
+
 EncyclopediaHomeScreen
-  EncyclopediaCategoryCard[bugs, fish, sea, fossils, artworks]
+  CollectionHomeShell
+    AppChrome
+    CollectionHomeSummaryCard
+    CollectionHomeSectionHeading
+    CollectionHomeCategoryGrid
+      CollectionHomeCategoryCard[bugs, fish, sea, fossils, art]
 
 EncyclopediaListScreen
   ListSearchRow
@@ -1172,9 +1191,12 @@ EncyclopediaDetailScreen
 
 ```text
 CatalogHomeScreen
-  CatalogSummary
-  CatalogCategoryGrid
-    CatalogCategoryCard
+  CollectionHomeShell
+    AppChrome
+    CollectionHomeSummaryCard
+    CollectionHomeSectionHeading
+    CollectionHomeCategoryGrid
+      CollectionHomeCategoryCard[12 categories]
 
 CatalogListScreen
   SelectedCategoryHeader
@@ -1201,7 +1223,11 @@ CatalogDetailScreen
   VariantPreviewSection
 ```
 
-카탈로그 탭은 `CatalogHomeScreen`을 먼저 표시하며 아이템 목록을 바로 열지 않는다. 홈에는 다음 11개 대분류를 이 순서로 표시한다: 가구, 인테리어, 옷, 음악, 잡화, 도구, 특수 아이템, 토용, 사진·포스터, 레시피, 리액션. 대분류 카드를 선택하면 `/catalog/[category]` 목록으로 이동한다. 카탈로그 목록은 선택한 대분류의 아이템만 한 줄에 하나씩 표시하고, 화면 폭이 768dp 이상이면 두 열로 표시한다. 소분류 탭은 SRS의 고정 순서를 사용하며 `전체`를 첫 탭으로 추가한다.
+카탈로그 탭은 `CatalogHomeScreen`을 먼저 표시하며 아이템 목록을 바로 열지 않는다. 홈에는 다음 12개 대분류를 이 순서로 표시한다: 가구, 인테리어, 옷, 음악, 기타, 도구, 특수 아이템, 토용, 사진·포스터, 레시피, 시즌·이벤트 레시피, 리액션. 대분류 카드를 선택하면 `/catalog/[category]` 목록으로 이동한다. 카탈로그 목록은 선택한 대분류의 아이템만 한 줄에 하나씩 표시하고, 화면 폭이 768dp 이상이면 두 열로 표시한다. 소분류 탭은 SRS의 고정 순서를 사용하며 `전체`를 첫 탭으로 추가한다.
+
+도감 홈과 카탈로그 홈은 `CollectionHomeShell`을 사용해 같은 시각 계층을 유지한다. 셸은 앱 전체에 적용되는 크림색 캔버스만 제공하며 배경 이미지, 외곽 라운드 패널, 장식 원을 렌더링하지 않는다. `CollectionHomeSummaryCard`는 수집률·수집 수·진행바를 공통 렌더링하며, `CollectionHomeCategoryCard`는 아이콘·분류명·세부 지표·진행바를 2열로 표시한다. 도감 카드는 카테고리별 채집·기증 또는 보유·기증 또는 진품·가품·기증 지표를 주입하고, 카탈로그 카드는 보유 지표를 주입한다. 모든 화면의 `AppTopBar`는 동일한 높이·좌우 여백·크림색 배경·하단 경계를 사용한다.
+
+`AppBottomNav`는 5개 탭의 공통 하단 내비게이션 컴포넌트다. 각 탭의 동일한 터치 영역·간격·안전 영역·라벨 스타일을 유지하고 모든 탭에 `tabBarActive: #83B6C7`, `tabBarActiveSurface: #E8F3F6`, `tabBarInactive: #A5AAA3`를 동일하게 적용한다. `useTabBarVisibility`가 숨김을 요청하면 같은 컴포넌트가 레이아웃에서 사라지고, 복원 시 동일한 바 스타일로 돌아온다.
 
 검색은 한국어·영어 이름, 분류, 획득방법, 번호에 적용한다. 필터 패널에는 보유·미보유, 가구·인테리어·옷의 판매 가능·비매품, 현재 목록에 값이 있는 스타일·색상·테마·시즌·시리즈·분류 태그·크기·기능·리폼 가능 여부·행운 아이템 여부·주문 가능 여부·입수처를 표시한다. 같은 그룹 안에서는 OR, 다른 그룹 사이에서는 AND 조건으로 적용한다. 획득방법을 누르면 해당 입수처 필터를 적용한다. 번호·이름·획득방법 정렬 및 오름차순·내림차순 전환과 초기화를 제공한다. 카드에는 로컬 이미지, 이름, 분류, 획득방법, 구매가 또는 `비매품`, 판매가와 보유 상태 아이콘을 표시한다.
 
@@ -1305,7 +1331,7 @@ test/fixtures/routines.ts
 - 현재 시각의 생물 출현 시간 범위와 남반구 표시
 - 도감 복수 필터 칩 AND 조합
 - 번호·이름·화석 그룹 정렬과 방향
-- 카탈로그 11개 분류·기본 아이템 수·변형 참조 무결성
+- 카탈로그 12개 분류·기본 아이템 수·변형 참조 무결성
 - 카탈로그 이름·분류·획득 방법·번호 검색과 보유 필터·정렬
 - 주민 복수 상태 selector
 - 액자 사진 owned → 주민 액자 상태
@@ -1403,7 +1429,7 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 - 앱 재실행 후 모든 사용자 기록이 유지된다.
 - MVP 화면이 네트워크 없이 조회·수정된다.
 - 오늘 화면의 현재 출현 생물 월별 신규·종료 표시와 도감 복수 필터가 기준 데이터와 일치한다.
-- 카탈로그 11개 분류의 기본 항목·상세·보유 상태가 네트워크 없이 조회·수정된다.
+- 카탈로그 12개 분류의 기본 항목·상세·보유 상태가 네트워크 없이 조회·수정된다.
 - 카탈로그 대분류·소분류가 SRS의 순서로 표시되고, 레시피 재료·필터와 가구 변형 보유·수량이 네트워크 없이 조회·수정된다.
 - 카탈로그 기본 아이템 ID와 로컬 이미지 맵의 연결 검증이 통과한다.
 - 섬 간 기록이 누출되지 않는다.
@@ -1450,7 +1476,7 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 - v1.7 · 2026-08-29 · 도감 5종 앱 데이터·목록·상세·수집 상태·오프라인 이미지 구현 기준 반영
 - v1.8 · 2026-08-29 · 생물 도감 상태를 채집·기증으로 단순화하고 미술품 분류 탭과 상태 계약을 정정
 - v1.9 · 2026-08-29 · 생물 카드 상태 아이콘을 네이티브 도형으로 교체하고 도감 상세 속성 한국어 매핑 적용
-- v2.0 · 2026-08-29 · 카탈로그 11개 분류 데이터·변형·목록·상세·기본 아이템 수집 구현 기준 반영
+- v2.0 · 2026-08-29 · 카탈로그 12개 분류 데이터·변형·목록·상세·기본 아이템 수집 구현 기준 반영
 - v2.1 · 2026-08-29 · 카탈로그 홈·대분류 선택·카테고리 목록 진입 흐름과 뒤로가기 동작 반영
 - v2.2 · 2026-08-29 · 대분류별 소분류 탭과 `classification` 기반 목록 필터 반영
 - v2.3 · 2026-08-29 · 보유·상세 필터 패널과 다중 선택 조건 반영
@@ -1459,3 +1485,7 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 - v2.6 · 2026-08-30 · 주민·도감·카탈로그 검색창을 공통 `SearchBar`로 통합하고 크기·입력 UI를 정합화
 - v2.7 · 2026-08-30 · 주민·카탈로그 소분류 탭을 공통 `UnderlineTabs`로 통합하고 AppTopBar 직하 간격을 단일화
 - v2.8 · 2026-08-30 · 주민·도감·카탈로그 목록 필터·정렬·결과 수 UI를 공통 `ListControls`로 통합
+- v2.9 · 2026-08-30 · 주민 목록의 별도 상태 범례를 제거하고 공통 `UnderlineTabs`에 상태 아이콘·라벨을 표시
+- v3.0 · 2026-08-30 · 도감·카탈로그 홈을 `CollectionHomeShell`·공통 요약 카드·공통 대분류 카드로 통합하고 배경·탭 바 색상을 정리
+- v3.1 · 2026-08-30 · AppBottomNav 공통 구현, 탭 숨김·복원 처리와 기록형·수집형 파스텔 팔레트 반영
+- v3.2 · 2026-08-30 · 탭 그룹별 활성색을 제거하고 전 탭 공통 파우더 블루 팔레트로 통일

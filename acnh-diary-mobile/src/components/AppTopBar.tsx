@@ -1,6 +1,8 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { AppColors } from '@/constants/theme';
+
 type AppTopBarProps = {
   title: string;
   breadcrumbs?: string[];
@@ -23,7 +25,11 @@ export function AppTopBar({
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.topBar, { paddingTop: insets.top }]}>
+    <View
+      style={[
+        styles.topBar,
+        { paddingTop: insets.top },
+      ]}>
       <View style={styles.content}>
         {showBack ? (
           <Pressable
@@ -65,15 +71,15 @@ export function AppTopBar({
 
 const styles = StyleSheet.create({
   topBar: {
-    backgroundColor: '#F7F8F2',
-    borderBottomColor: '#E8EDE5',
+    backgroundColor: AppColors.topBar,
+    borderBottomColor: AppColors.border,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   content: {
     alignItems: 'center',
     flexDirection: 'row',
-    minHeight: 58,
-    paddingHorizontal: 16,
+    minHeight: 64,
+    paddingHorizontal: 18,
   },
   titleBlock: {
     flex: 1,
