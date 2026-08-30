@@ -1,5 +1,7 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { AppColors } from '@/constants/theme';
+
 export type UnderlineTab<T extends string> = {
   icon?: string;
   key: T;
@@ -55,7 +57,7 @@ export function UnderlineTabs<T extends string>({
 
 const styles = StyleSheet.create({
   tabBar: {
-    borderBottomColor: '#DEE7DE',
+    borderBottomColor: AppColors.primaryBorder,
     borderBottomWidth: 1,
     marginBottom: 14,
   },
@@ -78,10 +80,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
   },
   tabActive: {
-    borderBottomColor: '#55A487',
+    borderBottomColor: AppColors.primary,
   },
   tabText: {
-    color: '#728074',
+    color: AppColors.tabBarInactive,
     fontSize: 13,
     fontWeight: '800',
   },
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
     gap: 0,
   },
   tabIcon: {
-    color: '#728074',
+    color: AppColors.tabBarInactive,
     fontSize: 14,
     fontWeight: '700',
   },
@@ -105,6 +107,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   tabTextActive: {
-    color: '#398A6D',
+    color: AppColors.primaryText,
   },
 });

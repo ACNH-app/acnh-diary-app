@@ -25,14 +25,21 @@ export const Colors = {
 } as const;
 
 export const AppColors = {
-  background: '#FFF9EC',
-  border: '#EADCC8',
-  topBar: '#FFFDF8',
-  tabBar: '#FFFDF8',
-  tabBarBorder: '#E9E2D8',
-  tabBarActive: '#83B6C7',
-  tabBarActiveSurface: '#E8F3F6',
-  tabBarInactive: '#A5AAA3',
+  background: '#FFFCF5',
+  border: '#D6E2C7',
+  topBar: '#FFFDFC',
+  tabBar: '#FFFFFF',
+  tabBarBorder: '#D9E3CE',
+  tabBarActive: '#A7D18C',
+  tabBarActiveSurface: '#F0F8EA',
+  tabBarActiveText: '#356B43',
+  tabBarInactive: '#849087',
+  primary: '#A7D18C',
+  primaryAction: '#79AC5F',
+  primarySurface: '#F0F8EA',
+  primarySoft: '#DCEFD2',
+  primaryText: '#3F4A43',
+  primaryBorder: '#BCD9A8',
 } as const;
 
 export const AppTabBarStyle = {

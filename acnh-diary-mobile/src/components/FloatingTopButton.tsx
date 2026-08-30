@@ -1,5 +1,7 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
 
+import { AppColors } from '@/constants/theme';
+
 type FloatingTopButtonProps = {
   accessibilityLabel: string;
   onPress: () => void;
@@ -21,7 +23,7 @@ export function FloatingTopButton({ accessibilityLabel, onPress }: FloatingTopBu
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    backgroundColor: '#31573D',
+    backgroundColor: AppColors.primarySoft,
     borderRadius: 23,
     bottom: 18,
     elevation: 4,
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     right: 18,
-    shadowColor: '#1D3826',
+    shadowColor: AppColors.primaryBorder,
     shadowOffset: { height: 3, width: 0 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
@@ -37,7 +39,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   icon: {
-    color: '#E4F2DC',
+    color: AppColors.primaryText,
     fontSize: 22,
     fontWeight: '800',
     lineHeight: 25,

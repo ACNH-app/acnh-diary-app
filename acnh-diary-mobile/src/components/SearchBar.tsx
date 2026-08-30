@@ -1,5 +1,7 @@
 import { Pressable, StyleProp, StyleSheet, Text, TextInput, View, ViewStyle } from 'react-native';
 
+import { AppColors } from '@/constants/theme';
+
 type SearchBarProps = {
   accessibilityLabel: string;
   onChangeText: (value: string) => void;
@@ -57,14 +59,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   searchIcon: {
-    color: '#55795C',
+    color: AppColors.primaryText,
     fontSize: 22,
     lineHeight: 25,
     marginRight: 8,
     transform: [{ rotate: '-20deg' }],
   },
   input: {
-    color: '#2D3B30',
+    color: AppColors.primaryText,
     flex: 1,
     fontSize: 14,
     height: 46,
@@ -72,14 +74,14 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     alignItems: 'center',
-    backgroundColor: '#EEF1EA',
+    backgroundColor: AppColors.primarySurface,
     borderRadius: 14,
     height: 28,
     justifyContent: 'center',
     width: 28,
   },
   clearText: {
-    color: '#718074',
+    color: AppColors.tabBarInactive,
     fontSize: 20,
     lineHeight: 22,
   },

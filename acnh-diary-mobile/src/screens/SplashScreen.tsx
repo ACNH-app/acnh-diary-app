@@ -19,7 +19,7 @@ export function SplashScreen({ onReady }: SplashScreenProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>모동숲 다이어리</Text>
-      <ActivityIndicator size="large" color="#4F7D56" style={styles.loader} />
+      <ActivityIndicator color={AppColors.primaryAction} size="large" style={styles.loader} />
     </View>
   );
 }

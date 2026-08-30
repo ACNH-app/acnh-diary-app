@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1.4,
   },
   title: {
-    color: '#29352C',
+    color: AppColors.primaryText,
     fontSize: 36,
     fontWeight: '800',
     letterSpacing: -1.4,
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   heroCard: {
-    backgroundColor: '#DCEBDD',
+    backgroundColor: AppColors.primarySoft,
     borderRadius: 28,
     height: 158,
     marginTop: 26,
@@ -417,13 +417,13 @@ const styles = StyleSheet.create({
     left: 20,
   },
   heroLabel: {
-    color: '#52725D',
+    color: AppColors.primaryText,
     fontSize: 10,
     fontWeight: '800',
     letterSpacing: 1.3,
   },
   heroName: {
-    color: '#29352C',
+    color: AppColors.primaryText,
     fontSize: 23,
     fontWeight: '800',
     marginTop: 4,
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
     marginTop: 28,
   },
   sectionTitle: {
-    color: '#334036',
+    color: AppColors.primaryText,
     fontSize: 17,
     fontWeight: '800',
   },
@@ -457,13 +457,13 @@ const styles = StyleSheet.create({
     height: 1,
   },
   fieldLabel: {
-    color: '#687266',
+    color: AppColors.primaryText,
     fontSize: 12,
     fontWeight: '700',
     marginBottom: 5,
   },
   input: {
-    color: '#29352C',
+    color: AppColors.primaryText,
     fontSize: 16,
     fontWeight: '600',
     paddingBottom: 13,
@@ -491,8 +491,8 @@ const styles = StyleSheet.create({
     padding: 14,
   },
   hemisphereCardSelected: {
-    backgroundColor: '#EEF6EA',
-    borderColor: '#86B47E',
+    backgroundColor: AppColors.primarySurface,
+    borderColor: AppColors.primaryBorder,
   },
   radio: {
     alignItems: 'center',
@@ -505,21 +505,21 @@ const styles = StyleSheet.create({
     width: 18,
   },
   radioSelected: {
-    borderColor: '#5D9361',
+    borderColor: AppColors.primaryAction,
   },
   radioDot: {
-    backgroundColor: '#5D9361',
+    backgroundColor: AppColors.primaryAction,
     borderRadius: 99,
     height: 9,
     width: 9,
   },
   hemisphereLabel: {
-    color: '#4B554C',
+    color: AppColors.primaryText,
     fontSize: 14,
     fontWeight: '800',
   },
   selectedText: {
-    color: '#3F7149',
+    color: AppColors.primaryText,
   },
   hemisphereDescription: {
     color: '#929990',
@@ -553,7 +553,7 @@ const styles = StyleSheet.create({
   birthdayInput: {
     borderBottomColor: '#DCE1D8',
     borderBottomWidth: 1,
-    color: '#3D493F',
+    color: AppColors.primaryText,
     fontSize: 14,
     marginLeft: 5,
     paddingHorizontal: 6,
@@ -574,7 +574,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   timezoneInput: {
-    color: '#506B56',
+    color: AppColors.primaryText,
     fontSize: 12,
     fontWeight: '700',
     maxWidth: 116,
@@ -596,7 +596,7 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     alignItems: 'center',
-    backgroundColor: '#314D39',
+    backgroundColor: AppColors.primaryAction,
     borderRadius: 18,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -608,7 +608,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.99 }],
   },
   submitLabel: {
-    color: '#FFFFFF',
+    color: AppColors.primaryText,
     fontSize: 16,
     fontWeight: '800',
   },

@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { AppColors } from '@/constants/theme';
+
 export type ListSortOption<T extends string> = {
   key: T;
   label: string;
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
   },
   filterToggle: {
     alignItems: 'center',
-    backgroundColor: '#E1ECE0',
+    backgroundColor: AppColors.primarySurface,
     borderRadius: 12,
     flexDirection: 'row',
     height: 48,
@@ -181,18 +183,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 9,
   },
   filterToggleIcon: {
-    color: '#3E744A',
+    color: AppColors.primaryText,
     fontSize: 18,
     marginRight: 5,
   },
   filterToggleText: {
-    color: '#3E744A',
+    color: AppColors.primaryText,
     fontSize: 11,
     fontWeight: '800',
   },
   filterBadge: {
     alignItems: 'center',
-    backgroundColor: '#3E744A',
+    backgroundColor: AppColors.primaryAction,
     borderRadius: 8,
     height: 16,
     justifyContent: 'center',
@@ -201,12 +203,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
   },
   filterBadgeText: {
-    color: '#FFFFFF',
+    color: AppColors.primaryText,
     fontSize: 9,
     fontWeight: '800',
   },
   filterPanel: {
-    backgroundColor: '#EDF3EA',
+    backgroundColor: AppColors.primarySurface,
     borderRadius: 16,
     marginTop: 8,
     padding: 12,
@@ -215,7 +217,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   filterGroupTitle: {
-    color: '#5F735F',
+    color: AppColors.primaryText,
     fontSize: 11,
     fontWeight: '800',
     marginBottom: 6,
@@ -224,13 +226,13 @@ const styles = StyleSheet.create({
     gap: 7,
   },
   filterChip: {
-    backgroundColor: '#E9EEE7',
+    backgroundColor: AppColors.primarySurface,
     borderRadius: 16,
     paddingHorizontal: 12,
     paddingVertical: 9,
   },
   filterChipActive: {
-    backgroundColor: '#355D42',
+    backgroundColor: AppColors.primaryAction,
   },
   filterChipText: {
     color: '#657468',
@@ -238,7 +240,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   filterChipTextActive: {
-    color: '#FFF',
+    color: AppColors.primaryText,
   },
   resultToolbar: {
     alignItems: 'center',
@@ -263,7 +265,7 @@ const styles = StyleSheet.create({
     marginLeft: 7,
   },
   resetText: {
-    color: '#3D7549',
+    color: AppColors.primaryText,
     fontSize: 12,
     fontWeight: '800',
     marginLeft: 8,
@@ -284,7 +286,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   sortSelectValue: {
-    color: '#3E5145',
+    color: AppColors.primaryText,
     fontSize: 13,
     fontWeight: '800',
   },
@@ -311,7 +313,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginTop: -4,
     overflow: 'hidden',
-    shadowColor: '#294334',
+    shadowColor: AppColors.primaryBorder,
     shadowOffset: { height: 3, width: 0 },
     shadowOpacity: 0.12,
     shadowRadius: 7,
@@ -325,7 +327,7 @@ const styles = StyleSheet.create({
     paddingVertical: 11,
   },
   sortOptionActive: {
-    backgroundColor: '#F0F7ED',
+    backgroundColor: AppColors.primarySurface,
   },
   sortOptionText: {
     color: '#66766B',
@@ -333,23 +335,23 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   sortOptionTextActive: {
-    color: '#397B4D',
+    color: AppColors.primaryText,
   },
   sortOptionCheck: {
-    color: '#4D956C',
+    color: AppColors.primaryText,
     fontSize: 14,
     fontWeight: '800',
   },
   directionButton: {
     alignItems: 'center',
-    backgroundColor: '#E4F1EB',
+    backgroundColor: AppColors.primarySurface,
     borderRadius: 12,
     height: 24,
     justifyContent: 'center',
     width: 24,
   },
   directionText: {
-    color: '#3D8B6B',
+    color: AppColors.primaryText,
     fontSize: 15,
     fontWeight: '500',
     lineHeight: 17,

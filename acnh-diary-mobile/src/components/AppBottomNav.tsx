@@ -54,7 +54,7 @@ export function AppBottomNav({ state, descriptors, navigation, insets }: BottomT
             ]}
             testID={options.tabBarButtonTestID}>
             <View style={[styles.indicator, { backgroundColor: isFocused ? AppColors.tabBarActive : 'transparent' }]} />
-            <Text numberOfLines={1} style={[styles.label, { color: isFocused ? AppColors.tabBarActive : AppColors.tabBarInactive }, isFocused && styles.labelActive]}>
+            <Text numberOfLines={1} style={[styles.label, { color: isFocused ? AppColors.tabBarActiveText : AppColors.tabBarInactive }, isFocused && styles.labelActive]}>
               {label}
             </Text>
           </Pressable>

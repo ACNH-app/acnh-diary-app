@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   summaryCard: {
     alignItems: 'center',
-    backgroundColor: '#DCEBDD',
+    backgroundColor: AppColors.primarySoft,
     borderRadius: 23,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -136,13 +136,13 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   summaryEyebrow: {
-    color: '#64816B',
+    color: AppColors.primaryText,
     fontSize: 9,
     fontWeight: '800',
     letterSpacing: 1.4,
   },
   summaryTitle: {
-    color: '#314F3A',
+    color: AppColors.primaryText,
     fontSize: 15,
     fontWeight: '800',
     marginTop: 3,
@@ -154,17 +154,17 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   summaryValue: {
-    color: '#2F7653',
+    color: AppColors.primaryText,
     fontSize: 28,
     fontWeight: '800',
   },
   summaryDetail: {
-    color: '#66836D',
+    color: AppColors.primaryText,
     fontSize: 11,
     fontWeight: '700',
   },
   summaryTrack: {
-    backgroundColor: '#C8E0CD',
+    backgroundColor: AppColors.primaryBorder,
     borderRadius: 5,
     height: 7,
     marginTop: 5,
@@ -172,12 +172,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   summaryFill: {
-    backgroundColor: '#61AA82',
+    backgroundColor: AppColors.primaryAction,
     borderRadius: 5,
     height: '100%',
   },
   summaryArrow: {
-    color: '#5A9A78',
+    color: AppColors.primaryText,
     fontSize: 30,
     lineHeight: 32,
     marginLeft: 10,
@@ -189,12 +189,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   sectionTitle: {
-    color: '#34443A',
+    color: AppColors.primaryText,
     fontSize: 20,
     fontWeight: '800',
   },
   sectionCount: {
-    color: '#7B887E',
+    color: '#7E8D91',
     fontSize: 11,
     fontWeight: '800',
   },
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   categoryLabel: {
-    color: '#35473B',
+    color: AppColors.primaryText,
     fontSize: 13,
     fontWeight: '800',
   },

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { AppColors } from '@/constants/theme';
 import type { EncyclopediaStatus } from '@/types/encyclopedia';
 
 export function CollectionStatusIcon({
@@ -9,7 +10,7 @@ export function CollectionStatusIcon({
   active: boolean;
   status: EncyclopediaStatus;
 }) {
-  const color = active ? '#3F7B4A' : '#9BA69D';
+  const color = active ? AppColors.primaryText : '#9BA69D';
 
   if (status === 'caught') {
     return (
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 15,
   },
-  caughtIconActive: { backgroundColor: '#DCEED8' },
+  caughtIconActive: { backgroundColor: AppColors.primarySurface },
   checkMark: {
     borderBottomWidth: 1.8,
     borderLeftWidth: 1.8,

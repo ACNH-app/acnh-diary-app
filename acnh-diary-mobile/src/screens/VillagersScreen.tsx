@@ -1005,7 +1005,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   heroCard: {
-    backgroundColor: '#314D39',
+    backgroundColor: AppColors.primarySoft,
     borderRadius: 26,
     minHeight: 190,
     overflow: 'hidden',
@@ -1016,7 +1016,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   heroGlow: {
-    backgroundColor: '#527451',
+    backgroundColor: AppColors.primaryBorder,
     borderRadius: 100,
     height: 190,
     opacity: 0.55,
@@ -1026,20 +1026,20 @@ const styles = StyleSheet.create({
     width: 190,
   },
   kicker: {
-    color: '#B8D2AF',
+    color: AppColors.primaryText,
     fontSize: 10,
     fontWeight: '800',
     letterSpacing: 1.8,
   },
   title: {
-    color: '#FFFFFF',
+    color: AppColors.primaryText,
     fontSize: 34,
     fontWeight: '800',
     letterSpacing: -1,
     marginTop: 5,
   },
   subtitle: {
-    color: '#D4E2CE',
+    color: AppColors.primaryText,
     fontSize: 13,
     lineHeight: 19,
     marginTop: 7,
@@ -1051,18 +1051,18 @@ const styles = StyleSheet.create({
     marginTop: 19,
   },
   heroCount: {
-    color: '#FFFFFF',
+    color: AppColors.primaryText,
     fontSize: 25,
     fontWeight: '800',
   },
   heroCountLabel: {
-    color: '#B8D2AF',
+    color: AppColors.primaryText,
     fontSize: 12,
     marginLeft: 6,
   },
   heroLeaf: {
     alignItems: 'center',
-    backgroundColor: '#45664D',
+    backgroundColor: AppColors.primary,
     borderRadius: 22,
     bottom: 20,
     height: 48,
@@ -1072,7 +1072,7 @@ const styles = StyleSheet.create({
     width: 48,
   },
   heroLeafText: {
-    color: '#D7E9C8',
+    color: AppColors.primaryText,
     fontSize: 24,
   },
   villagerCard: {
@@ -1094,7 +1094,7 @@ const styles = StyleSheet.create({
   },
   cardImageWrap: {
     alignItems: 'center',
-    backgroundColor: '#EFF4E9',
+    backgroundColor: AppColors.primarySurface,
     borderRadius: 13,
     height: 142,
     justifyContent: 'center',
@@ -1115,12 +1115,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   cardSpeciesText: {
-    color: '#58705B',
+    color: AppColors.primaryText,
     fontSize: 10,
     fontWeight: '700',
   },
   cardNameKo: {
-    color: '#29352C',
+    color: AppColors.primaryText,
     fontSize: 16,
     fontWeight: '800',
     marginTop: 10,
@@ -1155,14 +1155,14 @@ const styles = StyleSheet.create({
   },
   statusToggle: {
     alignItems: 'center',
-    backgroundColor: '#F0F3ED',
+    backgroundColor: AppColors.primarySurface,
     borderRadius: 9,
     height: 29,
     justifyContent: 'center',
     width: 29,
   },
   statusToggleSelected: {
-    backgroundColor: '#DCEBD5',
+    backgroundColor: AppColors.primarySoft,
   },
   statusToggleIcon: {
     color: '#A3ADA3',
@@ -1170,7 +1170,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   statusToggleIconSelected: {
-    color: '#3D7548',
+    color: AppColors.primaryText,
   },
   emptyState: {
     alignItems: 'center',
@@ -1183,7 +1183,7 @@ const styles = StyleSheet.create({
     transform: [{ rotate: '-20deg' }],
   },
   emptyTitle: {
-    color: '#415145',
+    color: AppColors.primaryText,
     fontSize: 17,
     fontWeight: '800',
     marginTop: 14,
@@ -1206,7 +1206,7 @@ const styles = StyleSheet.create({
   },
   detailImageStage: {
     alignItems: 'center',
-    backgroundColor: '#E8F0E2',
+    backgroundColor: AppColors.primarySurface,
     borderRadius: 24,
     height: 300,
     justifyContent: 'center',
@@ -1215,7 +1215,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   detailImageGlow: {
-    backgroundColor: '#CADFC5',
+    backgroundColor: AppColors.primaryBorder,
     borderRadius: 110,
     height: 220,
     opacity: 0.7,
@@ -1246,8 +1246,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   detailImageTabSelected: {
-    backgroundColor: '#31563A',
-    borderColor: '#31563A',
+    backgroundColor: AppColors.primaryAction,
+    borderColor: AppColors.primaryAction,
   },
   detailImageTabText: {
     color: '#728074',
@@ -1255,14 +1255,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   detailImageTabTextSelected: {
-    color: '#FFFFFF',
+    color: AppColors.primaryText,
   },
   detailIdentity: {
     alignItems: 'center',
     marginTop: 3,
   },
   detailNameKo: {
-    color: '#29352C',
+    color: AppColors.primaryText,
     fontSize: 29,
     fontWeight: '800',
   },
@@ -1279,13 +1279,13 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   detailTag: {
-    backgroundColor: '#E4F0DE',
+    backgroundColor: AppColors.primarySurface,
     borderRadius: 11,
     paddingHorizontal: 10,
     paddingVertical: 7,
   },
   detailTagText: {
-    color: '#47704C',
+    color: AppColors.primaryText,
     fontSize: 11,
     fontWeight: '700',
   },
@@ -1299,7 +1299,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   detailSectionTitle: {
-    color: '#3E5042',
+    color: AppColors.primaryText,
     fontSize: 16,
     fontWeight: '800',
   },
@@ -1328,12 +1328,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   houseImage: {
-    backgroundColor: '#E8F0E2',
+    backgroundColor: AppColors.primarySurface,
     height: 125,
     width: '100%',
   },
   houseImageLabel: {
-    color: '#3E5042',
+    color: AppColors.primaryText,
     fontSize: 12,
     fontWeight: '800',
     paddingHorizontal: 12,
@@ -1341,7 +1341,7 @@ const styles = StyleSheet.create({
   },
   musicCard: {
     alignItems: 'center',
-    backgroundColor: '#E8F0E2',
+    backgroundColor: AppColors.primarySurface,
     borderRadius: 16,
     flexDirection: 'row',
     marginTop: 10,
@@ -1354,7 +1354,7 @@ const styles = StyleSheet.create({
     width: 44,
   },
   musicName: {
-    color: '#3E5042',
+    color: AppColors.primaryText,
     flex: 1,
     fontSize: 12,
     fontWeight: '800',
@@ -1372,12 +1372,12 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   collectibleImage: {
-    backgroundColor: '#EFF4E9',
+    backgroundColor: AppColors.primarySurface,
     height: 145,
     width: '100%',
   },
   collectibleName: {
-    color: '#3E5042',
+    color: AppColors.primaryText,
     fontSize: 13,
     fontWeight: '800',
     marginTop: 10,
@@ -1408,8 +1408,8 @@ const styles = StyleSheet.create({
     minHeight: 34,
   },
   ownedButtonSelected: {
-    backgroundColor: '#31563A',
-    borderColor: '#31563A',
+    backgroundColor: AppColors.primaryAction,
+    borderColor: AppColors.primaryAction,
   },
   ownedButtonText: {
     color: '#718074',
@@ -1417,7 +1417,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   ownedButtonTextSelected: {
-    color: '#FFFFFF',
+    color: AppColors.primaryText,
   },
   visitEditor: {
     backgroundColor: '#FFFFFF',
@@ -1434,7 +1434,7 @@ const styles = StyleSheet.create({
     borderColor: '#E0E7DC',
     borderRadius: 10,
     borderWidth: 1,
-    color: '#3E5042',
+    color: AppColors.primaryText,
     flex: 1,
     fontSize: 13,
     height: 40,
@@ -1442,14 +1442,14 @@ const styles = StyleSheet.create({
   },
   visitAddButton: {
     alignItems: 'center',
-    backgroundColor: '#31563A',
+    backgroundColor: AppColors.primaryAction,
     borderRadius: 10,
     justifyContent: 'center',
     minWidth: 55,
     paddingHorizontal: 12,
   },
   visitAddButtonText: {
-    color: '#FFFFFF',
+    color: AppColors.primaryText,
     fontSize: 12,
     fontWeight: '800',
   },
@@ -1465,7 +1465,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   visitDate: {
-    color: '#3E5042',
+    color: AppColors.primaryText,
     fontSize: 12,
     fontWeight: '700',
   },
@@ -1493,7 +1493,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   infoValue: {
-    color: '#3E5042',
+    color: AppColors.primaryText,
     fontSize: 13,
     fontWeight: '700',
   },
