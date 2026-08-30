@@ -27,7 +27,7 @@
     },
     {
       "key": "items",
-      "label": "잡화",
+      "label": "기타",
       "itemCount": 365,
       "variationCount": 0
     },
@@ -59,6 +59,12 @@
       "key": "recipes",
       "label": "레시피",
       "itemCount": 924,
+      "variationCount": 0
+    },
+    {
+      "key": "seasonal_recipes",
+      "label": "시즌·이벤트",
+      "itemCount": 251,
       "variationCount": 0
     },
     {

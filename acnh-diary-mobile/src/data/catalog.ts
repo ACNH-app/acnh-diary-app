@@ -24,6 +24,15 @@ type CatalogVariationData = {
 const data = require('./content/catalog/catalog.json') as CatalogData;
 const variationData = require('./content/catalog/catalog-variations.json') as CatalogVariationData;
 
+const seasonalRecipeItems = data.items.filter((item) => {
+  if (item.catalogType !== 'recipes') return false;
+  const filters = item.details.recipeFilters;
+  return Array.isArray(filters) && filters.some((filter) => {
+    const prefix = String(filter).split(':', 1)[0];
+    return prefix === 'season' || prefix === 'event';
+  });
+});
+
 const itemsByCategory = data.categories.reduce<Record<CatalogCategory, CatalogItem[]>>(
   (result, category) => {
     result[category.key] = data.items.filter((item) => item.catalogType === category.key);
@@ -31,6 +40,7 @@ const itemsByCategory = data.categories.reduce<Record<CatalogCategory, CatalogIt
   },
   {} as Record<CatalogCategory, CatalogItem[]>,
 );
+itemsByCategory.seasonal_recipes = seasonalRecipeItems;
 
 const variationsByItem = variationData.variations.reduce<Record<string, CatalogVariant[]>>(
   (result, variation) => {
@@ -49,12 +59,13 @@ export const catalogCategoryDescriptions: Record<CatalogCategory, string> = {
   interior: '집 안을 완성하는 인테리어',
   clothing: '매일 입을 수 있는 의상과 소품',
   music: '집에서 감상하는 K.K. 음악',
-  items: '생활에 쓰는 다양한 잡화',
+  items: '생활에 쓰는 다양한 기타 아이템',
   tools: '섬 생활에 필요한 도구',
   special_items: '특별한 방법으로 얻는 아이템',
   gyroids: '수집하고 꾸미는 토용',
   photos: '주민 사진과 포스터',
   recipes: '요리와 DIY 레시피',
+  seasonal_recipes: '시즌과 이벤트로 얻는 레시피',
   reactions: '표현을 풍부하게 하는 리액션',
 };
 
@@ -64,6 +75,12 @@ export const catalogFilterFacetLabels: Record<CatalogFilterFacet, string> = {
   colors: '색상',
   seasonality: '시즌',
   series: '시리즈',
+  tag: '분류 태그',
+  size: '크기',
+  functions: '기능',
+  customizable: '리폼 가능 여부',
+  lucky: '행운 아이템 여부',
+  orderable: '주문 가능 여부',
   source: '입수처',
   recipeSeason: '시즌 레시피',
   recipeEvent: '이벤트 레시피',
@@ -76,6 +93,12 @@ export const catalogFilterFacets: CatalogFilterFacet[] = [
   'colors',
   'seasonality',
   'series',
+  'tag',
+  'size',
+  'functions',
+  'customizable',
+  'lucky',
+  'orderable',
   'source',
   'recipeSeason',
   'recipeEvent',
@@ -183,6 +206,12 @@ function getCatalogFilterValues(item: CatalogItem, facet: CatalogFilterFacet) {
 }
 
 export function getCatalogFilterOptionLabel(facet: CatalogFilterFacet, key: string) {
+  const booleanLabels: Partial<Record<CatalogFilterFacet, Record<string, string>>> = {
+    customizable: { true: '가능', false: '불가' },
+    lucky: { true: '행운 아이템', false: '일반 아이템' },
+    orderable: { true: '주문 가능', false: '주문 불가' },
+  };
+  if (booleanLabels[facet]?.[key]) return booleanLabels[facet][key];
   return facet === 'recipeSeason' || facet === 'recipeEvent' || facet === 'recipeMaterial'
     ? recipeFilterLabels[key] ?? key
     : key;
@@ -240,10 +269,14 @@ export function getCatalogSubcategories(category: CatalogCategory): CatalogSubca
     .filter((subcategory) => !configuredValues.has(subcategory.key))
     .sort((left, right) => left.label.localeCompare(right.label, 'ko'));
 
+  const availableSubcategories = [...subcategories, ...extra];
+  if (availableSubcategories.length <= 1) {
+    return [{ key: 'all', label: '전체', itemCount: getCatalogItems(category).length, values: [] }];
+  }
+
   return [
     { key: 'all', label: '전체', itemCount: getCatalogItems(category).length, values: [] },
-    ...subcategories,
-    ...extra,
+    ...availableSubcategories,
   ];
 }
 

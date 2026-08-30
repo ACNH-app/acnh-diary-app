@@ -3,7 +3,8 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { catalogCategories, catalogCategoryDescriptions, getCatalogItems } from '@/data/catalog';
+import { AppChrome } from '@/components/AppChrome';
+import { catalogCategories, getCatalogItems } from '@/data/catalog';
 import { getActiveIsland, getCollectionStatesForIsland, initializeDatabase } from '@/db/database';
 import type { CatalogCategory } from '@/types/catalog';
 import type { EncyclopediaState } from '@/types/encyclopedia';
@@ -19,8 +20,29 @@ const CATEGORY_ICONS: Record<CatalogCategory, string> = {
   gyroids: '◉',
   photos: '▣',
   recipes: '♨',
+  seasonal_recipes: '✿',
   reactions: '✋',
 };
+
+const CATEGORY_TONES: Record<CatalogCategory, { card: string; icon: string; accent: string; track: string }> = {
+  furniture: { card: '#FFF1E8', icon: '#F4A98C', accent: '#E9856F', track: '#F2D9CF' },
+  interior: { card: '#EDF8F0', icon: '#8BCDA5', accent: '#63B084', track: '#D7E9DC' },
+  clothing: { card: '#F3EEFC', icon: '#B09BD9', accent: '#9278C4', track: '#E2D9F0' },
+  music: { card: '#FFF7DA', icon: '#E2BA4D', accent: '#D4A936', track: '#F0E7BC' },
+  items: { card: '#EAF7FA', icon: '#78BECA', accent: '#55A8B8', track: '#D4E9ED' },
+  tools: { card: '#FFF0EE', icon: '#ED9181', accent: '#DF7668', track: '#F0D8D4' },
+  gyroids: { card: '#F4F0E5', icon: '#C3A16B', accent: '#A9844D', track: '#E6DCC8' },
+  photos: { card: '#FCEEF2', icon: '#D795A8', accent: '#C77991', track: '#EDD9E0' },
+  recipes: { card: '#EEF8F0', icon: '#7DB38B', accent: '#65A578', track: '#D7E9DB' },
+  seasonal_recipes: { card: '#F8EFF8', icon: '#C990C0', accent: '#B473AB', track: '#EADCE8' },
+  reactions: { card: '#FFF7DA', icon: '#E2BA4D', accent: '#D4A936', track: '#F0E7BC' },
+  special_items: { card: '#F4F0E5', icon: '#C3A16B', accent: '#A9844D', track: '#E6DCC8' },
+};
+
+const catalogHomeCategories = [
+  ...catalogCategories.filter((category) => category.key !== 'special_items'),
+  ...catalogCategories.filter((category) => category.key === 'special_items'),
+];
 
 export function CatalogHomeScreen() {
   const router = useRouter();
@@ -38,54 +60,50 @@ export function CatalogHomeScreen() {
 
   useFocusEffect(refresh);
 
-  const totalCount = catalogCategories.reduce((sum, category) => sum + category.itemCount, 0);
-  const ownedCount = useMemo(
-    () =>
-      catalogCategories.reduce(
-        (sum, category) =>
-          sum + getCatalogItems(category.key).filter((item) => states[`${category.key}/${item.id}`]?.owned).length,
-        0,
-      ),
-    [states],
-  );
+  const uniqueItems = useMemo(() => {
+    const items = new Map<string, ReturnType<typeof getCatalogItems>[number]>();
+    for (const category of catalogCategories) {
+      for (const item of getCatalogItems(category.key)) {
+        items.set(`${item.catalogType}/${item.id}`, item);
+      }
+    }
+    return Array.from(items.values());
+  }, []);
+  const totalCount = uniqueItems.length;
+  const ownedCount = uniqueItems.filter((item) => states[`${item.catalogType}/${item.id}`]?.owned).length;
+  const summaryPercent = totalCount ? Math.round((ownedCount / totalCount) * 100) : 0;
 
   const progressFor = (category: CatalogCategory) => {
     const items = getCatalogItems(category);
-    const owned = items.filter((item) => states[`${category}/${item.id}`]?.owned).length;
+    const owned = items.filter((item) => states[`${item.catalogType}/${item.id}`]?.owned).length;
     return { owned, total: items.length };
   };
 
   return (
-    <SafeAreaView edges={['top']} style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.hero}>
-          <View style={styles.heroCopy}>
-            <Text style={styles.kicker}>ISLAND CATALOG</Text>
-            <Text style={styles.title}>카탈로그</Text>
-            <Text style={styles.subtitle}>섬에서 만난 아이템을 분류별로 찾아보고 보유 기록을 남겨 보세요.</Text>
-          </View>
-          <View style={styles.heroBadge}>
-            <Text style={styles.heroBadgeText}>品</Text>
-          </View>
-        </View>
-
+    <View style={styles.screenRoot}>
+      <AppChrome title="카탈로그" />
+      <SafeAreaView edges={[]} style={styles.safeArea}>
+        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.summaryCard}>
-          <View>
+          <View style={styles.summaryCopy}>
             <Text style={styles.summaryLabel}>CATALOG LOG</Text>
-            <Text style={styles.summaryTitle}>나의 카탈로그 기록</Text>
+            <Text style={styles.summaryTitle}>전체 카탈로그 수집률</Text>
+            <View style={styles.summaryStats}>
+              <Text style={styles.summaryValue}>{summaryPercent}%</Text>
+              <Text style={styles.summaryTotal}>{ownedCount.toLocaleString('ko-KR')} / {totalCount.toLocaleString('ko-KR')}</Text>
+            </View>
+            <View style={styles.summaryTrack}>
+              <View style={[styles.summaryFill, { width: `${summaryPercent}%` }]} />
+            </View>
           </View>
-          <Text style={styles.summaryValue}>
-            {ownedCount.toLocaleString('ko-KR')}
-            <Text style={styles.summaryTotal}> / {totalCount.toLocaleString('ko-KR')}</Text>
-          </Text>
+          <Text style={styles.summaryArrow}>›</Text>
         </View>
-
-        <Text style={styles.sectionTitle}>분류별 카탈로그</Text>
-        <Text style={styles.sectionSubtitle}>대분류를 선택하면 해당 아이템 목록과 상세 정보를 확인할 수 있어요.</Text>
 
         <View style={styles.categoryGrid}>
-          {catalogCategories.map((category, index) => {
+          {catalogHomeCategories.map((category) => {
             const progress = progressFor(category.key);
+            const tone = CATEGORY_TONES[category.key];
+            const percent = progress.total ? Math.round((progress.owned / progress.total) * 100) : 0;
             return (
               <Pressable
                 accessibilityLabel={`${category.label} 카탈로그 열기`}
@@ -99,32 +117,35 @@ export function CatalogHomeScreen() {
                 }
                 style={({ pressed }) => [
                   styles.categoryCard,
-                  index === catalogCategories.length - 1 && styles.categoryCardWide,
+                  { backgroundColor: tone.card },
                   pressed && styles.categoryCardPressed,
                 ]}>
-                <View style={styles.categoryIcon}>
+                <View style={[styles.categoryIcon, { backgroundColor: tone.icon }]}>
                   <Text style={styles.categoryIconText}>{CATEGORY_ICONS[category.key]}</Text>
                 </View>
-                <Text style={styles.categoryLabel}>{category.label}</Text>
-                <Text style={styles.categoryDescription}>{catalogCategoryDescriptions[category.key]}</Text>
-                <View style={styles.progressRow}>
+                <View style={styles.categoryCardCopy}>
+                  <Text numberOfLines={1} style={styles.categoryLabel}>{category.label}</Text>
                   <Text style={styles.progressText}>
-                    {progress.owned.toLocaleString('ko-KR')} / {progress.total.toLocaleString('ko-KR')} 보유
+                    {progress.owned.toLocaleString('ko-KR')} / {progress.total.toLocaleString('ko-KR')} · {percent}%
                   </Text>
-                  <Text style={styles.arrow}>›</Text>
+                  <View style={[styles.progressTrack, { backgroundColor: tone.track }]}>
+                    <View style={[styles.progressFill, { backgroundColor: tone.accent, width: `${percent}%` }]} />
+                  </View>
                 </View>
               </Pressable>
             );
           })}
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  screenRoot: { flex: 1 },
   safeArea: { flex: 1, backgroundColor: '#F6F8F2' },
-  content: { padding: 20, paddingBottom: 42 },
+  content: { paddingBottom: 8, paddingHorizontal: 12, paddingTop: 8 },
   hero: {
     alignItems: 'center',
     backgroundColor: '#2F503B',
@@ -155,39 +176,41 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 28,
-    padding: 18,
+    marginBottom: 8,
+    minHeight: 82,
+    padding: 12,
   },
-  summaryLabel: { color: '#6F8A6B', fontSize: 10, fontWeight: '800', letterSpacing: 1.4 },
-  summaryTitle: { color: '#2E4834', fontSize: 17, fontWeight: '800', marginTop: 4 },
-  summaryValue: { color: '#2F6D48', fontSize: 28, fontWeight: '800' },
-  summaryTotal: { color: '#6C896E', fontSize: 14, fontWeight: '600' },
-  sectionTitle: { color: '#29382C', fontSize: 22, fontWeight: '800' },
-  sectionSubtitle: { color: '#7A857B', fontSize: 13, lineHeight: 19, marginTop: 5 },
-  categoryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 16 },
+  summaryLabel: { color: '#6F8A6B', fontSize: 9, fontWeight: '800', letterSpacing: 1.2 },
+  summaryCopy: { flex: 1, minWidth: 0 },
+  summaryTitle: { color: '#2E4834', fontSize: 13, fontWeight: '800', marginTop: 2 },
+  summaryStats: { alignItems: 'baseline', flexDirection: 'row', gap: 6, marginTop: 1 },
+  summaryValue: { color: '#2F6D48', fontSize: 24, fontWeight: '800' },
+  summaryTotal: { color: '#6C896E', fontSize: 10, fontWeight: '700' },
+  summaryTrack: { backgroundColor: '#CFE3D2', borderRadius: 4, height: 6, marginTop: 4, overflow: 'hidden', width: '100%' },
+  summaryFill: { backgroundColor: '#5B9F7B', borderRadius: 5, height: '100%' },
+  summaryArrow: { color: '#4A8B6C', fontSize: 26, lineHeight: 28, marginLeft: 8 },
+  categoryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between' },
   categoryCard: {
-    backgroundColor: '#FFF',
     borderColor: '#E4E9E0',
-    borderRadius: 22,
+    borderRadius: 16,
     borderWidth: 1,
-    minHeight: 174,
-    padding: 16,
-    width: '48%',
+    flexDirection: 'row',
+    minHeight: 78,
+    padding: 8,
+    width: '48.5%',
   },
-  categoryCardWide: { width: '100%' },
   categoryCardPressed: { opacity: 0.82, transform: [{ scale: 0.985 }] },
   categoryIcon: {
     alignItems: 'center',
-    backgroundColor: '#EEF5E9',
-    borderRadius: 18,
-    height: 42,
+    borderRadius: 16,
+    height: 32,
     justifyContent: 'center',
-    width: 42,
+    width: 32,
   },
-  categoryIconText: { color: '#4F885A', fontSize: 23, fontWeight: '700' },
-  categoryLabel: { color: '#2F4033', fontSize: 19, fontWeight: '800', marginTop: 14 },
-  categoryDescription: { color: '#7C877E', fontSize: 12, lineHeight: 17, marginTop: 4 },
-  progressRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 14 },
-  progressText: { color: '#5D7B60', fontSize: 11, fontWeight: '700' },
-  arrow: { color: '#5D9361', fontSize: 22, lineHeight: 18 },
+  categoryIconText: { color: '#FFF', fontSize: 16, fontWeight: '700' },
+  categoryCardCopy: { flex: 1, justifyContent: 'center', marginLeft: 7, minWidth: 0 },
+  categoryLabel: { color: '#2F4033', fontSize: 13, fontWeight: '800' },
+  progressText: { color: '#6C7B72', fontSize: 8, fontWeight: '700', marginTop: 2 },
+  progressTrack: { borderRadius: 3, height: 4, marginTop: 4, overflow: 'hidden', width: '100%' },
+  progressFill: { borderRadius: 4, height: '100%' },
 });

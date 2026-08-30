@@ -4,7 +4,6 @@ import {
   FlatList,
   Image,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,8 +11,11 @@ import {
   View,
 } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
+import { FloatingTopButton } from '@/components/FloatingTopButton';
 import { encyclopediaCategories, getEncyclopediaItems, getEncyclopediaLabel } from '@/data/encyclopedia';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
 import {
@@ -37,8 +39,6 @@ type FilterKey =
   | 'unowned'
   | 'donated'
   | 'undonated'
-  | 'incomplete'
-  | 'newThisMonth'
   | 'genuineOwned'
   | 'fakeOwned';
 
@@ -61,16 +61,14 @@ const filterLabels: Record<FilterKey, string> = {
   unowned: '미보유',
   donated: '기증 완료',
   undonated: '미기증',
-  incomplete: '이번 달 미완료',
-  newThisMonth: '이번 달 신규',
   genuineOwned: '진품 보유',
   fakeOwned: '가품 보유',
 };
 
 const filterOptions: Record<EncyclopediaCategory, FilterKey[]> = {
-  bugs: ['caught', 'uncaught', 'donated', 'undonated', 'incomplete', 'newThisMonth'],
-  fish: ['caught', 'uncaught', 'donated', 'undonated', 'incomplete', 'newThisMonth'],
-  sea: ['caught', 'uncaught', 'donated', 'undonated', 'incomplete', 'newThisMonth'],
+  bugs: ['caught', 'uncaught', 'donated', 'undonated'],
+  fish: ['caught', 'uncaught', 'donated', 'undonated'],
+  sea: ['caught', 'uncaught', 'donated', 'undonated'],
   fossils: ['owned', 'unowned', 'donated', 'undonated'],
   art: ['donated', 'undonated', 'genuineOwned', 'fakeOwned'],
 };
@@ -83,25 +81,7 @@ function getState(states: Record<string, EncyclopediaState>, item: EncyclopediaI
   return states[`${item.category}/${item.id}`] ?? EMPTY_STATE;
 }
 
-function isAvailableThisMonth(item: EncyclopediaItem, month: number, hemisphere: 'north' | 'south') {
-  return item.availability[hemisphere].months.includes(month);
-}
-
-function isNewThisMonth(item: EncyclopediaItem, month: number, hemisphere: 'north' | 'south') {
-  const previousMonth = month === 1 ? 12 : month - 1;
-  return (
-    isAvailableThisMonth(item, month, hemisphere) &&
-    !isAvailableThisMonth(item, previousMonth, hemisphere)
-  );
-}
-
-function matchesFilter(
-  filter: FilterKey,
-  item: EncyclopediaItem,
-  state: EncyclopediaState,
-  month: number,
-  hemisphere: 'north' | 'south',
-) {
+function matchesFilter(filter: FilterKey, item: EncyclopediaItem, state: EncyclopediaState) {
   const owned = item.category === 'art' ? state.genuineOwned || state.fakeOwned : state.owned;
   if (filter === 'caught') return state.caught;
   if (filter === 'uncaught') return !state.caught;
@@ -111,10 +91,7 @@ function matchesFilter(
   if (filter === 'undonated') return !state.donated;
   if (filter === 'genuineOwned') return state.genuineOwned;
   if (filter === 'fakeOwned') return state.fakeOwned;
-  if (filter === 'incomplete') {
-    return isAvailableThisMonth(item, month, hemisphere) && (!state.caught || !state.donated);
-  }
-  return isNewThisMonth(item, month, hemisphere);
+  return false;
 }
 
 function compareItems(left: EncyclopediaItem, right: EncyclopediaItem, sortMode: SortMode) {
@@ -154,6 +131,8 @@ function statusLabel(status: EncyclopediaStatus) {
 export function EncyclopediaListScreen({ category }: { category: EncyclopediaCategory }) {
   const router = useRouter();
   const listRef = useRef<FlatList<EncyclopediaItem>>(null);
+  const { handleScroll, navigationVisible } = useScrollNavigationVisibility();
+  useTabBarVisibility(navigationVisible);
   const [search, setSearch] = useState('');
   const [activeFilters, setActiveFilters] = useState<FilterKey[]>([]);
   const [sortMode, setSortMode] = useState<SortMode>('number');
@@ -163,14 +142,12 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
   const [showBulkControls, setShowBulkControls] = useState(false);
   const [states, setStates] = useState<Record<string, EncyclopediaState>>({});
   const [islandId, setIslandId] = useState<string | null>(null);
-  const [hemisphere, setHemisphere] = useState<'north' | 'south'>('north');
 
   const refresh = useCallback(() => {
     try {
       initializeDatabase();
       const island = getActiveIsland();
       setIslandId(island?.id ?? null);
-      setHemisphere(island?.hemisphere ?? 'north');
       setStates(island ? getCollectionStatesForIsland(island.id) : {});
     } catch {
       Alert.alert('도감 상태를 불러오지 못했어요', '잠시 후 다시 시도해 주세요.');
@@ -180,7 +157,6 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
   useFocusEffect(refresh);
 
   const items = getEncyclopediaItems(category);
-  const month = new Date().getMonth() + 1;
   const normalizedSearch = search.trim().toLocaleLowerCase('ko-KR');
   const visibleItems = useMemo(() => {
     const filtered = items.filter((item) => {
@@ -200,14 +176,14 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
             (artAuthenticityTab === 'all' ||
               (artAuthenticityTab === 'genuineOnly' && !artwork?.hasFake) ||
               (artAuthenticityTab === 'hasFake' && artwork?.hasFake)))) &&
-        activeFilters.every((filter) => matchesFilter(filter, item, state, month, hemisphere))
+        activeFilters.every((filter) => matchesFilter(filter, item, state))
       );
     });
     return [...filtered].sort((left, right) => {
       const result = compareItems(left, right, sortMode);
       return sortDescending ? -result : result;
     });
-  }, [activeFilters, artAuthenticityTab, artTypeTab, category, hemisphere, items, month, normalizedSearch, sortDescending, sortMode, states]);
+  }, [activeFilters, artAuthenticityTab, artTypeTab, category, items, normalizedSearch, sortDescending, sortMode, states]);
 
   const updateState = (item: EncyclopediaItem, status: EncyclopediaStatus, value: boolean) => {
     if (!islandId) {
@@ -272,8 +248,10 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
   const sortOptions: SortMode[] = category === 'fossils' ? ['number', 'name', 'group'] : ['number', 'name'];
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <FlatList
+    <View style={styles.screenRoot}>
+      <AppChrome breadcrumbs={['도감']} showBack title={getEncyclopediaLabel(category)} />
+      <SafeAreaView edges={[]} style={styles.safeArea}>
+        <FlatList
         columnWrapperStyle={styles.columnWrapper}
         contentContainerStyle={styles.listContent}
         data={visibleItems}
@@ -290,20 +268,6 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
         }
         ListHeaderComponent={
           <View>
-            <View style={styles.headerRow}>
-              <Pressable accessibilityLabel="도감 홈으로 돌아가기" onPress={() => router.back()} style={styles.backButton}>
-                <Text style={styles.backButtonText}>‹</Text>
-              </Pressable>
-              <View style={styles.headerCopy}>
-                <Text style={styles.kicker}>도감</Text>
-                <Text style={styles.title}>{getEncyclopediaLabel(category)}</Text>
-                <Text style={styles.subtitle}>{items.length}개 항목을 기록하고 있어요.</Text>
-              </View>
-              <View style={styles.countBadge}>
-                <Text style={styles.countBadgeText}>{visibleItems.length}</Text>
-              </View>
-            </View>
-
             <View style={styles.searchBox}>
               <Text style={styles.searchIcon}>⌕</Text>
               <TextInput
@@ -444,17 +408,16 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
             onToggle={(status) => toggleStatus(item, status)}
           />
         )}
-        showsVerticalScrollIndicator={false}
-      />
-      <Pressable
-        accessibilityLabel="도감 목록 맨 위로 이동"
-        accessibilityRole="button"
-        onPress={() => listRef.current?.scrollToOffset({ animated: true, offset: 0 })}
-        style={({ pressed }) => [styles.floatingTopButton, pressed && styles.floatingTopButtonPressed]}>
-        <Text style={styles.floatingTopIcon}>↑</Text>
-        <Text style={styles.floatingTopText}>맨 위로</Text>
-      </Pressable>
-    </SafeAreaView>
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}
+        />
+        <FloatingTopButton
+          accessibilityLabel="도감 목록 맨 위로 이동"
+          onPress={() => listRef.current?.scrollToOffset({ animated: true, offset: 0 })}
+        />
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -516,8 +479,9 @@ function EncyclopediaCard({
 }
 
 const styles = StyleSheet.create({
+  screenRoot: { flex: 1 },
   safeArea: { backgroundColor: '#F6F8F2', flex: 1 },
-  listContent: { padding: 18, paddingBottom: 112 },
+  listContent: { padding: 18, paddingBottom: 32 },
   columnWrapper: { gap: 8 },
   headerRow: { alignItems: 'center', flexDirection: 'row', marginBottom: 20 },
   backButton: {
@@ -586,8 +550,4 @@ const styles = StyleSheet.create({
   emptyIcon: { color: '#8EA18E', fontSize: 38 },
   emptyTitle: { color: '#405044', fontSize: 17, fontWeight: '800', marginTop: 14 },
   emptyDescription: { color: '#89948B', fontSize: 13, marginTop: 7, textAlign: 'center' },
-  floatingTopButton: { alignItems: 'center', backgroundColor: '#31573D', borderRadius: 25, bottom: 24, elevation: 4, flexDirection: 'row', paddingHorizontal: 14, paddingVertical: 11, position: 'absolute', right: 18, shadowColor: '#1D3826', shadowOffset: { height: 3, width: 0 }, shadowOpacity: 0.2, shadowRadius: 6 },
-  floatingTopButtonPressed: { opacity: 0.78 },
-  floatingTopIcon: { color: '#E4F2DC', fontSize: 18, fontWeight: '800', marginRight: 5 },
-  floatingTopText: { color: '#FFF', fontSize: 11, fontWeight: '800' },
 });

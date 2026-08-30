@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { AppChrome } from '@/components/AppChrome';
 import { encyclopediaCategories, getEncyclopediaItems } from '@/data/encyclopedia';
 import {
   getActiveIsland,
@@ -45,19 +46,10 @@ export function EncyclopediaHomeScreen() {
   };
 
   return (
-    <SafeAreaView edges={['top']} style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.hero}>
-          <View style={styles.heroCopy}>
-            <Text style={styles.kicker}>MUSEUM NOTES</Text>
-            <Text style={styles.title}>도감</Text>
-            <Text style={styles.subtitle}>섬에서 만난 생물과 작품을 차곡차곡 기록해 보세요.</Text>
-          </View>
-          <View style={styles.heroBadge}>
-            <Text style={styles.heroBadgeText}>博</Text>
-          </View>
-        </View>
-
+    <View style={styles.screenRoot}>
+      <AppChrome title="도감" />
+      <SafeAreaView edges={[]} style={styles.safeArea}>
+        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.summaryCard}>
           <View>
             <Text style={styles.summaryLabel}>COLLECTION LOG</Text>
@@ -72,7 +64,6 @@ export function EncyclopediaHomeScreen() {
         </View>
 
         <Text style={styles.sectionTitle}>분류별 도감</Text>
-        <Text style={styles.sectionSubtitle}>카테고리를 선택하면 목록과 상세 정보를 확인할 수 있어요.</Text>
 
         <View style={styles.categoryGrid}>
           {encyclopediaCategories.map((category, index) => {
@@ -119,12 +110,14 @@ export function EncyclopediaHomeScreen() {
             );
           })}
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  screenRoot: { flex: 1 },
   safeArea: { flex: 1, backgroundColor: '#F6F8F2' },
   content: { padding: 20, paddingBottom: 42 },
   hero: {

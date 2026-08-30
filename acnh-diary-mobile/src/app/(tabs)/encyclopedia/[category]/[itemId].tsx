@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 
-import { EncyclopediaDetailScreen } from '../../../screens/EncyclopediaDetailScreen';
-import type { EncyclopediaCategory } from '../../../types/encyclopedia';
+import { EncyclopediaDetailScreen } from '@/screens/EncyclopediaDetailScreen';
+import type { EncyclopediaCategory } from '@/types/encyclopedia';
 
 const categories: EncyclopediaCategory[] = ['bugs', 'fish', 'sea', 'fossils', 'art'];
 

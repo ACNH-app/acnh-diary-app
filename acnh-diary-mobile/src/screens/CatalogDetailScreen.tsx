@@ -12,7 +12,9 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useRouter } from 'expo-router';
 
+import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
+import { FloatingTopButton } from '@/components/FloatingTopButton';
 import {
   catalogCategories,
   getCatalogAssetForItem,
@@ -122,6 +124,8 @@ export function CatalogDetailScreen({
 }) {
   const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
+  const { handleScroll, navigationVisible } = useScrollNavigationVisibility();
+  useTabBarVisibility(navigationVisible);
   const item = getCatalogItem(category, itemId);
   const [state, setState] = useState<EncyclopediaState>(EMPTY_STATE);
   const [variantStates, setVariantStates] = useState<Record<string, VariantCollectionState>>({});
@@ -132,7 +136,7 @@ export function CatalogDetailScreen({
       initializeDatabase();
       const island = getActiveIsland();
       setIslandId(island?.id ?? null);
-      setState(item && island ? getCollectionStatesForIsland(island.id)[`${category}/${item.id}`] ?? EMPTY_STATE : EMPTY_STATE);
+      setState(item && island ? getCollectionStatesForIsland(island.id)[`${item.catalogType}/${item.id}`] ?? EMPTY_STATE : EMPTY_STATE);
       setVariantStates(item && island && category === 'furniture'
         ? Object.fromEntries(
             getCatalogVariants(item).map((variant) => {
@@ -152,14 +156,17 @@ export function CatalogDetailScreen({
 
   if (!item) {
     return (
-      <SafeAreaView edges={['top', 'bottom']} style={styles.safeArea}>
-        <View style={styles.notFound}>
-          <Text style={styles.notFoundTitle}>항목을 찾을 수 없어요</Text>
-          <Pressable onPress={() => router.back()} style={styles.primaryButton}>
-            <Text style={styles.primaryButtonText}>목록으로 돌아가기</Text>
-          </Pressable>
-        </View>
-      </SafeAreaView>
+      <View style={styles.screenRoot}>
+        <AppChrome breadcrumbs={['카탈로그']} showBack title="항목 없음" />
+        <SafeAreaView edges={[]} style={styles.safeArea}>
+          <View style={styles.notFound}>
+            <Text style={styles.notFoundTitle}>항목을 찾을 수 없어요</Text>
+            <Pressable onPress={() => router.back()} style={styles.primaryButton}>
+              <Text style={styles.primaryButtonText}>목록으로 돌아가기</Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      </View>
     );
   }
 
@@ -223,22 +230,15 @@ export function CatalogDetailScreen({
   };
 
   return (
-    <SafeAreaView edges={['top']} style={styles.safeArea}>
-      <ScrollView
-        contentContainerStyle={styles.content}
-        ref={scrollRef}
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.headerRow}>
-          <Pressable accessibilityLabel="카탈로그 목록으로 돌아가기" onPress={() => router.back()} style={styles.backButton}>
-            <Text style={styles.backButtonText}>‹</Text>
-          </Pressable>
-          <View style={styles.headerCopy}>
-            <Text style={styles.kicker}>{getCategoryLabel(category).toUpperCase()}</Text>
-            <Text style={styles.headerTitle}>상세 정보</Text>
-          </View>
-          {item.number != null ? <Text style={styles.number}>#{item.number}</Text> : null}
-        </View>
-
+    <View style={styles.screenRoot}>
+      <AppChrome breadcrumbs={['카탈로그', getCategoryLabel(category)]} showBack title={item.nameKo} />
+      <SafeAreaView edges={[]} style={styles.safeArea}>
+        <ScrollView
+          contentContainerStyle={styles.content}
+          onScroll={handleScroll}
+          ref={scrollRef}
+          scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}>
         <View style={styles.heroCard}>
           <View style={styles.heroImageFrame}>
             {image ? <Image resizeMode="contain" source={image} style={styles.heroImage} /> : <Text style={styles.imageFallback}>?</Text>}
@@ -284,9 +284,6 @@ export function CatalogDetailScreen({
 
         {item.variationCount > 0 ? (
           <Section title="변형 정보">
-            <Text style={styles.variantDescription}>
-              {item.variationCount.toLocaleString('ko-KR')}개 변형이 있습니다. 가구 변형은 각각 보유 여부와 수량을 기록할 수 있습니다.
-            </Text>
             {variants.length > 0 ? (
               <ScrollView contentContainerStyle={styles.variantList} horizontal showsHorizontalScrollIndicator={false}>
                 {variants.map((variant) => (
@@ -321,16 +318,13 @@ export function CatalogDetailScreen({
             ) : null}
           </Section>
         ) : null}
-      </ScrollView>
-      <Pressable
-        accessibilityLabel="카탈로그 상세 맨 위로 이동"
-        accessibilityRole="button"
-        onPress={() => scrollRef.current?.scrollTo({ animated: true, y: 0 })}
-        style={({ pressed }) => [styles.floatingTopButton, pressed && styles.floatingTopButtonPressed]}>
-        <Text style={styles.floatingTopIcon}>↑</Text>
-        <Text style={styles.floatingTopText}>맨 위로</Text>
-      </Pressable>
-    </SafeAreaView>
+        </ScrollView>
+        <FloatingTopButton
+          accessibilityLabel="카탈로그 상세 맨 위로 이동"
+          onPress={() => scrollRef.current?.scrollTo({ animated: true, y: 0 })}
+        />
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -354,8 +348,9 @@ function InfoRow({ label, value }: { label: string; value: string | null }) {
 }
 
 const styles = StyleSheet.create({
+  screenRoot: { flex: 1 },
   safeArea: { backgroundColor: '#F6F8F2', flex: 1 },
-  content: { padding: 18, paddingBottom: 112 },
+  content: { padding: 18, paddingBottom: 40 },
   headerRow: { alignItems: 'center', flexDirection: 'row', marginBottom: 20 },
   backButton: { alignItems: 'center', backgroundColor: '#E5EEE0', borderRadius: 20, height: 40, justifyContent: 'center', marginRight: 12, width: 40 },
   backButtonText: { color: '#456B4D', fontSize: 30, lineHeight: 32, marginTop: -3 },
@@ -383,7 +378,6 @@ const styles = StyleSheet.create({
   infoRow: { alignItems: 'flex-start', borderBottomColor: '#EDF1EB', borderBottomWidth: 1, flexDirection: 'row', paddingVertical: 12 },
   infoLabel: { color: '#89958B', fontSize: 12, width: 92 },
   infoValue: { color: '#3C4E40', flex: 1, fontSize: 12, fontWeight: '700', lineHeight: 18, textAlign: 'right' },
-  variantDescription: { color: '#7C897E', fontSize: 12, lineHeight: 18, paddingTop: 13 },
   variantList: { gap: 8, paddingBottom: 14, paddingTop: 12 },
   variantCard: { alignItems: 'center', backgroundColor: '#F5F8F2', borderRadius: 12, padding: 6, width: 118 },
   variantImageFrame: { alignItems: 'center', height: 58, justifyContent: 'center', width: 106 },
@@ -400,8 +394,4 @@ const styles = StyleSheet.create({
   notFoundTitle: { color: '#405044', fontSize: 18, fontWeight: '800', marginBottom: 14 },
   primaryButton: { backgroundColor: '#31573D', borderRadius: 14, paddingHorizontal: 16, paddingVertical: 12 },
   primaryButtonText: { color: '#FFF', fontSize: 13, fontWeight: '800' },
-  floatingTopButton: { alignItems: 'center', backgroundColor: '#31573D', borderRadius: 25, bottom: 24, elevation: 4, flexDirection: 'row', paddingHorizontal: 14, paddingVertical: 11, position: 'absolute', right: 18, shadowColor: '#1D3826', shadowOffset: { height: 3, width: 0 }, shadowOpacity: 0.2, shadowRadius: 6 },
-  floatingTopButtonPressed: { opacity: 0.78 },
-  floatingTopIcon: { color: '#E4F2DC', fontSize: 18, fontWeight: '800', marginRight: 5 },
-  floatingTopText: { color: '#FFF', fontSize: 11, fontWeight: '800' },
 });

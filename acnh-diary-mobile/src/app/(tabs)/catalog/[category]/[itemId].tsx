@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 
-import { CatalogDetailScreen } from '../../../screens/CatalogDetailScreen';
-import type { CatalogCategory } from '../../../types/catalog';
+import { CatalogDetailScreen } from '@/screens/CatalogDetailScreen';
+import type { CatalogCategory } from '@/types/catalog';
 
 const categories: CatalogCategory[] = [
   'furniture',
@@ -14,6 +14,7 @@ const categories: CatalogCategory[] = [
   'gyroids',
   'photos',
   'recipes',
+  'seasonal_recipes',
   'reactions',
 ];
 

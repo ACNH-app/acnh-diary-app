@@ -12,10 +12,12 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useRouter } from 'expo-router';
 
+import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
+import { FloatingTopButton } from '@/components/FloatingTopButton';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
 import { getEncyclopediaDetailAsset } from '@/data/encyclopedia-detail-assets';
-import { getEncyclopediaItem, getEncyclopediaLabel, getPreviousMonth } from '@/data/encyclopedia';
+import { getEncyclopediaItem, getEncyclopediaLabel } from '@/data/encyclopedia';
 import {
   localizeArtAvailability,
   localizeArtName,
@@ -39,7 +41,6 @@ import {
   setCollectionStatus,
 } from '@/db/database';
 import type {
-  EncyclopediaAvailability,
   EncyclopediaCategory,
   EncyclopediaItem,
   EncyclopediaState,
@@ -53,8 +54,6 @@ const EMPTY_STATE: EncyclopediaState = {
   genuineOwned: false,
   fakeOwned: false,
 };
-
-const monthLabels = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
 
 const categoryAccent: Record<EncyclopediaCategory, string> = {
   bugs: '#C47543',
@@ -87,17 +86,6 @@ function getAvailability(item: EncyclopediaItem, hemisphere: 'north' | 'south') 
   return item.availability[hemisphere];
 }
 
-function getAvailabilityStatus(
-  availability: EncyclopediaAvailability,
-  month: number,
-  state: EncyclopediaState,
-) {
-  const available = availability.months.includes(month);
-  if (!available) return '이번 달 출현 정보 없음';
-  if (!state.caught || !state.donated) return '이번 달 미완료';
-  return '이번 달 기록 완료';
-}
-
 export function EncyclopediaDetailScreen({
   category,
   itemId,
@@ -107,6 +95,8 @@ export function EncyclopediaDetailScreen({
 }) {
   const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
+  const { handleScroll, navigationVisible } = useScrollNavigationVisibility();
+  useTabBarVisibility(navigationVisible);
   const [state, setState] = useState<EncyclopediaState>(EMPTY_STATE);
   const [islandId, setIslandId] = useState<string | null>(null);
   const [hemisphere, setHemisphere] = useState<'north' | 'south'>('north');
@@ -130,14 +120,17 @@ export function EncyclopediaDetailScreen({
 
   if (!item) {
     return (
-      <SafeAreaView edges={['top', 'bottom']} style={styles.safeArea}>
-        <View style={styles.notFound}>
-          <Text style={styles.notFoundTitle}>항목을 찾을 수 없어요</Text>
-          <Pressable onPress={() => router.back()} style={styles.primaryButton}>
-            <Text style={styles.primaryButtonText}>목록으로 돌아가기</Text>
-          </Pressable>
-        </View>
-      </SafeAreaView>
+      <View style={styles.screenRoot}>
+        <AppChrome breadcrumbs={['도감']} showBack title="항목 없음" />
+        <SafeAreaView edges={[]} style={styles.safeArea}>
+          <View style={styles.notFound}>
+            <Text style={styles.notFoundTitle}>항목을 찾을 수 없어요</Text>
+            <Pressable onPress={() => router.back()} style={styles.primaryButton}>
+              <Text style={styles.primaryButtonText}>목록으로 돌아가기</Text>
+            </Pressable>
+          </View>
+        </SafeAreaView>
+      </View>
     );
   }
 
@@ -145,9 +138,6 @@ export function EncyclopediaDetailScreen({
   const accent = categoryAccent[category];
   const creature = isCreature(category);
   const availability = getAvailability(item, hemisphere);
-  const previousMonth = getPreviousMonth(month);
-  const availableThisMonth = availability.months.includes(month);
-  const newThisMonth = availableThisMonth && !availability.months.includes(previousMonth);
 
   const updateStatus = (status: EncyclopediaStatus) => {
     if (!islandId) {
@@ -171,22 +161,15 @@ export function EncyclopediaDetailScreen({
       : ['genuineOwned', 'fakeOwned', 'donated'];
 
   return (
-    <SafeAreaView edges={['top']} style={styles.safeArea}>
-      <ScrollView
-        contentContainerStyle={styles.content}
-        ref={scrollRef}
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.headerRow}>
-          <Pressable accessibilityLabel="도감 목록으로 돌아가기" onPress={() => router.back()} style={styles.backButton}>
-            <Text style={styles.backButtonText}>‹</Text>
-          </Pressable>
-          <View style={styles.headerCopy}>
-            <Text style={styles.kicker}>{getEncyclopediaLabel(category).toUpperCase()}</Text>
-            <Text style={styles.headerTitle}>상세 정보</Text>
-          </View>
-          {item.number != null ? <Text style={styles.number}>#{item.number}</Text> : null}
-        </View>
-
+    <View style={styles.screenRoot}>
+      <AppChrome breadcrumbs={['도감', getEncyclopediaLabel(category)]} showBack title={item.nameKo} />
+      <SafeAreaView edges={[]} style={styles.safeArea}>
+        <ScrollView
+          contentContainerStyle={styles.content}
+          onScroll={handleScroll}
+          ref={scrollRef}
+          scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}>
         <View style={[styles.heroCard, { borderTopColor: accent }]}>
           <View style={styles.heroImageFrame}>
             {image ? <Image resizeMode="contain" source={image} style={styles.heroImage} /> : <Text style={styles.imageFallback}>?</Text>}
@@ -221,14 +204,6 @@ export function EncyclopediaDetailScreen({
 
         {creature ? (
           <>
-            <View style={styles.monthBanner}>
-              <View style={styles.monthBannerCopy}>
-                <Text style={styles.panelEyebrow}>이번 달 도감</Text>
-                <Text style={styles.monthStatus}>{getAvailabilityStatus(availability, month, state)}</Text>
-                <Text style={styles.monthDetail}>{monthLabels[month - 1]} · {hemisphere === 'north' ? '북반구' : '남반구'}</Text>
-              </View>
-              {newThisMonth ? <Text style={styles.newBadge}>신규</Text> : null}
-            </View>
             <Section title="출현 정보">
               <InfoRow label="출현 월" value={localizeAvailabilityLabel(availability.label) ?? '정보 없음'} />
               <InfoRow label="이번 달 시간" value={localizeAvailabilityTime(availability.timesByMonth[String(month)]) ?? '정보 없음'} />
@@ -271,16 +246,13 @@ export function EncyclopediaDetailScreen({
             <Text style={styles.museumText}>{item.museumPhrase}</Text>
           </Section>
         ) : null}
-      </ScrollView>
-      <Pressable
-        accessibilityLabel="도감 상세 맨 위로 이동"
-        accessibilityRole="button"
-        onPress={() => scrollRef.current?.scrollTo({ animated: true, y: 0 })}
-        style={({ pressed }) => [styles.floatingTopButton, pressed && styles.floatingTopButtonPressed]}>
-        <Text style={styles.floatingTopIcon}>↑</Text>
-        <Text style={styles.floatingTopText}>맨 위로</Text>
-      </Pressable>
-    </SafeAreaView>
+        </ScrollView>
+        <FloatingTopButton
+          accessibilityLabel="도감 상세 맨 위로 이동"
+          onPress={() => scrollRef.current?.scrollTo({ animated: true, y: 0 })}
+        />
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -366,8 +338,9 @@ function InfoRow({ label, value }: { label: string; value: string }) {
 }
 
 const styles = StyleSheet.create({
+  screenRoot: { flex: 1 },
   safeArea: { backgroundColor: '#F6F8F2', flex: 1 },
-  content: { padding: 18, paddingBottom: 112 },
+  content: { padding: 18, paddingBottom: 40 },
   headerRow: { alignItems: 'center', flexDirection: 'row', marginBottom: 18 },
   backButton: { alignItems: 'center', backgroundColor: '#E5EEE0', borderRadius: 20, height: 40, justifyContent: 'center', marginRight: 12, width: 40 },
   backButtonText: { color: '#456B4D', fontSize: 30, lineHeight: 32, marginTop: -3 },
@@ -413,10 +386,6 @@ const styles = StyleSheet.create({
   artImage: { backgroundColor: '#F5F7F3', borderRadius: 12, height: 126, marginTop: 7, width: '100%' },
   descriptionLabel: { color: '#819087', fontSize: 12, fontWeight: '700' },
   descriptionText: { color: '#617066', fontSize: 13, lineHeight: 21, marginTop: 5 },
-  floatingTopButton: { alignItems: 'center', backgroundColor: '#31573D', borderRadius: 25, bottom: 24, elevation: 4, flexDirection: 'row', paddingHorizontal: 14, paddingVertical: 11, position: 'absolute', right: 18, shadowColor: '#1D3826', shadowOffset: { height: 3, width: 0 }, shadowOpacity: 0.2, shadowRadius: 6 },
-  floatingTopButtonPressed: { opacity: 0.78 },
-  floatingTopIcon: { color: '#E4F2DC', fontSize: 18, fontWeight: '800', marginRight: 5 },
-  floatingTopText: { color: '#FFF', fontSize: 11, fontWeight: '800' },
   notFound: { alignItems: 'center', flex: 1, justifyContent: 'center', padding: 24 },
   notFoundTitle: { color: '#405044', fontSize: 18, fontWeight: '800', marginBottom: 16 },
   primaryButton: { backgroundColor: '#31573D', borderRadius: 14, paddingHorizontal: 18, paddingVertical: 13 },

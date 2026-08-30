@@ -13,6 +13,7 @@ import {
   updateIsland,
 } from '@/db/database';
 import type { Hemisphere, Island, IslandInput } from '@/types/island';
+import { AppChrome } from '@/components/AppChrome';
 
 type FormState = {
   name: string;
@@ -139,21 +140,10 @@ export function IslandManagerScreen() {
   };
 
   return (
-    <SafeAreaView edges={['top', 'bottom']} style={styles.safeArea}>
+    <View style={styles.screenRoot}>
+      <AppChrome onBack={() => router.replace('/today')} showBack title="섬 관리" />
+      <SafeAreaView edges={['bottom']} style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        <View style={styles.headerRow}>
-          <Pressable accessibilityLabel="오늘로 돌아가기" onPress={() => router.replace('/today')} style={styles.backButton}>
-            <Text style={styles.backText}>‹</Text>
-          </Pressable>
-          <View style={styles.headerCopy}>
-            <Text style={styles.kicker}>ISLAND MANAGEMENT</Text>
-            <Text style={styles.title}>섬 관리</Text>
-          </View>
-          <Pressable accessibilityLabel="새 섬 추가" onPress={beginAdd} style={styles.addButton}>
-            <Text style={styles.addButtonText}>＋ 추가</Text>
-          </Pressable>
-        </View>
-
         <Text style={styles.sectionTitle}>등록된 섬</Text>
         <View style={styles.islandList}>
           {islands.map((island) => (
@@ -180,7 +170,13 @@ export function IslandManagerScreen() {
             <Text style={styles.sectionTitle}>{editingId ? '섬 정보 수정' : '새 섬 등록'}</Text>
             <Text style={styles.sectionHint}>저장 후 선택한 섬이 활성 섬이 됩니다.</Text>
           </View>
-          {editingId ? <Pressable onPress={beginAdd}><Text style={styles.cancelText}>새로 입력</Text></Pressable> : null}
+          {editingId ? (
+            <Pressable onPress={beginAdd}><Text style={styles.cancelText}>새로 입력</Text></Pressable>
+          ) : (
+            <Pressable accessibilityLabel="새 섬 추가" onPress={beginAdd} style={styles.addButton}>
+              <Text style={styles.addButtonText}>＋ 추가</Text>
+            </Pressable>
+          )}
         </View>
         <View style={styles.formCard}>
           <Field label="섬 이름" value={form.name} onChangeText={(value) => setForm((current) => ({ ...current, name: value }))} />
@@ -208,7 +204,8 @@ export function IslandManagerScreen() {
           </Pressable>
         </View>
       </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -222,14 +219,9 @@ function Field({ label, value, onChangeText, keyboardType }: { label: string; va
 }
 
 const styles = StyleSheet.create({
+  screenRoot: { flex: 1 },
   safeArea: { backgroundColor: '#F6F8F2', flex: 1 },
   content: { padding: 20, paddingBottom: 48 },
-  headerRow: { alignItems: 'center', flexDirection: 'row', marginBottom: 28 },
-  backButton: { alignItems: 'center', backgroundColor: '#E5EEE0', borderRadius: 20, height: 40, justifyContent: 'center', marginRight: 12, width: 40 },
-  backText: { color: '#456B4D', fontSize: 30, lineHeight: 32, marginTop: -3 },
-  headerCopy: { flex: 1 },
-  kicker: { color: '#799078', fontSize: 10, fontWeight: '800', letterSpacing: 1.5 },
-  title: { color: '#29382C', fontSize: 30, fontWeight: '800', marginTop: 4 },
   addButton: { backgroundColor: '#31573D', borderRadius: 14, paddingHorizontal: 12, paddingVertical: 9 },
   addButtonText: { color: '#FFF', fontSize: 12, fontWeight: '800' },
   sectionTitle: { color: '#334036', fontSize: 18, fontWeight: '800' },

@@ -14,7 +14,10 @@ import {
 } from 'react-native';
 import type { ImageSourcePropType } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 
+import { AppChrome } from '@/components/AppChrome';
+import { FloatingTopButton } from '@/components/FloatingTopButton';
 import {
   addCampsiteVisit,
   getActiveIsland,
@@ -229,6 +232,7 @@ function compareVillagers(left: Villager, right: Villager, sortMode: SortMode) {
 }
 
 export function VillagersScreen() {
+  const router = useRouter();
   const listRef = useRef<FlatList<Villager>>(null);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<Category>('all');
@@ -239,8 +243,6 @@ export function VillagersScreen() {
   const [selectedHobby, setSelectedHobby] = useState<string | null>(null);
   const [selectedSubtype, setSelectedSubtype] = useState<string | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [selectedVillager, setSelectedVillager] = useState<Villager | null>(null);
-  const [detailImageType, setDetailImageType] = useState<VillagerImageType>('full');
   const [islandId, setIslandId] = useState<string | null>(null);
   const [villagerStates, setVillagerStates] = useState<Record<string, VillagerState>>({});
   const [campsiteVisits, setCampsiteVisits] = useState<Record<string, string[]>>({});
@@ -289,41 +291,6 @@ export function VillagersScreen() {
     }
   };
 
-  const handleAddCampsiteVisit = (villagerId: string, visitDate: string) => {
-    if (!islandId) return;
-    try {
-      addCampsiteVisit(islandId, villagerId, visitDate);
-      setCampsiteVisits(getCampsiteVisitsForIsland(islandId));
-      setVillagerStates((current) => ({
-        ...current,
-        [villagerId]: {
-          ...(current[villagerId] ?? EMPTY_VILLAGER_STATE),
-          campsiteVisited: true,
-        },
-      }));
-    } catch {
-      Alert.alert('방문일을 저장하지 못했어요', '날짜는 YYYY-MM-DD 형식으로 입력해 주세요.');
-    }
-  };
-
-  const handleRemoveCampsiteVisit = (villagerId: string, visitDate: string) => {
-    if (!islandId) return;
-    try {
-      removeCampsiteVisit(islandId, villagerId, visitDate);
-      const nextVisits = getCampsiteVisitsForIsland(islandId);
-      setCampsiteVisits(nextVisits);
-      setVillagerStates((current) => ({
-        ...current,
-        [villagerId]: {
-          ...(current[villagerId] ?? EMPTY_VILLAGER_STATE),
-          campsiteVisited: Boolean(nextVisits[villagerId]?.length),
-        },
-      }));
-    } catch {
-      Alert.alert('방문일을 삭제하지 못했어요', '잠시 후 다시 시도해 주세요.');
-    }
-  };
-
   const normalizedSearch = search.trim().toLocaleLowerCase('ko-KR');
   const filteredVillagers = villagers.filter((villager) => {
     const matchesSearch =
@@ -364,12 +331,13 @@ export function VillagersScreen() {
   };
 
   const openDetail = (villager: Villager) => {
-    setDetailImageType('full');
-    setSelectedVillager(villager);
+    router.push({ pathname: '/villagers/[villagerId]', params: { villagerId: villager.id } });
   };
 
   return (
-    <SafeAreaView edges={['top']} style={styles.safeArea}>
+    <View style={styles.screenRoot}>
+      <AppChrome title="주민" />
+      <SafeAreaView edges={[]} style={styles.safeArea}>
       <FlatList
         columnWrapperStyle={styles.columnWrapper}
         contentContainerStyle={styles.listContent}
@@ -381,22 +349,6 @@ export function VillagersScreen() {
         ListEmptyComponent={<EmptyState search={search} />}
         ListHeaderComponent={
           <View>
-            <View style={styles.heroCard}>
-              <View style={styles.heroGlow} />
-              <View style={styles.heroContent}>
-                <Text style={styles.kicker}>ISLAND RESIDENTS</Text>
-                <Text style={styles.title}>주민 도감</Text>
-                <Text style={styles.subtitle}>섬에서 만날 수 있는 주민들을 한눈에 살펴보세요.</Text>
-                <View style={styles.heroCountRow}>
-                  <Text style={styles.heroCount}>{villagers.length}</Text>
-                  <Text style={styles.heroCountLabel}>명의 주민</Text>
-                </View>
-              </View>
-              <View style={styles.heroLeaf}>
-                <Text style={styles.heroLeafText}>✦</Text>
-              </View>
-            </View>
-
             <ScrollView
               contentContainerStyle={styles.categoryTabsContent}
               horizontal
@@ -554,19 +506,112 @@ export function VillagersScreen() {
         subtype={selectedSubtype}
       />
 
-      <VillagerDetailModal
-        imageType={detailImageType}
-        isVisible={Boolean(selectedVillager)}
-        onChangeImageType={setDetailImageType}
-        onAddCampsiteVisit={handleAddCampsiteVisit}
-        onRemoveCampsiteVisit={handleRemoveCampsiteVisit}
-        onRequestClose={() => setSelectedVillager(null)}
-        onToggleStatus={handleStatusToggle}
-        state={selectedVillager ? getVillagerState(selectedVillager.id) : EMPTY_VILLAGER_STATE}
-        campsiteVisits={selectedVillager ? campsiteVisits[selectedVillager.id] ?? [] : []}
-        villager={selectedVillager}
-      />
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
+  );
+}
+
+export function VillagerDetailScreen({ villagerId }: { villagerId: string }) {
+  const villager = villagers.find((item) => item.id === villagerId);
+  const [imageType, setImageType] = useState<VillagerImageType>('full');
+  const [islandId, setIslandId] = useState<string | null>(null);
+  const [state, setState] = useState<VillagerState>(EMPTY_VILLAGER_STATE);
+  const [campsiteVisits, setCampsiteVisits] = useState<string[]>([]);
+
+  useEffect(() => {
+    try {
+      initializeDatabase();
+      const activeIsland = getActiveIsland();
+
+      if (activeIsland) {
+        setIslandId(activeIsland.id);
+        setState(getVillagerStatesForIsland(activeIsland.id)[villagerId] ?? EMPTY_VILLAGER_STATE);
+        setCampsiteVisits(getCampsiteVisitsForIsland(activeIsland.id)[villagerId] ?? []);
+      }
+    } catch {
+      Alert.alert('주민 상태를 불러오지 못했어요', '잠시 후 다시 시도해 주세요.');
+    }
+  }, [villagerId]);
+
+  const handleStatusToggle = (status: VillagerStatus) => {
+    if (!islandId) {
+      Alert.alert('섬 정보가 필요해요', '먼저 섬 정보를 등록해 주세요.');
+      return;
+    }
+
+    const nextValue = !state[status];
+
+    try {
+      if (status === 'campsiteVisited' && nextValue) {
+        addCampsiteVisit(islandId, villagerId, formatToday());
+        setCampsiteVisits(getCampsiteVisitsForIsland(islandId)[villagerId] ?? []);
+      } else {
+        setVillagerStatus(islandId, villagerId, status, nextValue);
+      }
+      setState((current) => ({ ...current, [status]: nextValue }));
+    } catch {
+      Alert.alert('상태를 저장하지 못했어요', '변경 내용을 저장하는 중 문제가 발생했습니다.');
+    }
+  };
+
+  const handleAddCampsiteVisit = (visitDate: string) => {
+    if (!islandId) {
+      Alert.alert('섬 정보가 필요해요', '먼저 섬 정보를 등록해 주세요.');
+      return;
+    }
+
+    try {
+      addCampsiteVisit(islandId, villagerId, visitDate);
+      setCampsiteVisits(getCampsiteVisitsForIsland(islandId)[villagerId] ?? []);
+      setState((current) => ({ ...current, campsiteVisited: true }));
+    } catch {
+      Alert.alert('방문일을 저장하지 못했어요', '날짜는 YYYY-MM-DD 형식으로 입력해 주세요.');
+    }
+  };
+
+  const handleRemoveCampsiteVisit = (visitDate: string) => {
+    if (!islandId) return;
+
+    try {
+      removeCampsiteVisit(islandId, villagerId, visitDate);
+      const nextVisits = getCampsiteVisitsForIsland(islandId)[villagerId] ?? [];
+      setCampsiteVisits(nextVisits);
+      setState((current) => ({ ...current, campsiteVisited: nextVisits.length > 0 }));
+    } catch {
+      Alert.alert('방문일을 삭제하지 못했어요', '잠시 후 다시 시도해 주세요.');
+    }
+  };
+
+  if (!villager) {
+    return (
+      <View style={styles.screenRoot}>
+        <AppChrome showBack title="주민" />
+        <SafeAreaView edges={[]} style={styles.safeArea}>
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyTitle}>주민을 찾을 수 없어요</Text>
+            <Text style={styles.emptyDescription}>주민 목록으로 돌아가 다시 선택해 주세요.</Text>
+          </View>
+        </SafeAreaView>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.screenRoot}>
+      <AppChrome showBack title={villager.name_ko} />
+      <SafeAreaView edges={[]} style={styles.safeArea}>
+        <VillagerDetailContent
+          campsiteVisits={campsiteVisits}
+          imageType={imageType}
+          onAddCampsiteVisit={handleAddCampsiteVisit}
+          onChangeImageType={setImageType}
+          onRemoveCampsiteVisit={handleRemoveCampsiteVisit}
+          onToggleStatus={handleStatusToggle}
+          state={state}
+          villager={villager}
+        />
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -767,26 +812,6 @@ function CampsiteVisitEditor({
         <Text style={styles.visitEmpty}>아직 기록된 방문일이 없습니다.</Text>
       )}
     </View>
-  );
-}
-
-function FloatingTopButton({
-  accessibilityLabel,
-  onPress,
-}: {
-  accessibilityLabel: string;
-  onPress: () => void;
-}) {
-  return (
-    <Pressable
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="button"
-      hitSlop={6}
-      onPress={onPress}
-      style={({ pressed }) => [styles.floatingTopButton, pressed && styles.floatingTopButtonPressed]}>
-      <Text style={styles.floatingTopButtonIcon}>↑</Text>
-      <Text style={styles.floatingTopButtonText}>맨 위로</Text>
-    </Pressable>
   );
 }
 
@@ -994,193 +1019,163 @@ function SortOption({ label, selected, onPress }: { label: string; selected: boo
   );
 }
 
-function VillagerDetailModal({
+function VillagerDetailContent({
   villager,
   imageType,
-  isVisible,
   state,
   campsiteVisits,
   onChangeImageType,
   onAddCampsiteVisit,
   onRemoveCampsiteVisit,
-  onRequestClose,
   onToggleStatus,
 }: {
-  villager: Villager | null;
+  villager: Villager;
   imageType: VillagerImageType;
-  isVisible: boolean;
   state: VillagerState;
   campsiteVisits: string[];
   onChangeImageType: (value: VillagerImageType) => void;
-  onAddCampsiteVisit: (villagerId: string, visitDate: string) => void;
-  onRemoveCampsiteVisit: (villagerId: string, visitDate: string) => void;
-  onRequestClose: () => void;
-  onToggleStatus: (villagerId: string, status: VillagerStatus) => void;
+  onAddCampsiteVisit: (visitDate: string) => void;
+  onRemoveCampsiteVisit: (visitDate: string) => void;
+  onToggleStatus: (status: VillagerStatus) => void;
 }) {
   const detailScrollRef = useRef<ScrollView>(null);
 
-  if (!villager) return null;
-
   return (
-    <Modal animationType="slide" onRequestClose={onRequestClose} transparent visible={isVisible}>
-      <View style={styles.modalBackdrop}>
-        <Pressable onPress={onRequestClose} style={StyleSheet.absoluteFill} />
-        <View style={styles.detailSheet}>
-          <SafeAreaView edges={['bottom']} style={styles.sheetSafeArea}>
-            <View style={styles.detailHeader}>
-              <View>
-                <Text style={styles.sheetKicker}>VILLAGER PROFILE</Text>
-                <Text style={styles.detailHeaderTitle}>{villager.name_ko}</Text>
-              </View>
-              <Pressable
-                accessibilityLabel="주민 상세 닫기"
-                accessibilityRole="button"
-                hitSlop={10}
-                onPress={onRequestClose}
-                style={styles.sheetCloseButton}>
-                <Text style={styles.sheetCloseText}>×</Text>
-              </Pressable>
-            </View>
-
-            <ScrollView
-              contentContainerStyle={styles.detailContent}
-              ref={detailScrollRef}
-              showsVerticalScrollIndicator={false}>
-              <View style={styles.detailImageStage}>
-                <View style={styles.detailImageGlow} />
-                <Image
-                  resizeMode="contain"
-                  source={getImageSource(villager, imageType)}
-                  style={[styles.detailImage, imageType === 'icon' && styles.detailIconImage]}
-                />
-              </View>
-
-              <ScrollView contentContainerStyle={styles.detailImageTabs} horizontal showsHorizontalScrollIndicator={false}>
-                {imageOptions.map((option) => {
-                  const selected = imageType === option.type;
-                  return (
-                    <Pressable
-                      accessibilityRole="tab"
-                      accessibilityState={{ selected }}
-                      key={option.type}
-                      onPress={() => onChangeImageType(option.type)}
-                      style={[styles.detailImageTab, selected && styles.detailImageTabSelected]}>
-                      <Text style={[styles.detailImageTabText, selected && styles.detailImageTabTextSelected]}>
-                        {option.label}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
-              </ScrollView>
-
-              <View style={styles.detailIdentity}>
-                <Text style={styles.detailNameKo}>{villager.name_ko}</Text>
-                <Text style={styles.detailNameEn}>{villager.name_en}</Text>
-              </View>
-
-              <View style={styles.detailTagRow}>
-                <View style={styles.detailTag}><Text style={styles.detailTagText}>{villager.species_ko}</Text></View>
-                <View style={styles.detailTag}><Text style={styles.detailTagText}>{villager.personality_ko}</Text></View>
-                <View style={styles.detailTag}><Text style={styles.detailTagText}>{labelOf(villager.hobby, hobbyLabels)}</Text></View>
-              </View>
-
-              <DetailSection title="주민 상태">
-                <VillagerStateToggleGroup
-                  onToggle={(status) => onToggleStatus(villager.id, status)}
-                  showLabels
-                  state={state}
-                  villagerName={villager.name_ko}
-                />
-              </DetailSection>
-
-              <DetailSection title="기본 정보">
-                <View style={styles.detailInfoCard}>
-                  <InfoRow label="종" value={villager.species_ko} />
-                  <InfoRow
-                    label="성격"
-                    value={`${villager.personality_ko} · 서브타입 ${villager.subtype}`}
-                  />
-                  <InfoRow label="성별" value={villager.gender === 'Female' ? '여성' : '남성'} />
-                  <InfoRow label="취미" value={labelOf(villager.hobby, hobbyLabels)} />
-                  <InfoRow label="활동 시간" value={villager.activity_time} />
-                  <InfoRow label="생일" value={formatKoreanBirthday(villager)} />
-                  <InfoRow label="별자리" value={labelOf(villager.sign, zodiacLabels)} />
-                  <InfoRow label="등장 작품" value={formatValues(villager.appearances, gameLabels)} />
-                  <InfoRow
-                    label="섬 주민 가능 여부"
-                    value={villager.islander === null ? null : villager.islander ? '가능' : '가능하지 않음'}
-                  />
-                  <InfoRow label="데뷔작" value={labelOf(villager.debut, gameLabels)} />
-                  <InfoRow label="말버릇" value={villager.catch_phrase_ko} />
-                  <InfoRow label="주민 한마디" value={villager.saying_ko} last />
-                </View>
-              </DetailSection>
-
-              <DetailSection title="취향과 기본 아이템">
-                <View style={styles.detailInfoCard}>
-                  <InfoRow label="좋아하는 색상" value={formatValues(villager.favorite_colors, colorLabels)} />
-                  <InfoRow label="좋아하는 스타일" value={formatValues(villager.favorite_styles, styleLabels)} />
-                  <InfoRow label="기본 옷" value={villager.default_clothing_ko ?? villager.default_clothing} />
-                  <InfoRow label="옷 색상" value={villager.default_clothing_variation} />
-                  <InfoRow label="기본 우산" value={villager.default_umbrella_ko ?? villager.default_umbrella} last />
-                </View>
-              </DetailSection>
-
-              <DetailSection title="하우스">
-                <View style={styles.houseImageRow}>
-                  <HouseImage label="외관" source={getImageSource(villager, 'house_exterior')} />
-                  <HouseImage label="내부" source={getImageSource(villager, 'house_interior')} />
-                </View>
-                <View style={styles.detailInfoCard}>
-                  <InfoRow label="벽지" value={villager.house_wallpaper_ko ?? villager.house_wallpaper} />
-                  <InfoRow label="바닥" value={villager.house_flooring_ko ?? villager.house_flooring} />
-                  <InfoRow label="가구" value={formatValues(villager.house_furniture, {})} />
-                  <InfoRow label="음악" value={villager.house_music_ko ?? villager.house_music} />
-                  <InfoRow label="음악 메모" value={villager.house_music_note} last />
-                </View>
-                {getMusicSource(villager) && villager.house_music ? (
-                  <View style={styles.musicCard}>
-                    <Image source={getMusicSource(villager) as ImageSourcePropType} style={styles.musicImage} />
-                    <Text style={styles.musicName}>{villager.house_music_ko ?? villager.house_music}</Text>
-                  </View>
-                ) : null}
-              </DetailSection>
-
-              <DetailSection title="포스터와 액자 사진">
-                <View style={styles.collectibleGrid}>
-                  <CollectibleCard
-                    imageType="poster"
-                    item={villager.collectibles.poster}
-                    onToggle={() => onToggleStatus(villager.id, 'posterOwned')}
-                    owned={state.posterOwned}
-                    villager={villager}
-                  />
-                  <CollectibleCard
-                    imageType="framed_photo"
-                    item={villager.collectibles.framed_photo}
-                    onToggle={() => onToggleStatus(villager.id, 'photoReceived')}
-                    owned={state.photoReceived}
-                    villager={villager}
-                  />
-                </View>
-              </DetailSection>
-
-              <DetailSection title="캠핑장 방문 이력">
-                <CampsiteVisitEditor
-                  onAdd={(visitDate) => onAddCampsiteVisit(villager.id, visitDate)}
-                  onRemove={(visitDate) => onRemoveCampsiteVisit(villager.id, visitDate)}
-                  visits={campsiteVisits}
-                />
-              </DetailSection>
-            </ScrollView>
-          </SafeAreaView>
-          <FloatingTopButton
-            accessibilityLabel={`${villager.name_ko} 상세 정보 맨 위로 이동`}
-            onPress={() => detailScrollRef.current?.scrollTo({ animated: true, y: 0 })}
+    <View style={styles.detailPage}>
+      <ScrollView
+        contentContainerStyle={styles.detailContent}
+        ref={detailScrollRef}
+        showsVerticalScrollIndicator={false}
+        style={styles.detailScroll}>
+        <View style={styles.detailImageStage}>
+          <View style={styles.detailImageGlow} />
+          <Image
+            resizeMode="contain"
+            source={getImageSource(villager, imageType)}
+            style={[styles.detailImage, imageType === 'icon' && styles.detailIconImage]}
           />
         </View>
-      </View>
-    </Modal>
+
+        <ScrollView contentContainerStyle={styles.detailImageTabs} horizontal showsHorizontalScrollIndicator={false}>
+          {imageOptions.map((option) => {
+            const selected = imageType === option.type;
+            return (
+              <Pressable
+                accessibilityRole="tab"
+                accessibilityState={{ selected }}
+                key={option.type}
+                onPress={() => onChangeImageType(option.type)}
+                style={[styles.detailImageTab, selected && styles.detailImageTabSelected]}>
+                <Text style={[styles.detailImageTabText, selected && styles.detailImageTabTextSelected]}>
+                  {option.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+
+        <View style={styles.detailIdentity}>
+          <Text style={styles.detailNameKo}>{villager.name_ko}</Text>
+          <Text style={styles.detailNameEn}>{villager.name_en}</Text>
+        </View>
+
+        <View style={styles.detailTagRow}>
+          <View style={styles.detailTag}><Text style={styles.detailTagText}>{villager.species_ko}</Text></View>
+          <View style={styles.detailTag}><Text style={styles.detailTagText}>{villager.personality_ko}</Text></View>
+          <View style={styles.detailTag}><Text style={styles.detailTagText}>{labelOf(villager.hobby, hobbyLabels)}</Text></View>
+        </View>
+
+        <DetailSection title="주민 상태">
+          <VillagerStateToggleGroup
+            onToggle={onToggleStatus}
+            showLabels
+            state={state}
+            villagerName={villager.name_ko}
+          />
+        </DetailSection>
+
+        <DetailSection title="기본 정보">
+          <View style={styles.detailInfoCard}>
+            <InfoRow label="종" value={villager.species_ko} />
+            <InfoRow label="성격" value={`${villager.personality_ko} · 서브타입 ${villager.subtype}`} />
+            <InfoRow label="성별" value={villager.gender === 'Female' ? '여성' : '남성'} />
+            <InfoRow label="취미" value={labelOf(villager.hobby, hobbyLabels)} />
+            <InfoRow label="활동 시간" value={villager.activity_time} />
+            <InfoRow label="생일" value={formatKoreanBirthday(villager)} />
+            <InfoRow label="별자리" value={labelOf(villager.sign, zodiacLabels)} />
+            <InfoRow label="등장 작품" value={formatValues(villager.appearances, gameLabels)} />
+            <InfoRow
+              label="섬 주민 가능 여부"
+              value={villager.islander === null ? null : villager.islander ? '가능' : '가능하지 않음'}
+            />
+            <InfoRow label="데뷔작" value={labelOf(villager.debut, gameLabels)} />
+            <InfoRow label="말버릇" value={villager.catch_phrase_ko} />
+            <InfoRow label="주민 한마디" value={villager.saying_ko} last />
+          </View>
+        </DetailSection>
+
+        <DetailSection title="취향과 기본 아이템">
+          <View style={styles.detailInfoCard}>
+            <InfoRow label="좋아하는 색상" value={formatValues(villager.favorite_colors, colorLabels)} />
+            <InfoRow label="좋아하는 스타일" value={formatValues(villager.favorite_styles, styleLabels)} />
+            <InfoRow label="기본 옷" value={villager.default_clothing_ko ?? villager.default_clothing} />
+            <InfoRow label="옷 색상" value={villager.default_clothing_variation} />
+            <InfoRow label="기본 우산" value={villager.default_umbrella_ko ?? villager.default_umbrella} last />
+          </View>
+        </DetailSection>
+
+        <DetailSection title="하우스">
+          <View style={styles.houseImageRow}>
+            <HouseImage label="외관" source={getImageSource(villager, 'house_exterior')} />
+            <HouseImage label="내부" source={getImageSource(villager, 'house_interior')} />
+          </View>
+          <View style={styles.detailInfoCard}>
+            <InfoRow label="벽지" value={villager.house_wallpaper_ko ?? villager.house_wallpaper} />
+            <InfoRow label="바닥" value={villager.house_flooring_ko ?? villager.house_flooring} />
+            <InfoRow label="가구" value={formatValues(villager.house_furniture, {})} />
+            <InfoRow label="음악" value={villager.house_music_ko ?? villager.house_music} />
+            <InfoRow label="음악 메모" value={villager.house_music_note} last />
+          </View>
+          {getMusicSource(villager) && villager.house_music ? (
+            <View style={styles.musicCard}>
+              <Image source={getMusicSource(villager) as ImageSourcePropType} style={styles.musicImage} />
+              <Text style={styles.musicName}>{villager.house_music_ko ?? villager.house_music}</Text>
+            </View>
+          ) : null}
+        </DetailSection>
+
+        <DetailSection title="포스터와 액자 사진">
+          <View style={styles.collectibleGrid}>
+            <CollectibleCard
+              imageType="poster"
+              item={villager.collectibles.poster}
+              onToggle={() => onToggleStatus('posterOwned')}
+              owned={state.posterOwned}
+              villager={villager}
+            />
+            <CollectibleCard
+              imageType="framed_photo"
+              item={villager.collectibles.framed_photo}
+              onToggle={() => onToggleStatus('photoReceived')}
+              owned={state.photoReceived}
+              villager={villager}
+            />
+          </View>
+        </DetailSection>
+
+        <DetailSection title="캠핑장 방문 이력">
+          <CampsiteVisitEditor
+            onAdd={onAddCampsiteVisit}
+            onRemove={onRemoveCampsiteVisit}
+            visits={campsiteVisits}
+          />
+        </DetailSection>
+      </ScrollView>
+      <FloatingTopButton
+        accessibilityLabel={`${villager.name_ko} 상세 정보 맨 위로 이동`}
+        onPress={() => detailScrollRef.current?.scrollTo({ animated: true, y: 0 })}
+      />
+    </View>
   );
 }
 
@@ -1204,6 +1199,9 @@ function InfoRow({
 }
 
 const styles = StyleSheet.create({
+  screenRoot: {
+    flex: 1,
+  },
   safeArea: {
     backgroundColor: '#F7F8F2',
     flex: 1,
@@ -1579,40 +1577,6 @@ const styles = StyleSheet.create({
   statusToggleIconSelected: {
     color: '#3D7548',
   },
-  floatingTopButton: {
-    alignItems: 'center',
-    backgroundColor: '#314D39',
-    borderRadius: 18,
-    bottom: 18,
-    elevation: 5,
-    flexDirection: 'row',
-    gap: 5,
-    height: 38,
-    justifyContent: 'center',
-    paddingHorizontal: 12,
-    position: 'absolute',
-    right: 18,
-    shadowColor: '#1B2D20',
-    shadowOffset: { height: 3, width: 0 },
-    shadowOpacity: 0.2,
-    shadowRadius: 7,
-    zIndex: 10,
-  },
-  floatingTopButtonPressed: {
-    opacity: 0.78,
-    transform: [{ scale: 0.96 }],
-  },
-  floatingTopButtonIcon: {
-    color: '#FFFFFF',
-    fontSize: 17,
-    fontWeight: '800',
-    lineHeight: 18,
-  },
-  floatingTopButtonText: {
-    color: '#FFFFFF',
-    fontSize: 11,
-    fontWeight: '800',
-  },
   emptyState: {
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -1648,25 +1612,10 @@ const styles = StyleSheet.create({
     minHeight: '62%',
     overflow: 'hidden',
   },
-  detailSheet: {
-    backgroundColor: '#F7F8F2',
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    maxHeight: '94%',
-    minHeight: '86%',
-    overflow: 'hidden',
-  },
   sheetSafeArea: {
     flex: 1,
   },
   sheetHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 22,
-    paddingTop: 18,
-  },
-  detailHeader: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -1682,12 +1631,6 @@ const styles = StyleSheet.create({
   sheetTitle: {
     color: '#29352C',
     fontSize: 26,
-    fontWeight: '800',
-    marginTop: 4,
-  },
-  detailHeaderTitle: {
-    color: '#29352C',
-    fontSize: 22,
     fontWeight: '800',
     marginTop: 4,
   },
@@ -1818,6 +1761,12 @@ const styles = StyleSheet.create({
   detailContent: {
     paddingBottom: 34,
     paddingHorizontal: 22,
+  },
+  detailPage: {
+    flex: 1,
+  },
+  detailScroll: {
+    flex: 1,
   },
   detailImageStage: {
     alignItems: 'center',

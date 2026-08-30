@@ -1,4 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { AppChrome } from '@/components/AppChrome';
 
 type PlaceholderScreenProps = {
   title: string;
@@ -7,26 +10,23 @@ type PlaceholderScreenProps = {
 
 export function PlaceholderScreen({ title, description }: PlaceholderScreenProps) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description}>{description}</Text>
+    <View style={styles.screenRoot}>
+      <AppChrome title={title} />
+      <SafeAreaView edges={[]} style={styles.container}>
+        <Text style={styles.description}>{description}</Text>
+      </SafeAreaView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  screenRoot: { flex: 1 },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 24,
     backgroundColor: '#f3f4f6',
-  },
-  title: {
-    color: '#1f2937',
-    fontSize: 28,
-    fontWeight: '700',
-    marginBottom: 8,
   },
   description: {
     color: '#6b7280',

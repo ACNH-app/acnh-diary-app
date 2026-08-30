@@ -9,6 +9,7 @@ export type CatalogCategory =
   | 'gyroids'
   | 'photos'
   | 'recipes'
+  | 'seasonal_recipes'
   | 'reactions';
 
 export type CatalogDetailValue = string | number | boolean | string[];
@@ -77,6 +78,12 @@ export type CatalogFilterFacet =
   | 'colors'
   | 'seasonality'
   | 'series'
+  | 'tag'
+  | 'size'
+  | 'functions'
+  | 'customizable'
+  | 'lucky'
+  | 'orderable'
   | 'source'
   | 'recipeSeason'
   | 'recipeEvent'
