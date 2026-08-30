@@ -1,12 +1,12 @@
 # 모동숲 다이어리 모바일 앱 아키텍처 설계서
 
-문서 상태: Draft v1.4
-최종 수정일: 2026-08-29  
-기준 문서: 모바일 SRS v1.4
+문서 상태: Draft v1.8
+최종 수정일: 2026-08-30
+기준 문서: 모바일 SRS v1.8
 
 ## 1. 목적과 범위
 
-본 문서는 React Native + Expo 기반 모동숲 다이어리 모바일 앱의 아키텍처를 정의한다. 모바일 앱은 서버와 로그인 없이 SQLite에 기록을 저장하며, 웹앱의 HTTP·FastAPI 계층을 포함하지 않는다. 현재 저장소에서는 `acnh-diary-mobile/`을 단일 Expo 앱으로 사용한다.
+본 문서는 React Native + Expo 기반 모동숲 다이어리 모바일 앱의 아키텍처를 정의한다. 모바일 앱은 서버와 로그인 없이 SQLite에 기록을 저장하며, 웹앱의 HTTP·FastAPI 계층을 포함하지 않는다. 현재 저장소에서는 `acnh-diary-mobile/`을 단일 Expo 앱으로 사용한다. 첨부 요구사항에서 제시한 대분류·소분류 순서는 제품 계약으로 고정한다.
 
 ### 1.1 아키텍처 목표
 
@@ -128,31 +128,40 @@ Screen
 - `src/app/_layout.tsx` — ThemeProvider와 공통 Stack
 - `src/app/index.tsx` — SQLite 초기화 결과에 따른 스플래시·온보딩·오늘 redirect
 - `src/app/onboarding.tsx` — 온보딩 화면
+- `src/app/islands.tsx` — 섬 추가·변경·수정·삭제 화면
 - `src/app/(tabs)/_layout.tsx` — 하단 탭 레이아웃
 - `src/app/(tabs)/today.tsx` — 오늘 화면
 - `src/app/(tabs)/villagers.tsx` — 주민 화면
 - `src/app/(tabs)/encyclopedia.tsx` — 도감 화면
-- `src/app/(tabs)/catalog.tsx` — 카탈로그 목록 화면
+- `src/app/(tabs)/catalog.tsx` — 카탈로그 홈 화면
 - `src/app/(tabs)/guides.tsx` — 준비 중 화면
 - `src/app/villagers/[villagerId].tsx` — 주민 상세 화면
 - `src/app/encyclopedia/[category]/[itemId].tsx` — 도감 상세 화면
-- `src/app/catalog/[category]/index.tsx` — 카탈로그 분류별 목록 화면
+- `src/app/catalog/[category]/index.tsx` — 카탈로그 대분류별 목록 화면
 - `src/app/catalog/[category]/[itemId].tsx` — 카탈로그 상세 화면
 - Modal은 route group 또는 `presentation: "modal"` 옵션으로 구성한다.
 
-현재 구현된 도감 route는 홈, 카테고리 목록, 독립 상세 화면이며 카탈로그 route는 분류 목록·상세 화면까지 제공한다. 목록·상세의 상태 변경은 활성 섬 기준으로 SQLite에 저장한다. 공략 상세와 설정 route는 후속 단계에서 추가하며, 설계된 route가 존재하지 않는 동안 placeholder route로 대체하지 않는다.
+현재 구현된 도감 route는 홈, 카테고리 목록, 독립 상세 화면이며 카탈로그 route는 홈, 대분류별 목록, 독립 상세 화면을 제공한다. 오늘 화면의 드로어에서 섬 관리 route로 이동해 섬 전환·추가·수정·삭제를 수행한다. 카탈로그 탭은 아이템 목록을 직접 열지 않고 카탈로그 홈에서 11개 대분류를 선택하도록 한다. 목록·상세의 상태 변경은 활성 섬 기준으로 SQLite에 저장한다. 공략 상세와 설정 route는 후속 단계에서 추가하며, 설계된 route가 존재하지 않는 동안 placeholder route로 대체하지 않는다.
 
 ### 6.2 탭 구조
 
 - `TodayTab`: 오늘 홈, 날짜 선택, 루틴·생물·NPC·캘린더
 - `VillagersTab`: 주민 목록, 주민 상세
 - `EncyclopediaTab`: 도감 홈, 카테고리 목록, 도감 상세
-- `CatalogTab`: 11개 분류 탭, 검색·보유 필터·정렬·카탈로그 상세
+- `CatalogTab`: 카탈로그 홈, 11개 대분류 선택, 선택 카테고리의 소분류 탭·목록·검색·보유·상세 필터·정렬·카탈로그 상세
 - `GuideTab`: Post-MVP placeholder와 향후 공략 스택
 
 ### 6.3 모바일 상세 화면
 
 주민·도감·카탈로그 상세는 독립 화면으로 구성한다. 목록에서 상세로 이동할 때 `category`와 `itemId`를 route parameter로 전달하며, 저장 상태는 다시 Repository에서 읽어 목록과 동기화한다.
+
+### 6.4 카탈로그 분류·반응형 규칙
+
+카탈로그 홈은 `catalogCategories`의 고정 순서인 가구, 인테리어, 옷, 음악, 잡화, 도구, 특수 아이템, 토용, 사진·포스터, 레시피, 리액션을 사용한다. 목록은 선택한 대분류만 조회하고, 가로 스크롤 소분류 탭은 SRS의 순서를 유지한다. 모바일은 1열, 768dp 이상은 2열로 렌더링한다.
+
+공통 필터는 검색·보유·미보유·번호/이름/획득방법 정렬·초기화를 제공한다. 가구·인테리어·옷에는 비매품 필터를 추가하고, 값이 존재하는 상세 필터만 노출한다. 레시피에는 시즌·이벤트·재료·획득방법 그룹을 추가하며, 같은 그룹은 OR, 그룹 간에는 AND로 평가한다. 사진과 포스터의 수집 상태는 서로 다른 itemId로 저장하고 액자 사진 상태를 주민 `photoReceived`와 동기화한다.
+
+NPC 전용 이미지가 현재 `dataset/app-ready` 오프라인 자산에 포함되어 있지 않으므로 오늘 화면은 NPC 이름을 유지하는 이니셜 대체 표시를 사용한다. NPC 이미지 자산이 추가되면 동일한 로컬 자산 맵을 연결하며 저장 모델과 화면 계약은 변경하지 않는다.
 
 ## 7. 저장소 아키텍처
 
@@ -173,9 +182,9 @@ SQLite에 다음 데이터를 저장한다.
 
 기준 데이터는 읽기 전용이다. 권장 구성은 카테고리별 압축 JSON이며, 데이터가 커지면 읽기 전용 SQLite로 전환한다. 기준 데이터의 `itemId`는 사용자 `collection_records`와 연결되는 안정적인 키여야 한다.
 
-카탈로그는 `src/data/content/catalog/catalog.json`에 11개 분류의 기본 아이템 7,443개를 저장하고, `catalog-variations.json`에 24,897개 변형을 표시용으로 저장한다. 기본 아이템은 `catalogType/itemId`로 식별하고 `assetType/assetId`를 통해 Metro 정적 로컬 이미지에 연결한다. 변형은 MVP에서 기본 아이템의 보유 상태에 포함하며, 별도 변형별 수집은 후속 migration으로 확장한다.
+카탈로그는 `src/data/content/catalog/catalog.json`에 11개 대분류의 기본 아이템 7,443개를 저장하고, `catalog-variations.json`에 24,897개 변형을 저장한다. 기본 아이템은 `catalogType/itemId`로 식별하고 `assetType/assetId`를 통해 Metro 정적 로컬 이미지에 연결한다. 각 대분류의 소분류 탭은 제품 요구사항에 정의된 순서를 우선하고, 각 항목은 기본 아이템의 `classification` 값으로 연결한다. 가구 변형은 `catalogType/itemId::variationId`를 수집 키로 사용해 보유 여부와 수량을 저장하며, 다른 유형은 동일한 키 형식으로 확장할 수 있다.
 
-각 원천 데이터의 원문 키와 화면 표시명은 분리 관리한다. raw 데이터는 내부 필드명 그대로 유지하고, UI 라벨은 locale 기반 `ui-labels.json` 또는 `labels.ko.json`/`labels.en.json` 맵을 통해 해석한다. 해당 맵은 같은 key 구조를 재사용해 영어 확장을 가능하게 한다.
+각 원천 데이터의 원문 키와 화면 표시명은 분리 관리한다. raw 데이터는 내부 필드명 그대로 유지하고, UI 라벨은 locale 기반 `ui-labels.json` 또는 `labels.ko.json`/`labels.en.json` 맵을 통해 해석한다. 도감 속성·미술품 작가·카탈로그 분류 및 레시피 필터는 이 표시 계층에서 한국어로 해석한다. 해당 맵은 같은 key 구조를 재사용해 영어 확장을 가능하게 한다.
 
 ### 7.3 기록과 기준 데이터 결합
 
@@ -201,6 +210,8 @@ Mobile ViewModel(item, state, displayFlags)
 - `newThisMonth`: 기준 월에 출현하고 전월에는 출현하지 않음
 - 1월의 전월은 12월
 - 남반구는 기준 데이터의 반구별 출현 월을 사용한다.
+
+오늘의 현재 출현 목록은 섬의 시간대에서 계산한 현재 시각과 선택한 게임 날짜의 반구별 월·시간 범위를 함께 평가한다. `All day`는 하루 종일, 자정을 넘는 범위는 두 구간으로 처리한다. 날씨와 MeteoNook 데이터는 MVP에서 제외한다.
 
 ### 8.3 주민 상태
 
@@ -264,6 +275,7 @@ Mobile ViewModel(item, state, displayFlags)
 - 목록은 필터·정렬 결과와 페이지 단위 또는 가상화 리스트를 사용한다.
 - collection_records에는 `(island_id, item_type, item_id)` 복합 인덱스를 둔다.
 - 향후 `catalog_variant_records`를 추가해 변형별 보유·개수를 확장한다.
+- `collection_records.quantity`와 `itemId::variationId` 키로 가구 변형별 보유·수량을 저장하고, 수량 범위는 0~999로 제한한다.
 - 날씨와 공략은 별도 도메인 모듈로 추가하고 기존 SQLite migration을 깨지 않는다.
 
 ## 12. 테스트 전략
@@ -298,8 +310,8 @@ TypeScript 도메인 모듈, `src/data` 기준 데이터 adapter, SQLite migrati
 
 ## 14. 미정 또는 별도 결정
 
-- 오늘 화면에 남은 `출현시간/월???`, 이벤트 범위 물음표
-- 주민 상세의 데뷔작·섬 주민 가능 여부·색상 물음표
+- 캘린더 이벤트는 현재 앱 번들 이벤트 날짜 데이터가 비어 있어 주민 생일을 우선 제공한다. 이벤트 데이터가 준비되면 동일한 날짜 ViewModel에 추가한다.
+- 주민 상세의 원천 데이터에 없는 데뷔작·섬 주민 가능 여부·일부 색상은 값을 추정하지 않고 숨긴다.
 - 기준 데이터 자동 업데이트 배포 방식
 - 백업 파일 암호화 여부
 
@@ -310,3 +322,7 @@ TypeScript 도메인 모듈, `src/data` 기준 데이터 adapter, SQLite migrati
 - v1.2 · 2026-08-29 · iOS 우선 실행 기준과 Xcode·expo-modules-jsi 호환성 패치 기준 확정
 - v1.3 · 2026-08-29 · SRS·SAD·SDS 버전 정렬, 초기화 위치와 Phase 0·1 경계 명시
 - v1.4 · 2026-08-29 · 카탈로그 목록·상세·로컬 자산·기본 아이템 수집 구조를 MVP 범위에 반영
+- v1.5 · 2026-08-29 · 카탈로그 탭을 홈·대분류·목록·상세 흐름으로 정렬
+- v1.6 · 2026-08-29 · 대분류별 `classification` 소분류 탭과 필터 흐름 반영
+- v1.7 · 2026-08-29 · 카탈로그 상세 필터 패널과 다중 선택 조건 반영
+- v1.8 · 2026-08-30 · 첨부 요구사항의 오늘·섬 관리·카탈로그 세부 흐름, 고정 탭 순서, 레시피 필터, 반응형 목록, 변형 수집 계약 반영

@@ -1,0 +1,2711 @@
+[
+  {
+    "id": "d13453f70a3d453c",
+    "category": "art",
+    "number": null,
+    "nameKo": "가라앉는 명화",
+    "nameEn": "Sinking painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/c/cc/Sinking_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/d13453f70a3d453c.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Sinking%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Ophelia",
+      "style": "Oil on canvas",
+      "author": "John Everett Millais",
+      "year": "1852",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/a/a5/Sinking_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/d13453f70a3d453c.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "Ophelia is a tragic figure in the Shakespearean play \"Hamlet.\" There is an otherworldly expression on her face as she lies unconscious in a river. She is surrounded by the beauty of nature as she floats between life and death.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "851acc8e80b7f726",
+    "category": "art",
+    "number": null,
+    "nameKo": "가치 있는 명화",
+    "nameEn": "Worthy painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/a/a8/Worthy_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/851acc8e80b7f726.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Worthy%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Liberty Leading the People",
+      "style": "Oil on canvas",
+      "author": "Eugène Delacroix",
+      "year": "1830",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 2.0,
+      "length": 1.5,
+      "realImageUrl": "https://dodo.ac/np/images/1/11/Worthy_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/851acc8e80b7f726.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "Painted by leading 19th century Romantic artist Delacroix in the same year as a French revolution. The woman in the center is often mistaken for Joan of Arc, but she is actually the fictional \"Marianne.\"",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "6234bafc306d236e",
+    "category": "art",
+    "number": null,
+    "nameKo": "거룩한 조각",
+    "nameEn": "Valiant statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/1/1e/Valiant_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/6234bafc306d236e.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Valiant%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "Nike of Samothrace",
+      "style": "Marble",
+      "author": "Artist Unknown",
+      "year": "circa 190 BCE",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 2.0,
+      "realImageUrl": "https://dodo.ac/np/images/1/1e/Valiant_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/6234bafc306d236e.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/5/57/Valiant_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/6234bafc306d236e.png",
+      "realDescription": "A statue of the goddess of victory, Nike, found on Samothrace. It shows Nike alighting on the prow of a ship. Originally found in separate pieces, it has largely been restored, but the arms and head are still missing.",
+      "fakeDescription": "In the forgery, the statue is mirrored, having its left leg in front and a seemingly smaller right wing.<br>If its right leg in front and its left wing appears smaller, it is genuine."
+    }
+  },
+  {
+    "id": "4194532d1822253c",
+    "category": "art",
+    "number": null,
+    "nameKo": "근사한 명화",
+    "nameEn": "Wistful painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/4/42/Wistful_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/4194532d1822253c.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Wistful%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Girl with a Pearl Earring",
+      "style": "Oil on canvas",
+      "author": "Johannes Vermeer",
+      "year": "circa 1665",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/a/ab/Wistful_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/4194532d1822253c.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/3/36/Wistful_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/4194532d1822253c.png",
+      "realDescription": "Also known as \"Girl with a Turban,\" this piece uses ultramarine paint, which was expensive at the time. It seems the expense was worth it, as the vivid blue colors draw the eye and help make the piece a classic. The only question is... Is that a real pearl earring? Or something else...",
+      "fakeDescription": "In the forgery, the woman's earring is star-shaped. Additionally, the woman on the forged painting will periodically open and close her eyes. If the earring is rounded, it is genuine."
+    }
+  },
+  {
+    "id": "fb3c821c7be2569f",
+    "category": "art",
+    "number": null,
+    "nameKo": "느낌이 좋은 명화",
+    "nameEn": "Warm painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/9/90/Warm_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/fb3c821c7be2569f.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Warm%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Clothed Maja",
+      "style": "Oil on canvas",
+      "author": "Francisco de Goya",
+      "year": "circa 1805",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 2.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/3/38/Warm_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/fb3c821c7be2569f.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "It is said that this painting is a more discreet version of an earlier work known as \"The Nude Maja.\" It is also known that Francisco de Goya was quite popular in his own time. Could these facts be related? A third, unrelated fact-the word \"maja\" refers to a \"stylish young lady of Madrid.\"",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "21c5f98e164fa4b3",
+    "category": "art",
+    "number": null,
+    "nameKo": "늠름한 조각",
+    "nameEn": "Gallant statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/b/b0/Gallant_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/21c5f98e164fa4b3.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Gallant%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "David",
+      "style": "Marble",
+      "author": "Michelangelo",
+      "year": "circa 1504",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 2.0,
+      "realImageUrl": "https://dodo.ac/np/images/b/b0/Gallant_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/21c5f98e164fa4b3.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/0/07/Gallant_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/21c5f98e164fa4b3.png",
+      "realDescription": "Young David glares at his enemies, sling slung over his shoulder. It took Michelangelo more than three years to sculpt this piece. Close inspection shows heart- shaped eyes, but that's probably meant to depict light hitting them. Hearts didn't have the lovey-dovey symbolism back then that they do today.",
+      "fakeDescription": "In the forgery, David is shown holding a book between his arm and waist. If David does not have a book, it is genuine."
+    }
+  },
+  {
+    "id": "b85a4308bffb9fda",
+    "category": "art",
+    "number": null,
+    "nameKo": "단서가 되는 조각",
+    "nameEn": "Informative statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/1/14/Informative_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/b85a4308bffb9fda.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Informative%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "Rosetta Stone",
+      "style": "Granodiorite",
+      "author": "Artist Unknown",
+      "year": "196 BCE",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/1/14/Informative_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/b85a4308bffb9fda.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/b/be/Informative_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/b85a4308bffb9fda.png",
+      "realDescription": "A stone slab found in Rosetta, Egypt in 1799. Helped efforts to decipher ancient Egyptian hieroglyphs. Almost identical text is written in hieroglyphs at the top, then Demotic script, and lastly Greek script.",
+      "fakeDescription": "In the forgery, the Rosetta Stone is colored blue and glows in the night. If the Rosetta Stone is colored in dull gray, it is genuine."
+    }
+  },
+  {
+    "id": "88bf67e92e5c80af",
+    "category": "art",
+    "number": null,
+    "nameKo": "대단한 명화",
+    "nameEn": "Amazing painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/b/bb/Amazing_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/88bf67e92e5c80af.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Amazing%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Night Watch",
+      "style": "Oil on canvas",
+      "author": "Rembrandt van Rijn",
+      "year": "1642",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 2.0,
+      "realImageUrl": "https://dodo.ac/np/images/a/a5/Amazing_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/88bf67e92e5c80af.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/a/af/Amazing_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/88bf67e92e5c80af.png",
+      "realDescription": "This masterpiece, painted by 17th century Dutch artist Rembrandt, depicts a military gathering. At the time, portraits usually showed their subjects standing still. So this was a leap forward in technique. For many years, art scholars thought the painting was set at night, but a restoration revealed a dark varnish. We can now see the dynamic poses and lighting as they were meant to be seen—in the daytime!",
+      "fakeDescription": "In the forgery, the man in the middle dressed in black is not wearing a hat. If the man does have a hat, it is genuine."
+    }
+  },
+  {
+    "id": "709bf4c2efba04f3",
+    "category": "art",
+    "number": null,
+    "nameKo": "돌 머리의 조각",
+    "nameEn": "Rock-head statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/1/1f/Rock-Head_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/709bf4c2efba04f3.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Rock-head%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "Olmec Colossal Head",
+      "style": "Basalt",
+      "author": "Artist Unknown",
+      "year": "Circa 1000 BCE",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 2.0,
+      "realImageUrl": "https://dodo.ac/np/images/1/1f/Rock-Head_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/709bf4c2efba04f3.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/9/93/Rock-Head_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/709bf4c2efba04f3.png",
+      "realDescription": "Giant stone head thought to be from the ancient Mesoamerican Olmec civilization. The larger ones can reach three meters in height. Scholars think they only crafted heads, no bodies.",
+      "fakeDescription": "In the forgery, the statue's lips are slightly curled into a smile. If the lips are more neutral, it is genuine."
+    }
+  },
+  {
+    "id": "f491f09c205037f6",
+    "category": "art",
+    "number": null,
+    "nameKo": "듬직한 조각",
+    "nameEn": "Robust statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/6e/Robust_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/f491f09c205037f6.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Robust%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "Discobolus",
+      "style": "Marble",
+      "author": "Artist Unknown",
+      "year": "2nd century CE",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/6/6e/Robust_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/f491f09c205037f6.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/e/ed/Robust_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/f491f09c205037f6.png",
+      "realDescription": "This ancient Roman statue is based on the ancient Greek statue crafted by Myron. It's a piece that shows the grandeur of the human body, beautiful from any angle.",
+      "fakeDescription": "In the forgery, there is a wrist watch on his right wrist. If there is no watch, it is genuine."
+    }
+  },
+  {
+    "id": "e49b4ab106be940c",
+    "category": "art",
+    "number": null,
+    "nameKo": "뛰어난 명화",
+    "nameEn": "Scenic painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/6b/Scenic_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/e49b4ab106be940c.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Scenic%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Hunters in The Snow",
+      "style": "Oil on wood panel",
+      "author": "Pieter Brueghel the Elder",
+      "year": "1565",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 1.5,
+      "realImageUrl": "https://dodo.ac/np/images/c/c9/Scenic_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/e49b4ab106be940c.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/5/59/Scenic_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/e49b4ab106be940c.png",
+      "realDescription": "A landscape artist from the late Renaissance period, Brueghel was known as the \"Peasant Artist.\" He earned the title for depicting scenes from common peasant life, such as the moment captured here. Note the contrast between the weary hunters and the people frolicking below on icy ponds.",
+      "fakeDescription": "In the forgery, there is only one hunter in the bottom left. If there are two hunters, it is genuine."
+    }
+  },
+  {
+    "id": "e1ab5b8c17970d13",
+    "category": "art",
+    "number": null,
+    "nameKo": "멋들어진 명화",
+    "nameEn": "Dynamic painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/7/78/Dynamic_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/e1ab5b8c17970d13.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Dynamic%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Thirty-Six Views of Mount Fuji The Great Wave off Kanagawa",
+      "style": "Woodblock print",
+      "author": "Katsushika Hokusai",
+      "year": "circa 1831",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/d/d3/Dynamic_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/e1ab5b8c17970d13.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "The signature piece of ukiyo-e artist Katsushika Hokusai, painted as part of a series when he was in his 60s. Although it is dubbed \"Thirty-Six Views,\" he eventually added 10 more to make 46 in total.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "874a42a6aa0dd7c0",
+    "category": "art",
+    "number": null,
+    "nameKo": "모성이 느껴지는 조각",
+    "nameEn": "Motherly statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/5/5d/Motherly_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/874a42a6aa0dd7c0.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Motherly%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "Capitoline Wolf",
+      "style": "Bronze",
+      "author": "Artist Unknown",
+      "year": "5th century BCE",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/5/5d/Motherly_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/874a42a6aa0dd7c0.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/3/3f/Motherly_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/874a42a6aa0dd7c0.png",
+      "realDescription": "This wolf from Roman mythology raises a pair of twins, along with some controversy. The original bronze sculpture of the wolf is a masterpiece that dates back to 5th century BCE. The twins were added during the 15th century...or so it was thought. Recent research has given rise to speculation that the original piece may be from the 11th or 12th century. (We will, however, stick with the 5th century BCE estimate for now.)",
+      "fakeDescription": "In the forgery, there is a tongue hanging out of the she-wolf's mouth. If there is no tongue, it is genuine."
+    }
+  },
+  {
+    "id": "6bb0ac41ce9af9bc",
+    "category": "art",
+    "number": null,
+    "nameKo": "무사의 조각",
+    "nameEn": "Warrior statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/5/5c/Warrior_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/6bb0ac41ce9af9bc.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Warrior%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "Terracotta Army",
+      "style": "Earthenware",
+      "author": "Artist Unknown",
+      "year": "210 BCE",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/5/5c/Warrior_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/6bb0ac41ce9af9bc.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/8/8b/Warrior_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/6bb0ac41ce9af9bc.png",
+      "realDescription": "These terracotta warriors were buried with the first Qin emperor to protect him in the afterlife. Nearly 2,000 years later, in 1974, about 8,000 of them were found. Each life-sized statue is said to have been handmade with different poses, expressions, and clothing.",
+      "fakeDescription": "In the forgery, the man is holding a shovel. If there is no shovel, it is genuine."
+    }
+  },
+  {
+    "id": "b52de337eda85b37",
+    "category": "art",
+    "number": null,
+    "nameKo": "미스터리한 명화",
+    "nameEn": "Mysterious painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/8/86/Mysterious_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/b52de337eda85b37.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Mysterious%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Isle of The Dead",
+      "style": "Oil on wood",
+      "author": "Arnold Böcklin",
+      "year": "1883",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 2.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/5/55/Mysterious_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/b52de337eda85b37.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "A small boat carrying a corpse glides quietly over a still sea to an island of graves surrounded by cliffs. The air of this piece by symbolist painter Böcklin is chilling, but also somehow calm. Böcklin worked here to capture not what he could see, but some of humanity's inner contemplations.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "17e95fd2029c1e24",
+    "category": "art",
+    "number": null,
+    "nameKo": "반짝이는 명화",
+    "nameEn": "Twinkling painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/4/4a/Twinkling_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/17e95fd2029c1e24.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Twinkling%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Starry Night",
+      "style": "Oil on canvas",
+      "author": "Vincent van Gogh",
+      "year": "1889",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/7/77/Twinkling_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/17e95fd2029c1e24.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "Van Gogh's signature piece, painted while he was hospitalized at an asylum. This view from his room includes memories and imaginations. In letters to friends, the artist called it a failure.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "6cc4674674c46c24",
+    "category": "art",
+    "number": null,
+    "nameKo": "빛의 명화",
+    "nameEn": "Glowing painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/6c/Glowing_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/6cc4674674c46c24.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Glowing%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Fighting Temeraire",
+      "style": "Oil on canvas",
+      "author": "Joseph Mallord William Turner",
+      "year": "1839",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/2/29/Glowing_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/6cc4674674c46c24.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "A famous piece by Turner, a \"master of light.\" It shows an English Navy ship commanded by Admiral Nelson as it's being tugged toward its dismantling.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "5ae257c6fc4c388f",
+    "category": "art",
+    "number": null,
+    "nameKo": "섬세한 명화",
+    "nameEn": "Detailed painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/4/47/Detailed_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/5ae257c6fc4c388f.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Detailed%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Ajisai Sōkeizu",
+      "style": "Dyed silk",
+      "author": "Itō Jakuchū",
+      "year": "18th century",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 2.0,
+      "realImageUrl": "https://dodo.ac/np/images/a/aa/Detailed_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/5ae257c6fc4c388f.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/e/e4/Detailed_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/5ae257c6fc4c388f.png",
+      "realDescription": "A detailed, colorful, and dynamic piece by Itō Jakuchū, a successful Kyoto artist in the mid-Edo period. High-quality paints on silk help it maintain its brilliant color even now, 200 years after its creation.",
+      "fakeDescription": "In the forgery, the flowers are purple and no stamp and signature are on the left edge. If there are blue flowers and the stamp and signature are present, it is genuine."
+    }
+  },
+  {
+    "id": "748eaf5152af94b1",
+    "category": "art",
+    "number": null,
+    "nameKo": "신비로운 조각",
+    "nameEn": "Mystic statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/e/e8/Mystic_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/748eaf5152af94b1.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Mystic%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "Bust of Nefertiti",
+      "style": "Limestone",
+      "author": "Thutmose",
+      "year": "circa 1345 BCE",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/e/e8/Mystic_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/748eaf5152af94b1.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/6/64/Mystic_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/748eaf5152af94b1.png",
+      "realDescription": "A bust of Nefertiti, whose name means \"the beautiful one has come.\" A \"royal wife,\" she was known as one of the three most beautiful women in ancient Egypt. It is not known whether the left eye is missing because it fell out, or because it was never completed.",
+      "fakeDescription": "In the forgery, there is an earring on Nefertiti's right ear. If there is no earring, it is genuine."
+    }
+  },
+  {
+    "id": "b52a86163be43edb",
+    "category": "art",
+    "number": null,
+    "nameKo": "씩씩한 명화",
+    "nameEn": "Scary painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/b/bc/Scary_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/b52a86163be43edb.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Scary%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Ōtani Oniji the 3rd as Yakko Edobei",
+      "style": "Woodblock print",
+      "author": "Tōshūsai Sharaku",
+      "year": "1794",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/5/5d/Scary_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/b52a86163be43edb.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/f/ff/Scary_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/b52a86163be43edb.png",
+      "realDescription": "A print from the mid-Edo period by Tōshūsai Sharaku depicting a famous actor of the time. Sharaku made roughly 140 ukiyo-e prints in his career, even though it only spanned around 10 months!",
+      "fakeDescription": "In the forgery, the man's eyebrows slant upwards and inwards and makes him look sad. Additionally, the man on the forged painting will periodically smile. If the eyebrows slant downwards and inwards to make him look angry, it is genuine."
+    }
+  },
+  {
+    "id": "cdf5a00ef9417583",
+    "category": "art",
+    "number": null,
+    "nameKo": "아늑한 명화",
+    "nameEn": "Serene painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/f/f3/Serene_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/cdf5a00ef9417583.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Serene%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Lady with an Ermine",
+      "style": "Oil on wood panel",
+      "author": "Leonardo da Vinci",
+      "year": "circa 1490",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/f/f7/Serene_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/cdf5a00ef9417583.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/2/26/Serene_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/cdf5a00ef9417583.png",
+      "realDescription": "One of only four portraits of women painted by da Vinci, one of which is the \"Mona Lisa. \"Some believe that the \"ermine\" is not actually an ermine, but rather a white ferret!",
+      "fakeDescription": "In the forgery, the woman is holding a black and white patterned ermine. If she is holding a pure white ermine, it is genuine."
+    }
+  },
+  {
+    "id": "7138dace8ac790d9",
+    "category": "art",
+    "number": null,
+    "nameKo": "아름다운 조각",
+    "nameEn": "Beautiful statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/9/9f/Beautiful_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/7138dace8ac790d9.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Beautiful%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "Venus de Milo",
+      "style": "Marble",
+      "author": "Artist Unknown",
+      "year": "circa 130 BCE",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/9/9f/Beautiful_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/7138dace8ac790d9.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/6/65/Beautiful_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/7138dace8ac790d9.png",
+      "realDescription": "A statue of the Roman goddess of love and beauty, Venus was found on the island of Milos. This beautiful sculpture makes many wonder what her original pose might have been.",
+      "fakeDescription": "In the forgery, there are three necklaces around her neck. If there are no necklaces, it is genuine."
+    }
+  },
+  {
+    "id": "089f9e3046a98236",
+    "category": "art",
+    "number": null,
+    "nameKo": "아카데믹한 명화",
+    "nameEn": "Academic painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/f/f6/Academic_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/089f9e3046a98236.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Academic%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Vitruvian Man",
+      "style": "Pen and ink on paper",
+      "author": "Leonardo da Vinci",
+      "year": "circa 1487",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/e/e8/Academic_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/089f9e3046a98236.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/4/46/Academic_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/089f9e3046a98236.png",
+      "realDescription": "This drawing is based on the \"ideal\" human-body ratio, as stated in \"De architectura.\" \"De architectura\" was a treatise by Vitruvius, an architect from the early 1st century BCE.",
+      "fakeDescription": "In the forgery, there is a coffee stain in the top right corner. The forgery also has a key taped to the back of the canvas. If there is no stain and key, it is genuine."
+    }
+  },
+  {
+    "id": "139045fb4d296d76",
+    "category": "art",
+    "number": null,
+    "nameKo": "어마어마한 조각",
+    "nameEn": "Tremendous statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/62/Tremendous_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/139045fb4d296d76.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Tremendous%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "Houmuwu Ding",
+      "style": "Bronze",
+      "author": "Artist Unknown",
+      "year": "1200 BCE",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/6/62/Tremendous_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/139045fb4d296d76.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/3/3d/Tremendous_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/139045fb4d296d76.png",
+      "realDescription": "This bronze ding from ancient China is the largest and heaviest ever found. The script on the inside suggests it was created to honor the king's mother.",
+      "fakeDescription": "In the forgery, there is a lid on the statue. If the top is open, it is genuine."
+    }
+  },
+  {
+    "id": "cf1c10b89f9c72c5",
+    "category": "art",
+    "number": null,
+    "nameKo": "엄숙한 명화",
+    "nameEn": "Solemn painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/d/d8/Solemn_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/cf1c10b89f9c72c5.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Solemn%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Las Meninas",
+      "style": "Oil on canvas",
+      "author": "Diego Velázquez",
+      "year": "circa 1656",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 2.0,
+      "realImageUrl": "https://dodo.ac/np/images/0/0d/Solemn_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/cf1c10b89f9c72c5.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/8/8c/Solemn_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/cf1c10b89f9c72c5.png",
+      "realDescription": "This famous piece by Velázquez, who served the Spanish court, shows us something about perspective. It depicts a young princess with her \"ladies-in-waiting.\" The artist himself is seen to the left. The king and queen are reflected in the mirror to the artist's right, so the perspective is that of the king. The king...watching the artist...paint the king and the queen...",
+      "fakeDescription": "In the forgery, the man in the background has his right arm raised as if waving. If the arm goes behind the curtain, it is genuine."
+    }
+  },
+  {
+    "id": "42eb3545bb50bf84",
+    "category": "art",
+    "number": null,
+    "nameKo": "예쁜 명화",
+    "nameEn": "Moving painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/0/09/Moving_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/42eb3545bb50bf84.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Moving%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Birth of Venus",
+      "style": "Tempura on canvas",
+      "author": "Sandro Botticelli",
+      "year": "circa 1485",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 1.5,
+      "realImageUrl": "https://dodo.ac/np/images/e/e4/Moving_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/42eb3545bb50bf84.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/2/21/Moving_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/42eb3545bb50bf84.png",
+      "realDescription": "A painting of the Roman goddess Venus riding a scallop shell after being born in the ocean. The name Botticelli is said to actually be a nickname given to the artist's brother, who was built like a barrel. Why this nickname was transferred between siblings is a mystery lost to the ages.",
+      "fakeDescription": "In the forgery, the sky behind the right-hand woman is clearly visible and there are flowers floating about. If there are trees behind her, it is genuine."
+    }
+  },
+  {
+    "id": "19ec75883a813e6e",
+    "category": "art",
+    "number": null,
+    "nameKo": "용감한 명화",
+    "nameEn": "Basic painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/3/34/Basic_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/19ec75883a813e6e.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Basic%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Blue Boy",
+      "style": "Oil on canvas",
+      "author": "Thomas Gainsborough",
+      "year": "1770",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 2.0,
+      "realImageUrl": "https://dodo.ac/np/images/a/ab/Basic_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/19ec75883a813e6e.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/4/48/Basic_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/19ec75883a813e6e.png",
+      "realDescription": "Gainsborough was known for his innovative use of colors in his traditional portraits, like this one. Although he preferred painting landscapes, his portraits would be the defining work of his career.",
+      "fakeDescription": "In the forgery, the boy has a bowl haircut with long bangs. If he has shorter and wavier hair, it is genuine."
+    }
+  },
+  {
+    "id": "f7df05299ee45c41",
+    "category": "art",
+    "number": null,
+    "nameKo": "위대한 조각",
+    "nameEn": "Great statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/7/71/Great_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/f7df05299ee45c41.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Great%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "King Kamehameha I",
+      "style": "Bronze",
+      "author": "Thomas Ridgeway Gould",
+      "year": "circa 1883",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 2.0,
+      "length": 2.0,
+      "realImageUrl": "https://dodo.ac/np/images/7/71/Great_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/f7df05299ee45c41.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "A bronze sculpture of King Kamehameha I, who founded the Kingdom of Hawaii in 1810. Traditionally, the sculpture is draped with many leis every year on June 11th.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "c5b4e99d57ed33be",
+    "category": "art",
+    "number": null,
+    "nameKo": "유명한 명화",
+    "nameEn": "Famous painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/d/db/Famous_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/c5b4e99d57ed33be.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Famous%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Mona Lisa",
+      "style": "Oil on poplar",
+      "author": "Leonardo da Vinci",
+      "year": "circa 1503",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/1/1c/Famous_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/c5b4e99d57ed33be.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/1/16/Famous_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/c5b4e99d57ed33be.png",
+      "realDescription": "The world's most famous smile. It's said that da Vinci kept this painting for himself until the very end...Given its power to beguile visitors all these years later, it's easy to see why.",
+      "fakeDescription": "In the forgery, the woman's eyebrows are raised. If her eyebrows are relaxed, it is genuine."
+    }
+  },
+  {
+    "id": "e29d04f8b82afc92",
+    "category": "art",
+    "number": null,
+    "nameKo": "익숙한 조각",
+    "nameEn": "Familiar statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/c/cf/Familiar_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/e29d04f8b82afc92.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Familiar%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "The Thinker",
+      "style": "Bronze",
+      "author": "Auguste Rodin",
+      "year": "1902",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/c/cf/Familiar_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/e29d04f8b82afc92.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "This bronze sculpture was crafted by the French sculptor Rodin, known as the father of modern sculpture. The incredibly famous original is located in France. The sculpture was casted over 20 times. As such, authentic pieces can be found all around the world.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "99c78500f06e3733",
+    "category": "art",
+    "number": null,
+    "nameKo": "재미있는 명화",
+    "nameEn": "Jolly painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/1/16/Jolly_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/99c78500f06e3733.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Jolly%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Summer",
+      "style": "Oil on canvas",
+      "author": "Giuseppe Arcimboldo",
+      "year": "circa 1563",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/d/d8/Jolly_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/99c78500f06e3733.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/1/1a/Jolly_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/99c78500f06e3733.png",
+      "realDescription": "A curious portrait by Giuseppe Arcimboldo, an Italian painter from the late 16th century. It doesn't take a particularly sharp eye to see that the entire portrait is composed of fresh produce.",
+      "fakeDescription": "In the forgery, the artichoke in its torso is missing. If there is an artichoke in its torso, it is genuine."
+    }
+  },
+  {
+    "id": "e61cb6e22c327c0b",
+    "category": "art",
+    "number": null,
+    "nameKo": "절제된 명화",
+    "nameEn": "Graceful painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/7/70/Graceful_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/e61cb6e22c327c0b.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Graceful%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Beauty Looking Back",
+      "style": "Color on silk",
+      "author": "Hishikawa Moronobu",
+      "year": "17th century",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 2.0,
+      "realImageUrl": "https://dodo.ac/np/images/5/59/Graceful_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/e61cb6e22c327c0b.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/8/83/Graceful_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/e61cb6e22c327c0b.png",
+      "realDescription": "A hand-painted piece by Hishikawa Moronobu, an artist known for popularizing the ukiyo-e style. This stirring painting depicts a fashionable woman glancing back over her shoulder.",
+      "fakeDescription": "In the forgery, the white collar around her neck is missing and she fills up the whole frame. The woman on the forged painting will also periodically look the wrong way. If she has a white collar and takes up less of the frame, it is genuine."
+    }
+  },
+  {
+    "id": "90b0e5e1f8006964",
+    "category": "art",
+    "number": null,
+    "nameKo": "좋은 명화",
+    "nameEn": "Nice painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/a/a1/Nice_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/90b0e5e1f8006964.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Nice%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Fifer",
+      "style": "Oil on canvas",
+      "author": "Édouard Manet",
+      "year": "1866",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 1.0,
+      "length": 2.0,
+      "realImageUrl": "https://dodo.ac/np/images/3/32/Nice_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/90b0e5e1f8006964.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "One of Manet's earlier works, this painting depicts a young flautist dressed in military uniform. Manet's works are notable for their lack of linear perspective and strong color contrast. These attributes led some to call him \"The Father of Impressionism\" and make comparisons to Vélazquez. Fun fact-flautists can determine what note the boy is playing just by studying the painting closely.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "afeaf6e857faf883",
+    "category": "art",
+    "number": null,
+    "nameKo": "진귀한 명화",
+    "nameEn": "Flowery painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/d/da/Flowery_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/afeaf6e857faf883.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Flowery%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Sunflowers",
+      "style": "Oil on canvas",
+      "author": "Vincent van Gogh",
+      "year": "circa 1888",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/6/6e/Flowery_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/afeaf6e857faf883.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "Van Gogh painted this piece when he moved to the south of France in search of more vibrant colors. Yellow was Van Gogh's favorite color, and he made seven paintings that featured sunflowers during this time.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "4f7ffa56397f184d",
+    "category": "art",
+    "number": null,
+    "nameKo": "침착한 명화",
+    "nameEn": "Quaint painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/e/ed/Quaint_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/4f7ffa56397f184d.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Quaint%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Milkmaid",
+      "style": "Oil on canvas",
+      "author": "Johannes Vermeer",
+      "year": "circa 1658",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/3/32/Quaint_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/4f7ffa56397f184d.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/5/5f/Quaint_Painting_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/4f7ffa56397f184d.png",
+      "realDescription": "This piece earned Vermeer the nickname \"Master of Light\" thanks to its exquisite contrast and depth. Vermeer painted this masterpiece at only 25 years of age. Many note that it is surprisingly small in real life.",
+      "fakeDescription": "In the forgery, the liquid coming out of the vase is wide and vibrant. If the liquid pouring out of the vase is thin, it is genuine."
+    }
+  },
+  {
+    "id": "f332ae200515c8c3",
+    "category": "art",
+    "number": null,
+    "nameKo": "태고의 조각",
+    "nameEn": "Ancient statue",
+    "image": {
+      "url": "https://dodo.ac/np/images/0/03/Ancient_Statue_NH_Icon.png",
+      "localPath": "assets/encyclopedia/art/items/f332ae200515c8c3.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Ancient%20statue",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Statue",
+      "artName": "Jōmon Period \"Dogū\" Figurine Shakōki-dogū",
+      "style": "Fired pottery",
+      "author": "Artist Unknown",
+      "year": "1000-400 BCE",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/0/03/Ancient_Statue_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/f332ae200515c8c3.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/1/12/Ancient_Statue_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/f332ae200515c8c3.png",
+      "realDescription": "A mysterious, riveting doll made from kneaded, unglazed dirt during the Jōmon period. Its large round eyes resemble goggles that intercept light, so its name should come as no surprise. \"Shakōki\" means \"light-intercepting goggles,\" and a dogū is a small animal figurine.",
+      "fakeDescription": "In the forgery, the statue has a pair of antennae on its head. Additionally, the forged statue's eyes will glow in the night, and it will float if interacted with as an ordinary piece of furniture. If the statue does not have a pair of antennae, it is genuine."
+    }
+  },
+  {
+    "id": "4dac1f58d8d7afe8",
+    "category": "art",
+    "number": null,
+    "nameKo": "평범한 명화",
+    "nameEn": "Common painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/c/cb/Common_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/4dac1f58d8d7afe8.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Common%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Gleaners",
+      "style": "Oil on canvas",
+      "author": "Jean-François Millet",
+      "year": "1857",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/3/34/Common_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/4dac1f58d8d7afe8.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "The signature piece from Millet, who was known for depicting the lives of commoners in the 19th century. Notice the abundant crops visible in the background relative to the meager wheat remaining for workers. This art served as social commentary in a time of great inequality.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "8ad669233ccabcf0",
+    "category": "art",
+    "number": null,
+    "nameKo": "평온한 명화",
+    "nameEn": "Calm painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/3/30/Calm_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/8ad669233ccabcf0.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Calm%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "A Sunday Afternoon on the Island of La Grande Jatte",
+      "style": "Oil on canvas",
+      "author": "Georges Seurat",
+      "year": "circa 1885",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 2.0,
+      "length": 1.5,
+      "realImageUrl": "https://dodo.ac/np/images/c/c2/Calm_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/8ad669233ccabcf0.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "Seurat, known as the founder of neo-impressionism, invented the use of brightly colored dots. His method, which does not involve mixing pigments, took time. This piece, for instance, took two years. It shows a crowd enjoying a day off at the river Seine in France.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "f73139a013102bdf",
+    "category": "art",
+    "number": null,
+    "nameKo": "혼란스러운 명화의 오른쪽",
+    "nameEn": "wild painting right half",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/6b/Wild_Painting_Right_Half_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/f73139a013102bdf.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Wild%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Folding Screen of Fūjin and Raijin",
+      "style": "Gold leaf and ink on paper",
+      "author": "Tawaraya Sōtatsu",
+      "year": "17th century",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/9/9f/Wild_Painting_Right_Half_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/f73139a013102bdf.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/3/31/Wild_Painting_Right_Half_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/f73139a013102bdf.png",
+      "realDescription": "This folding screen shows dynamic brushwork of Fūjin and Raijin on a gold-leaf background. It is thought to be the masterpiece of Tawaraya Sōtatsu, an early-Edo- period artist. The simplification of the subjects is a style that was carried on by Ogata Kōrin. It's a style still in use today in the Rinpa school of Japanese painting.",
+      "fakeDescription": "In the forgery, Fūjin is white rather than green. If Fūjin is colored green, it is genuine."
+    }
+  },
+  {
+    "id": "001113ced9466672",
+    "category": "art",
+    "number": null,
+    "nameKo": "혼란스러운 명화의 왼쪽",
+    "nameEn": "wild painting left half",
+    "image": {
+      "url": "https://dodo.ac/np/images/e/e3/Wild_Painting_Left_Half_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/001113ced9466672.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Wild%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Folding Screen of Fūjin and Raijin",
+      "style": "Gold leaf and ink on paper",
+      "author": "Tawaraya Sōtatsu",
+      "year": "17th century",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": true,
+      "width": 2.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/1/1b/Wild_Painting_Left_Half_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/001113ced9466672.png",
+      "fakeImageUrl": "https://dodo.ac/np/images/1/1b/Wild_Painting_Left_Half_%28Fake%29_NH_Icon.png",
+      "fakeImageLocalPath": "assets/encyclopedia/art/fake/001113ced9466672.png",
+      "realDescription": "This folding screen shows dynamic brushwork of Fūjin and Raijin on a gold-leaf background. It is thought to be the masterpiece of Tawaraya Sōtatsu, an early-Edo- period artist. The simplification of the subjects is a style that was carried on by Ogata Kōrin. It's a style still in use today in the Rinpa school of Japanese painting.",
+      "fakeDescription": "In the forgery, Raijin is green rather than white. If Raijin is colored white, it is genuine."
+    }
+  },
+  {
+    "id": "835506447d504365",
+    "category": "art",
+    "number": null,
+    "nameKo": "활기 넘치는 명화",
+    "nameEn": "Proper painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/3/3d/Proper_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/835506447d504365.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Proper%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "A Bar at The Folies-Bergère",
+      "style": "Oil on canvas",
+      "author": "Édouard Manet",
+      "year": "circa 1882",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 2.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/f/f0/Proper_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/835506447d504365.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "Close inspection of the mirror behind this painting's subject reveals many mysteries and paradoxes... In fact, the painting is based on multiple perspectives, which explains the unusual placement of some items. Sadly, this is Manet's last major work. He passed away a year after it was complete, at age 51.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "77267cbf6d7c0fdc",
+    "category": "art",
+    "number": null,
+    "nameKo": "훌륭한 명화",
+    "nameEn": "Perfect painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/6b/Perfect_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/77267cbf6d7c0fdc.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Perfect%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "Apples and Oranges",
+      "style": "Oil on canvas",
+      "author": "Paul Cézanne",
+      "year": "circa 1899",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/5/54/Perfect_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/77267cbf6d7c0fdc.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "This still life is known to have inspired the work of many other artists, including Pablo Picasso. Rather than trying to recreate an image, Cézanne captured the beauty of shapes from many angles. With this work, Cézanne draws on both the atmosphere of his subjects and the spirit of its beholders.",
+      "fakeDescription": null
+    }
+  },
+  {
+    "id": "194f376b427c252e",
+    "category": "art",
+    "number": null,
+    "nameKo": "힘찬 명화",
+    "nameEn": "Moody painting",
+    "image": {
+      "url": "https://dodo.ac/np/images/5/50/Moody_Painting_NH_Texture.png",
+      "localPath": "assets/encyclopedia/art/items/194f376b427c252e.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Moody%20painting",
+    "museumPhrase": null,
+    "location": null,
+    "condition": null,
+    "rarity": null,
+    "availability": {
+      "north": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      },
+      "south": {
+        "label": null,
+        "months": [],
+        "timesByMonth": {},
+        "periods": []
+      }
+    },
+    "catchphrase": null,
+    "prices": {
+      "primary": 4980,
+      "primaryLabel": "구매가",
+      "special": 1245,
+      "specialLabel": "판매가"
+    },
+    "shadow": null,
+    "movementSpeed": null,
+    "tank": {
+      "width": null,
+      "length": null
+    },
+    "tankImage": null,
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": {
+      "type": "Painting",
+      "artName": "The Sower",
+      "style": "Oil on canvas",
+      "author": "Jean-François Millet",
+      "year": "circa 1850",
+      "availability": "Jolly Redd's Treasure Trawler",
+      "hasFake": false,
+      "width": 1.0,
+      "length": 1.0,
+      "realImageUrl": "https://dodo.ac/np/images/2/22/Moody_Painting_NH_Icon.png",
+      "realImageLocalPath": "assets/encyclopedia/art/real/194f376b427c252e.png",
+      "fakeImageUrl": null,
+      "fakeImageLocalPath": null,
+      "realDescription": "Millet painted this piece of a farmer sowing wheat seeds in a field after moving to the countryside from Paris. If the piece reminds you of Van Gogh, that's likely because Van Gogh himself was inspired by it!",
+      "fakeDescription": null
+    }
+  }
+]

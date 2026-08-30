@@ -1,0 +1,4058 @@
+[
+  {
+    "id": "b012f6257dd1d94b",
+    "category": "sea",
+    "number": 1,
+    "nameKo": "미역",
+    "nameEn": "seaweed",
+    "image": {
+      "url": "https://dodo.ac/np/images/8/8c/Seaweed_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/b012f6257dd1d94b.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Seaweed",
+    "museumPhrase": "Let it be known that seaweed is a misnomer of the highest order! That is, it is not a noxious weed so much as it is a marine algae most beneficial to life on land and sea. Seaweed, you see, provides essential habitat and food for all manner of marine creatures. And it creates a great deal of the oxygen we land lovers love to breath too, hoo! And yet, I can't help but shudder when the slimy stuff touches my toes during a swim. Hoot! The horror!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Oct – Jul",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "NA",
+          "9": "NA",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Oct – Jul",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Apr – Jan",
+        "months": [
+          1,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "NA",
+          "3": "NA",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Apr – Jan",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got some seaweed! I couldn't kelp myself.",
+    "prices": {
+      "primary": 600,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Large",
+    "movementSpeed": "Stationary",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/c/c3/Seaweed_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/b012f6257dd1d94b.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "be36dfa8d32f0de6",
+    "category": "sea",
+    "number": 2,
+    "nameKo": "바다포도",
+    "nameEn": "sea grapes",
+    "image": {
+      "url": "https://dodo.ac/np/images/e/e7/Sea_Grapes_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/be36dfa8d32f0de6.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Sea%20grapes",
+    "museumPhrase": "Sea grapes are a marine algae that look much like their landlocked namesake. That is, they are green pearl-like orbs that cluster tightly along underwater vines. And sea grapes, like regular grapes, are a popular snack food too... albeit of the saltier variety. Fans of the briny delicacy enjoy the way the shiny pearls POP when chewed. It makes one wonder whether sea grape juice might have some appeal? 'Twould leave the drinker with sour grapes, I suppose.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Jun – Sep",
+        "months": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Jun – Sep",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Dec – Mar",
+        "months": [
+          1,
+          2,
+          3,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Dec – Mar",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got some sea grapes! Can't let these go sour.",
+    "prices": {
+      "primary": 900,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Stationary",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/5/56/Sea_Grapes_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/be36dfa8d32f0de6.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "ede290618bebc1f7",
+    "category": "sea",
+    "number": 3,
+    "nameKo": "해삼",
+    "nameEn": "sea cucumber",
+    "image": {
+      "url": "https://dodo.ac/np/images/9/9b/Sea_Cucumber_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/ede290618bebc1f7.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Sea%20cucumber",
+    "museumPhrase": "The sea cucumber, much like its relatives the sea urchin and sea star, has no heart nor brain. However, unlike its relatives, it has no shell nor spikes to with which to protect itself either. So how does a softy such as this stay safe in the open ocean? Brace yourself I say… when threatened sea cucumbers jettison their innards out of their backsides! Hoo! Gross but true! The sticky, stringy stuff ensnares predators, allowing the cuke to make its escape and grow its insides back. One might say…the sea cucumber is a GUTSY creature, indeed. Hoo hoo, hee hee! Do forgive me!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Nov – Apr",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Nov – Apr",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "May – Oct",
+        "months": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "May – Oct",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a sea cucumber! It's a bit cumbersome...",
+    "prices": {
+      "primary": 500,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Very slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/4/43/Sea_Cucumber_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/ede290618bebc1f7.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "19441ee0e9c160dc",
+    "category": "sea",
+    "number": 4,
+    "nameKo": "바다돼지",
+    "nameEn": "sea pig",
+    "image": {
+      "url": "https://dodo.ac/np/images/a/a9/Sea_Pig_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/19441ee0e9c160dc.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Sea%20pig",
+    "museumPhrase": "Never have I seen a creature that walks the line between creepy and cute quite like the sea pig does. Sea pigs are, in fact, a type of sea cucumber that lives deep down on the ocean floor. About four inches long, these soft pinkish oddities use tube-like legs and feelers to get around. Thus they snuffle through the mud, slurping up particles from decaying carcasses. Meanwhile, predators be warned... This little piggy tastes like poison.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Nov – Feb",
+        "months": [
+          1,
+          2,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "4 PM – 9 AM",
+          "2": "4 PM – 9 AM",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "4 PM – 9 AM",
+          "12": "4 PM – 9 AM"
+        },
+        "periods": [
+          {
+            "months": "Nov – Feb",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "May – Aug",
+        "months": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "4 PM – 9 AM",
+          "6": "4 PM – 9 AM",
+          "7": "4 PM – 9 AM",
+          "8": "4 PM – 9 AM",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "May – Aug",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a sea pig! What's next? Air pigs?",
+    "prices": {
+      "primary": 10000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Very fast",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/a/a3/Sea_Pig_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/19441ee0e9c160dc.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "16b19619bc33fdc7",
+    "category": "sea",
+    "number": 5,
+    "nameKo": "불가사리",
+    "nameEn": "sea star",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/6c/Sea_Star_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/16b19619bc33fdc7.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Sea%20star",
+    "museumPhrase": "The sea star may appear to have five feet...but those are, in fact, its arms. And though five-armed sea stars are the most common, there are species with 20 or even 40 arms out there! Ah, but the fascinating appendage fats do not end there, wot wot! You see upon each sea star's arm sprout many dozens of tiny feet. YES, FEET! They use these suction-cupped feet not just to move about...but to...eh... grab hold of dinner guests as well. Finally, it should be noted that when a sea star loses an arm, it can grow it back. More impressive yes, a served sea star arm...can sometimes grow an entire sea star body back!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a sea star! Maybe it'll give me an autograph!",
+    "prices": {
+      "primary": 500,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Very slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/f/f8/Sea_Star_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/16b19619bc33fdc7.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "6424295ad358c8ab",
+    "category": "sea",
+    "number": 6,
+    "nameKo": "성게",
+    "nameEn": "sea urchin",
+    "image": {
+      "url": "https://dodo.ac/np/images/9/9c/Sea_Urchin_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/6424295ad358c8ab.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Sea%20urchin",
+    "museumPhrase": "Ah, the sea urchin...the unabashed goth of the ocean floor! Indeed, with its mane of dark-hued spikes, it looks for all the world as if it might front a punk-rock band. Perhaps its more demure relatives—the sea cucumber and the sea star—disapprove of its outlandish look? It would certainly explain why sea stars gobble up sea urchins every chance they get! But worry not for our spiky friend. Its venomous spines are an effective deterrent to many a predator.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "May – Sep",
+        "months": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "May – Sep",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Nov – Mar",
+        "months": [
+          1,
+          2,
+          3,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Nov – Mar",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a sea urchin! Wasn't even 'earchin for it.",
+    "prices": {
+      "primary": 1700,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/7/7e/Sea_Urchin_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/6424295ad358c8ab.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "26acb380ca7d2dfe",
+    "category": "sea",
+    "number": 7,
+    "nameKo": "연필성게",
+    "nameEn": "slate pencil urchin",
+    "image": {
+      "url": "https://dodo.ac/np/images/0/05/Slate_Pencil_Urchin_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/26acb380ca7d2dfe.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Slate%20pencil%20urchin",
+    "museumPhrase": "Slate Pencil Urchins are a type of sea urchin topped with thick, rounded spines that resemble sticks of chalk. These urchins' spines protect them not only from predators but from violent waves as well. Found in coral reefs, they're usually bright red, brown, or purple in color. For all those bright colors, one would think the slate pencil urchin to be deadly. But all those pretty colors, it seems, are just a pretty show.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "May – Sep",
+        "months": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "4 PM – 9 AM",
+          "6": "4 PM – 9 AM",
+          "7": "4 PM – 9 AM",
+          "8": "4 PM – 9 AM",
+          "9": "4 PM – 9 AM",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "May – Sep",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Nov – Mar",
+        "months": [
+          1,
+          2,
+          3,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "4 PM – 9 AM",
+          "2": "4 PM – 9 AM",
+          "3": "4 PM – 9 AM",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "4 PM – 9 AM",
+          "12": "4 PM – 9 AM"
+        },
+        "periods": [
+          {
+            "months": "Nov – Mar",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a slate pencil urchin! Its handwriting is gorgeous.",
+    "prices": {
+      "primary": 2000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Medium",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/f/f5/Slate_Pencil_Urchin_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/26acb380ca7d2dfe.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "132b4744c1761787",
+    "category": "sea",
+    "number": 8,
+    "nameKo": "말미잘",
+    "nameEn": "sea anemone",
+    "image": {
+      "url": "https://dodo.ac/np/images/e/e9/Sea_Anemone_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/132b4744c1761787.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Sea%20anemone",
+    "museumPhrase": "Medusa herself would be impressed by the sea anemone. This pretty predator loves to wave its colorful flowing locks about. But these gorgeous tresses are, in fact, deadly tentacles surrounding a hungry mouth! Triggered by the slightest touch, these tentacles harpoon victims with neurotoxin. The sea anemone then pulls the helpless, hapless prey into its mouth for a spot of lunch! I say, let this be a lesson! Never, ever make an enemy... out of an anemone!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a sea anemone! The enemy of my anemone is my afrenome!",
+    "prices": {
+      "primary": 500,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Large",
+    "movementSpeed": "Stationary",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/0/01/Sea_Anemone_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/132b4744c1761787.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "b208cc87a6b0fee1",
+    "category": "sea",
+    "number": 9,
+    "nameKo": "보름달물해파리",
+    "nameEn": "moon jellyfish",
+    "image": {
+      "url": "https://dodo.ac/np/images/f/f9/Moon_Jellyfish_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/b208cc87a6b0fee1.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Moon%20jellyfish",
+    "museumPhrase": "Ah, the moon jellyfish...what's not to love about this pretty floating flower of the sea... Well, I suppose its tentacles do give a sting when touched...but it's only a mild thing to the likes of us. Other creatures may not be so fond of this translucent beauty. Though who can blame them, really? Moon jellyfish have stinging cells called cnidocytes that kill fish and other small critters that float by. And they use their \"oral arms\" to pull these morsels into their mouths and stomachs. Indeed, one need but observe the moon jellyfish to see how brutal AND beautiful nature can be.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Jul – Sep",
+        "months": [
+          7,
+          8,
+          9
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Jul – Sep",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Jan – Mar",
+        "months": [
+          1,
+          2,
+          3
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Jan – Mar",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a moon jellyfish! Now to find a sun peanutbutterfish.",
+    "prices": {
+      "primary": 600,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Very slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/f/f5/Moon_Jellyfish_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/b208cc87a6b0fee1.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "aa5c7d8cec6a2f34",
+    "category": "sea",
+    "number": 10,
+    "nameKo": "갯민숭달팽이",
+    "nameEn": "sea slug",
+    "image": {
+      "url": "https://dodo.ac/np/images/5/54/Sea_Slug_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/aa5c7d8cec6a2f34.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Sea%20slug",
+    "museumPhrase": "Imagine, if you will, a land slug...but one dressed in frilly attire full of bold colors, stripes, and spots! That is the sea slug, a gastropod that looks ready to walk the red carpet...or perform beneath a big top. But these clowns are no laughing matter, eh wot. Their garish colors and wild patterns warn predators to steer clear of their stinging, toxic taste. And THAT is how you dress for success, as they say!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a sea slug! It's kinda salty about that.",
+    "prices": {
+      "primary": 600,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Tiny",
+    "movementSpeed": "Very slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/4/49/Sea_Slug_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/aa5c7d8cec6a2f34.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "8f0df69bfe1b3381",
+    "category": "sea",
+    "number": 11,
+    "nameKo": "진주조개",
+    "nameEn": "pearl oyster",
+    "image": {
+      "url": "https://dodo.ac/np/images/0/0a/Pearl_Oyster_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/8f0df69bfe1b3381.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Pearl%20oyster",
+    "museumPhrase": "Hoo, indeed, hoot! What a splendid pearl oyster! Did you know the famed pearl oyster can live for 40 years and grow up to a foot in size? 'Tis true, hootie-hoo! Of course, this briny bivalve is best known for the precious gems it grows within. The pearl-making process begins when an irritant gains access to the delicate insides of the oyster. The intruder is then covered with layer upon layer of \"nacre,\" the same substance used to create its shell. It takes years for a pearl to form, but in the end, the irritant is rendered harmless. Ahh, if only we all had the power to turn things that annoy us... into things of beauty instead.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a pearl oyster! Aw, shucks. Don't clam up now!",
+    "prices": {
+      "primary": 2800,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Medium",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/5/52/Pearl_Oyster_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/8f0df69bfe1b3381.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "876467b1c906e28f",
+    "category": "sea",
+    "number": 12,
+    "nameKo": "지중해담치",
+    "nameEn": "mussel",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/6c/Mussel_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/876467b1c906e28f.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Mussel",
+    "museumPhrase": "Did you know the mussel has a beard?! Hoo! It's true! Well, partially true, anyway. Mussels have a special gland that secretes a thing called \"bysuss\" or \"byssal thread.\" They use these tough beard-like fibers to anchor themselves to rocks and keep themselves in place. So, you see, the mussel's beard is functional rather than merely stylish. Then again, perhaps all beards should be this way.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Jun – Dec",
+        "months": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Jun – Dec",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Dec – Jun",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Dec – Jun",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a mussel! It's been working out.",
+    "prices": {
+      "primary": 1500,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/a/a9/Mussel_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/876467b1c906e28f.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "f02c9509dd6c77f5",
+    "category": "sea",
+    "number": 13,
+    "nameKo": "굴",
+    "nameEn": "oyster",
+    "image": {
+      "url": "https://dodo.ac/np/images/4/4d/Oyster_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/f02c9509dd6c77f5.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Oyster",
+    "museumPhrase": "Oysters are marvelous mollusks and, in many ways, the social butterflies of the seas. That is, these bivalves tend to live attached to rocks in large groups known as oyster beds. These reef-like structures provide home and habitat for a delightful variety of creatures. Mussels, barnacles, and sea anemones have all been known to set up house. Meanwhile, small fish and crabs hide from predators and even raise their young among the snuggling oysters. With all the hubbub, an oyster bed sounds like the last place one would get some sleep!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Sep – Feb",
+        "months": [
+          1,
+          2,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Sep – Feb",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Mar – Aug",
+        "months": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Mar – Aug",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got an oyster! It's a little shellfish.",
+    "prices": {
+      "primary": 1100,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/6/66/Oyster_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/f02c9509dd6c77f5.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "2aa67d90a0bb2d64",
+    "category": "sea",
+    "number": 14,
+    "nameKo": "가리비",
+    "nameEn": "scallop",
+    "image": {
+      "url": "https://dodo.ac/np/images/5/55/Scallop_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/2aa67d90a0bb2d64.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Scallop",
+    "museumPhrase": "Ah, the scallop! It just goes to show, you can't keep a good bivalve down. While most members of its family are known for staying put, the scallop is a nimble fellow indeed. When a hungry sea star approaches, the scallop can swim away by clap-clap-clapping its shells together! \"How does a scallop know when a predator approaches?\" you ask. Why, it has 200 eyes to see with! It makes one wonder what else the scallop sees with all those eyes... I fear it sees into my very soul!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a scallop! It otter be savored.",
+    "prices": {
+      "primary": 1200,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/4/4a/Scallop_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/2aa67d90a0bb2d64.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "013b1ae321ed05a1",
+    "category": "sea",
+    "number": 15,
+    "nameKo": "수랑",
+    "nameEn": "whelk",
+    "image": {
+      "url": "https://dodo.ac/np/images/5/5e/Whelk_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/013b1ae321ed05a1.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Whelk",
+    "museumPhrase": "Whelks are sea snails that migrate from deep water to shallow water when the weather changes. Avid carnivores, they feed on worms, crustaceans, and mollusks. In fact, these wily snails have been known to use their own shells to pry open the shells of their victims! They then use a rough tongue-like organ with thousands of tiny teeth to lick their victims' shells clean. Eh... you might want to put that image out of your mind when it's your turn to dine.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a whelk! Happy snails to ya.",
+    "prices": {
+      "primary": 1000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/5/54/Whelk_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/013b1ae321ed05a1.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "1f9a75143c922954",
+    "category": "sea",
+    "number": 16,
+    "nameKo": "소라",
+    "nameEn": "turban shell",
+    "image": {
+      "url": "https://dodo.ac/np/images/9/93/Turban_Shell_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/1f9a75143c922954.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Turban%20shell",
+    "museumPhrase": "The turban shell is a sea snail with a rather nifty trick up its sleeve...er, shell. You see, this snail carries a hard, round, button-like \"operculum\" with it wherever it goes. What is an operculum, you ask? Why, it is a trapdoor of sorts! When danger approaches, the snail slips into its shell and pulls this trapdoor closed over the opening. Thus it is locked safe and sound inside. And bravo, I say! Bravo! When trouble comes knocking, just do what the turban shell￿ does. Shut the door and turn out the lights!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Mar – May; Sep – Dec",
+        "months": [
+          3,
+          4,
+          5,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Mar – May; Sep – Dec",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Mar – Jun; Sep – Nov",
+        "months": [
+          3,
+          4,
+          5,
+          6,
+          9,
+          10,
+          11
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "NA",
+          "8": "NA",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Mar – Jun; Sep – Nov",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a turban shell! It's totally TURB...ular!",
+    "prices": {
+      "primary": 1000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/6/63/Turban_Shell_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/1f9a75143c922954.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "618b888531bede4f",
+    "category": "sea",
+    "number": 17,
+    "nameKo": "전복",
+    "nameEn": "abalone",
+    "image": {
+      "url": "https://dodo.ac/np/images/0/04/Abalone_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/618b888531bede4f.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Abalone",
+    "museumPhrase": "My feathers, but the abalone is a most deceptive sea snail, wot wot! After seeing its dull brown shell from the outside, one would think it quite plain.But take a gander inside, and you'll see that the abalone's home is a shimmering beauty to behold! The inner layer of the shell is made of \"nacre,\" or \"mother-of-pearl,\" and, hoo, what a dazzling iridescent hue! Let this be a lesson! You mustn't judge a sea snail by the outside of its shell. Judge it by the inside of its shell instead.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Jun – Jan",
+        "months": [
+          1,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "4 PM – 9 AM",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "4 PM – 9 AM",
+          "7": "4 PM – 9 AM",
+          "8": "4 PM – 9 AM",
+          "9": "4 PM – 9 AM",
+          "10": "4 PM – 9 AM",
+          "11": "4 PM – 9 AM",
+          "12": "4 PM – 9 AM"
+        },
+        "periods": [
+          {
+            "months": "Jun – Jan",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Dec – Jul",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          12
+        ],
+        "timesByMonth": {
+          "1": "4 PM – 9 AM",
+          "2": "4 PM – 9 AM",
+          "3": "4 PM – 9 AM",
+          "4": "4 PM – 9 AM",
+          "5": "4 PM – 9 AM",
+          "6": "4 PM – 9 AM",
+          "7": "4 PM – 9 AM",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "4 PM – 9 AM"
+        },
+        "periods": [
+          {
+            "months": "Dec – Jul",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got an abalone! Why do I want a sandwich now?",
+    "prices": {
+      "primary": 2000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Medium",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/f/fd/Abalone_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/618b888531bede4f.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "479bec50a402e66d",
+    "category": "sea",
+    "number": 18,
+    "nameKo": "대왕거거",
+    "nameEn": "gigas giant clam",
+    "image": {
+      "url": "https://dodo.ac/np/images/c/ca/Gigas_Giant_Clam_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/479bec50a402e66d.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Gigas%20giant%20clam",
+    "museumPhrase": "Gigas giant clams live in warm-water coral reefs and are the biggest bivalves in the world. Growing as wide as six feet and weighing up to 600 pounds, these clams can live to be 100 years old. And yes, these mighty creatures look as though they could eat a swimmer whole. But they eat plankton instead and get valuable nutrients from an algae they live in symbiosis with. Indeed, these enormous gents get all the sustenance they need by lying face up with their shells half-open. If such was my life, I'd be happy as a clam too.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "May – Sep",
+        "months": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "May – Sep",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Nov – Mar",
+        "months": [
+          1,
+          2,
+          3,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Nov – Mar",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a gigas giant clam! It's kind of a big deal.",
+    "prices": {
+      "primary": 15000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Very large",
+    "movementSpeed": "Very fast",
+    "tank": {
+      "width": 2.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/1/17/Gigas_Giant_Clam_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/479bec50a402e66d.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "c965058073213909",
+    "category": "sea",
+    "number": 19,
+    "nameKo": "앵무조개",
+    "nameEn": "chambered nautilus",
+    "image": {
+      "url": "https://dodo.ac/np/images/9/98/Chambered_Nautilus_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/c965058073213909.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Chambered%20nautilus",
+    "museumPhrase": "The chambered nautilus is perhaps best known for its gorgeous shell. Not only does this shell's interior shine with a pearly luster, it features a near-perfect natural spiral. But those aren't the chambered nautilus's only bragging rights. This cephalopod can have up to 90 tentacles, it's said! These arms come coated with a sticky substance that helps the nautilus capture its prey...Which is far better than using them for overly long hugs, I say.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Mar – Jun; Sep – Nov",
+        "months": [
+          3,
+          4,
+          5,
+          6,
+          9,
+          10,
+          11
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "4 PM – 9 AM",
+          "4": "4 PM – 9 AM",
+          "5": "4 PM – 9 AM",
+          "6": "4 PM – 9 AM",
+          "7": "NA",
+          "8": "NA",
+          "9": "4 PM – 9 AM",
+          "10": "4 PM – 9 AM",
+          "11": "4 PM – 9 AM",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Mar – Jun; Sep – Nov",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Mar – May; Sep – Dec",
+        "months": [
+          3,
+          4,
+          5,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "4 PM – 9 AM",
+          "4": "4 PM – 9 AM",
+          "5": "4 PM – 9 AM",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "4 PM – 9 AM",
+          "10": "4 PM – 9 AM",
+          "11": "4 PM – 9 AM",
+          "12": "4 PM – 9 AM"
+        },
+        "periods": [
+          {
+            "months": "Mar – May; Sep – Dec",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a chambered nautilus! Is it on the naughty list?",
+    "prices": {
+      "primary": 1800,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Medium",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/4/4a/Chambered_Nautilus_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/c965058073213909.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "64d7be2f5aff5fbd",
+    "category": "sea",
+    "number": 20,
+    "nameKo": "문어",
+    "nameEn": "octopus",
+    "image": {
+      "url": "https://dodo.ac/np/images/5/58/Octopus_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/64d7be2f5aff5fbd.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Octopus%20%28creature%29",
+    "museumPhrase": "With its eight limbs, three hearts, and surprisingly big brain, the octopus is quite the wonder. It is also an escape artist like no other! You see, the octopus has specialized skin cells that can change color and texture with lightening speed. Thus it can look for all the world like a patch of seabed one minute...and a pile of rocks the next! But the deception doesn't stop there, wot wot. When attacked by a predator, the octopus releases a cloud of ink and -POOF- makes its escape. Let's just call the octopus what it is, shall we? The ninja of the deep!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got an octopus! It can give four hugs at once!",
+    "prices": {
+      "primary": 1200,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/2/27/Octopus_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/64d7be2f5aff5fbd.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "a12c9aae89b85772",
+    "category": "sea",
+    "number": 21,
+    "nameKo": "우무문어",
+    "nameEn": "umbrella octopus",
+    "image": {
+      "url": "https://dodo.ac/np/images/a/ac/Umbrella_Octopus_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/a12c9aae89b85772.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Umbrella%20octopus",
+    "museumPhrase": "My feathers, could there be a more adorable sea creature than the umbrella octopus? I daresay not! These deep-sea octopuses are on the smallish side and use the cutest ear-like fins to flutter about. Meanwhile, it's the web stretched between their tentacles that gives them their name. Hoo, it's true! With arms stretched wide, they look for all the world like an umbrella! Though surely the last thing the umbrella octopus wants...is to stay dry.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Mar – May; Sep – Nov",
+        "months": [
+          3,
+          4,
+          5,
+          9,
+          10,
+          11
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Mar – May; Sep – Nov",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Mar – May; Sep – Nov",
+        "months": [
+          3,
+          4,
+          5,
+          9,
+          10,
+          11
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Mar – May; Sep – Nov",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got an umbrella octopus! Too bad I'm already soaked.",
+    "prices": {
+      "primary": 6000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Fast",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/c/c0/Umbrella_Octopus_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/a12c9aae89b85772.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "510f30613819c6e9",
+    "category": "sea",
+    "number": 22,
+    "nameKo": "흡혈오징어",
+    "nameEn": "vampire squid",
+    "image": {
+      "url": "https://dodo.ac/np/images/a/ac/Vampire_Squid_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/510f30613819c6e9.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Vampire%20squid",
+    "museumPhrase": "Beware the vampire squid, I say! This eight-armed deep-sea monster is out to drink your blood! Hoo hoo, ha ha! I only jest! Ahem! The Vampire Squid does, in fact, live deep in the ocean where almost no light pervades. But while it looks like it could nibble on your neck...it nibbles on the bits of dead plankton and algae instead. By all accounts, the vampire squid is a a gentle sort who squirts bioluminecesant goo at foes. Sp, how did it get the eerie official name \"Vampyroteuthis inernalis\"? That means \"vampire squid from the heck,\" you see. The problem is that the squid's \"cloak.\" Its arms are webbed with velvet-red skin and lined with toothy spikes. Plainly put, this genial squid looks for all the world like a vampire who went for a swim.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "May – Aug",
+        "months": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "4 PM – 9 AM",
+          "6": "4 PM – 9 AM",
+          "7": "4 PM – 9 AM",
+          "8": "4 PM – 9 AM",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "May – Aug",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Nov – Feb",
+        "months": [
+          1,
+          2,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "4 PM – 9 AM",
+          "2": "4 PM – 9 AM",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "4 PM – 9 AM",
+          "12": "4 PM – 9 AM"
+        },
+        "periods": [
+          {
+            "months": "Nov – Feb",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a vampire squid! A lot was at stake.",
+    "prices": {
+      "primary": 10000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Very fast",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/0/0d/Vampire_Squid_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/510f30613819c6e9.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "7ee4d9c9aaa1162a",
+    "category": "sea",
+    "number": 23,
+    "nameKo": "반딧불오징어",
+    "nameEn": "firefly squid",
+    "image": {
+      "url": "https://dodo.ac/np/images/d/d0/Firefly_Squid_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/7ee4d9c9aaa1162a.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Firefly%20squid",
+    "museumPhrase": "The firefly squid is a wee migratory squid that barely reaches three inches in length. And though they usually live in deep water, they do venture to the coast to spawn. Like their firefly namesakes, these sparkling squid emit a blue bioluminescent glow. This glow may be used to threaten enemies, communicate with friends, or, perhaps, to lure food in. Truth be told, we do not know for sure why the firefly squid glows. We remain in the dark, as they say.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Mar – Jun",
+        "months": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "9 PM – 4 AM",
+          "4": "9 PM – 4 AM",
+          "5": "9 PM – 4 AM",
+          "6": "9 PM – 4 AM",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Mar – Jun",
+            "time": "9 PM – 4 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Sep – Dec",
+        "months": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "9 PM – 4 AM",
+          "10": "9 PM – 4 AM",
+          "11": "9 PM – 4 AM",
+          "12": "9 PM – 4 AM"
+        },
+        "periods": [
+          {
+            "months": "Sep – Dec",
+            "time": "9 PM – 4 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a firefly squid! More like a glowswim squid.",
+    "prices": {
+      "primary": 1400,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Tiny",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/7/71/Firefly_Squid_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/7ee4d9c9aaa1162a.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "bc30693a908e49d5",
+    "category": "sea",
+    "number": 24,
+    "nameKo": "꽃게",
+    "nameEn": "gazami crab",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/60/Gazami_Crab_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/bc30693a908e49d5.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Gazami%20crab",
+    "museumPhrase": "The gazami crab may be better known by its more descriptive name… the Japanese blue crab. It gets its name from the blue tint sometimes found in its shell and legs. Its paddle-like rear legs are what help it to swim freely and quickly through the water. Of course, this gazami crab couldn't swim enough to get away from you!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Jun – Nov",
+        "months": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Jun – Nov",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Dec – May",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Dec – May",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a gazami crab! What a gripping find!",
+    "prices": {
+      "primary": 2200,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Medium",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/8/80/Gazami_Crab_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/bc30693a908e49d5.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "a4da99d7dddb1bd5",
+    "category": "sea",
+    "number": 25,
+    "nameKo": "던지니스크랩",
+    "nameEn": "Dungeness crab",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/65/Dungeness_Crab_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/a4da99d7dddb1bd5.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Dungeness%20crab",
+    "museumPhrase": "The Dungeness crab wears a pretty fan-shaped shell that's often done up in purple hues. But eye-catching colors aside, this fellow can be surprisingly hard to spot! That's because the Dungeness crab is something of an expert hider. When scared, it plays a nifty trick! That is, it buries itself beneath the sand with impressive speed. \"Now you see me, now you don't,\" it says as it vanishes before your very eyes!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Nov – May",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Nov – May",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "May – Nov",
+        "months": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "May – Nov",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a Dungeness crab! Dun dun duuuun...geness.",
+    "prices": {
+      "primary": 1900,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Medium",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/6/67/Dungeness_Crab_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/a4da99d7dddb1bd5.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "6c8fc7d29796f9f6",
+    "category": "sea",
+    "number": 26,
+    "nameKo": "대게",
+    "nameEn": "snow crab",
+    "image": {
+      "url": "https://dodo.ac/np/images/7/78/Snow_Crab_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/6c8fc7d29796f9f6.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Snow%20crab",
+    "museumPhrase": "The snow crab truly lives up to its name, wot wot. They are most often found in cold northern seas. Some have even been discovered living in the Arctic Ocean! Indeed, snow crab prefer to live in deep water that never gets more than three degrees above freezing. Hooooo. Just thinking about their icy environs is giving me the chills!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Nov – Apr",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Nov – Apr",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "May – Oct",
+        "months": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "May – Oct",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a snow crab! It's giving me the cold shoulder.",
+    "prices": {
+      "primary": 6000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Large",
+    "movementSpeed": "Fast",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/c/c0/Snow_Crab_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/6c8fc7d29796f9f6.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "13c9887c0c22d593",
+    "category": "sea",
+    "number": 27,
+    "nameKo": "왕게",
+    "nameEn": "red king crab",
+    "image": {
+      "url": "https://dodo.ac/np/images/9/9d/Red_King_Crab_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/13c9887c0c22d593.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Red%20king%20crab",
+    "museumPhrase": "The red king crab is a mighty crustacean to be sure. Though it must be said that there is some debate about its royal lineage. King crabs, unlike other crabs, are thought to be descended from hermit crabs, you see. And have you noticed... GASP! They have but eight legs, though conventional crabs have 10! It matters not, I say. For the red king crab is as regal as can be. Weighing up to 20 pounds with a leg span reaching five feet... I bow to this crab's nobility.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Nov – Mar",
+        "months": [
+          1,
+          2,
+          3,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Nov – Mar",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "May – Sep",
+        "months": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "May – Sep",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I caught a red king crab! It's royally flushed.",
+    "prices": {
+      "primary": 8000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Large",
+    "movementSpeed": "Very fast",
+    "tank": {
+      "width": 2.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/c/cf/Red_King_Crab_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/13c9887c0c22d593.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "790c01a99a51c551",
+    "category": "sea",
+    "number": 28,
+    "nameKo": "따개비",
+    "nameEn": "acorn barnacle",
+    "image": {
+      "url": "https://dodo.ac/np/images/a/a4/Acorn_Barnacle_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/790c01a99a51c551.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Acorn%20barnacle",
+    "museumPhrase": "Do not mistake the acorn barnacle for a relative of the calm. Tut-tut, mollusks they are not. Barnacles are cousins to crabs and lobsters, you see. Though the family resemblance is hard to spot. Acorn barnacles may also seem to live a stationary life, what with being attached to rocks and such. But truth be told, baby barnacles are avid travelers, drifting shell-less about the sea before settling down. Once they find a good rock to affix themselves to, they float free no more. Which begs the question... Do adult acorn barnacles ever look out across the open sea...and long for youthful adventure once more?",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "All day",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "All day",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got an acorn barnacle! Will it grow into an oak barnacle?",
+    "prices": {
+      "primary": 600,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Tiny",
+    "movementSpeed": "Stationary",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/d/d8/Acorn_Barnacle_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/790c01a99a51c551.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "78a80722a184a23d",
+    "category": "sea",
+    "number": 29,
+    "nameKo": "키다리게",
+    "nameEn": "spider crab",
+    "image": {
+      "url": "https://dodo.ac/np/images/f/f3/Spider_Crab_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/78a80722a184a23d.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Spider%20crab",
+    "museumPhrase": "Hoooot hooot, I do so hope to not hyperventilate as I regale you with the spider crab's qualities. But I would be remiss if I did not point out that this, the largest crab on earth... looks like a GIANT SPIDER! Arachnophobia aside... this crab is a magnificent creature to be sure. Though they can grow up to 12 feet from claw to claw and weigh up to 40 pounds, they're said to be docile. In fact, these gentle giants love to hide, attaching seaweed and sponges to their shell as camouflage. My feathers, if only I could unsee the SPIDER in the spider crab... I'm sure I'd find it charming as can be.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Mar – Apr",
+        "months": [
+          3,
+          4
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "All day",
+          "4": "All day",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Mar – Apr",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Sep – Oct",
+        "months": [
+          9,
+          10
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "All day",
+          "10": "All day",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Sep – Oct",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a spider crab! Water bugs can rest easy.",
+    "prices": {
+      "primary": 12000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Very large",
+    "movementSpeed": "Very fast",
+    "tank": {
+      "width": 2.0,
+      "length": 2.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/c/cc/Spider_Crab_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/78a80722a184a23d.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "71eed0dd8051d922",
+    "category": "sea",
+    "number": 30,
+    "nameKo": "보리새우",
+    "nameEn": "tiger prawn",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/65/Tiger_Prawn_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/71eed0dd8051d922.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Tiger%20prawn",
+    "museumPhrase": "The tiger prawn is a hearty crustacean found in many places around the world. Named for the stripes on its exoskeleton, it molts out of this shell as it grows in size. If only I could acquire a larger home with such ease! But do you know what I find even more fascinating? The tiger prawn's legs! It has five pairs of swimming legs, five pairs of walking legs, and three pairs of limbs it eats with! How, might I ask, does it not trip over its own 26 feet?",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Jun – Sep",
+        "months": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "4 PM – 9 AM",
+          "7": "4 PM – 9 AM",
+          "8": "4 PM – 9 AM",
+          "9": "4 PM – 9 AM",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Jun – Sep",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Dec – Mar",
+        "months": [
+          1,
+          2,
+          3,
+          12
+        ],
+        "timesByMonth": {
+          "1": "4 PM – 9 AM",
+          "2": "4 PM – 9 AM",
+          "3": "4 PM – 9 AM",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "4 PM – 9 AM"
+        },
+        "periods": [
+          {
+            "months": "Dec – Mar",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a tiger prawn! I ain't lion!",
+    "prices": {
+      "primary": 3000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Medium",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/7/72/Tiger_Prawn_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/71eed0dd8051d922.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "64038687e347a97b",
+    "category": "sea",
+    "number": 31,
+    "nameKo": "북쪽분홍새우",
+    "nameEn": "sweet shrimp",
+    "image": {
+      "url": "https://dodo.ac/np/images/d/d3/Sweet_Shrimp_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/64038687e347a97b.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Sweet%20shrimp",
+    "museumPhrase": "The sweet shrimp spends the first few years of its life as a male. It then transitions into a female as it ages. Interestingly, it is hardly alone in this type of development cycle. Indeed, a great variety of marine creatures can change their biological sex as they age. Clown fish, some sea star, and sea bass are among them. Hoo hoo, the ocean is full of a great many wonders. Huzzah to that, I say!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Sep – Feb",
+        "months": [
+          1,
+          2,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "4 PM – 9 AM",
+          "2": "4 PM – 9 AM",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "4 PM – 9 AM",
+          "10": "4 PM – 9 AM",
+          "11": "4 PM – 9 AM",
+          "12": "4 PM – 9 AM"
+        },
+        "periods": [
+          {
+            "months": "Sep – Feb",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Mar – Aug",
+        "months": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "4 PM – 9 AM",
+          "4": "4 PM – 9 AM",
+          "5": "4 PM – 9 AM",
+          "6": "4 PM – 9 AM",
+          "7": "4 PM – 9 AM",
+          "8": "4 PM – 9 AM",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Mar – Aug",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a sweet shrimp! It's being very considerate.",
+    "prices": {
+      "primary": 1400,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/8/80/Sweet_Shrimp_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/64038687e347a97b.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "014a6c70dac90bc5",
+    "category": "sea",
+    "number": 32,
+    "nameKo": "갯가재",
+    "nameEn": "mantis shrimp",
+    "image": {
+      "url": "https://dodo.ac/np/images/7/7d/Mantis_Shrimp_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/014a6c70dac90bc5.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Mantis%20shrimp",
+    "museumPhrase": "Think carefully before you mock the mantis shrimp for its diminutive size. I warn you, it's itching for a fight! A pugilist through and through, this brightly hued fellow packs a punch unparalleled on land or sea. Not only are its forelimbs shaped like clubs and scythes, its arms are naturally spring-loaded too! Thus the mantis shrimp's high-speed blows crack open crabs and oyster shells with ease. And should you grab it with your hands, you might discover why it's called \"the thumb splitter\" too!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "4 PM – 9 AM",
+          "2": "4 PM – 9 AM",
+          "3": "4 PM – 9 AM",
+          "4": "4 PM – 9 AM",
+          "5": "4 PM – 9 AM",
+          "6": "4 PM – 9 AM",
+          "7": "4 PM – 9 AM",
+          "8": "4 PM – 9 AM",
+          "9": "4 PM – 9 AM",
+          "10": "4 PM – 9 AM",
+          "11": "4 PM – 9 AM",
+          "12": "4 PM – 9 AM"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "All year",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "4 PM – 9 AM",
+          "2": "4 PM – 9 AM",
+          "3": "4 PM – 9 AM",
+          "4": "4 PM – 9 AM",
+          "5": "4 PM – 9 AM",
+          "6": "4 PM – 9 AM",
+          "7": "4 PM – 9 AM",
+          "8": "4 PM – 9 AM",
+          "9": "4 PM – 9 AM",
+          "10": "4 PM – 9 AM",
+          "11": "4 PM – 9 AM",
+          "12": "4 PM – 9 AM"
+        },
+        "periods": [
+          {
+            "months": "All year",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a mantis shrimp! Shrimply amazing!",
+    "prices": {
+      "primary": 2500,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Medium",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/b/b5/Mantis_Shrimp_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/014a6c70dac90bc5.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "5196bc1437648ff6",
+    "category": "sea",
+    "number": 33,
+    "nameKo": "닭새우",
+    "nameEn": "spiny lobster",
+    "image": {
+      "url": "https://dodo.ac/np/images/8/8c/Spiny_Lobster_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/5196bc1437648ff6.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Spiny%20lobster",
+    "museumPhrase": "It is the spiny lobster's lengthy antennae that help set it apart from other lobsters. Those two antennae can grow twice as long as the lobster's own body! And what a clever crustacean it is, having found a way to use those antennae as a means of defense. When the spiny lobster senses danger, it rubs its antennae across its exoskeleton. The horrid screeching sound frightens predators away! If someone scratched nails across a chalkboard in your direction, I daresay you'd run too!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Oct – Dec",
+        "months": [
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "9 PM – 4 AM",
+          "11": "9 PM – 4 AM",
+          "12": "9 PM – 4 AM"
+        },
+        "periods": [
+          {
+            "months": "Oct – Dec",
+            "time": "9 PM – 4 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Apr – Jun",
+        "months": [
+          4,
+          5,
+          6
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "9 PM – 4 AM",
+          "5": "9 PM – 4 AM",
+          "6": "9 PM – 4 AM",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Apr – Jun",
+            "time": "9 PM – 4 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a spiny lobster! It's got a lot of backbone!",
+    "prices": {
+      "primary": 5000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Large",
+    "movementSpeed": "Fast",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/3/3d/Spiny_Lobster_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/5196bc1437648ff6.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "ea7dc74d21a7c8ef",
+    "category": "sea",
+    "number": 34,
+    "nameKo": "바닷가재",
+    "nameEn": "lobster",
+    "image": {
+      "url": "https://dodo.ac/np/images/a/a9/Lobster_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/ea7dc74d21a7c8ef.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Lobster",
+    "museumPhrase": "The lobster is rather famous for its two large claws. But did you know that, in fact, it has six claws total? Of course, the four tiny claws aren't as threatening as its large \"crusher claw\" is. That pincer can put a hundred pounds of pressure on in a pinch! Just a little something to bear in mind when a lobster tries to shake your hand.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Dec – Jan; Apr – Jun",
+        "months": [
+          1,
+          4,
+          5,
+          6,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "NA",
+          "3": "NA",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Dec – Jan; Apr – Jun",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Jun – Jul; Oct – Dec",
+        "months": [
+          6,
+          7,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "All day",
+          "7": "All day",
+          "8": "NA",
+          "9": "NA",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Jun – Jul; Oct – Dec",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a lobster! Lobjective complete.",
+    "prices": {
+      "primary": 4500,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Large",
+    "movementSpeed": "Fast",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/b/b6/Lobster_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/ea7dc74d21a7c8ef.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "02309ed137f6d957",
+    "category": "sea",
+    "number": 35,
+    "nameKo": "자이언트 이소포드",
+    "nameEn": "giant isopod",
+    "image": {
+      "url": "https://dodo.ac/np/images/0/00/Giant_Isopod_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/02309ed137f6d957.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Giant%20isopod",
+    "museumPhrase": "Growing up to nearly 20 inches, the sea-dwelling giant isopod is the world's largest cousin of the pill bug. Twenty inches?! Twenty times as revolting, I say! Making matters worse for those of us who find the pill bug repulsive rather than \"cute\"... The giant isopod can swim shockingly fast and is known for its voracious appetite. In fact, it's most happy when dining on the carcasses of animals that have sunk to the bottom of the sea! This behavior has earned it a nickname... 'the vacuum cleaner of the deep.' Why must nature play such awful pranks on me?",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Jul – Oct",
+        "months": [
+          7,
+          8,
+          9,
+          10
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "9 AM – 4 PM; 9 PM – 4 AM",
+          "8": "9 AM – 4 PM; 9 PM – 4 AM",
+          "9": "9 AM – 4 PM; 9 PM – 4 AM",
+          "10": "9 AM – 4 PM; 9 PM – 4 AM",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Jul – Oct",
+            "time": "9 AM – 4 PM; 9 PM – 4 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Jan – Apr",
+        "months": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "timesByMonth": {
+          "1": "9 AM – 4 PM; 9 PM – 4 AM",
+          "2": "9 AM – 4 PM; 9 PM – 4 AM",
+          "3": "9 AM – 4 PM; 9 PM – 4 AM",
+          "4": "9 AM – 4 PM; 9 PM – 4 AM",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Jan – Apr",
+            "time": "9 AM – 4 PM; 9 PM – 4 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "GAAAAH! I got a giant isopod! It's the crustodian of the sea.",
+    "prices": {
+      "primary": 12000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Very fast",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/5/58/Giant_Isopod_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/02309ed137f6d957.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "874183f0dd887888",
+    "category": "sea",
+    "number": 36,
+    "nameKo": "투구게",
+    "nameEn": "horseshoe crab",
+    "image": {
+      "url": "https://dodo.ac/np/images/5/5b/Horseshoe_Crab_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/874183f0dd887888.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Horseshoe%20crab",
+    "museumPhrase": "Some might say it's good luck to catch a horseshoe crab. But I am NOT among them, eh wot! Though called a \"crab,\" this beast is an arthropod and thus more akin to spiders and scorpions! Its long tail resembles a scorpion stinger, in fact! Though it's quite harmless, they say. A \"living fossil,\" the horseshoe crab has been around since before the dinosaurs. With that tank-like shell, I suppose it WOULD be the one to survive. But here's what truly rattles me to my beak... During breeding season, horseshoe crabs crawl up on the beach and make nests together in the hundreds. HUNDREDS OF HORSESHOE CRABS! And with that I can say no more.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Jul – Sep",
+        "months": [
+          7,
+          8,
+          9
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "9 PM – 4 AM",
+          "8": "9 PM – 4 AM",
+          "9": "9 PM – 4 AM",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Jul – Sep",
+            "time": "9 PM – 4 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Jan – Mar",
+        "months": [
+          1,
+          2,
+          3
+        ],
+        "timesByMonth": {
+          "1": "9 PM – 4 AM",
+          "2": "9 PM – 4 AM",
+          "3": "9 PM – 4 AM",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Jan – Mar",
+            "time": "9 PM – 4 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a horseshoe crab! I hope it's lucky!",
+    "prices": {
+      "primary": 2500,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Medium",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/8/86/Horseshoe_Crab_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/874183f0dd887888.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "0bb07ddadf17255e",
+    "category": "sea",
+    "number": 37,
+    "nameKo": "멍게",
+    "nameEn": "sea pineapple",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/61/Sea_Pineapple_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/0bb07ddadf17255e.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Sea%20pineapple",
+    "museumPhrase": "Try not to gawk as you look upon the sea pineapple. Its peculiar look is simply one of nature's many jokes. Though it may look like a half-rotten hunk of fruit, the sea pineapple is no plant, shellfish, or even sea slug. It's a tunicate, wot wot...a fancy name for a shallow-water filter feeder with a taste for plankton. It should be noted that the sea pineapple looks like a tadpole when it's young and can still swim about. Alas, its youthful cuteness wears off once it attaches itself for good to a rock. Ah, but let's put insults aside! Sea pineapples are full of water, you sea. And I fear we're asking for a squirt in the eye!",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Apr – Aug",
+        "months": [
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Apr – Aug",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Oct – Feb",
+        "months": [
+          1,
+          2,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Oct – Feb",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a sea pineapple! Your move, sea pizzas.",
+    "prices": {
+      "primary": 1500,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/4/41/Sea_Pineapple_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/0bb07ddadf17255e.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "0b2e9846a08b51a1",
+    "category": "sea",
+    "number": 38,
+    "nameKo": "가든일",
+    "nameEn": "spotted garden eel",
+    "image": {
+      "url": "https://dodo.ac/np/images/a/aa/Spotted_Garden_Eel_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/0b2e9846a08b51a1.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Spotted%20garden%20eel",
+    "museumPhrase": "The spotted garden eel is a small eel-shaped fish that loves to burrow in the sandy ocean floor. These silly things are known for popping their heads out of the sand to nibble on plankton drifting by. Some say this makes them look like plants sprouting in a garden...hence the name spotted garden eel. But I think they look more like prairie dogs peeking out of desert hidey-holes. \"Prairie eels\" has a lovely ring, don't you think?",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "May – Oct",
+        "months": [
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "4 AM – 9 PM",
+          "6": "4 AM – 9 PM",
+          "7": "4 AM – 9 PM",
+          "8": "4 AM – 9 PM",
+          "9": "4 AM – 9 PM",
+          "10": "4 AM – 9 PM",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "May – Oct",
+            "time": "4 AM – 9 PM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Nov – Apr",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "4 AM – 9 PM",
+          "2": "4 AM – 9 PM",
+          "3": "4 AM – 9 PM",
+          "4": "4 AM – 9 PM",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "4 AM – 9 PM",
+          "12": "4 AM – 9 PM"
+        },
+        "periods": [
+          {
+            "months": "Nov – Apr",
+            "time": "4 AM – 9 PM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a spotted garden eel! Was it un-spotted before I saw it?",
+    "prices": {
+      "primary": 1100,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Small",
+    "movementSpeed": "Slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/d/df/Spotted_Garden_Eel_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/0b2e9846a08b51a1.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "65ec2916b1f96470",
+    "category": "sea",
+    "number": 39,
+    "nameKo": "납작벌레",
+    "nameEn": "flatworm",
+    "image": {
+      "url": "https://dodo.ac/np/images/0/07/Flatworm_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/65ec2916b1f96470.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Flatworm",
+    "museumPhrase": "Flatworms are flat creatures, and while some types look like sea slugs, they have little else in common. Some types are venomous and produce a poison similar to the kind blowfish are famous for. Flatworms are hermaphrodites and mate by fighting to determine the loser, who then bears the eggs.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Aug – Sep",
+        "months": [
+          8,
+          9
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "4 PM – 9 AM",
+          "9": "4 PM – 9 AM",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Aug – Sep",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      },
+      "south": {
+        "label": "Feb – Mar",
+        "months": [
+          2,
+          3
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "4 PM – 9 AM",
+          "3": "4 PM – 9 AM",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Feb – Mar",
+            "time": "4 PM – 9 AM"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a flatworm! Guess it forgot its spareworm.",
+    "prices": {
+      "primary": 700,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Tiny",
+    "movementSpeed": "Very slow",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/a/a4/Flatworm_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/65ec2916b1f96470.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  },
+  {
+    "id": "cceb29fa8d81af83",
+    "category": "sea",
+    "number": 40,
+    "nameKo": "해로동혈",
+    "nameEn": "Venus' flower basket",
+    "image": {
+      "url": "https://dodo.ac/np/images/6/6a/Venus%27_Flower_Basket_NH_Icon.png",
+      "localPath": "assets/encyclopedia/sea/items/cceb29fa8d81af83.png"
+    },
+    "sourceUrl": "https://nookipedia.com/wiki/Venus%27%20flower%20basket",
+    "museumPhrase": "The Venus' flower basket looks like an otherworldly creature one would find on an alien planet. But it is instead a remarkable sea sponge found in the deepest parts of the ocean. Its body is composed of silica and looks like a sculpture or, perhaps, a vase made of glassy mesh. I daresay Venus' flower basket is one of nature's most impressive works of art.",
+    "location": null,
+    "condition": null,
+    "rarity": "",
+    "availability": {
+      "north": {
+        "label": "Oct – Feb",
+        "months": [
+          1,
+          2,
+          10,
+          11,
+          12
+        ],
+        "timesByMonth": {
+          "1": "All day",
+          "2": "All day",
+          "3": "NA",
+          "4": "NA",
+          "5": "NA",
+          "6": "NA",
+          "7": "NA",
+          "8": "NA",
+          "9": "NA",
+          "10": "All day",
+          "11": "All day",
+          "12": "All day"
+        },
+        "periods": [
+          {
+            "months": "Oct – Feb",
+            "time": "All day"
+          }
+        ]
+      },
+      "south": {
+        "label": "Apr – Aug",
+        "months": [
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "timesByMonth": {
+          "1": "NA",
+          "2": "NA",
+          "3": "NA",
+          "4": "All day",
+          "5": "All day",
+          "6": "All day",
+          "7": "All day",
+          "8": "All day",
+          "9": "NA",
+          "10": "NA",
+          "11": "NA",
+          "12": "NA"
+        },
+        "periods": [
+          {
+            "months": "Apr – Aug",
+            "time": "All day"
+          }
+        ]
+      }
+    },
+    "catchphrase": "I got a Venus' flower basket! Why was she picking flowers here?",
+    "prices": {
+      "primary": 5000,
+      "primaryLabel": "판매가",
+      "special": null,
+      "specialLabel": null
+    },
+    "shadow": "Medium",
+    "movementSpeed": "Fast",
+    "tank": {
+      "width": 1.0,
+      "length": 1.0
+    },
+    "tankImage": {
+      "url": "https://dodo.ac/np/images/5/51/Venus%27_Flower_Basket_NH.png",
+      "localPath": "assets/encyclopedia/sea/tank/cceb29fa8d81af83.png"
+    },
+    "fossilGroup": null,
+    "interactable": null,
+    "artwork": null
+  }
+]

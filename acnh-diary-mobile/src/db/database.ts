@@ -6,7 +6,14 @@ import type {
   EncyclopediaStatus,
 } from '../types/encyclopedia';
 import type { CatalogCategory } from '../types/catalog';
-import type { Island, IslandInput, Routine } from '../types/island';
+import type {
+  Island,
+  IslandInput,
+  NpcVisit,
+  PlayerProfile,
+  Routine,
+  RoutineProgress,
+} from '../types/island';
 import type { VillagerState, VillagerStatus } from '../types/villager-state';
 
 // Keep the old Phase 0 database untouched while the onboarding flow is verified.
@@ -24,8 +31,19 @@ export const TEST_ISLAND: IslandInput = {
 };
 
 const DEFAULT_ROUTINES = [
-  { title: '토마토 심기', goalCount: 1 },
-  { title: '집 정리', goalCount: 1 },
+  { title: '레시피 보틀', goalCount: 1 },
+  { title: '돈나무', goalCount: 1 },
+  { title: '바위치기', goalCount: 6 },
+  { title: '화석 캐기', goalCount: 4 },
+  { title: '나무 흔들기 · 가구', goalCount: 2 },
+  { title: '나무 흔들기 · 벌', goalCount: 5 },
+  { title: '나무 흔들기 · 동전', goalCount: 15 },
+  { title: '갑돌보', goalCount: 1 },
+  { title: '마추릴라 · 우정 확인', goalCount: 1 },
+  { title: '마추릴라 · 오늘의 운세', goalCount: 1 },
+  { title: '과일 수확', goalCount: 1 },
+  { title: '채소 수확', goalCount: 1 },
+  { title: '선물주기', goalCount: 10 },
 ] as const;
 
 type IslandRow = {
@@ -48,6 +66,25 @@ type RoutineRow = {
   goal_count: number;
   repeat_type: 'daily';
   created_at: string | null;
+};
+
+type RoutineLogRow = {
+  routine_id: string;
+  current_count: number;
+  completed: number;
+};
+
+type PlayerProfileRow = {
+  island_id: string;
+  name: string;
+  birthday_month: number | null;
+  birthday_day: number | null;
+};
+
+type NpcVisitRow = {
+  island_id: string;
+  visit_date: string;
+  npc_name: string;
 };
 
 type VillagerStateRow = {
@@ -73,6 +110,7 @@ type CollectionRecordRow = {
   donated: number;
   genuine_owned: number;
   fake_owned: number;
+  quantity: number | null;
 };
 
 const VILLAGER_STATUS_COLUMNS: Record<VillagerStatus, keyof Omit<VillagerStateRow, 'villager_id'>> = {
@@ -131,6 +169,24 @@ function validateIslandInput(input: IslandInput) {
   if (input.hemisphere !== 'north' && input.hemisphere !== 'south') {
     throw new Error('VALIDATION_ERROR');
   }
+
+  if (input.birthdayMonth != null || input.birthdayDay != null) {
+    if (!isValidBirthday(input.birthdayMonth, input.birthdayDay)) {
+      throw new Error('VALIDATION_ERROR');
+    }
+  }
+}
+
+function isValidBirthday(month: number | undefined | null, day: number | undefined | null) {
+  if (month == null || day == null) return false;
+  const date = new Date(Date.UTC(2024, month - 1, day));
+  return (
+    Number.isInteger(month) &&
+    Number.isInteger(day) &&
+    date.getUTCFullYear() === 2024 &&
+    date.getUTCMonth() === month - 1 &&
+    date.getUTCDate() === day
+  );
 }
 
 function toIsland(row: IslandRow): Island {
@@ -197,6 +253,7 @@ export function initializeDatabase() {
       routine_id TEXT NOT NULL REFERENCES routines(id) ON DELETE CASCADE,
       log_date TEXT NOT NULL,
       completed INTEGER NOT NULL DEFAULT 0 CHECK(completed IN (0, 1)),
+      current_count INTEGER NOT NULL DEFAULT 0,
       created_at TEXT DEFAULT CURRENT_TIMESTAMP,
       UNIQUE(island_id, routine_id, log_date)
     );
@@ -232,18 +289,34 @@ export function initializeDatabase() {
       donated INTEGER NOT NULL DEFAULT 0 CHECK(donated IN (0, 1)),
       genuine_owned INTEGER NOT NULL DEFAULT 0 CHECK(genuine_owned IN (0, 1)),
       fake_owned INTEGER NOT NULL DEFAULT 0 CHECK(fake_owned IN (0, 1)),
+      quantity INTEGER CHECK(quantity IS NULL OR (quantity >= 0 AND quantity <= 999)),
       updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY(island_id, item_type, item_id)
     );
 
     CREATE INDEX IF NOT EXISTS collection_records_island_type
     ON collection_records(island_id, item_type);
+
+    CREATE TABLE IF NOT EXISTS npc_visits (
+      island_id TEXT NOT NULL REFERENCES islands(id) ON DELETE CASCADE,
+      visit_date TEXT NOT NULL,
+      npc_name TEXT NOT NULL,
+      updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY(island_id, visit_date)
+    );
+
+    CREATE TABLE IF NOT EXISTS app_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT
+    );
   `);
 
   // Existing Phase 0 databases need these columns before the active-island index is created.
   ensureColumn('islands', 'is_active', 'INTEGER NOT NULL DEFAULT 0');
   ensureColumn('islands', 'updated_at', 'TEXT');
   ensureColumn('villager_states', 'poster_owned', 'INTEGER NOT NULL DEFAULT 0');
+  ensureColumn('routine_logs', 'current_count', 'INTEGER NOT NULL DEFAULT 0');
+  ensureColumn('collection_records', 'quantity', 'INTEGER');
 
   const islands = db.getAllSync<{ id: string; is_active: number }>(
     'SELECT id, is_active FROM islands ORDER BY created_at ASC, id ASC;'
@@ -280,6 +353,88 @@ export function getActiveIsland(): Island | null {
   return result[0] ? toIsland(result[0]) : null;
 }
 
+export function getIslands(): Island[] {
+  const result = db.getAllSync<IslandRow>(`
+    SELECT i.id, i.name, i.fruit, i.flower, i.hemisphere, i.timezone,
+           p.name AS player_name, i.created_at, i.updated_at, i.is_active
+    FROM islands i
+    LEFT JOIN player_profiles p ON p.island_id = i.id
+    ORDER BY i.is_active DESC, i.created_at ASC, i.id ASC;
+  `);
+  return result.map(toIsland);
+}
+
+export function setActiveIsland(islandId: string) {
+  db.withTransactionSync(() => {
+    db.runSync('UPDATE islands SET is_active = 0, updated_at = CURRENT_TIMESTAMP;');
+    const result = db.runSync(
+      'UPDATE islands SET is_active = 1, updated_at = CURRENT_TIMESTAMP WHERE id = ?;',
+      [islandId],
+    );
+    if (result.changes === 0) throw new Error('ISLAND_NOT_FOUND');
+  });
+}
+
+export function getPlayerProfileForIsland(islandId: string): PlayerProfile | null {
+  const row = db.getAllSync<PlayerProfileRow>(
+    `SELECT island_id, name, birthday_month, birthday_day
+     FROM player_profiles WHERE island_id = ? LIMIT 1;`,
+    [islandId],
+  )[0];
+  return row
+    ? {
+        islandId: row.island_id,
+        name: row.name,
+        birthdayMonth: row.birthday_month,
+        birthdayDay: row.birthday_day,
+      }
+    : null;
+}
+
+export function updateIsland(islandId: string, input: IslandInput) {
+  validateIslandInput(input);
+  db.withTransactionSync(() => {
+    const result = db.runSync(
+      `UPDATE islands
+       SET name = ?, fruit = ?, flower = ?, hemisphere = ?, timezone = ?, updated_at = CURRENT_TIMESTAMP
+       WHERE id = ?;`,
+      [
+        input.name.trim(),
+        input.fruit.trim(),
+        input.flower.trim(),
+        input.hemisphere,
+        input.timezone.trim(),
+        islandId,
+      ],
+    );
+    if (result.changes === 0) throw new Error('ISLAND_NOT_FOUND');
+    db.runSync(
+      `INSERT INTO player_profiles (island_id, name, birthday_month, birthday_day)
+       VALUES (?, ?, ?, ?)
+       ON CONFLICT(island_id) DO UPDATE SET
+         name = excluded.name,
+         birthday_month = excluded.birthday_month,
+         birthday_day = excluded.birthday_day;`,
+      [islandId, input.playerName.trim(), input.birthdayMonth ?? null, input.birthdayDay ?? null],
+    );
+  });
+}
+
+export function deleteIsland(islandId: string) {
+  if (getIslandCount() <= 1) throw new Error('LAST_ISLAND');
+  db.withTransactionSync(() => {
+    const island = db.getAllSync<{ is_active: number }>('SELECT is_active FROM islands WHERE id = ?;', [islandId])[0];
+    if (!island) throw new Error('ISLAND_NOT_FOUND');
+    db.runSync('DELETE FROM islands WHERE id = ?;', [islandId]);
+    if (island.is_active === 1) {
+      db.runSync(
+        `UPDATE islands SET is_active = 1, updated_at = CURRENT_TIMESTAMP
+         WHERE id = (SELECT id FROM islands ORDER BY created_at ASC, id ASC LIMIT 1);`,
+      );
+    }
+  });
+}
+
 export function getFirstIslandName() {
   const activeIsland = getActiveIsland();
   if (activeIsland) return activeIsland.name;
@@ -299,6 +454,112 @@ export function getRoutinesForIsland(islandId: string) {
     [islandId]
   );
   return result.map(toRoutine);
+}
+
+export function getRoutineProgressForIsland(islandId: string, date: string): Record<string, RoutineProgress> {
+  const rows = db.getAllSync<RoutineLogRow>(
+    `SELECT routine_id, current_count, completed
+     FROM routine_logs WHERE island_id = ? AND log_date = ?;`,
+    [islandId, date],
+  );
+  return Object.fromEntries(
+    rows.map((row) => [
+      row.routine_id,
+      { currentCount: row.current_count, isComplete: row.completed === 1 },
+    ]),
+  );
+}
+
+export function setRoutineProgress(
+  islandId: string,
+  routineId: string,
+  date: string,
+  currentCount: number,
+  targetCount: number,
+) {
+  if (!Number.isInteger(currentCount) || currentCount < 0 || currentCount > targetCount) {
+    throw new Error('VALIDATION_ERROR');
+  }
+  db.runSync(
+    `INSERT INTO routine_logs (id, island_id, routine_id, log_date, completed, current_count)
+     VALUES (?, ?, ?, ?, ?, ?)
+     ON CONFLICT(island_id, routine_id, log_date) DO UPDATE SET
+       completed = excluded.completed,
+       current_count = excluded.current_count;`,
+    [createId('routine-log'), islandId, routineId, date, currentCount >= targetCount ? 1 : 0, currentCount],
+  );
+}
+
+export function addRoutine(islandId: string, title: string, goalCount = 1) {
+  const trimmedTitle = title.trim();
+  if (!trimmedTitle || trimmedTitle.length > 40 || !Number.isInteger(goalCount) || goalCount < 1 || goalCount > 99) {
+    throw new Error('VALIDATION_ERROR');
+  }
+  db.runSync(
+    `INSERT INTO routines (id, island_id, title, goal_count, repeat_type)
+     VALUES (?, ?, ?, ?, 'daily');`,
+    [createId('routine'), islandId, trimmedTitle, goalCount],
+  );
+}
+
+export function updateRoutine(routineId: string, title: string, goalCount: number) {
+  const trimmedTitle = title.trim();
+  if (!trimmedTitle || trimmedTitle.length > 40 || !Number.isInteger(goalCount) || goalCount < 1 || goalCount > 99) {
+    throw new Error('VALIDATION_ERROR');
+  }
+  db.runSync('UPDATE routines SET title = ?, goal_count = ? WHERE id = ?;', [trimmedTitle, goalCount, routineId]);
+}
+
+export function deleteRoutine(routineId: string) {
+  db.runSync('DELETE FROM routines WHERE id = ?;', [routineId]);
+}
+
+export function getNpcVisitsForIsland(islandId: string, startDate: string, endDate: string): Record<string, string> {
+  const rows = db.getAllSync<NpcVisitRow>(
+    `SELECT island_id, visit_date, npc_name FROM npc_visits
+     WHERE island_id = ? AND visit_date BETWEEN ? AND ? ORDER BY visit_date ASC;`,
+    [islandId, startDate, endDate],
+  );
+  return Object.fromEntries(rows.map((row) => [row.visit_date, row.npc_name]));
+}
+
+export function setNpcVisit(visit: NpcVisit) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(visit.visitDate) || !visit.npcName.trim()) {
+    throw new Error('VALIDATION_ERROR');
+  }
+  db.runSync(
+    `INSERT INTO npc_visits (island_id, visit_date, npc_name)
+     VALUES (?, ?, ?)
+     ON CONFLICT(island_id, visit_date) DO UPDATE SET
+       npc_name = excluded.npc_name, updated_at = CURRENT_TIMESTAMP;`,
+    [visit.islandId, visit.visitDate, visit.npcName.trim()],
+  );
+}
+
+export function clearNpcVisitsForWeek(islandId: string, startDate: string, endDate: string) {
+  db.runSync(
+    'DELETE FROM npc_visits WHERE island_id = ? AND visit_date BETWEEN ? AND ?;',
+    [islandId, startDate, endDate],
+  );
+}
+
+export function getManualGameDate() {
+  return db.getAllSync<{ value: string | null }>(
+    `SELECT value FROM app_settings WHERE key = 'manual_game_date' LIMIT 1;`,
+  )[0]?.value ?? null;
+}
+
+export function setManualGameDate(value: string | null) {
+  if (value != null && !/^\d{4}-\d{2}-\d{2}$/.test(value)) throw new Error('VALIDATION_ERROR');
+  if (value == null) {
+    db.runSync(`DELETE FROM app_settings WHERE key = 'manual_game_date';`);
+    return;
+  }
+  db.runSync(
+    `INSERT INTO app_settings (key, value) VALUES ('manual_game_date', ?)
+     ON CONFLICT(key) DO UPDATE SET value = excluded.value;`,
+    [value],
+  );
 }
 
 export function getVillagerStatesForIsland(islandId: string): Record<string, VillagerState> {
@@ -365,6 +626,19 @@ export function getCollectionStatesForIsland(islandId: string): Record<string, E
   );
 }
 
+export function getCollectionQuantitiesForIsland(islandId: string): Record<string, number> {
+  const rows = db.getAllSync<Pick<CollectionRecordRow, 'item_type' | 'item_id' | 'quantity'>>(
+    `SELECT item_type, item_id, quantity
+     FROM collection_records
+     WHERE island_id = ? AND quantity IS NOT NULL;`,
+    [islandId],
+  );
+
+  return Object.fromEntries(
+    rows.map((row) => [`${row.item_type}/${row.item_id}`, row.quantity ?? 0]),
+  );
+}
+
 export function setCollectionStatus(
   islandId: string,
   itemType: EncyclopediaCategory | CatalogCategory,
@@ -383,6 +657,37 @@ export function setCollectionStatus(
   );
 }
 
+export function setCatalogOwnedStatus(
+  islandId: string,
+  itemType: CatalogCategory,
+  itemId: string,
+  value: boolean,
+  linkedVillager?: { id: string; status: VillagerStatus },
+) {
+  db.withTransactionSync(() => {
+    db.runSync(
+      `INSERT INTO collection_records (island_id, item_type, item_id, owned)
+       VALUES (?, ?, ?, ?)
+       ON CONFLICT(island_id, item_type, item_id) DO UPDATE SET
+         owned = excluded.owned,
+         updated_at = CURRENT_TIMESTAMP;`,
+      [islandId, itemType, itemId, value ? 1 : 0],
+    );
+
+    if (linkedVillager) {
+      const column = VILLAGER_STATUS_COLUMNS[linkedVillager.status];
+      db.runSync(
+        `INSERT INTO villager_states (island_id, villager_id, ${column})
+         VALUES (?, ?, ?)
+         ON CONFLICT(island_id, villager_id) DO UPDATE SET
+           ${column} = excluded.${column},
+           updated_at = CURRENT_TIMESTAMP;`,
+        [islandId, linkedVillager.id, value ? 1 : 0],
+      );
+    }
+  });
+}
+
 export function setCollectionStatusForItems(
   islandId: string,
   itemType: EncyclopediaCategory | CatalogCategory,
@@ -396,6 +701,25 @@ export function setCollectionStatusForItems(
       setCollectionStatus(islandId, itemType, itemId, status, value);
     }
   });
+}
+
+export function setCollectionQuantity(
+  islandId: string,
+  itemType: CatalogCategory,
+  itemId: string,
+  quantity: number,
+) {
+  if (!Number.isInteger(quantity) || quantity < 0 || quantity > 999) {
+    throw new Error('VALIDATION_ERROR');
+  }
+  db.runSync(
+    `INSERT INTO collection_records (island_id, item_type, item_id, quantity)
+     VALUES (?, ?, ?, ?)
+     ON CONFLICT(island_id, item_type, item_id) DO UPDATE SET
+       quantity = excluded.quantity,
+       updated_at = CURRENT_TIMESTAMP;`,
+    [islandId, itemType, itemId, quantity],
+  );
 }
 
 export function getCampsiteVisitsForIsland(islandId: string): Record<string, string[]> {
@@ -500,8 +824,8 @@ export function createIsland(input: IslandInput) {
 
     db.runSync(
       `INSERT INTO player_profiles (island_id, name, birthday_month, birthday_day)
-       VALUES (?, ?, NULL, NULL);`,
-      [id, input.playerName.trim()]
+       VALUES (?, ?, ?, ?);`,
+      [id, input.playerName.trim(), input.birthdayMonth ?? null, input.birthdayDay ?? null]
     );
 
     for (const [index, routine] of DEFAULT_ROUTINES.entries()) {

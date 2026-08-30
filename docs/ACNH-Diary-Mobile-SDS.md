@@ -1,8 +1,8 @@
 # 모동숲 다이어리 모바일 앱 상세 설계서
 
-문서 상태: Draft v2.0
-최종 수정일: 2026-08-29  
-기준 문서: 모바일 SRS v1.4 · 모바일 SAD v1.3
+문서 상태: Draft v2.4
+최종 수정일: 2026-08-30
+기준 문서: 모바일 SRS v1.8 · 모바일 SAD v1.8
 
 ## 1. 구현 기준
 
@@ -24,14 +24,17 @@ acnh-diary-mobile/
         encyclopedia.tsx
         catalog.tsx
         guides.tsx
+        islands.tsx
     screens/
       OnboardingScreen.tsx
+      IslandManagerScreen.tsx
       PlaceholderScreen.tsx
       SplashScreen.tsx
       TodayScreen.tsx
       EncyclopediaHomeScreen.tsx
       EncyclopediaListScreen.tsx
       EncyclopediaDetailScreen.tsx
+      CatalogHomeScreen.tsx
       CatalogListScreen.tsx
       CatalogDetailScreen.tsx
     components/
@@ -61,7 +64,7 @@ acnh-diary-mobile/
   scripts/
 ```
 
-현재 구현은 Phase 0 실행 골격 위에 주민·도감·카탈로그 MVP를 수직 슬라이스로 추가한 상태다. 도감과 카탈로그는 카테고리별 앱용 JSON, 고정 ID 기반 로컬 이미지 맵, SQLite 수집 상태 저장을 사용한다. 카탈로그는 11개 분류의 기본 아이템을 보유 단위로 제공하고 변형은 표시용 데이터로만 제공한다. `domain`·`storage`·`backup`의 전체 Repository 추상화와 클라우드 기능은 후속 단계로 남긴다. 별도 monorepo `packages/`는 만들지 않는다.
+현재 구현은 Phase 0 실행 골격 위에 온보딩·섬 관리·오늘·주민·도감·카탈로그 MVP를 수직 슬라이스로 추가한 상태다. 도감과 카탈로그는 카테고리별 앱용 JSON, 고정 ID 기반 로컬 이미지 맵, SQLite 수집 상태 저장을 사용한다. 카탈로그는 11개 분류의 기본 아이템과 변형을 제공하며 가구 변형은 보유 여부·수량까지 기록한다. `domain`·`storage`·`backup`의 전체 Repository 추상화와 클라우드 기능은 후속 단계로 남긴다. 별도 monorepo `packages/`는 만들지 않는다.
 
 ### 1.2 앱 진입점 및 라우팅
 
@@ -71,7 +74,7 @@ acnh-diary-mobile/
 
 ### 1.3 첫 구현 수직 슬라이스
 
-문서와 구현의 기준점을 맞추기 위해 첫 기능 구현은 다음 범위로 제한한다. 이 범위가 완료되기 전에는 주민·도감·백업의 상세 기능을 병렬로 확장하지 않는다.
+현재 앱의 실행 기준과 후속 Repository 추상화의 목표를 분리해 기록한다. 아래 포함 범위는 현재 코드에서 검증할 수 있는 기능이며, 백업·설정은 별도 단계로 남긴다.
 
 포함 범위:
 
@@ -83,13 +86,17 @@ acnh-diary-mobile/
 - 루틴의 체크·횟수 변경과 날짜별 저장
 - 오늘 화면의 로딩·빈 상태·오류·저장 중 상태
 - 앱 종료 후 재실행 시 섬과 루틴 기록 복원
+- 현재 월·시간의 생물 목록과 채집·기증 상태
+- 주간 NPC 기록, 기본 주말 NPC, 주간 초기화, 주간·월간 생일 캘린더
+- 섬 관리 화면의 전환·추가·수정·삭제 및 마지막 섬 삭제 차단
+- 카탈로그 11개 대분류, 고정 소분류 순서, 목록 필터·정렬·상세·로컬 이미지
+- 레시피 재료·시즌·이벤트·재료별 필터와 가구 변형별 보유·수량 기록
 
 후속 범위:
 
-- 현재 출현 생물·계절·이벤트·NPC·캘린더의 실제 데이터 조립
-- 카탈로그 변형별 수집과 개수 기록
 - 백업 내보내기·복원
-- 여러 섬 관리 UI
+- 앱 정보·라이선스 화면
+- NPC 전용 이미지 자산이 데이터셋에 추가될 때 로컬 자산 맵 연결
 
 첫 수직 슬라이스는 `src/app` route가 직접 SQL을 실행하지 않고, `features`의 hook과 `domain` 정책을 통해 `storage` Repository를 호출하는지로 완료를 판단한다. 기준 데이터가 없는 기능은 빈 상태를 표시하되, 사용자 기록 기능을 막지 않는다.
 
@@ -484,6 +491,8 @@ interface Artwork {
 
 모든 상세 필드는 nullable이며 값이 없으면 화면에서 숨긴다.
 
+주민 기준 데이터 417명은 활동 시간과 하우스 가구 목록이 모두 비어 있으므로 해당 상세 행을 렌더링하지 않는다. 하우스 외관·내부 이미지와 벽지·바닥·음악은 번들 기준 데이터를 사용하며, 캘린더 이벤트 원본과 NPC 전용 이미지가 없는 경우 각각 주민 생일과 이름 이니셜 fallback을 사용한다.
+
 ### 3.1 기준 데이터 어댑터 규칙
 
 `src/data`는 `dataset/app-ready/content`의 파일별 원본 구조를 앱 도메인 타입으로 변환한다. 원본 JSON의 키를 화면이나 Domain에서 직접 사용하지 않는다.
@@ -494,9 +503,9 @@ interface Artwork {
 - 미술품은 `dataset/app-ready/seed/supabase_seed/content_db/catalog_items.json`의 `catalog_type = "art"` 레코드를 앱용 `content/encyclopedia/art.json`으로 정규화한다. 진품·가품 이미지 URL과 구별 설명은 artwork 하위 필드로 보존한다.
 - 도감 기준 데이터는 `content/encyclopedia/{bugs,fish,sea,fossils,art}.json`으로 분리하고, `encyclopedia-assets.ts`가 `{category}/{itemId}` 고정 키를 Metro 정적 자산으로 연결한다.
 - 카탈로그 기준 데이터는 `catalog_items.json`에서 `furniture`, `interior`, `clothing`, `music`, `items`, `tools`, `special_items`, `gyroids`, `photos`, `recipes`, `reactions` 11개 유형만 추려 `content/catalog/catalog.json`으로 만든다. 변형은 `content/catalog/catalog-variations.json`으로 분리한다.
-- 카탈로그 기본 항목은 `id`, `catalogType`, 한국어·영어 이름, 분류, 획득 방법, 구매·판매가, 통화 코드, 이벤트 정보, nullable 상세 필드, `assetType`·`assetId`를 가진다. 상세 필드가 비어 있으면 화면에서 행을 만들지 않는다.
+- 카탈로그 기본 항목은 `id`, `catalogType`, 한국어·영어 이름, 분류, 획득 방법, 구매·판매가, 통화 코드, 이벤트 정보, nullable 상세 필드, `assetType`·`assetId`를 가진다. 상세 필드가 비어 있으면 화면에서 행을 만들지 않는다. 레시피는 `details.materials`와 `details.recipeFilters`를 추가로 가진다.
 - 카탈로그 생성 스크립트는 `node scripts/build_mobile_catalog_data.js`이며 raw JSON은 앱 번들에 포함하지 않는다. 현재 생성 결과는 기본 항목 7,443개와 변형 24,897개다.
-- 카탈로그 이미지는 `catalog-assets.ts`와 `music-assets.ts`의 Metro 정적 require 맵을 통해 로컬에서 해석한다. 이미지가 없는 항목은 데이터의 원격 URL을 기준 정보로 보존하되 오프라인 화면에서는 안전한 placeholder를 사용한다.
+- 카탈로그 이미지는 `catalog-assets.ts`와 `music-assets.ts`의 Metro 정적 require 맵을 통해 로컬에서 해석한다. 이미지가 없는 항목은 데이터의 원격 URL을 기준 정보로 보존하되 오프라인 화면에서는 안전한 placeholder를 사용한다. NPC 전용 이미지는 현재 앱용 오프라인 캐시에 없어 이름 이니셜 fallback을 사용한다.
 - 앱 번들에는 `src/data/content/villagers/villagers.json`, `src/data/content/encyclopedia/{bugs,fish,sea,fossils,art}.json`, `src/data/content/catalog/{catalog,catalog-variations}.json`과 검증된 로컬 이미지가 포함된다. `dataset/app-ready/seed`와 저장소 루트의 원본 경로는 런타임에서 직접 import하지 않는다.
 
 ### 3.2 카탈로그 어댑터 계약
@@ -504,6 +513,9 @@ interface Artwork {
 `src/data/catalog.ts`는 번들 JSON을 카테고리별로 그룹화하고 화면이 사용할 조회 계약을 제공한다.
 
 - `getCatalogItems(category)`는 기본 아이템 목록을 반환한다.
+- `getCatalogSubcategories(category)`는 `classification` 값에서 `전체`와 중복 없는 소분류 목록·항목 수를 반환한다.
+- `getCatalogFilterOptions(items)`는 현재 목록에서 값이 있는 스타일·테마·색상·시즌·시리즈·입수처 옵션과 항목 수를 반환한다.
+- `matchesCatalogFilter(item, facet, selectedValues)`는 같은 필터 그룹의 OR 조건을 평가한다.
 - `getCatalogItem(category, itemId)`는 고정 ID로 단일 항목을 반환한다.
 - `getCatalogVariants(item)`는 해당 기본 아이템의 변형만 반환한다.
 - `getCatalogAssetForItem`와 `getCatalogAssetForVariant`는 유형별 Metro 이미지 자산을 반환한다. 음악은 숫자 `number`를 `music-assets.ts` 키로 사용한다.
@@ -630,10 +642,10 @@ the visit-date history and sets `campsite_visited` while at least one date remai
 ```sql
 CREATE TABLE npc_visits (
   island_id TEXT NOT NULL REFERENCES islands(id) ON DELETE CASCADE,
-  visited_on TEXT NOT NULL,
-  npc_id TEXT NOT NULL,
-  memo TEXT,
-  PRIMARY KEY(island_id, visited_on)
+  visit_date TEXT NOT NULL,
+  npc_name TEXT NOT NULL,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(island_id, visit_date)
 );
 
 CREATE TABLE app_settings (
@@ -642,7 +654,7 @@ CREATE TABLE app_settings (
 );
 ```
 
-`app_settings.manual_date`가 `NULL`이면 기기 시각으로 계산하고, 값이 있으면 `YYYY-MM-DD` 수동 기준 날짜로 사용한다. `app_settings.active_data_version`은 항상 문자열로 저장해 번들 기준 데이터 manifest와 비교한다.
+`app_settings.manual_game_date`가 없으면 기기 시각과 섬 시간대의 오전 5시 경계로 계산하고, 값이 있으면 `YYYY-MM-DD` 수동 기준 날짜로 사용한다. `app_settings.active_data_version`은 항상 문자열로 저장해 번들 기준 데이터 manifest와 비교한다. 현재 NPC 방문은 `(island_id, visit_date)`에 `npc_name`을 저장하고 주간 범위 삭제를 지원한다.
 
 ## 5. Migration
 
@@ -691,7 +703,7 @@ Migration은 번호가 증가해야 하고, 사용자 기록을 삭제하지 않
 | v1 | `routine_logs` | 섬·루틴·게임 날짜별 진행 상태 |
 | v1 | `app_settings` | 수동 날짜와 데이터 버전 |
 
-현재 실행 기준선은 `collection_records`와 주민 상태·캠핑장 방문 테이블까지 생성한다. `collection_records`는 `(island_id, item_type, item_id)`를 복합 키로 사용하고 `caught`, `owned`, `donated`, `genuine_owned`, `fake_owned`를 독립 플래그로 저장한다. 화면에서 허용하는 상태는 카테고리별로 다르며, 생물은 `caught`·`donated`, 화석은 `owned`·`donated`, 미술품은 `genuine_owned`·`fake_owned`·`donated`, 카탈로그는 `owned`만 사용한다. 카탈로그의 `item_type`은 11개 `CatalogCategory` 값이고 `item_id`는 기본 아이템의 고정 ID다. 기존 `owned` 컬럼은 화석과 이전 데이터 호환성을 위해 유지한다. 정식 비동기 migration·백업·NPC 기록 테이블은 후속 단계에서 목표 스키마에 맞춰 확장한다.
+현재 실행 기준선은 `collection_records`와 주민 상태·캠핑장 방문·NPC 방문·앱 설정 테이블까지 생성한다. `collection_records`는 `(island_id, item_type, item_id)`를 복합 키로 사용하고 `caught`, `owned`, `donated`, `genuine_owned`, `fake_owned`, `quantity`를 독립 필드로 저장한다. 화면에서 허용하는 상태는 카테고리별로 다르며, 생물은 `caught`·`donated`, 화석은 `owned`·`donated`, 미술품은 `genuine_owned`·`fake_owned`·`donated`, 카탈로그는 `owned`만 사용한다. 카탈로그의 `item_type`은 11개 `CatalogCategory` 값이고 `item_id`는 기본 아이템의 고정 ID다. 가구 변형은 `item_id::variationId`와 `quantity`를 사용한다. 기존 `owned` 컬럼은 화석과 이전 데이터 호환성을 위해 유지한다. 정식 비동기 migration과 백업 Repository는 후속 단계에서 목표 스키마에 맞춰 확장한다.
 
 Migration 실행 규칙:
 
@@ -884,15 +896,16 @@ UPSERT 실패 시 기존 로그를 유지하고 `STORAGE_WRITE_FAILED`를 반환
 ### UC-MOB-010 · 카탈로그 목록·상세 조회
 
 1. `getCatalogItems(category)`로 선택한 분류의 기본 아이템을 읽는다.
-2. 한국어·영어 이름, 분류, 획득 방법, 번호에 검색어를 적용한다.
-3. 보유·미보유 필터와 번호·이름·획득 방법 정렬을 적용한다.
-4. `getCollectionStatesForIsland(islandId)` 결과를 `catalogType/itemId`에 결합한다.
-5. 항목 선택 시 `category`와 고정 `itemId`를 상세 route parameter로 전달한다.
-6. 상세 진입 시 `getCatalogVariants(item)`로 변형 미리보기를 읽되 보유 상태는 기본 아이템에만 기록한다.
+2. `classification` 값에서 `전체`와 소분류 탭을 만들고, 선택한 소분류로 기본 아이템을 제한한다.
+3. 한국어·영어 이름, 분류, 획득 방법, 번호에 검색어를 적용한다.
+4. 보유·미보유 필터와 번호·이름·획득 방법 정렬을 적용한다.
+5. `getCollectionStatesForIsland(islandId)` 결과를 `catalogType/itemId`에 결합하고, 가구 변형은 `getCollectionQuantitiesForIsland` 결과도 결합한다.
+6. 항목 선택 시 `category`와 고정 `itemId`를 상세 route parameter로 전달한다.
+7. 상세 진입 시 `getCatalogVariants(item)`로 변형 미리보기를 읽고, 가구 변형의 상태 키는 `catalogType/itemId::variationId`로 사용한다.
 
 ### UC-MOB-011 · 카탈로그 보유 상태 변경
 
-`collection_records`의 `item_type = catalogType`, `item_id = itemId` 행에 `owned`만 UPSERT한다. 저장 성공 후 목록·상세의 상태를 갱신하고, 활성 섬이 없거나 저장에 실패하면 상태를 변경하지 않고 사용자 메시지를 표시한다.
+`collection_records`의 `item_type = catalogType`, `item_id = itemId` 행에 `owned`를 UPSERT한다. 가구 변형은 `item_id::variationId` 행에 `owned`와 `quantity`(0~999)를 저장한다. 사진 아이템의 보유 변경은 연결된 주민 상태도 같은 transaction 경계에서 갱신한다. 저장 성공 후 목록·상세의 상태를 갱신하고, 활성 섬이 없거나 저장에 실패하면 상태를 변경하지 않고 사용자 메시지를 표시한다.
 
 ### UC-MOB-012 · 백업 내보내기
 
@@ -922,7 +935,7 @@ src/app/index.tsx
 TodayScreen
   -> useTodayViewModel()
     -> active island 조회
-    -> app_settings.manual_date 조회
+    -> app_settings.manual_game_date 조회
     -> getGameDateContext()
     -> routineRepository.listDefinitions(islandId, gameDate)
     -> TodayViewModel 반환
@@ -967,7 +980,7 @@ interface TodayViewModel {
 | `empty` | 활성 섬 생성 안내 | 온보딩 이동 |
 | `error` | 오류 코드에 맞는 재시도 안내 | 재시도, 온보딩 또는 설정 이동 |
 
-`useTodayViewModel`은 `activeIsland`와 `today:{islandId, gameDate}`를 구독한다. 수동 날짜를 변경하면 `app_settings.manual_date` 저장 성공 후 새 `gameDate`를 계산하고, 해제하면 해당 설정을 `NULL`로 저장한다. 루틴 한 건을 저장하는 동안 해당 카드만 `saving` 상태로 표시하며, 중복 탭은 마지막 저장이 끝날 때까지 무시한다.
+`useTodayViewModel`은 `activeIsland`와 `today:{islandId, gameDate}`를 구독한다. 수동 날짜를 변경하면 `app_settings.manual_game_date` 저장 성공 후 새 `gameDate`를 계산하고, 해제하면 해당 설정을 `NULL`로 저장한다. 루틴 한 건을 저장하는 동안 해당 카드만 `saving` 상태로 표시하며, 중복 탭은 마지막 저장이 끝날 때까지 무시한다.
 
 ### 8.2 첫 구현 Hook 계약
 
@@ -1064,7 +1077,7 @@ TodayScreen
   CalendarSection
 ```
 
-첫 수직 슬라이스의 실제 렌더링 범위는 `TodayHeader`, `GameDatePicker`, `RoutineSection`이다. `SeasonEventSection`, `AvailableCritterSection`, `WeeklyNpcSection`, `CalendarSection`은 기준 데이터·Repository가 준비되기 전까지 숨기거나 `준비 중` 빈 상태로 표시하며, 임의의 샘플 데이터를 사용하지 않는다.
+현재 실제 렌더링 범위는 `TodayHeader`, `GameDatePicker`, `SeasonEventSection`, `AvailableCritterSection`, `RoutineSection`, `WeeklyNpcSection`, `CalendarSection`이다. 날씨·MeteoNook와 이벤트 날짜 원본이 없는 캘린더 이벤트는 MVP에서 제외하고, 주민 생일은 417명 주민 기준 데이터로 표시한다. NPC 전용 이미지가 없는 동안에는 NPC 이름 이니셜 대체 표시를 사용하며 임의의 다른 캐릭터 이미지를 사용하지 않는다.
 
 ```typescript
 interface RoutineCardProps {
@@ -1150,10 +1163,18 @@ EncyclopediaDetailScreen
 ### 9.5 CatalogScreen
 
 ```text
+CatalogHomeScreen
+  CatalogSummary
+  CatalogCategoryGrid
+    CatalogCategoryCard
+
 CatalogListScreen
-  CatalogCategoryTabs
+  SelectedCategoryHeader
+  CatalogSubcategoryTabs
   CatalogSearchBar
-  OwnershipFilterChips
+  CatalogFilterPanel
+    OwnershipFilterChips
+    DetailFilterGroups
   SortControl
   CatalogCardList
     CatalogCard
@@ -1170,9 +1191,13 @@ CatalogDetailScreen
   VariantPreviewSection
 ```
 
-카탈로그 목록은 한 줄에 하나씩 표시하고, 11개 분류 탭은 가로 스크롤한다. 검색은 한국어 이름·영어 이름·분류·획득 방법·번호에 적용하며, 보유·미보유 필터와 번호·이름·획득 방법 정렬 및 오름차순·내림차순 전환을 제공한다. 카드에는 로컬 이미지, 이름, 분류, 획득 방법, 구매가 또는 비매품, 판매가와 `owned` 상태 아이콘을 표시한다.
+카탈로그 탭은 `CatalogHomeScreen`을 먼저 표시하며 아이템 목록을 바로 열지 않는다. 홈에는 다음 11개 대분류를 이 순서로 표시한다: 가구, 인테리어, 옷, 음악, 잡화, 도구, 특수 아이템, 토용, 사진·포스터, 레시피, 리액션. 대분류 카드를 선택하면 `/catalog/[category]` 목록으로 이동한다. 카탈로그 목록은 선택한 대분류의 아이템만 한 줄에 하나씩 표시하고, 화면 폭이 768dp 이상이면 두 열로 표시한다. 소분류 탭은 SRS의 고정 순서를 사용하며 `전체`를 첫 탭으로 추가한다.
 
-상세 화면은 `CatalogItem`의 기본 정보와 값이 있는 상세 필드만 표시한다. 변형이 있으면 `CatalogVariant`의 이미지와 라벨을 미리보기로 보여 주지만, 보유 토글은 기본 아이템 하나에만 적용한다. 구매가는 `buyCurrency` 코드(`bells`, `nook_miles`, `poki` 등)를 한국어 통화 라벨로 변환한다. 목록과 상세에는 항상 맨 위로 이동하는 floating action을 제공한다.
+검색은 한국어·영어 이름, 분류, 획득방법, 번호에 적용한다. 필터 패널에는 보유·미보유, 가구·인테리어·옷의 판매 가능·비매품, 현재 목록에 값이 있는 스타일·색상·테마·시즌·시리즈·입수처를 표시한다. 같은 그룹 안에서는 OR, 다른 그룹 사이에서는 AND 조건으로 적용한다. 획득방법을 누르면 해당 입수처 필터를 적용한다. 번호·이름·획득방법 정렬 및 오름차순·내림차순 전환과 초기화를 제공한다. 카드에는 로컬 이미지, 이름, 분류, 획득방법, 구매가 또는 `비매품`, 판매가와 보유 상태 아이콘을 표시한다.
+
+가구 소분류는 가구·잡화·벽걸이·천장, 인테리어는 바닥·러그·벽지, 옷은 상의·하의·원피스/코스튬·모자·액세서리·양말·신발·가방·우산·기타(잠수복) 순서다. 특수 아이템, 사진·포스터, 레시피, 리액션도 SRS에 정의된 순서를 그대로 사용한다. 레시피 앱 데이터는 원본 `materials`와 `recipe_filters`를 보존해 카드에 재료를 표시하고 시즌·이벤트·재료·획득방법 필터를 제공한다. 원본 `npc:celeste`·`npc:pascal`은 각각 이벤트 필터의 부옥이·머메이드로 정규화한다. 리액션의 `owned` 상태는 화면에서 습득 상태로 표시하고 상세 route는 만들지 않는다.
+
+상세 화면은 `CatalogItem`의 기본 정보와 값이 있는 상세 필드만 표시한다. 구매가는 `buyCurrency` 코드(`bells`, `nook_miles`, `poki` 등)를 한국어 통화 라벨로 변환한다. 변형이 있으면 `CatalogVariant`의 이미지와 라벨을 미리보기로 보여 주며, 가구 변형은 `catalogType/itemId::variationId` 키로 보유 여부와 0~999개 수량을 별도 저장한다. 사진과 포스터는 서로 다른 기본 itemId를 사용하고, 액자 사진 보유 변경은 연결된 주민 `photo_received` 상태에 반영한다. 목록과 상세에는 항상 맨 위로 이동하는 floating action을 제공한다.
 
 ### 9.6 설정·백업
 
@@ -1265,12 +1290,16 @@ test/fixtures/routines.ts
 - 출현 시간·월·조건
 - 월별 미완료 OR 조건
 - 이번 달 신규 출현 조건
+- 현재 시각의 생물 출현 시간 범위와 남반구 표시
 - 도감 복수 필터 칩 AND 조합
 - 번호·이름·화석 그룹 정렬과 방향
 - 카탈로그 11개 분류·기본 아이템 수·변형 참조 무결성
 - 카탈로그 이름·분류·획득 방법·번호 검색과 보유 필터·정렬
 - 주민 복수 상태 selector
 - 액자 사진 owned → 주민 액자 상태
+- 레시피 재료·시즌·이벤트·재료별 필터
+- 가구 변형별 보유·수량 0~999 저장
+- NPC 방문 주간 범위와 토·일 기본값
 - 루틴 유효기간과 과거 로그 보존
 
 첫 수직 슬라이스의 필수 Given/When/Then:
@@ -1311,7 +1340,8 @@ test/fixtures/routines.ts
 - 하단 5개 탭과 준비 중 화면
 - 섬 전환 후 데이터 교체
 - 도감 카드 직접 토글과 전체 체크·해제
-- 카탈로그 분류 전환·검색·보유 토글·상세·변형 미리보기
+- 카탈로그 대분류 진입·소분류 탭 전환·검색·보유 토글·상세·변형 미리보기
+- 카탈로그 레시피 재료·시즌·이벤트·재료 필터, 사진/포스터 독립 상태, 태블릿 2열
 - 상세 화면에서 뒤로 이동 후 목록 상태
 - 파일 내보내기·가져오기 확인 dialog
 - 네트워크 차단 상태에서 핵심 기능
@@ -1334,12 +1364,17 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 |---|---|---|
 | `MOB-ISL-001`~`003` | `CreateIslandInput`, Onboarding validation | `onboarding-flow.test.ts` |
 | `MOB-ISL-008` | Migration v1, `IslandRepository.create`, 5.3 transaction | `migration-v1.test.ts` |
-| `MOB-TOD-001`~`004` | `getGameDateContext`, `app_settings.manual_date` | `game-date.test.ts` |
+| `MOB-TOD-001`~`004` | `getGameDateContext`, `app_settings.manual_game_date` | `game-date.test.ts` |
 | `MOB-TOD-008`~`011` | `RoutineDefinition`, `RoutineViewModel`, `setProgress` | `routine-policy.test.ts`, `routine-repository.test.ts` |
 | `MOB-TOD-012`~`013` | definition versioning, date-scoped logs | `routine-repository.test.ts` |
-| `MOB-CAT-001`~`008` | `CatalogListScreen`, `CatalogDetailScreen`, `catalog.ts`, `collection_records.owned` | catalog data validation, screen·restart test |
+| `MOB-ISL-004`~`007`, `009` | `IslandManagerScreen`, island repository helpers, birthday validation | island switch/add/edit/delete and validation test |
+| `MOB-TOD-005`~`018` | `TodayScreen`, game-date/time availability, routine/NPC/calendar queries | today screen and data policy test |
+| `MOB-CAT-001`~`019` | `CatalogHomeScreen`, `CatalogListScreen`, `CatalogDetailScreen`, ordered subcategories, recipe filters, `collection_records.owned/quantity` | catalog data validation, subcategory·detail filter, variant persistence, screen·restart test |
 | `NFR-MOB-003` | SQLite persistence, migration idempotence | migration·screen restart test |
 | `NFR-MOB-004` | routine accessibility labels and non-color state | Today screen test |
+| `NFR-MOB-009` | missing-value hiding and NPC initials fallback | data coverage and accessibility test |
+| `NFR-MOB-010` | shared UI tokens and contrast review | visual review |
+| `NFR-MOB-011` | Expo SDK 57 iOS export | `npx expo config --json`, iOS export |
 
 ## 13. 구현 완료 정의
 
@@ -1357,6 +1392,7 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 - MVP 화면이 네트워크 없이 조회·수정된다.
 - 도감 월별 추천과 복수 필터가 기준 데이터와 일치한다.
 - 카탈로그 11개 분류의 기본 항목·상세·보유 상태가 네트워크 없이 조회·수정된다.
+- 카탈로그 대분류·소분류가 SRS의 순서로 표시되고, 레시피 재료·필터와 가구 변형 보유·수량이 네트워크 없이 조회·수정된다.
 - 카탈로그 기본 아이템 ID와 로컬 이미지 맵의 연결 검증이 통과한다.
 - 섬 간 기록이 누출되지 않는다.
 - 백업 round-trip과 실패 rollback이 통과한다.
@@ -1374,7 +1410,7 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 4. `initializeApp`와 Onboarding Use Case를 연결해 첫 섬 생성·재실행 복원을 확인한다.
 5. `useTodayViewModel`과 `TodayScreen`을 연결해 날짜 변경·루틴 저장·오류 복원을 확인한다.
 6. iOS Simulator와 실제 iPhone에서 offline 상태로 수직 슬라이스의 완료 정의를 검증한다.
-7. 수직 슬라이스가 통과한 후 기준 데이터 adapter와 주민·도감·카탈로그 기능을 추가한다. 현재 주민·도감·카탈로그 MVP까지 이 기준을 통과했다.
+7. 기준 데이터 adapter와 주민·도감·카탈로그 기능을 연결한다. 현재 온보딩·섬 관리·오늘·주민·도감·카탈로그 MVP까지 구현되어 있으며, 백업·설정·NPC 전용 이미지는 후속 범위다.
 
 ## 14. 미정 항목
 
@@ -1403,3 +1439,6 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 - v1.8 · 2026-08-29 · 생물 도감 상태를 채집·기증으로 단순화하고 미술품 분류 탭과 상태 계약을 정정
 - v1.9 · 2026-08-29 · 생물 카드 상태 아이콘을 네이티브 도형으로 교체하고 도감 상세 속성 한국어 매핑 적용
 - v2.0 · 2026-08-29 · 카탈로그 11개 분류 데이터·변형·목록·상세·기본 아이템 수집 구현 기준 반영
+- v2.1 · 2026-08-29 · 카탈로그 홈·대분류 선택·카테고리 목록 진입 흐름과 뒤로가기 동작 반영
+- v2.2 · 2026-08-29 · 대분류별 소분류 탭과 `classification` 기반 목록 필터 반영
+- v2.3 · 2026-08-29 · 보유·상세 필터 패널과 다중 선택 조건 반영

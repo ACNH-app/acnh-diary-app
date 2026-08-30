@@ -1,5 +1,5 @@
-import { CatalogListScreen } from '../../screens/CatalogListScreen';
+import { CatalogHomeScreen } from '../../screens/CatalogHomeScreen';
 
 export default function CatalogRoute() {
-  return <CatalogListScreen />;
+  return <CatalogHomeScreen />;
 }

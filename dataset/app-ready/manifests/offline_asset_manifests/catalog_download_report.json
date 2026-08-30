@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "cache_root": "images/offline_cache",
+  "manifest_unique_url_count": 25391,
+  "cache_image_count": 26026,
+  "remaining_unique_missing_count": 0,
+  "complete": true,
+  "requested_unique_missing_count": 203,
+  "downloaded_count": 203,
+  "skipped_count": 0,
+  "failed_count": 0,
+  "counts_by_catalog_type": {
+    "art": {
+      "downloaded": 3
+    },
+    "bugs": {
+      "downloaded": 80
+    },
+    "fish": {
+      "downloaded": 80
+    },
+    "sea": {
+      "downloaded": 40
+    }
+  },
+  "failures": []
+}

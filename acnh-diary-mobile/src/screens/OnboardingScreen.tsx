@@ -33,6 +33,8 @@ function getDeviceTimezone() {
 export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   const [islandName, setIslandName] = useState('수원삼섬');
   const [playerName, setPlayerName] = useState('그랑');
+  const [birthdayMonth, setBirthdayMonth] = useState('');
+  const [birthdayDay, setBirthdayDay] = useState('');
   const [fruit, setFruit] = useState('사과');
   const [flower, setFlower] = useState('장미');
   const [hemisphere, setHemisphere] = useState<Hemisphere>('north');
@@ -43,6 +45,8 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
   const handleSubmit = async () => {
     const trimmedIslandName = islandName.trim();
     const trimmedPlayerName = playerName.trim();
+    const parsedBirthdayMonth = Number(birthdayMonth);
+    const parsedBirthdayDay = Number(birthdayDay);
     const trimmedFruit = fruit.trim();
     const trimmedFlower = flower.trim();
     const trimmedTimezone = timezone.trim();
@@ -62,6 +66,19 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
       return;
     }
 
+    const birthday = new Date(Date.UTC(2024, parsedBirthdayMonth - 1, parsedBirthdayDay));
+    if (
+      !birthdayMonth ||
+      !birthdayDay ||
+      !Number.isInteger(parsedBirthdayMonth) ||
+      !Number.isInteger(parsedBirthdayDay) ||
+      birthday.getUTCMonth() !== parsedBirthdayMonth - 1 ||
+      birthday.getUTCDate() !== parsedBirthdayDay
+    ) {
+      setErrorMessage('주민대표 생일을 올바르게 입력해 주세요.');
+      return;
+    }
+
     setErrorMessage(null);
     setIsSubmitting(true);
 
@@ -73,6 +90,8 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
         hemisphere,
         timezone: trimmedTimezone,
         playerName: trimmedPlayerName,
+        birthdayMonth: parsedBirthdayMonth,
+        birthdayDay: parsedBirthdayDay,
       });
     } catch {
       setErrorMessage('저장하지 못했습니다. 잠시 후 다시 시도해 주세요.');
@@ -139,6 +158,35 @@ export function OnboardingScreen({ onComplete }: OnboardingScreenProps) {
               maxLength={10}
               autoCapitalize="none"
             />
+            <View style={styles.fieldDivider} />
+            <View style={styles.birthdayRow}>
+              <View style={styles.birthdayCopy}>
+                <Text style={styles.fieldLabel}>주민대표 생일</Text>
+                <Text style={styles.birthdayHint}>캘린더와 여권 요약에 사용해요</Text>
+              </View>
+              <TextInput
+                accessibilityLabel="주민대표 생일 월"
+                keyboardType="number-pad"
+                maxLength={2}
+                onChangeText={setBirthdayMonth}
+                placeholder="월"
+                placeholderTextColor="#A6A9A2"
+                style={styles.birthdayInput}
+                value={birthdayMonth}
+              />
+              <Text style={styles.birthdaySeparator}>월</Text>
+              <TextInput
+                accessibilityLabel="주민대표 생일 일"
+                keyboardType="number-pad"
+                maxLength={2}
+                onChangeText={setBirthdayDay}
+                placeholder="일"
+                placeholderTextColor="#A6A9A2"
+                style={styles.birthdayInput}
+                value={birthdayDay}
+              />
+              <Text style={styles.birthdaySeparator}>일</Text>
+            </View>
             <View style={styles.fieldDivider} />
             <View style={styles.inlineFields}>
               <FormField
@@ -487,6 +535,34 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 15,
     paddingVertical: 13,
+  },
+  birthdayRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  birthdayCopy: {
+    flex: 1,
+  },
+  birthdayHint: {
+    color: '#9A9F97',
+    fontSize: 10,
+    marginTop: 3,
+  },
+  birthdayInput: {
+    borderBottomColor: '#DCE1D8',
+    borderBottomWidth: 1,
+    color: '#3D493F',
+    fontSize: 14,
+    marginLeft: 5,
+    paddingHorizontal: 6,
+    paddingVertical: 5,
+    textAlign: 'center',
+    width: 34,
+  },
+  birthdaySeparator: {
+    color: '#7B857B',
+    fontSize: 12,
+    marginLeft: 2,
   },
   timezoneCopy: {
     flex: 1,
