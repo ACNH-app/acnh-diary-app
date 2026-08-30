@@ -4,10 +4,8 @@ import {
   FlatList,
   Image,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
@@ -16,6 +14,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
+import {
+  ListFilterChip,
+  ListFilterGroup,
+  ListFilterPanel,
+  ListFilterToggle,
+  ListResultToolbar,
+  ListSearchRow,
+  type ListSortOption,
+} from '@/components/ListControls';
+import { SearchBar } from '@/components/SearchBar';
 import { encyclopediaCategories, getEncyclopediaItems, getEncyclopediaLabel } from '@/data/encyclopedia';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
 import {
@@ -139,6 +147,7 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
   const [sortDescending, setSortDescending] = useState(false);
   const [artTypeTab, setArtTypeTab] = useState<ArtTypeTab>('all');
   const [artAuthenticityTab, setArtAuthenticityTab] = useState<ArtAuthenticityTab>('all');
+  const [filterExpanded, setFilterExpanded] = useState(false);
   const [showBulkControls, setShowBulkControls] = useState(false);
   const [states, setStates] = useState<Record<string, EncyclopediaState>>({});
   const [islandId, setIslandId] = useState<string | null>(null);
@@ -245,7 +254,21 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
   };
 
   const columns = isCreature(category) ? 5 : 2;
-  const sortOptions: SortMode[] = category === 'fossils' ? ['number', 'name', 'group'] : ['number', 'name'];
+  const sortOptions: Array<ListSortOption<SortMode>> = category === 'fossils'
+    ? [
+        { key: 'number', label: '번호순' },
+        { key: 'name', label: '이름순' },
+        { key: 'group', label: '그룹순' },
+      ]
+    : [
+        { key: 'number', label: '번호순' },
+        { key: 'name', label: '이름순' },
+      ];
+  const activeFilterCount =
+    activeFilters.length +
+    (artTypeTab !== 'all' ? 1 : 0) +
+    (artAuthenticityTab !== 'all' ? 1 : 0);
+  const isFiltered = Boolean(search || activeFilterCount || sortMode !== 'number' || sortDescending);
 
   return (
     <View style={styles.screenRoot}>
@@ -268,100 +291,90 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
         }
         ListHeaderComponent={
           <View>
-            <View style={styles.searchBox}>
-              <Text style={styles.searchIcon}>⌕</Text>
-              <TextInput
+            <ListSearchRow>
+              <SearchBar
                 accessibilityLabel={`${getEncyclopediaLabel(category)} 검색`}
-                autoCapitalize="none"
-                autoCorrect={false}
                 onChangeText={setSearch}
+                onClear={() => setSearch('')}
                 placeholder="이름 또는 번호로 검색"
-                placeholderTextColor="#99A49B"
-                style={styles.searchInput}
+                style={styles.searchBar}
                 value={search}
               />
-              {search ? (
-                <Pressable accessibilityLabel="검색어 지우기" hitSlop={8} onPress={() => setSearch('')}>
-                  <Text style={styles.clearSearch}>×</Text>
-                </Pressable>
-              ) : null}
-            </View>
+              <ListFilterToggle
+                activeCount={activeFilterCount}
+                expanded={filterExpanded}
+                onPress={() => setFilterExpanded((value) => !value)}
+              />
+            </ListSearchRow>
 
-            <ScrollView contentContainerStyle={styles.horizontalContent} horizontal showsHorizontalScrollIndicator={false}>
-              {filterOptions[category].map((filter) => (
+            {filterExpanded ? (
+              <ListFilterPanel>
+                <ListFilterGroup title="수집 상태">
+                  {filterOptions[category].map((filter) => (
+                    <ListFilterChip
+                      key={filter}
+                      label={filterLabels[filter]}
+                      onPress={() => toggleFilter(filter)}
+                      selected={activeFilters.includes(filter)}
+                    />
+                  ))}
+                </ListFilterGroup>
+
+                {category === 'art' ? (
+                  <>
+                    <ListFilterGroup title="작품 분류">
+                      {([
+                        ['all', '전체'],
+                        ['painting', '그림'],
+                        ['statue', '조각'],
+                      ] as Array<[ArtTypeTab, string]>).map(([value, label]) => (
+                        <ListFilterChip
+                          key={value}
+                          label={label}
+                          onPress={() => setArtTypeTab(value)}
+                          role="radio"
+                          selected={artTypeTab === value}
+                        />
+                      ))}
+                    </ListFilterGroup>
+                    <ListFilterGroup title="진품 여부">
+                      {([
+                        ['genuineOnly', '진품만 있는 작품'],
+                        ['hasFake', '가품도 있는 작품'],
+                      ] as Array<[ArtAuthenticityTab, string]>).map(([value, label]) => (
+                        <ListFilterChip
+                          key={value}
+                          label={label}
+                          onPress={() => setArtAuthenticityTab((current) => current === value ? 'all' : value)}
+                          role="radio"
+                          selected={artAuthenticityTab === value}
+                        />
+                      ))}
+                    </ListFilterGroup>
+                  </>
+                ) : null}
+
                 <Pressable
-                  accessibilityRole="checkbox"
-                  accessibilityState={{ checked: activeFilters.includes(filter) }}
-                  key={filter}
-                  onPress={() => toggleFilter(filter)}
-                  style={[styles.filterChip, activeFilters.includes(filter) && styles.filterChipActive]}>
-                  <Text style={[styles.filterChipText, activeFilters.includes(filter) && styles.filterChipTextActive]}>
-                    {filterLabels[filter]}
-                  </Text>
+                  accessibilityLabel="도감 일괄 변경 열기"
+                  accessibilityRole="button"
+                  onPress={() => setShowBulkControls((value) => !value)}
+                  style={styles.bulkButton}>
+                  <Text style={styles.bulkButtonText}>{showBulkControls ? '일괄 변경 닫기' : '일괄 변경'}</Text>
                 </Pressable>
-              ))}
-            </ScrollView>
-
-            {category === 'art' ? (
-              <View style={styles.artTabs}>
-                <Text style={styles.controlLabel}>작품 분류</Text>
-                {(
-                  [
-                    ['all', '전체'],
-                    ['painting', '그림'],
-                    ['statue', '조각'],
-                  ] as Array<[ArtTypeTab, string]>
-                ).map(([value, label]) => (
-                  <Pressable
-                    accessibilityRole="tab"
-                    accessibilityState={{ selected: artTypeTab === value }}
-                    key={value}
-                    onPress={() => setArtTypeTab(value)}
-                    style={[styles.sortChip, artTypeTab === value && styles.sortChipActive]}>
-                    <Text style={[styles.sortChipText, artTypeTab === value && styles.sortChipTextActive]}>{label}</Text>
-                  </Pressable>
-                ))}
-                {(
-                  [
-                    ['genuineOnly', '진품만 있는 작품'],
-                    ['hasFake', '가품도 있는 작품'],
-                  ] as Array<[ArtAuthenticityTab, string]>
-                ).map(([value, label]) => (
-                  <Pressable
-                    accessibilityRole="tab"
-                    accessibilityState={{ selected: artAuthenticityTab === value }}
-                    key={value}
-                    onPress={() => setArtAuthenticityTab((current) => current === value ? 'all' : value)}
-                    style={[styles.sortChip, artAuthenticityTab === value && styles.sortChipActive]}>
-                    <Text style={[styles.sortChipText, artAuthenticityTab === value && styles.sortChipTextActive]}>{label}</Text>
-                  </Pressable>
-                ))}
-              </View>
+              </ListFilterPanel>
             ) : null}
 
-            <View style={styles.controlRow}>
-              <View style={styles.sortOptions}>
-                <Text style={styles.controlLabel}>정렬</Text>
-                {sortOptions.map((option) => (
-                  <Pressable
-                    accessibilityRole="radio"
-                    accessibilityState={{ selected: sortMode === option }}
-                    key={option}
-                    onPress={() => setSortMode(option)}
-                    style={[styles.sortChip, sortMode === option && styles.sortChipActive]}>
-                    <Text style={[styles.sortChipText, sortMode === option && styles.sortChipTextActive]}>
-                      {option === 'number' ? '번호' : option === 'name' ? '이름' : '그룹'}
-                    </Text>
-                  </Pressable>
-                ))}
-                <Pressable accessibilityLabel="정렬 방향 변경" onPress={() => setSortDescending((value) => !value)} style={styles.directionButton}>
-                  <Text style={styles.directionText}>{sortDescending ? '↓' : '↑'}</Text>
-                </Pressable>
-              </View>
-              <Pressable onPress={() => setShowBulkControls((value) => !value)} style={styles.bulkButton}>
-                <Text style={styles.bulkButtonText}>일괄 변경</Text>
-              </Pressable>
-            </View>
+            <ListResultToolbar
+              descending={sortDescending}
+              isFiltered={isFiltered}
+              onReset={clearFilters}
+              onSortChange={setSortMode}
+              onToggleDirection={() => setSortDescending((value) => !value)}
+              resultCount={visibleItems.length}
+              sortOptions={sortOptions}
+              sortValue={sortMode}
+              totalCount={items.length}
+            />
 
             {showBulkControls ? (
               <View style={styles.bulkPanel}>
@@ -380,14 +393,6 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
               </View>
             ) : null}
 
-            {activeFilters.length > 0 || search ? (
-              <View style={styles.resultSummary}>
-                <Text style={styles.resultSummaryText}>{visibleItems.length}개 항목 표시 중</Text>
-                <Pressable onPress={clearFilters}>
-                  <Text style={styles.resetText}>초기화</Text>
-                </Pressable>
-              </View>
-            ) : null}
           </View>
         }
         numColumns={columns}
@@ -500,25 +505,7 @@ const styles = StyleSheet.create({
   subtitle: { color: '#7A857B', fontSize: 13, marginTop: 4 },
   countBadge: { alignItems: 'center', backgroundColor: '#2F503B', borderRadius: 24, height: 48, justifyContent: 'center', width: 48 },
   countBadgeText: { color: '#E4F2DB', fontSize: 17, fontWeight: '800' },
-  searchBox: { alignItems: 'center', backgroundColor: '#FFF', borderColor: '#E2E8DF', borderRadius: 16, borderWidth: 1, flexDirection: 'row', height: 52, paddingHorizontal: 14 },
-  searchIcon: { color: '#55795C', fontSize: 24, marginRight: 8 },
-  searchInput: { color: '#2D3B30', flex: 1, fontSize: 14, paddingVertical: 0 },
-  clearSearch: { color: '#718074', fontSize: 22, paddingLeft: 8 },
-  horizontalContent: { gap: 8, paddingBottom: 2, paddingTop: 14 },
-  filterChip: { backgroundColor: '#E9EEE7', borderRadius: 16, paddingHorizontal: 12, paddingVertical: 9 },
-  filterChipActive: { backgroundColor: '#355D42' },
-  filterChipText: { color: '#657468', fontSize: 12, fontWeight: '700' },
-  filterChipTextActive: { color: '#FFF' },
-  controlRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 14 },
-  sortOptions: { alignItems: 'center', flexDirection: 'row', flexShrink: 1, gap: 6 },
-  controlLabel: { color: '#758177', fontSize: 12, fontWeight: '700', marginRight: 2 },
-  sortChip: { borderColor: '#DCE5DA', borderRadius: 12, borderWidth: 1, paddingHorizontal: 9, paddingVertical: 6 },
-  sortChipActive: { backgroundColor: '#DDECDD', borderColor: '#BFD8BE' },
-  sortChipText: { color: '#758177', fontSize: 11, fontWeight: '700' },
-  sortChipTextActive: { color: '#3F724B' },
-  artTabs: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 12 },
-  directionButton: { alignItems: 'center', backgroundColor: '#E1ECE0', borderRadius: 12, height: 28, justifyContent: 'center', width: 28 },
-  directionText: { color: '#3E744A', fontSize: 16, fontWeight: '800' },
+  searchBar: { flex: 1, minWidth: 0 },
   bulkButton: { backgroundColor: '#2F503B', borderRadius: 14, paddingHorizontal: 11, paddingVertical: 8 },
   bulkButtonText: { color: '#FFF', fontSize: 11, fontWeight: '800' },
   bulkPanel: { backgroundColor: '#E8F0E3', borderRadius: 16, marginTop: 10, padding: 12 },
@@ -529,9 +516,6 @@ const styles = StyleSheet.create({
   bulkActionText: { color: '#FFF', fontSize: 10, fontWeight: '800' },
   bulkActionMuted: { backgroundColor: '#D5E1D1', borderRadius: 9, marginLeft: 5, paddingHorizontal: 8, paddingVertical: 6 },
   bulkActionMutedText: { color: '#5F7664', fontSize: 10, fontWeight: '800' },
-  resultSummary: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginTop: 16 },
-  resultSummaryText: { color: '#79857B', fontSize: 12 },
-  resetText: { color: '#3D7549', fontSize: 12, fontWeight: '800' },
   itemCard: { backgroundColor: '#FFF', borderColor: '#E2E8DF', borderRadius: 14, borderWidth: 1, marginBottom: 8, minWidth: 0, overflow: 'hidden' },
   creatureCard: { flex: 1, padding: 6 },
   artCard: { flex: 1, padding: 9 },

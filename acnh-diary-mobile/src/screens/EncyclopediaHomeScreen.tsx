@@ -38,12 +38,44 @@ export function EncyclopediaHomeScreen() {
 
   const progressFor = (category: EncyclopediaCategory) => {
     const items = getEncyclopediaItems(category);
-    const donated = items.filter((item) => {
-      const state = states[`${category}/${item.id}`] ?? EMPTY_STATE;
-      return state.donated;
-    }).length;
-    return { donated, total: items.length };
+    const count = (status: keyof EncyclopediaState) =>
+      items.filter((item) => (states[`${category}/${item.id}`] ?? EMPTY_STATE)[status]).length;
+
+    if (category === 'bugs' || category === 'fish' || category === 'sea') {
+      return {
+        metrics: [
+          { count: count('caught'), label: '채집' },
+          { count: count('donated'), label: '기증' },
+        ],
+        total: items.length,
+      };
+    }
+
+    if (category === 'fossils') {
+      return {
+        metrics: [
+          { count: count('owned'), label: '보유' },
+          { count: count('donated'), label: '기증' },
+        ],
+        total: items.length,
+      };
+    }
+
+    return {
+      metrics: [
+        { count: count('genuineOwned'), label: '진품' },
+        { count: count('fakeOwned'), label: '가품' },
+        { count: count('donated'), label: '기증' },
+      ],
+      total: items.length,
+    };
   };
+
+  const totalDonated = encyclopediaCategories.reduce(
+    (sum, item) => sum + progressFor(item.category).metrics.find((metric) => metric.label === '기증')!.count,
+    0,
+  );
+  const totalItems = encyclopediaCategories.reduce((sum, item) => sum + progressFor(item.category).total, 0);
 
   return (
     <View style={styles.screenRoot}>
@@ -56,9 +88,9 @@ export function EncyclopediaHomeScreen() {
             <Text style={styles.summaryTitle}>나의 박물관 기록</Text>
           </View>
           <Text style={styles.summaryValue}>
-            {encyclopediaCategories.reduce((sum, item) => sum + progressFor(item.category).donated, 0)}
+            {totalDonated}
             <Text style={styles.summaryTotal}>
-              {' '}/ {encyclopediaCategories.reduce((sum, item) => sum + progressFor(item.category).total, 0)}
+              {' '}/ {totalItems} 기증
             </Text>
           </Text>
         </View>
@@ -66,7 +98,7 @@ export function EncyclopediaHomeScreen() {
         <Text style={styles.sectionTitle}>분류별 도감</Text>
 
         <View style={styles.categoryGrid}>
-          {encyclopediaCategories.map((category, index) => {
+          {encyclopediaCategories.map((category) => {
             const progress = progressFor(category.category);
             return (
               <Pressable
@@ -82,7 +114,6 @@ export function EncyclopediaHomeScreen() {
                 }
                 style={({ pressed }) => [
                   styles.categoryCard,
-                  index === encyclopediaCategories.length - 1 && styles.categoryCardWide,
                   pressed && styles.categoryCardPressed,
                 ]}>
                 <View style={styles.categoryIcon}>
@@ -98,14 +129,17 @@ export function EncyclopediaHomeScreen() {
                             : '▱'}
                   </Text>
                 </View>
-                <Text style={styles.categoryLabel}>{category.label}</Text>
-                <Text style={styles.categoryDescription}>{category.description}</Text>
-                <View style={styles.progressRow}>
-                  <Text style={styles.progressText}>
-                    {progress.donated} / {progress.total} 기증
-                  </Text>
-                  <Text style={styles.arrow}>›</Text>
+                <View style={styles.categoryCopy}>
+                  <Text style={styles.categoryLabel}>{category.label}</Text>
+                  <View style={styles.progressLines}>
+                    {progress.metrics.map((metric) => (
+                      <Text key={metric.label} style={styles.progressText}>
+                        {metric.label} {metric.count} / {progress.total}
+                      </Text>
+                    ))}
+                  </View>
                 </View>
+                <Text style={styles.arrow}>›</Text>
               </Pressable>
             );
           })}
@@ -119,7 +153,7 @@ export function EncyclopediaHomeScreen() {
 const styles = StyleSheet.create({
   screenRoot: { flex: 1 },
   safeArea: { flex: 1, backgroundColor: '#F6F8F2' },
-  content: { padding: 20, paddingBottom: 42 },
+  content: { padding: 16, paddingBottom: 20 },
   hero: {
     alignItems: 'center',
     backgroundColor: '#2F503B',
@@ -150,8 +184,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 28,
-    padding: 18,
+    marginBottom: 16,
+    padding: 14,
   },
   summaryLabel: { color: '#6F8A6B', fontSize: 10, fontWeight: '800', letterSpacing: 1.4 },
   summaryTitle: { color: '#2E4834', fontSize: 17, fontWeight: '800', marginTop: 4 },
@@ -159,30 +193,32 @@ const styles = StyleSheet.create({
   summaryTotal: { color: '#6C896E', fontSize: 14, fontWeight: '600' },
   sectionTitle: { color: '#29382C', fontSize: 22, fontWeight: '800' },
   sectionSubtitle: { color: '#7A857B', fontSize: 13, marginTop: 5 },
-  categoryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 16 },
+  categoryGrid: { flexDirection: 'column', gap: 8, marginTop: 12 },
   categoryCard: {
+    alignItems: 'center',
     backgroundColor: '#FFF',
     borderColor: '#E4E9E0',
-    borderRadius: 22,
+    borderRadius: 18,
     borderWidth: 1,
-    minHeight: 174,
-    padding: 16,
-    width: '48%',
+    flexDirection: 'row',
+    minHeight: 82,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    width: '100%',
   },
-  categoryCardWide: { width: '100%' },
   categoryCardPressed: { opacity: 0.82, transform: [{ scale: 0.985 }] },
   categoryIcon: {
     alignItems: 'center',
     backgroundColor: '#EEF5E9',
-    borderRadius: 18,
-    height: 42,
+    borderRadius: 17,
+    height: 38,
     justifyContent: 'center',
-    width: 42,
+    width: 38,
   },
-  categoryIconText: { color: '#4F885A', fontSize: 23, fontWeight: '700' },
-  categoryLabel: { color: '#2F4033', fontSize: 19, fontWeight: '800', marginTop: 14 },
-  categoryDescription: { color: '#7C877E', fontSize: 12, lineHeight: 17, marginTop: 4 },
-  progressRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 14 },
-  progressText: { color: '#5D7B60', fontSize: 11, fontWeight: '700' },
-  arrow: { color: '#5D9361', fontSize: 22, lineHeight: 18 },
+  categoryIconText: { color: '#4F885A', fontSize: 21, fontWeight: '700' },
+  categoryCopy: { flex: 1, marginLeft: 12 },
+  categoryLabel: { color: '#2F4033', fontSize: 16, fontWeight: '800' },
+  progressLines: { marginTop: 3 },
+  progressText: { color: '#5D7B60', fontSize: 10, fontWeight: '700', lineHeight: 15 },
+  arrow: { color: '#5D9361', fontSize: 22, lineHeight: 22, marginLeft: 8 },
 });

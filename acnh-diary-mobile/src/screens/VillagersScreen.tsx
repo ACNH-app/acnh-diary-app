@@ -4,7 +4,6 @@ import {
   Alert,
   FlatList,
   Image,
-  Modal,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -18,6 +17,17 @@ import { useRouter } from 'expo-router';
 
 import { AppChrome } from '@/components/AppChrome';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
+import {
+  ListFilterChip,
+  ListFilterGroup,
+  ListFilterPanel,
+  ListFilterToggle,
+  ListResultToolbar,
+  ListSearchRow,
+  type ListSortOption,
+} from '@/components/ListControls';
+import { SearchBar } from '@/components/SearchBar';
+import { UnderlineTabs } from '@/components/UnderlineTabs';
 import {
   addCampsiteVisit,
   getActiveIsland,
@@ -242,7 +252,7 @@ export function VillagersScreen() {
   const [selectedPersonality, setSelectedPersonality] = useState<string | null>(null);
   const [selectedHobby, setSelectedHobby] = useState<string | null>(null);
   const [selectedSubtype, setSelectedSubtype] = useState<string | null>(null);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filterExpanded, setFilterExpanded] = useState(false);
   const [islandId, setIslandId] = useState<string | null>(null);
   const [villagerStates, setVillagerStates] = useState<Record<string, VillagerState>>({});
   const [campsiteVisits, setCampsiteVisits] = useState<Record<string, string[]>>({});
@@ -292,7 +302,11 @@ export function VillagersScreen() {
   };
 
   const normalizedSearch = search.trim().toLocaleLowerCase('ko-KR');
-  const filteredVillagers = villagers.filter((villager) => {
+  const categoryVillagers = villagers.filter((villager) => {
+    const state = getVillagerState(villager.id);
+    return category === 'all' ? true : category === 'outside' ? isOutside(state) : state[category];
+  });
+  const filteredVillagers = categoryVillagers.filter((villager) => {
     const matchesSearch =
       !normalizedSearch ||
       villager.search_tokens.some((token) => token.toLocaleLowerCase('ko-KR').includes(normalizedSearch));
@@ -302,17 +316,7 @@ export function VillagersScreen() {
     const matchesHobby = !selectedHobby || villager.hobby === selectedHobby;
     const matchesSubtype = !selectedSubtype || villager.subtype === selectedSubtype;
     const state = getVillagerState(villager.id);
-    const matchesCategory =
-      category === 'all' ? true : category === 'outside' ? isOutside(state) : state[category];
-
-    return (
-      matchesSearch &&
-      matchesSpecies &&
-      matchesPersonality &&
-      matchesHobby &&
-      matchesSubtype &&
-      matchesCategory
-    );
+    return matchesSearch && matchesSpecies && matchesPersonality && matchesHobby && matchesSubtype;
   });
   const visibleVillagers = [...filteredVillagers].sort((left, right) =>
     compareVillagers(left, right, sortMode) * (sortDirection === 'asc' ? 1 : -1),
@@ -320,6 +324,7 @@ export function VillagersScreen() {
   const activeFilterCount = [selectedSpecies, selectedPersonality, selectedHobby, selectedSubtype].filter(
     Boolean,
   ).length;
+  const isFiltered = Boolean(search || activeFilterCount || sortMode !== 'name' || sortDirection !== 'asc');
 
   const clearFilters = () => {
     setSelectedSpecies(null);
@@ -349,109 +354,76 @@ export function VillagersScreen() {
         ListEmptyComponent={<EmptyState search={search} />}
         ListHeaderComponent={
           <View>
-            <ScrollView
-              contentContainerStyle={styles.categoryTabsContent}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={styles.categoryTabs}>
-              {categoryOptions.map((option) => {
-                const selected = category === option.category;
-                return (
-                  <Pressable
-                    accessibilityLabel={`${option.label} 주민 보기`}
-                    accessibilityRole="tab"
-                    accessibilityState={{ selected }}
-                    key={option.category}
-                    onPress={() => setCategory(option.category)}
-                    style={[styles.categoryTab, selected && styles.categoryTabSelected]}>
-                    <Text style={[styles.categoryTabText, selected && styles.categoryTabTextSelected]}>
-                      {option.label}
-                    </Text>
-                  </Pressable>
-                );
-              })}
-            </ScrollView>
+            <UnderlineTabs
+              accessibilityLabel={(tab) => `${tab.label} 주민 보기`}
+              onChange={setCategory}
+              tabs={categoryOptions.map((option) => ({ key: option.category, label: option.label }))}
+              value={category}
+            />
 
-            <View style={styles.searchBox}>
-              <Text style={styles.searchIcon}>⌕</Text>
-              <TextInput
+            <ListSearchRow>
+              <SearchBar
                 accessibilityLabel="주민 검색"
-                autoCapitalize="none"
-                autoCorrect={false}
                 onChangeText={setSearch}
+                onClear={() => setSearch('')}
                 placeholder="이름, 종족, 성격, 번호로 검색"
-                placeholderTextColor="#9AA298"
-                returnKeyType="search"
-                style={styles.searchInput}
+                style={styles.searchBar}
                 value={search}
               />
-              {search ? (
-                <Pressable
-                  accessibilityLabel="검색어 지우기"
-                  accessibilityRole="button"
-                  hitSlop={8}
-                  onPress={() => setSearch('')}
-                  style={styles.clearSearchButton}>
-                  <Text style={styles.clearSearchText}>×</Text>
-                </Pressable>
-              ) : null}
-            </View>
+              <ListFilterToggle
+                activeCount={activeFilterCount}
+                expanded={filterExpanded}
+                onPress={() => setFilterExpanded((value) => !value)}
+              />
+            </ListSearchRow>
 
-            <View style={styles.controlRow}>
-              <Pressable
-                accessibilityLabel="주민 필터 열기"
-                accessibilityRole="button"
-                onPress={() => setIsFilterOpen(true)}
-                style={({ pressed }) => [styles.controlButton, pressed && styles.controlButtonPressed]}>
-                <Text style={styles.controlButtonIcon}>☷</Text>
-                <Text style={styles.controlButtonText}>필터</Text>
-                {activeFilterCount > 0 ? (
-                  <View style={styles.filterBadge}>
-                    <Text style={styles.filterBadgeText}>{activeFilterCount}</Text>
-                  </View>
-                ) : null}
-              </Pressable>
-              <View style={styles.sortSummary}>
-                <Text style={styles.sortSummaryLabel}>정렬</Text>
-                <Text style={styles.sortSummaryValue}>
-                  {sortMode === 'number'
-                    ? '번호순'
-                    : sortMode === 'birthday'
-                      ? '생일순'
-                      : sortMode === 'personality'
-                        ? '성격순'
-                        : sortMode === 'species'
-                          ? '종족순'
-                          : '이름순'}{' '}
-                  {sortDirection === 'asc' ? '↑' : '↓'}
-                </Text>
-              </View>
-            </View>
-
-            {activeFilterCount > 0 ? (
-              <View style={styles.activeFilters}>
-                {[selectedSpecies, selectedPersonality, selectedHobby, selectedSubtype]
-                  .filter(Boolean)
-                  .map((filter) => (
-                  <View key={filter} style={styles.activeFilterChip}>
-                    <Text style={styles.activeFilterText}>
-                      {filter === selectedHobby ? labelOf(filter, hobbyLabels) : filter}
-                    </Text>
-                  </View>
-                  ))}
-                <Pressable accessibilityRole="button" onPress={clearFilters}>
-                  <Text style={styles.clearFiltersText}>초기화</Text>
-                </Pressable>
-              </View>
+            {filterExpanded ? (
+              <ListFilterPanel>
+                <FilterOptionGroup
+                  options={speciesOptions}
+                  title="종족"
+                  value={selectedSpecies}
+                  onChange={setSelectedSpecies}
+                />
+                <FilterOptionGroup
+                  options={personalityOptions}
+                  title="성격"
+                  value={selectedPersonality}
+                  onChange={setSelectedPersonality}
+                />
+                <FilterOptionGroup
+                  options={hobbyOptions}
+                  renderOptionLabel={(option) => labelOf(option, hobbyLabels) ?? option}
+                  title="취미"
+                  value={selectedHobby}
+                  onChange={setSelectedHobby}
+                />
+                <FilterOptionGroup
+                  options={subtypeOptions}
+                  title="성격 서브타입"
+                  value={selectedSubtype}
+                  onChange={setSelectedSubtype}
+                />
+              </ListFilterPanel>
             ) : null}
 
-            <View style={styles.resultHeader}>
-              <View>
-                <Text style={styles.sectionTitle}>주민 목록</Text>
-                <Text style={styles.sectionSubtitle}>카드를 눌러 상세 정보를 확인하세요.</Text>
-              </View>
-              <Text style={styles.resultCount}>{visibleVillagers.length}명</Text>
-            </View>
+            <ListResultToolbar
+              descending={sortDirection === 'desc'}
+              isFiltered={isFiltered}
+              onReset={clearFilters}
+              onSortChange={setSortMode}
+              onToggleDirection={() => setSortDirection((value) => value === 'asc' ? 'desc' : 'asc')}
+              resultCount={visibleVillagers.length}
+              sortOptions={[
+                { key: 'number', label: '번호순' },
+                { key: 'name', label: '이름순' },
+                { key: 'personality', label: '성격순' },
+                { key: 'birthday', label: '생일순' },
+                { key: 'species', label: '종족순' },
+              ] as Array<ListSortOption<SortMode>>}
+              sortValue={sortMode}
+              totalCount={categoryVillagers.length}
+            />
 
             <ScrollView
               contentContainerStyle={styles.statusLegendContent}
@@ -485,25 +457,6 @@ export function VillagersScreen() {
       <FloatingTopButton
         accessibilityLabel="주민 목록 맨 위로 이동"
         onPress={() => listRef.current?.scrollToOffset({ animated: true, offset: 0 })}
-      />
-
-      <FilterModal
-        hobby={selectedHobby}
-        isVisible={isFilterOpen}
-        onApply={() => setIsFilterOpen(false)}
-        onChangeHobby={setSelectedHobby}
-        onChangePersonality={setSelectedPersonality}
-        onChangeSort={setSortMode}
-        onChangeSortDirection={setSortDirection}
-        onChangeSpecies={setSelectedSpecies}
-        onChangeSubtype={setSelectedSubtype}
-        onClear={clearFilters}
-        onRequestClose={() => setIsFilterOpen(false)}
-        personality={selectedPersonality}
-        sortMode={sortMode}
-        sortDirection={sortDirection}
-        species={selectedSpecies}
-        subtype={selectedSubtype}
       />
 
       </SafeAreaView>
@@ -827,141 +780,6 @@ function EmptyState({ search }: { search: string }) {
   );
 }
 
-type FilterModalProps = {
-  isVisible: boolean;
-  species: string | null;
-  personality: string | null;
-  hobby: string | null;
-  subtype: string | null;
-  sortMode: SortMode;
-  sortDirection: SortDirection;
-  onChangeSpecies: (value: string | null) => void;
-  onChangePersonality: (value: string | null) => void;
-  onChangeHobby: (value: string | null) => void;
-  onChangeSubtype: (value: string | null) => void;
-  onChangeSort: (value: SortMode) => void;
-  onChangeSortDirection: (value: SortDirection) => void;
-  onClear: () => void;
-  onApply: () => void;
-  onRequestClose: () => void;
-};
-
-function FilterModal({
-  isVisible,
-  species,
-  personality,
-  hobby,
-  subtype,
-  sortMode,
-  sortDirection,
-  onChangeSpecies,
-  onChangePersonality,
-  onChangeHobby,
-  onChangeSubtype,
-  onChangeSort,
-  onChangeSortDirection,
-  onClear,
-  onApply,
-  onRequestClose,
-}: FilterModalProps) {
-  return (
-    <Modal animationType="slide" onRequestClose={onRequestClose} transparent visible={isVisible}>
-      <View style={styles.modalBackdrop}>
-        <Pressable onPress={onRequestClose} style={StyleSheet.absoluteFill} />
-        <View style={styles.filterSheet}>
-          <SafeAreaView edges={['bottom']} style={styles.sheetSafeArea}>
-            <View style={styles.sheetHeader}>
-              <View>
-                <Text style={styles.sheetKicker}>REFINE YOUR LIST</Text>
-                <Text style={styles.sheetTitle}>주민 필터</Text>
-              </View>
-              <Pressable
-                accessibilityLabel="필터 닫기"
-                accessibilityRole="button"
-                hitSlop={10}
-                onPress={onRequestClose}
-                style={styles.sheetCloseButton}>
-                <Text style={styles.sheetCloseText}>×</Text>
-              </Pressable>
-            </View>
-
-            <ScrollView contentContainerStyle={styles.filterContent} showsVerticalScrollIndicator={false}>
-              <FilterOptionGroup
-                options={speciesOptions}
-                title="종족"
-                value={species}
-                onChange={onChangeSpecies}
-              />
-              <FilterOptionGroup
-                options={personalityOptions}
-                title="성격"
-                value={personality}
-                onChange={onChangePersonality}
-              />
-              <FilterOptionGroup
-                options={hobbyOptions}
-                renderOptionLabel={(option) => labelOf(option, hobbyLabels) ?? option}
-                title="취미"
-                value={hobby}
-                onChange={onChangeHobby}
-              />
-              <FilterOptionGroup
-                options={subtypeOptions}
-                title="성격 서브타입"
-                value={subtype}
-                onChange={onChangeSubtype}
-              />
-
-              <Text style={styles.filterGroupTitle}>정렬</Text>
-              <View style={styles.sortGrid}>
-                <SortOption label="번호순" selected={sortMode === 'number'} onPress={() => onChangeSort('number')} />
-                <SortOption label="이름순" selected={sortMode === 'name'} onPress={() => onChangeSort('name')} />
-                <SortOption
-                  label="성격순"
-                  selected={sortMode === 'personality'}
-                  onPress={() => onChangeSort('personality')}
-                />
-                <SortOption
-                  label="종족순"
-                  selected={sortMode === 'species'}
-                  onPress={() => onChangeSort('species')}
-                />
-                <SortOption
-                  label="생일순"
-                  selected={sortMode === 'birthday'}
-                  onPress={() => onChangeSort('birthday')}
-                />
-              </View>
-              <Text style={styles.filterGroupTitle}>정렬 방향</Text>
-              <View style={styles.directionGrid}>
-                <SortOption
-                  label="오름차순 ↑"
-                  selected={sortDirection === 'asc'}
-                  onPress={() => onChangeSortDirection('asc')}
-                />
-                <SortOption
-                  label="내림차순 ↓"
-                  selected={sortDirection === 'desc'}
-                  onPress={() => onChangeSortDirection('desc')}
-                />
-              </View>
-            </ScrollView>
-
-            <View style={styles.sheetActions}>
-              <Pressable accessibilityRole="button" onPress={onClear} style={styles.resetButton}>
-                <Text style={styles.resetButtonText}>초기화</Text>
-              </Pressable>
-              <Pressable accessibilityRole="button" onPress={onApply} style={styles.applyButton}>
-                <Text style={styles.applyButtonText}>결과 보기</Text>
-              </Pressable>
-            </View>
-          </SafeAreaView>
-        </View>
-      </View>
-    </Modal>
-  );
-}
-
 function FilterOptionGroup({
   title,
   options,
@@ -976,46 +794,26 @@ function FilterOptionGroup({
   renderOptionLabel?: (value: string) => string;
 }) {
   return (
-    <View style={styles.filterGroup}>
-      <Text style={styles.filterGroupTitle}>{title}</Text>
-      <ScrollView contentContainerStyle={styles.optionRow} horizontal showsHorizontalScrollIndicator={false}>
-        <Pressable
-          accessibilityRole="radio"
-          accessibilityState={{ selected: value === null }}
-          onPress={() => onChange(null)}
-          style={[styles.optionChip, value === null && styles.optionChipSelected]}>
-          <Text style={[styles.optionChipText, value === null && styles.optionChipTextSelected]}>전체</Text>
-        </Pressable>
-        {options.map((option) => {
-          const selected = value === option;
-          return (
-            <Pressable
-              accessibilityRole="radio"
-              accessibilityState={{ selected }}
-              key={option}
-              onPress={() => onChange(selected ? null : option)}
-              style={[styles.optionChip, selected && styles.optionChipSelected]}>
-              <Text style={[styles.optionChipText, selected && styles.optionChipTextSelected]}>
-                {renderOptionLabel?.(option) ?? option}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </ScrollView>
-    </View>
-  );
-}
-
-function SortOption({ label, selected, onPress }: { label: string; selected: boolean; onPress: () => void }) {
-  return (
-    <Pressable
-      accessibilityRole="radio"
-      accessibilityState={{ selected }}
-      onPress={onPress}
-      style={[styles.sortOption, selected && styles.sortOptionSelected]}>
-      <Text style={[styles.sortOptionText, selected && styles.sortOptionTextSelected]}>{label}</Text>
-      {selected ? <Text style={styles.sortCheck}>✓</Text> : null}
-    </Pressable>
+    <ListFilterGroup title={title}>
+      <ListFilterChip
+        label="전체"
+        onPress={() => onChange(null)}
+        role="radio"
+        selected={value === null}
+      />
+      {options.map((option) => {
+        const selected = value === option;
+        return (
+          <ListFilterChip
+            key={option}
+            label={renderOptionLabel?.(option) ?? option}
+            onPress={() => onChange(selected ? null : option)}
+            role="radio"
+            selected={selected}
+          />
+        );
+      })}
+    </ListFilterGroup>
   );
 }
 
@@ -1210,32 +1008,9 @@ const styles = StyleSheet.create({
     paddingBottom: 38,
     paddingHorizontal: 16,
   },
-  categoryTabs: {
-    marginTop: 17,
-  },
-  categoryTabsContent: {
-    gap: 7,
-    paddingRight: 8,
-  },
-  categoryTab: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#E1E7DE',
-    borderRadius: 13,
-    borderWidth: 1,
-    paddingHorizontal: 13,
-    paddingVertical: 9,
-  },
-  categoryTabSelected: {
-    backgroundColor: '#31563A',
-    borderColor: '#31563A',
-  },
-  categoryTabText: {
-    color: '#728074',
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  categoryTabTextSelected: {
-    color: '#FFFFFF',
+  searchBar: {
+    flex: 1,
+    minWidth: 0,
   },
   columnWrapper: {
     justifyContent: 'space-between',
@@ -1310,147 +1085,6 @@ const styles = StyleSheet.create({
   heroLeafText: {
     color: '#D7E9C8',
     fontSize: 24,
-  },
-  searchBox: {
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderColor: '#E4E8DF',
-    borderRadius: 17,
-    borderWidth: 1,
-    flexDirection: 'row',
-    height: 56,
-    marginTop: 16,
-    paddingHorizontal: 16,
-  },
-  searchIcon: {
-    color: '#647368',
-    fontSize: 27,
-    lineHeight: 30,
-    marginRight: 8,
-    transform: [{ rotate: '-20deg' }],
-  },
-  searchInput: {
-    color: '#29352C',
-    flex: 1,
-    fontSize: 15,
-    height: 54,
-  },
-  clearSearchButton: {
-    alignItems: 'center',
-    backgroundColor: '#EEF1EA',
-    borderRadius: 14,
-    height: 28,
-    justifyContent: 'center',
-    width: 28,
-  },
-  clearSearchText: {
-    color: '#647368',
-    fontSize: 20,
-    lineHeight: 22,
-  },
-  controlRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 13,
-  },
-  controlButton: {
-    alignItems: 'center',
-    backgroundColor: '#E8F0E2',
-    borderRadius: 14,
-    flexDirection: 'row',
-    minHeight: 42,
-    paddingHorizontal: 13,
-  },
-  controlButtonPressed: {
-    opacity: 0.75,
-  },
-  controlButtonIcon: {
-    color: '#3B6944',
-    fontSize: 20,
-    marginRight: 6,
-  },
-  controlButtonText: {
-    color: '#31563A',
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  filterBadge: {
-    alignItems: 'center',
-    backgroundColor: '#31563A',
-    borderRadius: 9,
-    height: 18,
-    justifyContent: 'center',
-    marginLeft: 7,
-    width: 18,
-  },
-  filterBadgeText: {
-    color: '#FFFFFF',
-    fontSize: 10,
-    fontWeight: '800',
-  },
-  sortSummary: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  sortSummaryLabel: {
-    color: '#8A948B',
-    fontSize: 12,
-    marginRight: 7,
-  },
-  sortSummaryValue: {
-    color: '#3B493E',
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  activeFilters: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 6,
-    marginTop: 12,
-  },
-  activeFilterChip: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#D7E3D2',
-    borderRadius: 12,
-    borderWidth: 1,
-    paddingHorizontal: 9,
-    paddingVertical: 6,
-  },
-  activeFilterText: {
-    color: '#47704C',
-    fontSize: 11,
-    fontWeight: '700',
-  },
-  clearFiltersText: {
-    color: '#718074',
-    fontSize: 11,
-    fontWeight: '700',
-    marginLeft: 4,
-  },
-  resultHeader: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-    marginTop: 25,
-  },
-  sectionTitle: {
-    color: '#29352C',
-    fontSize: 21,
-    fontWeight: '800',
-  },
-  sectionSubtitle: {
-    color: '#8A948B',
-    fontSize: 12,
-    marginTop: 4,
-  },
-  resultCount: {
-    color: '#5A7A5E',
-    fontSize: 14,
-    fontWeight: '800',
-    marginBottom: 2,
   },
   statusLegend: {
     marginBottom: 13,
@@ -1598,165 +1232,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginTop: 6,
     textAlign: 'center',
-  },
-  modalBackdrop: {
-    backgroundColor: 'rgba(25, 37, 27, 0.42)',
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  filterSheet: {
-    backgroundColor: '#F7F8F2',
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    maxHeight: '88%',
-    minHeight: '62%',
-    overflow: 'hidden',
-  },
-  sheetSafeArea: {
-    flex: 1,
-  },
-  sheetHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 22,
-    paddingTop: 18,
-  },
-  sheetKicker: {
-    color: '#829080',
-    fontSize: 9,
-    fontWeight: '800',
-    letterSpacing: 1.5,
-  },
-  sheetTitle: {
-    color: '#29352C',
-    fontSize: 26,
-    fontWeight: '800',
-    marginTop: 4,
-  },
-  sheetCloseButton: {
-    alignItems: 'center',
-    backgroundColor: '#E6EBE1',
-    borderRadius: 17,
-    height: 34,
-    justifyContent: 'center',
-    width: 34,
-  },
-  sheetCloseText: {
-    color: '#617064',
-    fontSize: 24,
-    lineHeight: 25,
-  },
-  filterContent: {
-    paddingBottom: 22,
-    paddingHorizontal: 22,
-  },
-  filterGroup: {
-    marginTop: 22,
-  },
-  filterGroupTitle: {
-    color: '#3E5042',
-    fontSize: 14,
-    fontWeight: '800',
-    marginBottom: 10,
-  },
-  optionRow: {
-    gap: 7,
-  },
-  optionChip: {
-    backgroundColor: '#FFFFFF',
-    borderColor: '#E1E7DE',
-    borderRadius: 13,
-    borderWidth: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 9,
-  },
-  optionChipSelected: {
-    backgroundColor: '#DDECD8',
-    borderColor: '#8EBD8E',
-  },
-  optionChipText: {
-    color: '#728074',
-    fontSize: 12,
-  },
-  optionChipTextSelected: {
-    color: '#35613E',
-    fontWeight: '800',
-  },
-  sortGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  directionGrid: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  sortOption: {
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderColor: '#E1E7DE',
-    borderRadius: 14,
-    borderWidth: 1,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    minHeight: 45,
-    minWidth: 92,
-  },
-  sortOptionSelected: {
-    backgroundColor: '#31563A',
-    borderColor: '#31563A',
-  },
-  sortOptionText: {
-    color: '#728074',
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  sortOptionTextSelected: {
-    color: '#FFFFFF',
-  },
-  sortCheck: {
-    color: '#D7E9C8',
-    fontSize: 13,
-    fontWeight: '800',
-    marginLeft: 6,
-  },
-  sheetActions: {
-    backgroundColor: '#F7F8F2',
-    borderTopColor: '#E3E9E0',
-    borderTopWidth: 1,
-    flexDirection: 'row',
-    gap: 10,
-    paddingHorizontal: 22,
-    paddingTop: 14,
-  },
-  resetButton: {
-    alignItems: 'center',
-    borderColor: '#D6DFD3',
-    borderRadius: 15,
-    borderWidth: 1,
-    justifyContent: 'center',
-    minHeight: 52,
-    paddingHorizontal: 22,
-  },
-  resetButtonText: {
-    color: '#617064',
-    fontSize: 14,
-    fontWeight: '700',
-  },
-  applyButton: {
-    alignItems: 'center',
-    backgroundColor: '#31563A',
-    borderRadius: 15,
-    flex: 1,
-    justifyContent: 'center',
-    minHeight: 52,
-  },
-  applyButtonText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '800',
   },
   detailContent: {
     paddingBottom: 34,

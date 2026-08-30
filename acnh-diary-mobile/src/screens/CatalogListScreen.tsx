@@ -4,10 +4,8 @@ import {
   FlatList,
   Image,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -16,6 +14,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
+import {
+  ListFilterChip,
+  ListFilterGroup,
+  ListFilterPanel,
+  ListFilterToggle,
+  ListResultToolbar,
+  ListSearchRow,
+} from '@/components/ListControls';
+import { SearchBar } from '@/components/SearchBar';
+import { UnderlineTabs } from '@/components/UnderlineTabs';
 import {
   getCatalogAssetForItem,
   catalogFilterFacets,
@@ -150,7 +158,6 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
   const [availabilityFilter, setAvailabilityFilter] = useState<AvailabilityFilter | null>(null);
   const [facetFilters, setFacetFilters] = useState<CatalogFacetFilters>(EMPTY_FACET_FILTERS);
   const [filterExpanded, setFilterExpanded] = useState(false);
-  const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [sortMode, setSortMode] = useState<SortMode>('number');
   const [sortDescending, setSortDescending] = useState(false);
   const [states, setStates] = useState<Record<string, EncyclopediaState>>({});
@@ -204,7 +211,6 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
   const selectSubcategory = (subcategory: string) => {
     setActiveSubcategory(subcategory);
     setFacetFilters({ ...EMPTY_FACET_FILTERS });
-    setSortMenuOpen(false);
     listRef.current?.scrollToOffset({ animated: false, offset: 0 });
   };
 
@@ -258,7 +264,6 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
     setFacetFilters(EMPTY_FACET_FILTERS);
     setSortMode('number');
     setSortDescending(false);
-    setSortMenuOpen(false);
   };
 
   const hasFacetFilters = catalogFilterFacets.some((facet) => facetFilters[facet].length > 0);
@@ -286,185 +291,96 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
         ListHeaderComponent={
           <View>
             {hasSubcategories ? (
-              <View style={styles.subcategoryTabBar}>
-                <ScrollView contentContainerStyle={styles.subcategoryTabs} horizontal showsHorizontalScrollIndicator={false}>
-                  {subcategories.map((subcategory) => {
-                    const selected = activeSubcategory === subcategory.key;
-                    return (
-                      <Pressable
-                        accessibilityLabel={`${subcategory.label} 소분류 선택`}
-                        accessibilityRole="tab"
-                        accessibilityState={{ selected }}
-                        key={subcategory.key}
-                        onPress={() => selectSubcategory(subcategory.key)}
-                        style={[styles.subcategoryTab, selected && styles.subcategoryTabActive]}>
-                        <Text style={[styles.subcategoryTabText, selected && styles.subcategoryTabTextActive]}>
-                          {subcategory.label}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-                </ScrollView>
-              </View>
+              <UnderlineTabs
+                accessibilityLabel={(tab) => `${tab.label} 소분류 선택`}
+                onChange={selectSubcategory}
+                tabs={subcategories.map(({ key, label }) => ({ key, label }))}
+                value={activeSubcategory}
+              />
             ) : null}
 
-            <View style={styles.searchFilterRow}>
-              <View style={styles.searchBox}>
-                <Text style={styles.searchIcon}>⌕</Text>
-                <TextInput
-                  accessibilityLabel={`${catalogCategoryLabels[activeCategory]} 검색`}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  onChangeText={setSearch}
-                  placeholder="이름, 분류, 획득 방법으로 검색"
-                  placeholderTextColor="#99A49B"
-                  style={styles.searchInput}
-                  value={search}
-                />
-                {search ? (
-                  <Pressable accessibilityLabel="검색어 지우기" hitSlop={8} onPress={() => setSearch('')}>
-                    <Text style={styles.clearSearch}>×</Text>
-                  </Pressable>
-                ) : null}
-              </View>
-              <Pressable
-                accessibilityLabel={`상세 필터 ${filterExpanded ? '접기' : '열기'}`}
-                accessibilityRole="button"
+            <ListSearchRow>
+              <SearchBar
+                accessibilityLabel={`${catalogCategoryLabels[activeCategory]} 검색`}
+                onChangeText={setSearch}
+                onClear={() => setSearch('')}
+                placeholder="이름, 분류, 획득 방법으로 검색"
+                style={styles.searchBar}
+                value={search}
+              />
+              <ListFilterToggle
+                activeCount={activeFilterCount}
+                expanded={filterExpanded}
                 onPress={() => setFilterExpanded((value) => !value)}
-                style={styles.filterToggle}>
-                <Text style={styles.filterToggleText}>
-                  {filterExpanded ? '필터 닫기' : activeFilterCount ? `필터 ${activeFilterCount}` : '필터'}
-                </Text>
-              </Pressable>
-            </View>
+              />
+            </ListSearchRow>
 
             {filterExpanded ? (
-              <View style={styles.filterPanel}>
-                <View style={styles.filterGroup}>
-                  <Text style={styles.filterGroupTitle}>보유 상태</Text>
-                  <ScrollView contentContainerStyle={styles.filterOptions} horizontal showsHorizontalScrollIndicator={false}>
-                    {(
-                      [
-                        ['owned', '보유'],
-                        ['unowned', '미보유'],
-                      ] as Array<[OwnershipFilter, string]>
-                    ).map(([filter, label]) => (
-                      <Pressable
-                        accessibilityRole="checkbox"
-                        accessibilityState={{ checked: ownershipFilter === filter }}
-                        key={filter}
-                        onPress={() => setOwnershipFilter((current) => (current === filter ? null : filter))}
-                        style={[styles.filterChip, ownershipFilter === filter && styles.filterChipActive]}>
-                        <Text style={[styles.filterChipText, ownershipFilter === filter && styles.filterChipTextActive]}>{label}</Text>
-                      </Pressable>
-                    ))}
-                  </ScrollView>
-                </View>
+              <ListFilterPanel>
+                <ListFilterGroup title="보유 상태">
+                  {([
+                    ['owned', '보유'],
+                    ['unowned', '미보유'],
+                  ] as Array<[OwnershipFilter, string]>).map(([filter, label]) => (
+                    <ListFilterChip
+                      key={filter}
+                      label={label}
+                      onPress={() => setOwnershipFilter((current) => (current === filter ? null : filter))}
+                      selected={ownershipFilter === filter}
+                    />
+                  ))}
+                </ListFilterGroup>
 
                 {(activeCategory === 'furniture' || activeCategory === 'interior' || activeCategory === 'clothing') ? (
-                  <View style={styles.filterGroup}>
-                    <Text style={styles.filterGroupTitle}>판매 여부</Text>
-                    <ScrollView contentContainerStyle={styles.filterOptions} horizontal showsHorizontalScrollIndicator={false}>
-                      {([
-                        ['forSale', '판매 가능'],
-                        ['notForSale', '비매품'],
-                      ] as Array<[AvailabilityFilter, string]>).map(([filter, label]) => (
-                        <Pressable
-                          accessibilityRole="checkbox"
-                          accessibilityState={{ checked: availabilityFilter === filter }}
-                          key={filter}
-                          onPress={() => setAvailabilityFilter((current) => (current === filter ? null : filter))}
-                          style={[styles.filterChip, availabilityFilter === filter && styles.filterChipActive]}>
-                          <Text style={[styles.filterChipText, availabilityFilter === filter && styles.filterChipTextActive]}>{label}</Text>
-                        </Pressable>
-                      ))}
-                    </ScrollView>
-                  </View>
+                  <ListFilterGroup title="판매 여부">
+                    {([
+                      ['forSale', '판매 가능'],
+                      ['notForSale', '비매품'],
+                    ] as Array<[AvailabilityFilter, string]>).map(([filter, label]) => (
+                      <ListFilterChip
+                        key={filter}
+                        label={label}
+                        onPress={() => setAvailabilityFilter((current) => (current === filter ? null : filter))}
+                        selected={availabilityFilter === filter}
+                      />
+                    ))}
+                  </ListFilterGroup>
                 ) : null}
 
                 {catalogFilterFacets.map((facet) => {
                   const options = filterOptions[facet];
                   if (options.length === 0) return null;
                   return (
-                    <View key={facet} style={styles.filterGroup}>
-                      <Text style={styles.filterGroupTitle}>{catalogFilterFacetLabels[facet]}</Text>
-                      <ScrollView contentContainerStyle={styles.filterOptions} horizontal showsHorizontalScrollIndicator={false}>
-                        {options.map((option) => {
-                          const selected = facetFilters[facet].includes(option.key);
-                          return (
-                            <Pressable
-                              accessibilityLabel={`${option.label} ${catalogFilterFacetLabels[facet]} 필터`}
-                              accessibilityRole="checkbox"
-                              accessibilityState={{ checked: selected }}
-                              key={option.key}
-                              onPress={() => toggleFacetFilter(facet, option.key)}
-                              style={[styles.filterChip, selected && styles.filterChipActive]}>
-                              <Text style={[styles.filterChipText, selected && styles.filterChipTextActive]}>
-                                {option.label} {option.itemCount}
-                              </Text>
-                            </Pressable>
-                          );
-                        })}
-                      </ScrollView>
-                    </View>
+                    <ListFilterGroup key={facet} title={catalogFilterFacetLabels[facet]}>
+                      {options.map((option) => {
+                        const selected = facetFilters[facet].includes(option.key);
+                        return (
+                          <ListFilterChip
+                            accessibilityLabel={`${option.label} ${catalogFilterFacetLabels[facet]} 필터`}
+                            key={option.key}
+                            label={`${option.label} ${option.itemCount}`}
+                            onPress={() => toggleFacetFilter(facet, option.key)}
+                            selected={selected}
+                          />
+                        );
+                      })}
+                    </ListFilterGroup>
                   );
                 })}
-              </View>
+              </ListFilterPanel>
             ) : null}
 
-            <View style={styles.resultToolbar}>
-              <View style={styles.resultCountGroup}>
-                <Text style={styles.resultCount}>
-                  {visibleItems.length.toLocaleString('ko-KR')} / {subcategoryItems.length.toLocaleString('ko-KR')}
-                </Text>
-                {isFiltered ? <Text style={styles.resultCountHint}>필터 결과</Text> : null}
-                {isFiltered ? (
-                  <Pressable onPress={clearFilters}>
-                    <Text style={styles.resetText}>초기화</Text>
-                  </Pressable>
-                ) : null}
-              </View>
-              <View style={styles.sortControls}>
-                <Pressable
-                  accessibilityLabel={`정렬 조건 ${sortLabels[sortMode]}`}
-                  accessibilityRole="button"
-                  onPress={() => setSortMenuOpen((value) => !value)}
-                  style={styles.sortSelect}>
-                  <Text style={styles.sortSelectLabel}>정렬</Text>
-                  <Text style={styles.sortSelectValue}>{sortLabels[sortMode]}</Text>
-                  <Text style={styles.sortSelectChevron}>{sortMenuOpen ? '⌃' : '⌄'}</Text>
-                </Pressable>
-                <View style={styles.sortDivider} />
-                <Pressable
-                  accessibilityLabel={sortDescending ? '내림차순으로 정렬 중, 오름차순으로 변경' : '오름차순으로 정렬 중, 내림차순으로 변경'}
-                  accessibilityRole="button"
-                  onPress={() => setSortDescending((value) => !value)}
-                  style={styles.directionButton}>
-                  <Text style={styles.directionText}>{sortDescending ? '↓' : '↑'}</Text>
-                </Pressable>
-              </View>
-            </View>
-
-            {sortMenuOpen ? (
-              <View style={styles.sortDropdown}>
-                {(
-                  Object.entries(sortLabels) as Array<[SortMode, string]>
-                ).map(([mode, label]) => (
-                  <Pressable
-                    accessibilityRole="radio"
-                    accessibilityState={{ selected: sortMode === mode }}
-                    key={mode}
-                    onPress={() => {
-                      setSortMode(mode);
-                      setSortMenuOpen(false);
-                    }}
-                    style={[styles.sortOption, sortMode === mode && styles.sortOptionActive]}>
-                    <Text style={[styles.sortOptionText, sortMode === mode && styles.sortOptionTextActive]}>{label}</Text>
-                    {sortMode === mode ? <Text style={styles.sortOptionCheck}>✓</Text> : null}
-                  </Pressable>
-                ))}
-              </View>
-            ) : null}
+            <ListResultToolbar
+              descending={sortDescending}
+              isFiltered={isFiltered}
+              onReset={clearFilters}
+              onSortChange={setSortMode}
+              onToggleDirection={() => setSortDescending((value) => !value)}
+              resultCount={visibleItems.length}
+              sortOptions={(Object.entries(sortLabels) as Array<[SortMode, string]>).map(([key, label]) => ({ key, label }))}
+              sortValue={sortMode}
+              totalCount={subcategoryItems.length}
+            />
           </View>
         }
         onRefresh={refresh}
@@ -583,47 +499,7 @@ const styles = StyleSheet.create({
   safeArea: { backgroundColor: '#F6F8F2', flex: 1 },
   listContent: { paddingBottom: 8, paddingHorizontal: 18 },
   columnWrapper: { gap: 10 },
-  subcategoryTabBar: { borderBottomColor: '#DEE7DE', borderBottomWidth: 1, marginBottom: 14 },
-  subcategoryTabs: { alignItems: 'stretch', flexGrow: 1 },
-  subcategoryTab: { alignItems: 'center', borderBottomColor: 'transparent', borderBottomWidth: 4, flexGrow: 1, justifyContent: 'center', minWidth: 62, paddingHorizontal: 4, paddingVertical: 13 },
-  subcategoryTabActive: { borderBottomColor: '#55A487' },
-  subcategoryTabText: { color: '#7A877D', fontSize: 13, fontWeight: '800' },
-  subcategoryTabTextActive: { color: '#398A6D' },
-  searchFilterRow: { alignItems: 'center', flexDirection: 'row', gap: 8 },
-  searchBox: { alignItems: 'center', backgroundColor: '#FFF', borderColor: '#E2E8DF', borderRadius: 14, borderWidth: 1, flex: 1, flexDirection: 'row', height: 42, minWidth: 0, paddingHorizontal: 12 },
-  searchIcon: { color: '#55795C', fontSize: 20, marginRight: 7 },
-  searchInput: { color: '#2D3B30', flex: 1, fontSize: 14, paddingVertical: 0 },
-  clearSearch: { color: '#718074', fontSize: 18, paddingLeft: 7 },
-  filterToggle: { alignItems: 'center', backgroundColor: '#E1ECE0', borderRadius: 12, minWidth: 58, paddingHorizontal: 9, paddingVertical: 8 },
-  filterToggleText: { color: '#3E744A', fontSize: 11, fontWeight: '800' },
-  filterPanel: { backgroundColor: '#EDF3EA', borderRadius: 16, marginTop: 8, padding: 12 },
-  filterGroup: { marginTop: 10 },
-  filterGroupFirst: { marginTop: 0 },
-  filterGroupTitle: { color: '#5F735F', fontSize: 11, fontWeight: '800', marginBottom: 6 },
-  filterOptions: { gap: 7 },
-  filterChip: { backgroundColor: '#E9EEE7', borderRadius: 16, paddingHorizontal: 12, paddingVertical: 9 },
-  filterChipActive: { backgroundColor: '#355D42' },
-  filterChipText: { color: '#657468', fontSize: 12, fontWeight: '700' },
-  filterChipTextActive: { color: '#FFF' },
-  resultToolbar: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 14, marginTop: 18 },
-  resultCountGroup: { alignItems: 'center', flexDirection: 'row', minWidth: 0 },
-  resultCount: { color: '#6F7F74', fontSize: 12, fontWeight: '800' },
-  resultCountHint: { color: '#98A39A', fontSize: 10, marginLeft: 7 },
-  sortControls: { alignItems: 'center', flexDirection: 'row' },
-  sortSelect: { alignItems: 'center', flexDirection: 'row', paddingVertical: 6 },
-  sortSelectLabel: { color: '#7B887F', fontSize: 11, fontWeight: '700', marginRight: 10 },
-  sortSelectValue: { color: '#3E5145', fontSize: 13, fontWeight: '800' },
-  sortSelectChevron: { color: '#6C7D71', fontSize: 16, lineHeight: 18, marginLeft: 7, marginTop: -2 },
-  sortDivider: { backgroundColor: '#DDE5DE', height: 28, marginHorizontal: 10, width: 1 },
-  sortDropdown: { alignSelf: 'flex-end', backgroundColor: '#FFF', borderColor: '#DFE8DF', borderRadius: 14, borderWidth: 1, elevation: 4, marginBottom: 8, marginTop: -4, overflow: 'hidden', shadowColor: '#294334', shadowOffset: { height: 3, width: 0 }, shadowOpacity: 0.12, shadowRadius: 7, width: 144 },
-  sortOption: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 13, paddingVertical: 11 },
-  sortOptionActive: { backgroundColor: '#F0F7ED' },
-  sortOptionText: { color: '#66766B', fontSize: 12, fontWeight: '700' },
-  sortOptionTextActive: { color: '#397B4D' },
-  sortOptionCheck: { color: '#4D956C', fontSize: 14, fontWeight: '800' },
-  directionButton: { alignItems: 'center', backgroundColor: '#E4F1EB', borderRadius: 12, height: 24, justifyContent: 'center', width: 24 },
-  directionText: { color: '#3D8B6B', fontSize: 15, fontWeight: '500', lineHeight: 17 },
-  resetText: { color: '#3D7549', fontSize: 12, fontWeight: '800' },
+  searchBar: { flex: 1, minWidth: 0 },
   itemCard: { alignItems: 'flex-start', backgroundColor: '#FFF', borderColor: '#E7ECE5', borderRadius: 22, borderWidth: 1, flex: 1, flexDirection: 'row', marginBottom: 14, minHeight: 178, minWidth: 0, overflow: 'hidden', padding: 14 },
   cardMain: { alignItems: 'flex-start', flex: 1, flexDirection: 'row', minWidth: 0 },
   imageFrame: { alignItems: 'center', backgroundColor: '#F5F8F2', borderRadius: 18, height: 126, justifyContent: 'center', marginRight: 14, width: 126 },

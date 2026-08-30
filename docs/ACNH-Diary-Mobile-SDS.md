@@ -1,8 +1,8 @@
 # 모동숲 다이어리 모바일 앱 상세 설계서
 
-문서 상태: Draft v2.4
+문서 상태: Draft v2.8
 최종 수정일: 2026-08-30
-기준 문서: 모바일 SRS v1.8 · 모바일 SAD v1.8
+기준 문서: 모바일 SRS v2.0 · 모바일 SAD v1.8
 
 ## 1. 구현 기준
 
@@ -1109,10 +1109,14 @@ interface GameDatePickerProps {
 
 ```text
 VillagersScreen
-  VillagerCategoryTabs
-  VillagerSearchBar
-  VillagerFilterSheet
-  VillagerSortControl
+  UnderlineTabs
+  ListSearchRow
+    SearchBar
+    ListFilterToggle
+  ListFilterPanel
+    ListFilterGroup
+    ListFilterChip
+  ListResultToolbar
   VillagerCardList
     VillagerCard
       VillagerStateToggleGroup
@@ -1134,11 +1138,14 @@ EncyclopediaHomeScreen
   EncyclopediaCategoryCard[bugs, fish, sea, fossils, artworks]
 
 EncyclopediaListScreen
-  SearchBar
-  CollectionFilterChipGroup
-  SortControl
+  ListSearchRow
+    SearchBar
+    ListFilterToggle
+  ListFilterPanel
+    ListFilterGroup
+    ListFilterChip
+  ListResultToolbar
   BulkStateControl
-  ResultCount
   EncyclopediaCardGrid
     CritterCard x 5 per page unit
     FossilOrArtworkCard x 2 per page unit
@@ -1154,6 +1161,7 @@ EncyclopediaDetailScreen
 
 현재 도감 구현은 다음 규칙을 따른다.
 
+- 도감 홈 카테고리 카드는 생물의 `caught`·`donated`, 화석의 `owned`·`donated`, 미술품의 `genuineOwned`·`fakeOwned`·`donated` 건수를 각 항목별로 표시한다.
 - 생물 상세는 활성 섬의 반구를 기준으로 출현 월·시간·장소·조건·빈도·가격·그림자·이동 속도·tank 크기·tank 전시 이미지·캐치프레이즈를 표시한다. 월별 신규·종료 배지는 오늘 화면의 현재 출현 생물 카드에서만 표시한다.
 - 화석 상세는 화석 그룹, 판매가, 크기, `interactable` 칩과 보유·기증 상태를 표시한다.
 - 미술품 상세는 그림/조각 분류, 구매·판매가, 획득 방법, 작품명·화풍·작가·연도·크기, 가품 존재 여부, 진품·가품 이미지와 구별 설명을 표시한다. 진품 보유와 가품 보유는 독립 토글이다.
@@ -1170,12 +1178,14 @@ CatalogHomeScreen
 
 CatalogListScreen
   SelectedCategoryHeader
-  CatalogSubcategoryTabs
-  CatalogSearchBar
-  CatalogFilterPanel
-    OwnershipFilterChips
-    DetailFilterGroups
-  SortControl
+  UnderlineTabs
+  ListSearchRow
+    SearchBar
+    ListFilterToggle
+  ListFilterPanel
+    ListFilterGroup
+    ListFilterChip
+  ListResultToolbar
   CatalogCardList
     CatalogCard
       LocalImage
@@ -1194,6 +1204,8 @@ CatalogDetailScreen
 카탈로그 탭은 `CatalogHomeScreen`을 먼저 표시하며 아이템 목록을 바로 열지 않는다. 홈에는 다음 11개 대분류를 이 순서로 표시한다: 가구, 인테리어, 옷, 음악, 잡화, 도구, 특수 아이템, 토용, 사진·포스터, 레시피, 리액션. 대분류 카드를 선택하면 `/catalog/[category]` 목록으로 이동한다. 카탈로그 목록은 선택한 대분류의 아이템만 한 줄에 하나씩 표시하고, 화면 폭이 768dp 이상이면 두 열로 표시한다. 소분류 탭은 SRS의 고정 순서를 사용하며 `전체`를 첫 탭으로 추가한다.
 
 검색은 한국어·영어 이름, 분류, 획득방법, 번호에 적용한다. 필터 패널에는 보유·미보유, 가구·인테리어·옷의 판매 가능·비매품, 현재 목록에 값이 있는 스타일·색상·테마·시즌·시리즈·분류 태그·크기·기능·리폼 가능 여부·행운 아이템 여부·주문 가능 여부·입수처를 표시한다. 같은 그룹 안에서는 OR, 다른 그룹 사이에서는 AND 조건으로 적용한다. 획득방법을 누르면 해당 입수처 필터를 적용한다. 번호·이름·획득방법 정렬 및 오름차순·내림차순 전환과 초기화를 제공한다. 카드에는 로컬 이미지, 이름, 분류, 획득방법, 구매가 또는 `비매품`, 판매가와 보유 상태 아이콘을 표시한다.
+
+주민·도감·카탈로그 목록은 `ListControls`의 `ListSearchRow`, `ListFilterToggle`, `ListFilterPanel`, `ListFilterGroup`, `ListFilterChip`, `ListResultToolbar`를 공통 사용한다. 각 화면은 필터 옵션과 정렬 옵션만 주입하며, 필터 패널은 기본 접힘 상태이고 결과 수는 목록 바로 위에서 `조회 수 / 전체 수`로 표시한다.
 
 가구 소분류는 가구·잡화·벽걸이·천장, 인테리어는 바닥·러그·벽지, 옷은 상의·하의·원피스/코스튬·모자·액세서리·양말·신발·가방·우산·기타(잠수복) 순서다. 특수 아이템, 사진·포스터, 레시피, 리액션도 SRS에 정의된 순서를 그대로 사용한다. 레시피 앱 데이터는 원본 `materials`와 `recipe_filters`를 보존해 카드에 재료를 표시하고 시즌·이벤트·재료·획득방법 필터를 제공한다. 원본 `npc:celeste`·`npc:pascal`은 각각 이벤트 필터의 부옥이·머메이드로 정규화한다. 리액션의 `owned` 상태는 화면에서 습득 상태로 표시하고 상세 route는 만들지 않는다.
 
@@ -1444,3 +1456,6 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 - v2.3 · 2026-08-29 · 보유·상세 필터 패널과 다중 선택 조건 반영
 - v2.4 · 2026-08-30 · 카탈로그 상세정보 기반 분류 태그·크기·기능·리폼·행운·주문 가능 여부 필터 반영
 - v2.5 · 2026-08-30 · 주민 상세 바텀시트를 독립 route 화면으로 전환하고 목록·상세 내비게이션 계약을 정합화
+- v2.6 · 2026-08-30 · 주민·도감·카탈로그 검색창을 공통 `SearchBar`로 통합하고 크기·입력 UI를 정합화
+- v2.7 · 2026-08-30 · 주민·카탈로그 소분류 탭을 공통 `UnderlineTabs`로 통합하고 AppTopBar 직하 간격을 단일화
+- v2.8 · 2026-08-30 · 주민·도감·카탈로그 목록 필터·정렬·결과 수 UI를 공통 `ListControls`로 통합
