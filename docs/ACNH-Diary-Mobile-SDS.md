@@ -1158,6 +1158,8 @@ EncyclopediaHomeScreen
       CollectionHomeCategoryCard[bugs, fish, sea, fossils, art]
 
 EncyclopediaListScreen
+  UnderlineTabs
+    ArtAuthenticityTabs or FishLocationTabs
   ListSearchRow
     SearchBar
     ListFilterToggle
@@ -1167,7 +1169,7 @@ EncyclopediaListScreen
   ListResultToolbar
   BulkStateControl
   EncyclopediaCardGrid
-    CritterCard x 5 per page unit
+    CritterCard x 4 per page unit
     FossilOrArtworkCard x 2 per page unit
 
 EncyclopediaDetailScreen
@@ -1183,8 +1185,8 @@ EncyclopediaDetailScreen
 
 - 도감 홈 카테고리 카드는 생물의 `caught`·`donated`, 화석의 `owned`·`donated`, 미술품의 `genuineOwned`·`fakeOwned`·`donated` 건수를 각 항목별로 표시한다.
 - 생물 상세는 상단 카드에 중앙 이미지, 한글명·영문명, 채집·박물관 기증 상태 아이콘, 너굴상점·특수 판매 가격, 출현 월 상태 태그와 현재 시각 상태 태그를 표시한다. 전월·다음 월 비교 결과에 따라 `이번 달 신규`·`이번 달 종료` 태그를 추가한다. 별도의 큰 생물 수집 기록 패널은 사용하지 않는다. 활성 섬의 반구를 기준으로 출현 월 칩과 출현 시간 막대, 장소·빈도·그림자·이동 속도·캐치프레이즈를 표시하고 출현 월·시간의 별도 중복 텍스트 행은 생략한다. 수조 정보 영역에는 수조 크기와 tank 전시 이미지만 표시한다. 곤충처럼 조건 데이터가 있는 생물은 출현조건을 추가 표시하고, 물고기는 `강`과 하구·절벽 위 세부 위치 태그를 표시한다.
-- 화석 상세는 화석 그룹, 판매가, 크기, `interactable` 칩과 보유·기증 상태를 표시한다.
-- 미술품 상세는 그림/조각 분류, 구매·판매가, 획득 방법, 작품명·화풍·작가·연도·크기, 가품 존재 여부, 진품·가품 이미지와 구별 설명을 표시한다. 진품 보유와 가품 보유는 독립 토글이다.
+- 화석 상세는 상단 아이템 카드에 이미지와 보유·기증 상태 아이콘을 표시하고, 본문에 화석 그룹, 판매가, 크기, `interactable` 칩을 표시한다.
+- 미술품 상세는 상단 아이템 카드에 이미지와 진품·가품·기증 상태 아이콘을 표시하고, 본문에 그림/조각 분류, 구매·판매가, 획득 방법, 작품명·화풍·작가·연도·크기, 가품 존재 여부, 진품·가품 이미지와 구별 설명을 표시한다. 진품 보유와 가품 보유는 독립 토글이다.
 - 목록은 생물 4열, 화석·미술품 2열이며 검색·복수 상태 필터·미술품 전용 탭·정렬·현재 필터 결과 일괄 변경을 제공한다. 생물은 채집·기증, 화석은 보유·기증, 미술품은 진품 보유·가품 보유·기증 상태를 사용한다. 목록과 상세의 상태 변경은 `collection_records`에 즉시 저장하고 화면에 반영한다.
 - 한국어 화면은 `encyclopedia-labels.ts`의 도감 속성 매핑을 사용해 출현 장소·세부 위치 태그·조건(데이터가 있는 경우)·희귀도·출현 시간·그림자·이동 속도·화석 그룹·미술품 작품 정보를 표시한다. 그림자 크기는 `Tiny`부터 `Huge`까지 `1`~`6`으로 매핑하고, `Very large (finned)`는 `5 (지느러미)`, `Long`은 `긴 형태`로 표시한다. 기준 데이터에 한국어 문장 번역이 없는 캐치프레이즈·박물관 설명은 원문을 보존한다.
 

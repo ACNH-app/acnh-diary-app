@@ -124,6 +124,12 @@ const fishLocationTabLabels: Record<string, string> = {
   Sea: '바다',
 };
 
+const artAuthenticityTabs = [
+  { key: 'all', label: '전체' },
+  { key: 'genuineOnly', label: '진품만 있는 작품' },
+  { key: 'hasFake', label: '가품도 있는 작품' },
+] as const satisfies ReadonlyArray<{ key: ArtAuthenticityTab; label: string }>;
+
 const locationChipColors: Record<string, LocationChipColors> = {
   Pier: { backgroundColor: '#FFF0DA', borderColor: '#E2B475', color: '#7A4F15' },
   Pond: { backgroundColor: '#EAF4D5', borderColor: '#B7D975', color: '#486815' },
@@ -513,6 +519,16 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
         }
         ListHeaderComponent={
           <View>
+            {category === 'art' ? (
+              <UnderlineTabs
+                accessibilityLabel={(tab) => `${tab.label} 미술품 보기`}
+                fitToWidth
+                onChange={setArtAuthenticityTab}
+                tabs={artAuthenticityTabs}
+                value={artAuthenticityTab}
+              />
+            ) : null}
+
             {category === 'fish' ? (
               <UnderlineTabs
                 accessibilityLabel={(tab) => `${tab.label} 출현 장소 물고기 보기`}
@@ -599,20 +615,6 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
                           onPress={() => setArtTypeTab(value)}
                           role="radio"
                           selected={artTypeTab === value}
-                        />
-                      ))}
-                    </ListFilterGroup>
-                    <ListFilterGroup title="진품 여부">
-                      {([
-                        ['genuineOnly', '진품만 있는 작품'],
-                        ['hasFake', '가품도 있는 작품'],
-                      ] as Array<[ArtAuthenticityTab, string]>).map(([value, label]) => (
-                        <ListFilterChip
-                          key={value}
-                          label={label}
-                          onPress={() => setArtAuthenticityTab((current) => current === value ? 'all' : value)}
-                          role="radio"
-                          selected={artAuthenticityTab === value}
                         />
                       ))}
                     </ListFilterGroup>

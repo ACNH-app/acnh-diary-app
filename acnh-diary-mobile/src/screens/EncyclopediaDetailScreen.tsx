@@ -257,23 +257,21 @@ export function EncyclopediaDetailScreen({
           <View style={styles.heroImageFrame}>
             {image ? <Image resizeMode="contain" source={image} style={styles.heroImage} /> : <Text style={styles.imageFallback}>?</Text>}
           </View>
-          {creature ? (
-            <View style={styles.creatureHeroStatusIcons}>
-              {(['caught', 'donated'] as EncyclopediaStatus[]).map((status) => {
-                const active = state[status];
-                return (
-                  <Pressable
-                    accessibilityLabel={`${item.nameKo} ${statusLabel(status)} ${active ? '해제' : '설정'}`}
-                    accessibilityRole="button"
-                    key={status}
-                    onPress={() => updateStatus(status)}
-                    style={[styles.creatureHeroStatusButton, active && styles.creatureHeroStatusButtonActive]}>
-                    <CollectionStatusIcon active={active} status={status} />
-                  </Pressable>
-                );
-              })}
-            </View>
-          ) : null}
+          <View style={styles.heroStatusIcons}>
+            {statuses.map((status) => {
+              const active = state[status];
+              return (
+                <Pressable
+                  accessibilityLabel={`${item.nameKo} ${statusLabel(status)} ${active ? '해제' : '설정'}`}
+                  accessibilityRole="button"
+                  key={status}
+                  onPress={() => updateStatus(status)}
+                  style={[styles.heroStatusButton, active && styles.heroStatusButtonActive]}>
+                  <CollectionStatusIcon active={active} status={status} />
+                </Pressable>
+              );
+            })}
+          </View>
           <View style={styles.heroCopy}>
             {!creature ? <Text style={styles.itemName}>{item.nameKo}</Text> : null}
             {!creature ? <Text style={styles.itemCategory}>{getEncyclopediaLabel(category)}</Text> : null}
@@ -302,28 +300,6 @@ export function EncyclopediaDetailScreen({
             ) : null}
           </View>
         </View>
-
-        {creature ? null : <View style={styles.statusPanel}>
-          <Text style={styles.panelEyebrow}>나의 수집 기록</Text>
-          <Text style={styles.panelTitle}>나의 기록</Text>
-          <View style={styles.statusGrid}>
-            {statuses.map((status) => {
-              const active = state[status];
-              return (
-                <Pressable
-                  accessibilityLabel={`${item.nameKo} ${statusLabel(status)} ${active ? '해제' : '설정'}`}
-                  accessibilityRole="button"
-                  key={status}
-                  onPress={() => updateStatus(status)}
-                  style={[styles.statusCard, active && { backgroundColor: `${accent}18`, borderColor: accent }]}>
-                  <CollectionStatusIcon active={active} status={status} />
-                  <Text style={styles.statusText}>{statusLabel(status)}</Text>
-                  <Text style={[styles.statusValue, active && { color: accent }]}>{active ? '기록됨' : '미기록'}</Text>
-                </Pressable>
-              );
-            })}
-          </View>
-        </View>}
 
         {creature ? (
           <>
@@ -652,21 +628,14 @@ const styles = StyleSheet.create({
   unavailableBadge: { backgroundColor: '#F0F2EF' },
   newMonthBadge: { backgroundColor: '#FFF0D8' },
   leavingMonthBadge: { backgroundColor: '#FBE3E0' },
-  creatureHeroStatusIcons: { flexDirection: 'row', gap: 5, marginBottom: 2, marginTop: 10 },
-  creatureHeroStatusButton: { alignItems: 'center', backgroundColor: '#F0F2EF', borderColor: AppColors.primaryBorder, borderRadius: 10, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
-  creatureHeroStatusButtonActive: { backgroundColor: AppColors.primarySoft, borderColor: AppColors.primaryAction },
+  heroStatusIcons: { flexDirection: 'row', gap: 5, marginBottom: 2, marginTop: 10 },
+  heroStatusButton: { alignItems: 'center', backgroundColor: '#F0F2EF', borderColor: AppColors.primaryBorder, borderRadius: 10, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
+  heroStatusButtonActive: { backgroundColor: AppColors.primarySoft, borderColor: AppColors.primaryAction },
   creatureHeroPrices: { alignItems: 'center', marginTop: 10, maxWidth: '100%' },
   creatureHeroPrice: { color: AppColors.primaryText, fontSize: 12, fontWeight: '900', textAlign: 'center' },
   creatureHeroPriceLabel: { color: '#819087', fontSize: 11, fontWeight: '700' },
   creatureHeroSpecialPrice: { color: AppColors.primaryText, fontSize: 12, fontWeight: '900', marginTop: 3, textAlign: 'center' },
   creatureHeroSpecialPriceLabel: { color: '#8A6B38', fontSize: 11, fontWeight: '700' },
-  statusPanel: { backgroundColor: AppColors.primarySoft, borderRadius: 22, marginBottom: 14, padding: 18 },
-  panelEyebrow: { color: AppColors.primaryText, fontSize: 10, fontWeight: '800', letterSpacing: 1.3 },
-  panelTitle: { color: AppColors.primaryText, fontSize: 18, fontWeight: '800', marginTop: 4 },
-  statusGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 14 },
-  statusCard: { alignItems: 'center', backgroundColor: AppColors.primarySurface, borderColor: AppColors.primaryBorder, borderRadius: 15, borderWidth: 1, minWidth: '30%', paddingHorizontal: 8, paddingVertical: 10 },
-  statusText: { color: AppColors.primaryText, fontSize: 11, fontWeight: '700', marginTop: 3 },
-  statusValue: { color: '#8B978C', fontSize: 10, marginTop: 3 },
   monthBanner: { alignItems: 'center', backgroundColor: AppColors.primarySoft, borderRadius: 22, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 14, padding: 18 },
   monthBannerCopy: { flex: 1 },
   monthStatus: { color: AppColors.primaryText, fontSize: 18, fontWeight: '800', marginTop: 5 },
