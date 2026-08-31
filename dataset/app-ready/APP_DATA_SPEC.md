@@ -414,6 +414,7 @@
 - 모든 항목은 `image.localPath`를 가지며, 앱은 `encyclopedia-assets.ts` 정적 맵을 통해 로컬 이미지를 사용한다.
 - 생물 `tankImage.localPath`는 tank 전시 이미지를, 미술품 `artwork.realImageLocalPath`와 `artwork.fakeImageLocalPath`는 진품·가품 비교 이미지를 가리킨다.
 - `availability.north`와 `availability.south`는 반구별 월·시간을 보관한다. 월별 추천은 앱의 게임 날짜와 활성 섬 반구로 계산한다.
+- 물고기의 강 계열 위치는 `location: "River"`로 통일한다. 원래 `River (mouth)`였던 항목은 `locationTags: ["River (mouth)"]`, `River (clifftop)`였던 항목은 `locationTags: ["River (clifftop)"]`를 추가하며, 물고기에 별도 출현조건 데이터가 없으면 `condition` 필드를 생략한다.
 - 미술품은 `artwork`에 작품 정보와 진품·가품 설명을 보관하며 `hasFake`에 따라 진품/가품 보유 상태를 독립적으로 기록한다.
 
 ## 5.7 Museum Source Archives

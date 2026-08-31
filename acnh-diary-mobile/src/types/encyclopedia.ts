@@ -27,7 +27,8 @@ export type EncyclopediaItem = {
   sourceUrl: string | null;
   museumPhrase: string | null;
   location: string | null;
-  condition: string | null;
+  locationTags?: string[];
+  condition?: string | null;
   rarity: string | null;
   availability: {
     north: EncyclopediaAvailability;

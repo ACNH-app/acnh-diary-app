@@ -16,6 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AppChrome } from '@/components/AppChrome';
 import { AppColors } from '@/constants/theme';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
+import { getMonthlyAvailabilityFlags, isAvailableAtMinute } from '@/data/availability';
 import { getCatalogItems } from '@/data/catalog';
 import { getEncyclopediaItems } from '@/data/encyclopedia';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
@@ -43,7 +44,8 @@ import type { Island, NpcVisit, Routine, RoutineProgress } from '@/types/island'
 
 type TodayScreenProps = { island?: Island | null; routines?: Routine[] };
 type CalendarMode = 'week' | 'month';
-type CritterTab = 'bugs' | 'fish' | 'sea';
+type CritterTab = 'bugs' | 'fish' | 'sea' | 'newThisMonth' | 'leavingThisMonth';
+type CritterCategory = 'bugs' | 'fish' | 'sea';
 
 const EMPTY_STATE: EncyclopediaState = { caught: false, owned: false, donated: false, genuineOwned: false, fakeOwned: false };
 const NPC_OPTIONS = ['K.K.', '무파니', '여울', '너굴', '콩돌', '밤돌', '부옥', '갑돌', '마추릴라'];
@@ -107,16 +109,6 @@ function getCurrentHour(timezone: string) {
   return value === 24 ? 0 : value;
 }
 
-function parseTime(value: string) {
-  const match = value.match(/(\d{1,2})\s*(AM|PM)\s*[–-]\s*(\d{1,2})\s*(AM|PM)/i);
-  if (!match) return null;
-  const toHour = (hourValue: string, meridiem: string) => {
-    const hour = Number(hourValue) % 12;
-    return meridiem.toUpperCase() === 'PM' ? hour + 12 : hour;
-  };
-  return { start: toHour(match[1], match[2]), end: toHour(match[3], match[4]) };
-}
-
 function getWeekDates(gameDate: string) {
   const date = parseIsoDate(gameDate);
   if (!date) return [];
@@ -146,30 +138,7 @@ function isAvailableNow(item: EncyclopediaItem, island: Island, gameDate: string
   if (!date) return false;
   const month = date.getUTCMonth() + 1;
   const availability = item.availability[island.hemisphere === 'south' ? 'south' : 'north'];
-  const time = availability.timesByMonth[String(month)] ?? '';
-  if (!availability.months.includes(month) || !time || time === 'NA') return false;
-  if (time.toLowerCase() === 'all day') return true;
-  const range = parseTime(time);
-  if (!range) return true;
-  const hour = getCurrentHour(island.timezone ?? 'Asia/Seoul');
-  return range.start <= range.end
-    ? hour >= range.start && hour < range.end
-    : hour >= range.start || hour < range.end;
-}
-
-function isAvailableInMonth(item: EncyclopediaItem, hemisphere: 'north' | 'south', month: number) {
-  return item.availability[hemisphere].months.includes(month);
-}
-
-function getMonthlyFlags(item: EncyclopediaItem, hemisphere: 'north' | 'south', month: number) {
-  const previousMonth = month === 1 ? 12 : month - 1;
-  const nextMonth = month === 12 ? 1 : month + 1;
-  const availableThisMonth = isAvailableInMonth(item, hemisphere, month);
-
-  return {
-    isLeavingThisMonth: availableThisMonth && !isAvailableInMonth(item, hemisphere, nextMonth),
-    isNewThisMonth: availableThisMonth && !isAvailableInMonth(item, hemisphere, previousMonth),
-  };
+  return isAvailableAtMinute(availability, month, getCurrentHour(island.timezone ?? 'Asia/Seoul') * 60);
 }
 
 export function TodayScreen({ island: initialIsland, routines: initialRoutines }: TodayScreenProps) {
@@ -230,7 +199,23 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const day = dateObject.getUTCDate();
   const season = seasonFor(month, island?.hemisphere ?? 'north');
   const zodiac = zodiacFor(month, day);
-  const availableCritters = useMemo(() => island && gameDate ? getEncyclopediaItems(critterTab).filter((item) => isAvailableNow(item, island, gameDate)) : [], [critterTab, gameDate, island]);
+  const availableCritters = useMemo(() => {
+    if (!island || !gameDate) return [];
+
+    const hemisphere = island.hemisphere === 'south' ? 'south' : 'north';
+    const categories: CritterCategory[] = ['bugs', 'fish', 'sea'];
+    const sourceItems = critterTab === 'newThisMonth' || critterTab === 'leavingThisMonth'
+      ? categories.flatMap((category) => getEncyclopediaItems(category))
+      : getEncyclopediaItems(critterTab);
+
+    return sourceItems.filter((item) => {
+      if (!isAvailableNow(item, island, gameDate)) return false;
+      const flags = getMonthlyAvailabilityFlags(item, hemisphere, month);
+      if (critterTab === 'newThisMonth') return flags.isNewThisMonth;
+      if (critterTab === 'leavingThisMonth') return flags.isLeavingThisMonth;
+      return true;
+    });
+  }, [critterTab, gameDate, island, month]);
   const calendarDates = useMemo(() => {
     if (!gameDate) return [];
     if (calendarMode === 'week') return getWeekDates(gameDate);
@@ -326,8 +311,38 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
         <View style={styles.noticeCard}><Text style={styles.noticeTitle}>날씨 데이터</Text><Text style={styles.noticeText}>MeteoNook 날씨 데이터는 MVP 범위에서 제외되어 있어요.</Text></View>
 
         <SectionHeader title="지금 잡을 수 있는 생물" description="현재 시간에 출현하는 생물과 이번 달 변동을 확인해요." />
-        <ScrollView contentContainerStyle={styles.tabRow} horizontal showsHorizontalScrollIndicator={false}>{([['bugs', '곤충'], ['fish', '물고기'], ['sea', '해산물']] as Array<[CritterTab, string]>).map(([value, label]) => <Pressable key={value} onPress={() => setCritterTab(value)} style={[styles.tabChip, critterTab === value && styles.tabChipActive]}><Text style={[styles.tabChipText, critterTab === value && styles.tabChipTextActive]}>{label}</Text></Pressable>)}</ScrollView>
-        <View style={styles.critterList}>{availableCritters.length ? availableCritters.map((item) => { const availability = item.availability[island.hemisphere === 'south' ? 'south' : 'north']; const availabilityTime = availability.timesByMonth[String(month)] ?? null; return <TodayCritterCard key={item.id} item={item} month={month} hemisphere={island.hemisphere === 'south' ? 'south' : 'north'} availabilityLabel={localizeAvailabilityLabel(availability.label)} availabilityTime={localizeAvailabilityTime(availabilityTime)} state={collectionStates[`${item.category}/${item.id}`] ?? EMPTY_STATE} onToggle={(status) => updateCritterStatus(item, status)} />; }) : <Text style={styles.noData}>현재 시간에 출현하는 생물이 없어요.</Text>}</View>
+        <ScrollView contentContainerStyle={styles.tabRow} horizontal showsHorizontalScrollIndicator={false}>
+          {([
+            ['bugs', '곤충'],
+            ['fish', '물고기'],
+            ['sea', '해산물'],
+            ['newThisMonth', '이번 달 신규'],
+            ['leavingThisMonth', '이번 달 종료'],
+          ] as Array<[CritterTab, string]>).map(([value, label]) => (
+            <Pressable
+              key={value}
+              onPress={() => setCritterTab(value)}
+              style={[
+                styles.tabChip,
+                value === 'newThisMonth' && { backgroundColor: '#FFF0D8' },
+                value === 'leavingThisMonth' && { backgroundColor: '#FBE3E0' },
+                critterTab === value && styles.tabChipActive,
+                critterTab === value && value === 'newThisMonth' && { backgroundColor: '#F6C879' },
+                critterTab === value && value === 'leavingThisMonth' && { backgroundColor: '#E9A39A' },
+              ]}>
+              <Text
+                style={[
+                  styles.tabChipText,
+                  value === 'newThisMonth' && { color: '#A26A2D' },
+                  value === 'leavingThisMonth' && { color: '#AE584B' },
+                  critterTab === value && styles.tabChipTextActive,
+                ]}>
+                {label}
+              </Text>
+            </Pressable>
+          ))}
+        </ScrollView>
+        <View style={styles.critterList}>{availableCritters.length ? availableCritters.map((item) => { const availability = item.availability[island.hemisphere === 'south' ? 'south' : 'north']; const availabilityTime = availability.timesByMonth[String(month)] ?? null; return <TodayCritterCard key={`${item.category}/${item.id}`} item={item} month={month} hemisphere={island.hemisphere === 'south' ? 'south' : 'north'} availabilityLabel={localizeAvailabilityLabel(availability.label)} availabilityTime={localizeAvailabilityTime(availabilityTime)} state={collectionStates[`${item.category}/${item.id}`] ?? EMPTY_STATE} onToggle={(status) => updateCritterStatus(item, status)} />; }) : <Text style={styles.noData}>현재 시간에 출현하는 생물이 없어요.</Text>}</View>
 
         <SectionHeader title="오늘의 루틴" description="체크하면 오늘 날짜에 진행 상태를 저장해요." actionLabel="루틴 편집" onAction={() => { setEditingRoutine(null); setRoutineTitle(''); setRoutineGoal('1'); setRoutineModalOpen(true); }} />
         <View style={styles.routineCard}>{routines.map((routine, index) => { const progress = routineProgress[routine.id]?.currentCount ?? 0; const complete = progress >= routine.goalCount; return <Pressable accessibilityLabel={`${routine.title} ${progress}/${routine.goalCount} ${complete ? '완료' : '미완료'}`} accessibilityRole="checkbox" accessibilityState={{ checked: complete }} key={routine.id} onPress={() => toggleRoutine(routine)} style={[styles.routineRow, index > 0 && styles.routineDivider]}><View style={[styles.routineIcon, complete && styles.routineIconDone]}><Text style={[styles.routineIconText, complete && styles.routineIconTextDone]}>{complete ? '✓' : '○'}</Text></View><View style={styles.routineCopy}><Text style={[styles.routineTitle, complete && styles.routineTitleDone]}>{routine.title}</Text><Text style={styles.routineGoal}>{progress} / {routine.goalCount}회 · 매일</Text></View><Pressable accessibilityLabel={`${routine.title} 편집`} onPress={() => { setEditingRoutine(routine); setRoutineTitle(routine.title); setRoutineGoal(String(routine.goalCount)); setRoutineModalOpen(true); }}><Text style={styles.smallAction}>편집</Text></Pressable></Pressable>; })}</View>
@@ -365,7 +380,7 @@ function TodayCritterCard({
   onToggle: (status: EncyclopediaStatus) => void;
 }) {
   const image = getEncyclopediaAsset(item.category, item.id);
-  const { isLeavingThisMonth, isNewThisMonth } = getMonthlyFlags(item, hemisphere, month);
+  const { isLeavingThisMonth, isNewThisMonth } = getMonthlyAvailabilityFlags(item, hemisphere, month);
 
   return (
     <View style={styles.critterRow}>

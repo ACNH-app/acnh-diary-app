@@ -55,6 +55,11 @@ const CONDITION_LABELS: Record<string, string> = {
   'Rain only': '비가 올 때만',
 };
 
+const LOCATION_TAG_LABELS: Record<string, string> = {
+  'River (mouth)': '하구',
+  'River (clifftop)': '절벽 위',
+};
+
 const RARITY_LABELS: Record<string, string> = {
   Common: '흔함',
   'Very Common': '매우 흔함',
@@ -65,14 +70,14 @@ const RARITY_LABELS: Record<string, string> = {
 };
 
 const SHADOW_LABELS: Record<string, string> = {
-  Tiny: '아주 작음',
-  Small: '작음',
-  Medium: '중간',
-  Large: '큼',
-  'Very large': '매우 큼',
-  Huge: '아주 큼',
+  Tiny: '1',
+  Small: '2',
+  Medium: '3',
+  Large: '4',
+  'Very large': '5',
+  Huge: '6',
   Long: '긴 형태',
-  'Very large (finned)': '지느러미가 있는 매우 큰 형태',
+  'Very large (finned)': '5 (지느러미)',
 };
 
 const MOVEMENT_LABELS: Record<string, string> = {
@@ -209,7 +214,7 @@ const AUTHOR_LABELS: Record<string, string> = {
   'Paul Cézanne': '폴 세잔',
 };
 
-function lookup(value: string | null, labels: Record<string, string>) {
+function lookup(value: string | null | undefined, labels: Record<string, string>) {
   if (!value) return value;
   return labels[value] ?? value;
 }
@@ -218,7 +223,11 @@ export function localizeLocation(value: string | null) {
   return lookup(value, LOCATION_LABELS);
 }
 
-export function localizeCondition(value: string | null) {
+export function localizeLocationTag(value: string | null) {
+  return lookup(value, LOCATION_TAG_LABELS);
+}
+
+export function localizeCondition(value: string | null | undefined) {
   return lookup(value, CONDITION_LABELS);
 }
 

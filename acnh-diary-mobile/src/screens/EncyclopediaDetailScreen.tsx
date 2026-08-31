@@ -16,6 +16,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
 import { AppColors } from '@/constants/theme';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
+import { getMonthlyAvailabilityFlags, isAvailableAtMinute, normalizeAvailabilityTime, parseAvailabilitySegments } from '@/data/availability';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
 import { getEncyclopediaDetailAsset } from '@/data/encyclopedia-detail-assets';
@@ -29,9 +30,9 @@ import {
   localizeAuthor,
   localizeAvailabilityLabel,
   localizeAvailabilityTime,
-  localizeCondition,
   localizeFossilGroup,
   localizeLocation,
+  localizeLocationTag,
   localizeMovementSpeed,
   localizeRarity,
   localizeShadow,
@@ -123,35 +124,6 @@ function formatHourLabel(hour: number) {
   return hour < 12 ? `${hour}am` : `${hour - 12}pm`;
 }
 
-function normalizeAvailabilityTime(value?: string | null) {
-  return value?.replace(/\u00a0/g, ' ').trim() ?? '';
-}
-
-function toHour(hourValue: string, meridiem: string) {
-  const hour = Number(hourValue) % 12;
-  return meridiem.toUpperCase() === 'PM' ? hour + 12 : hour;
-}
-
-function parseAvailabilitySegments(value?: string | null) {
-  const normalized = normalizeAvailabilityTime(value);
-  if (!normalized || normalized.toLowerCase() === 'na') return [];
-  if (normalized.toLowerCase() === 'all day') return [{ start: 0, end: 24 }];
-
-  const matches = [...normalized.matchAll(/(\d{1,2})\s*(AM|PM)\s*(?:-|–|—|~|to)\s*(\d{1,2})\s*(AM|PM)/gi)];
-
-  return matches.flatMap((match) => {
-    const start = toHour(match[1], match[2]);
-    const end = toHour(match[3], match[4]);
-
-    if (start === end) return [{ start: 0, end: 24 }];
-    if (start < end) return [{ start, end }];
-    return [
-      { start, end: 24 },
-      { start: 0, end },
-    ];
-  });
-}
-
 function isHourActive(hour: number, segments: Array<{ start: number; end: number }>) {
   return segments.some((segment) => hour >= segment.start && hour < segment.end);
 }
@@ -240,7 +212,9 @@ export function EncyclopediaDetailScreen({
   const showsCreatureLocationDetails = category !== 'sea';
   const showsShadowInAvailability = category === 'fish' || category === 'sea';
   const showsMovementInAvailability = category === 'sea' && Boolean(item.movementSpeed);
-  const showsSpecialPrice = category !== 'sea' && item.prices.special != null;
+  const isAvailableThisMonth = availability.months.includes(currentMonth);
+  const isAvailableNow = isAvailableAtMinute(availability, currentMonth, currentMinute);
+  const monthlyFlags = getMonthlyAvailabilityFlags(item, hemisphere, currentMonth);
 
   const updateStatus = (status: EncyclopediaStatus) => {
     if (!islandId) {
@@ -265,7 +239,7 @@ export function EncyclopediaDetailScreen({
 
   return (
     <View style={styles.screenRoot}>
-      <AppChrome breadcrumbs={['도감', getEncyclopediaLabel(category)]} showBack title={item.nameKo} />
+      <AppChrome breadcrumbs={['도감']} showBack title={getEncyclopediaLabel(category)} />
       <SafeAreaView edges={[]} style={styles.safeArea}>
         <ScrollView
           contentContainerStyle={styles.content}
@@ -274,16 +248,62 @@ export function EncyclopediaDetailScreen({
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}>
         <View style={[styles.heroCard, { borderTopColor: accent }]}>
+          {creature ? (
+            <View style={styles.creatureHeroIdentity}>
+              <Text style={styles.itemName}>{item.nameKo}</Text>
+              <Text style={styles.itemEnglish}>{item.nameEn}</Text>
+            </View>
+          ) : null}
           <View style={styles.heroImageFrame}>
             {image ? <Image resizeMode="contain" source={image} style={styles.heroImage} /> : <Text style={styles.imageFallback}>?</Text>}
           </View>
+          {creature ? (
+            <View style={styles.creatureHeroStatusIcons}>
+              {(['caught', 'donated'] as EncyclopediaStatus[]).map((status) => {
+                const active = state[status];
+                return (
+                  <Pressable
+                    accessibilityLabel={`${item.nameKo} ${statusLabel(status)} ${active ? '해제' : '설정'}`}
+                    accessibilityRole="button"
+                    key={status}
+                    onPress={() => updateStatus(status)}
+                    style={[styles.creatureHeroStatusButton, active && styles.creatureHeroStatusButtonActive]}>
+                    <CollectionStatusIcon active={active} status={status} />
+                  </Pressable>
+                );
+              })}
+            </View>
+          ) : null}
           <View style={styles.heroCopy}>
-            <Text style={styles.itemName}>{item.nameKo}</Text>
-            <Text style={styles.itemCategory}>{getEncyclopediaLabel(category)}</Text>
+            {!creature ? <Text style={styles.itemName}>{item.nameKo}</Text> : null}
+            {!creature ? <Text style={styles.itemCategory}>{getEncyclopediaLabel(category)}</Text> : null}
+            {creature ? (
+              <>
+                <CreatureAvailabilityBadges
+                  compact
+                  isAvailableNow={isAvailableNow}
+                  isAvailableThisMonth={isAvailableThisMonth}
+                  isLeavingThisMonth={monthlyFlags.isLeavingThisMonth}
+                  isNewThisMonth={monthlyFlags.isNewThisMonth}
+                />
+                <View style={styles.creatureHeroPrices}>
+                  <Text style={styles.creatureHeroPrice}>
+                    <Text style={styles.creatureHeroPriceLabel}>{item.prices.primaryLabel ?? '판매가'}</Text>{' '}
+                    {formatPrice(item.prices.primary) ?? '정보 없음'}
+                  </Text>
+                  {item.prices.special != null ? (
+                    <Text style={styles.creatureHeroSpecialPrice}>
+                      <Text style={styles.creatureHeroSpecialPriceLabel}>{item.prices.specialLabel ?? '특수 가격'}</Text>{' '}
+                      {formatPrice(item.prices.special)}
+                    </Text>
+                  ) : null}
+                </View>
+              </>
+            ) : null}
           </View>
         </View>
 
-        <View style={styles.statusPanel}>
+        {creature ? null : <View style={styles.statusPanel}>
           <Text style={styles.panelEyebrow}>나의 수집 기록</Text>
           <Text style={styles.panelTitle}>나의 기록</Text>
           <View style={styles.statusGrid}>
@@ -303,7 +323,7 @@ export function EncyclopediaDetailScreen({
               );
             })}
           </View>
-        </View>
+        </View>}
 
         {creature ? (
           <>
@@ -315,17 +335,12 @@ export function EncyclopediaDetailScreen({
                 currentMonth={currentMonth}
                 hemisphere={hemisphere}
               />
-              <InfoRow label="출현 월" value={localizeAvailabilityLabel(availability.label) ?? '정보 없음'} />
-              <InfoRow label="이번 달 시간" value={localizeAvailabilityTime(availability.timesByMonth[String(currentMonth)]) ?? '정보 없음'} />
-              {showsCreatureLocationDetails ? <InfoRow label="출현 장소" value={localizeLocation(item.location) ?? '정보 없음'} /> : null}
-              {showsCreatureLocationDetails ? <InfoRow label="출현 조건" value={localizeCondition(item.condition) ?? '제한 없음'} /> : null}
+              {showsCreatureLocationDetails ? <LocationInfoRow item={item} /> : null}
               {showsCreatureLocationDetails ? <InfoRow label="출현 빈도" value={localizeRarity(item.rarity) || '정보 없음'} /> : null}
               {showsShadowInAvailability ? <InfoRow label="그림자 크기" value={localizeShadow(item.shadow) ?? '해당 없음'} /> : null}
               {showsMovementInAvailability ? <InfoRow label="이동 속도" value={localizeMovementSpeed(item.movementSpeed) ?? item.movementSpeed ?? '정보 없음'} /> : null}
             </Section>
-            <Section title="거래·크기 정보">
-              <InfoRow label={item.prices.primaryLabel ?? '판매가'} value={formatPrice(item.prices.primary) ?? '정보 없음'} />
-              {showsSpecialPrice ? <InfoRow label={item.prices.specialLabel ?? '특수 가격'} value={formatPrice(item.prices.special) ?? '정보 없음'} /> : null}
+            <Section title="수조 정보">
               <InfoRow label="수조 크기" value={formatTank(item.tank.width, item.tank.length)} />
               <TankPreview image={getEncyclopediaDetailAsset(category, item.id, 'tank')} />
             </Section>
@@ -362,6 +377,43 @@ export function EncyclopediaDetailScreen({
           onPress={() => scrollRef.current?.scrollTo({ animated: true, y: 0 })}
         />
       </SafeAreaView>
+    </View>
+  );
+}
+
+function CreatureAvailabilityBadges({
+  compact = false,
+  isAvailableNow,
+  isAvailableThisMonth,
+  isLeavingThisMonth,
+  isNewThisMonth,
+}: {
+  compact?: boolean;
+  isAvailableNow: boolean;
+  isAvailableThisMonth: boolean;
+  isLeavingThisMonth: boolean;
+  isNewThisMonth: boolean;
+}) {
+  const badges = [
+    {
+      label: isAvailableThisMonth ? '이번 달 출현' : '이번 달 미출현',
+      style: isAvailableThisMonth ? styles.monthAvailableBadge : styles.unavailableBadge,
+    },
+    {
+      label: isAvailableNow ? '현재 출현' : '현재 미출현',
+      style: isAvailableNow ? styles.currentAvailableBadge : styles.unavailableBadge,
+    },
+    ...(isNewThisMonth ? [{ label: '이번 달 신규', style: styles.newMonthBadge }] : []),
+    ...(isLeavingThisMonth ? [{ label: '이번 달 종료', style: styles.leavingMonthBadge }] : []),
+  ];
+
+  return (
+    <View style={[styles.availabilityBadgeRow, compact && styles.heroAvailabilityBadgeRow]}>
+      {badges.map((badge) => (
+        <View key={badge.label} style={[styles.availabilityBadge, badge.style]}>
+          <Text style={styles.availabilityBadgeText}>{badge.label}</Text>
+        </View>
+      ))}
     </View>
   );
 }
@@ -443,6 +495,28 @@ function InfoRow({ label, value }: { label: string; value: string }) {
     <View style={styles.infoRow}>
       <Text style={styles.infoLabel}>{label}</Text>
       <Text style={styles.infoValue}>{value}</Text>
+    </View>
+  );
+}
+
+function LocationInfoRow({ item }: { item: EncyclopediaItem }) {
+  const tags = item.locationTags ?? [];
+
+  return (
+    <View style={styles.infoRow}>
+      <Text style={styles.infoLabel}>출현 장소</Text>
+      <View style={styles.locationInfoValue}>
+        <Text style={styles.infoValue}>{localizeLocation(item.location) ?? '정보 없음'}</Text>
+        {tags.length > 0 ? (
+          <View style={styles.locationTagList}>
+            {tags.map((tag) => (
+              <View key={tag} style={styles.locationTagChip}>
+                <Text style={styles.locationTagChipText}>{localizeLocationTag(tag) ?? tag}</Text>
+              </View>
+            ))}
+          </View>
+        ) : null}
+      </View>
     </View>
   );
 }
@@ -560,13 +634,32 @@ const styles = StyleSheet.create({
   kicker: { color: AppColors.primaryText, fontSize: 10, fontWeight: '800', letterSpacing: 1.5 },
   headerTitle: { color: AppColors.primaryText, fontSize: 25, fontWeight: '800', marginTop: 3 },
   number: { color: '#66816A', fontSize: 14, fontWeight: '800' },
-  heroCard: { alignItems: 'center', backgroundColor: '#FFF', borderRadius: 24, borderTopWidth: 4, flexDirection: 'row', marginBottom: 14, padding: 18 },
-  heroImageFrame: { alignItems: 'center', backgroundColor: '#F1F5EE', borderRadius: 20, height: 128, justifyContent: 'center', marginRight: 18, width: 128 },
+  heroCard: { alignItems: 'center', backgroundColor: '#FFF', borderRadius: 24, borderTopWidth: 4, flexDirection: 'column', marginBottom: 14, padding: 18 },
+  creatureHeroIdentity: { alignItems: 'center', marginBottom: 10, width: '100%' },
+  heroImageFrame: { alignItems: 'center', backgroundColor: '#F1F5EE', borderRadius: 20, height: 128, justifyContent: 'center', width: 128 },
   heroImage: { height: 112, width: 112 },
   imageFallback: { color: '#809080', fontSize: 36, fontWeight: '800' },
-  heroCopy: { flex: 1 },
-  itemName: { color: AppColors.primaryText, fontSize: 25, fontWeight: '800', lineHeight: 31 },
+  heroCopy: { alignItems: 'center', minWidth: 0, width: '100%' },
+  itemName: { color: AppColors.primaryText, fontSize: 25, fontWeight: '800', lineHeight: 31, textAlign: 'center' },
+  itemEnglish: { color: '#7D8A80', fontSize: 13, marginTop: 3, textAlign: 'center' },
   itemCategory: { color: AppColors.primaryText, fontSize: 12, fontWeight: '700', marginTop: 18 },
+  availabilityBadgeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginBottom: 14 },
+  heroAvailabilityBadgeRow: { marginBottom: 0, marginTop: 10 },
+  availabilityBadge: { borderRadius: 999, paddingHorizontal: 9, paddingVertical: 6 },
+  availabilityBadgeText: { color: AppColors.primaryText, fontSize: 11, fontWeight: '800' },
+  monthAvailableBadge: { backgroundColor: '#E1F2D7' },
+  currentAvailableBadge: { backgroundColor: '#DDEFFF' },
+  unavailableBadge: { backgroundColor: '#F0F2EF' },
+  newMonthBadge: { backgroundColor: '#FFF0D8' },
+  leavingMonthBadge: { backgroundColor: '#FBE3E0' },
+  creatureHeroStatusIcons: { flexDirection: 'row', gap: 5, marginBottom: 2, marginTop: 10 },
+  creatureHeroStatusButton: { alignItems: 'center', backgroundColor: '#F0F2EF', borderColor: AppColors.primaryBorder, borderRadius: 10, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
+  creatureHeroStatusButtonActive: { backgroundColor: AppColors.primarySoft, borderColor: AppColors.primaryAction },
+  creatureHeroPrices: { alignItems: 'center', marginTop: 10, maxWidth: '100%' },
+  creatureHeroPrice: { color: AppColors.primaryText, fontSize: 12, fontWeight: '900', textAlign: 'center' },
+  creatureHeroPriceLabel: { color: '#819087', fontSize: 11, fontWeight: '700' },
+  creatureHeroSpecialPrice: { color: AppColors.primaryText, fontSize: 12, fontWeight: '900', marginTop: 3, textAlign: 'center' },
+  creatureHeroSpecialPriceLabel: { color: '#8A6B38', fontSize: 11, fontWeight: '700' },
   statusPanel: { backgroundColor: AppColors.primarySoft, borderRadius: 22, marginBottom: 14, padding: 18 },
   panelEyebrow: { color: AppColors.primaryText, fontSize: 10, fontWeight: '800', letterSpacing: 1.3 },
   panelTitle: { color: AppColors.primaryText, fontSize: 18, fontWeight: '800', marginTop: 4 },
@@ -585,6 +678,10 @@ const styles = StyleSheet.create({
   infoRow: { alignItems: 'flex-start', borderBottomColor: '#EDF1EB', borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 },
   infoLabel: { color: '#819087', fontSize: 12, paddingRight: 14 },
   infoValue: { color: AppColors.primaryText, flex: 1, fontSize: 13, fontWeight: '700', textAlign: 'right' },
+  locationInfoValue: { alignItems: 'flex-end', flex: 1 },
+  locationTagList: { flexDirection: 'row', flexWrap: 'wrap', gap: 4, justifyContent: 'flex-end', marginTop: 4 },
+  locationTagChip: { backgroundColor: '#F4E8FF', borderColor: '#BE9AE8', borderRadius: 999, borderWidth: 1, paddingHorizontal: 7, paddingVertical: 3 },
+  locationTagChipText: { color: '#684397', fontSize: 10, fontWeight: '800' },
   availabilityPanel: { borderBottomColor: '#EDF1EB', borderBottomWidth: 1, marginBottom: 4, paddingBottom: 14 },
   availabilityLabel: { color: '#68796D', fontSize: 12, fontWeight: '800' },
   monthGrid: { alignItems: 'flex-start', flexDirection: 'row', gap: 3, marginTop: 4 },

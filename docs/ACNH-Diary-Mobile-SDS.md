@@ -448,7 +448,7 @@ interface Bug extends CritterBase {
 interface Fish extends CritterBase {
   type: "fish";
   location: string | null;
-  weatherCondition: string | null;
+  locationTags: string[];
   nookPrice: number | null;
   cjPrice: number | null;
   size: string | null;
@@ -501,6 +501,7 @@ interface Artwork {
 `src/data`는 `dataset/app-ready/content`의 파일별 원본 구조를 앱 도메인 타입으로 변환한다. 원본 JSON의 키를 화면이나 Domain에서 직접 사용하지 않는다.
 
 - 곤충·물고기·해산물은 배열의 `id`를 문자열 `id`와 번호 `number`로 사용하고, `name["name-KRko"]`, `availability["month-array-northern"]`, `availability["month-array-southern"]`, `availability["time-array"]`를 정규화한다.
+- 물고기의 `River (mouth)`·`River (clifftop)` 위치는 `location: "River"`로 통일하고 각각 `locationTags: ["River (mouth)"]`·`locationTags: ["River (clifftop)"]`에 세부 위치를 보존한다. 물고기는 별도 출현조건 데이터가 없으므로 `condition` 필드를 저장하거나 화면에 표시하지 않는다.
 - 화석은 객체의 key 또는 `file-name`을 안정적인 `id`로 사용한다. 현재 원본에 번호가 없으므로 `number`는 `null`이며 기본 정렬은 표시 순서와 이름을 사용한다.
 - 출현 시간·월·위치·가격은 Domain이 사용할 정규화 필드로 변환하고, 원본에 없는 값은 `null`로 둔다.
 - 미술품은 `dataset/app-ready/seed/supabase_seed/content_db/catalog_items.json`의 `catalog_type = "art"` 레코드를 앱용 `content/encyclopedia/art.json`으로 정규화한다. 진품·가품 이미지 URL과 구별 설명은 artwork 하위 필드로 보존한다.
@@ -885,7 +886,7 @@ UPSERT 실패 시 기존 로그를 유지하고 `STORAGE_WRITE_FAILED`를 반환
 3. 검색어를 이름·번호에 적용한다.
 4. 필터 칩을 AND 조합으로 적용한다.
 5. category별 정렬을 적용한다.
-6. 생물 5개, 화석·미술품 2개 표시 단위로 ViewModel을 구성한다.
+6. 생물 4개, 화석·미술품 2개 표시 단위로 ViewModel을 구성한다.
 7. 전체 수·조회 수를 반환한다.
 
 ### UC-MOB-008 · 도감 상태 단건·일괄 변경
@@ -894,7 +895,7 @@ UPSERT 실패 시 기존 로그를 유지하고 `STORAGE_WRITE_FAILED`를 반환
 
 ### UC-MOB-009 · 오늘 화면 생물 월별 표시
 
-오늘 화면은 섬의 반구와 게임 날짜의 월·현재 시각으로 현재 출현 생물을 필터링한다. 출현 월과 전월·다음 월 출현 여부를 비교해 `newThisMonth`와 `leavingThisMonth`를 계산하고, 해당 생물 카드에 각각 `이번 달 신규`와 `이번 달 종료` 배지를 표시한다. collection record는 배지 계산에 사용하지 않는다.
+오늘 화면은 섬의 반구와 게임 날짜의 월·현재 시각으로 현재 출현 생물을 필터링한다. 기본 탭은 곤충·물고기·해산물이며, `이번 달 신규`와 `이번 달 종료` 탭은 세 카테고리를 합친 현재 출현 생물에서 각각 해당 월별 플래그만 필터링한다. 출현 월과 전월·다음 월 출현 여부를 비교해 `newThisMonth`와 `leavingThisMonth`를 계산하고, 해당 생물 카드에 각각 `이번 달 신규`와 `이번 달 종료` 배지를 표시한다. collection record는 배지 계산에 사용하지 않는다.
 
 ### UC-MOB-010 · 카탈로그 목록·상세 조회
 
@@ -1181,11 +1182,11 @@ EncyclopediaDetailScreen
 현재 도감 구현은 다음 규칙을 따른다.
 
 - 도감 홈 카테고리 카드는 생물의 `caught`·`donated`, 화석의 `owned`·`donated`, 미술품의 `genuineOwned`·`fakeOwned`·`donated` 건수를 각 항목별로 표시한다.
-- 생물 상세는 활성 섬의 반구를 기준으로 출현 월·시간·장소·조건·빈도·가격·그림자·이동 속도·tank 크기·tank 전시 이미지·캐치프레이즈를 표시한다. 월별 신규·종료 배지는 오늘 화면의 현재 출현 생물 카드에서만 표시한다.
+- 생물 상세는 상단 카드에 중앙 이미지, 한글명·영문명, 채집·박물관 기증 상태 아이콘, 너굴상점·특수 판매 가격, 출현 월 상태 태그와 현재 시각 상태 태그를 표시한다. 전월·다음 월 비교 결과에 따라 `이번 달 신규`·`이번 달 종료` 태그를 추가한다. 별도의 큰 생물 수집 기록 패널은 사용하지 않는다. 활성 섬의 반구를 기준으로 출현 월 칩과 출현 시간 막대, 장소·빈도·그림자·이동 속도·캐치프레이즈를 표시하고 출현 월·시간의 별도 중복 텍스트 행은 생략한다. 수조 정보 영역에는 수조 크기와 tank 전시 이미지만 표시한다. 곤충처럼 조건 데이터가 있는 생물은 출현조건을 추가 표시하고, 물고기는 `강`과 하구·절벽 위 세부 위치 태그를 표시한다.
 - 화석 상세는 화석 그룹, 판매가, 크기, `interactable` 칩과 보유·기증 상태를 표시한다.
 - 미술품 상세는 그림/조각 분류, 구매·판매가, 획득 방법, 작품명·화풍·작가·연도·크기, 가품 존재 여부, 진품·가품 이미지와 구별 설명을 표시한다. 진품 보유와 가품 보유는 독립 토글이다.
-- 목록은 생물 5열, 화석·미술품 2열이며 검색·복수 상태 필터·미술품 전용 탭·정렬·현재 필터 결과 일괄 변경을 제공한다. 생물은 채집·기증, 화석은 보유·기증, 미술품은 진품 보유·가품 보유·기증 상태를 사용한다. 목록과 상세의 상태 변경은 `collection_records`에 즉시 저장하고 화면에 반영한다.
-- 한국어 화면은 `encyclopedia-labels.ts`의 도감 속성 매핑을 사용해 출현 장소·조건·희귀도·출현 시간·그림자·이동 속도·화석 그룹·미술품 작품 정보를 표시한다. 기준 데이터에 한국어 문장 번역이 없는 캐치프레이즈·박물관 설명은 원문을 보존한다.
+- 목록은 생물 4열, 화석·미술품 2열이며 검색·복수 상태 필터·미술품 전용 탭·정렬·현재 필터 결과 일괄 변경을 제공한다. 생물은 채집·기증, 화석은 보유·기증, 미술품은 진품 보유·가품 보유·기증 상태를 사용한다. 목록과 상세의 상태 변경은 `collection_records`에 즉시 저장하고 화면에 반영한다.
+- 한국어 화면은 `encyclopedia-labels.ts`의 도감 속성 매핑을 사용해 출현 장소·세부 위치 태그·조건(데이터가 있는 경우)·희귀도·출현 시간·그림자·이동 속도·화석 그룹·미술품 작품 정보를 표시한다. 그림자 크기는 `Tiny`부터 `Huge`까지 `1`~`6`으로 매핑하고, `Very large (finned)`는 `5 (지느러미)`, `Long`은 `긴 형태`로 표시한다. 기준 데이터에 한국어 문장 번역이 없는 캐치프레이즈·박물관 설명은 원문을 보존한다.
 
 ### 9.5 CatalogScreen
 

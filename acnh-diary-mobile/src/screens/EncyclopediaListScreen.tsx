@@ -30,8 +30,8 @@ import { encyclopediaCategories, getEncyclopediaItems, getEncyclopediaLabel } fr
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
 import {
   localizeAvailabilityTime,
-  localizeCondition,
   localizeLocation,
+  localizeLocationTag,
   localizeRarity,
   localizeShadow,
 } from '@/data/encyclopedia-labels';
@@ -63,7 +63,7 @@ type SortMode = 'number' | 'name' | 'group';
 type ArtTypeTab = 'all' | 'painting' | 'statue';
 type ArtAuthenticityTab = 'all' | 'genuineOnly' | 'hasFake';
 type Hemisphere = 'north' | 'south';
-type FishFilterFacet = 'location' | 'month' | 'time' | 'rarity' | 'condition' | 'shadow';
+type FishFilterFacet = 'location' | 'month' | 'time' | 'rarity' | 'shadow';
 type FishFacetFilters = Record<FishFilterFacet, string[]>;
 type LocationChipColors = {
   backgroundColor: string;
@@ -103,18 +103,16 @@ const EMPTY_FISH_FACET_FILTERS: FishFacetFilters = {
   month: [],
   time: [],
   rarity: [],
-  condition: [],
   shadow: [],
 };
 
-const fishFilterFacets: FishFilterFacet[] = ['location', 'month', 'time', 'rarity', 'condition', 'shadow'];
+const fishFilterFacets: FishFilterFacet[] = ['location', 'month', 'time', 'rarity', 'shadow'];
 
 const fishFilterFacetLabels: Record<FishFilterFacet, string> = {
   location: '출현 장소',
   month: '출현 월',
   time: '출현 시간',
   rarity: '출현 빈도',
-  condition: '출현 조건',
   shadow: '그림자 크기',
 };
 
@@ -144,6 +142,11 @@ const locationChipPalette: LocationChipColors[] = [
   { backgroundColor: '#E1F0FF', borderColor: '#85B6E4', color: '#2D5E8E' },
   { backgroundColor: '#FFE9F1', borderColor: '#E69AB7', color: '#873B5B' },
 ];
+
+const locationTagChipColors: Record<string, LocationChipColors> = {
+  'River (mouth)': { backgroundColor: '#FFF1CC', borderColor: '#E0C46B', color: '#735711' },
+  'River (clifftop)': { backgroundColor: '#EAE6FF', borderColor: '#A89EE8', color: '#55499D' },
+};
 
 function isCreature(category: EncyclopediaCategory) {
   return category === 'bugs' || category === 'fish' || category === 'sea';
@@ -211,11 +214,6 @@ function normalizeFacetValue(value: string | null | undefined) {
   return value?.replace(/[\u00a0\u202f]/g, ' ').replace(/\s+/g, ' ').trim() || null;
 }
 
-function getFishCondition(item: EncyclopediaItem) {
-  if (item.condition) return item.condition;
-  return item.location === 'Sea (raining)' ? 'Rain only' : 'Any weather';
-}
-
 function getFishLocationTabKey(location: string | null) {
   if (location === 'River (clifftop)') return 'River';
   if (location === 'River (mouth)') return 'River';
@@ -246,7 +244,6 @@ function getFishFacetValues(item: EncyclopediaItem, facet: FishFilterFacet, hemi
     );
   }
   if (facet === 'rarity') return [normalizeFacetValue(item.rarity)].filter(Boolean) as string[];
-  if (facet === 'condition') return [getFishCondition(item)];
   if (facet === 'shadow') return [normalizeFacetValue(item.shadow)].filter(Boolean) as string[];
   return [];
 }
@@ -256,7 +253,6 @@ function formatFishFacetLabel(facet: FishFilterFacet, value: string) {
   if (facet === 'month') return `${value}월`;
   if (facet === 'time') return localizeAvailabilityTime(value) ?? value;
   if (facet === 'rarity') return localizeRarity(value) ?? value;
-  if (facet === 'condition') return localizeCondition(value) ?? value;
   if (facet === 'shadow') return localizeShadow(value) ?? value;
   return value;
 }
@@ -311,6 +307,10 @@ function getLocationChipColors(location: string | null) {
 
   const index = [...location].reduce((sum, char) => sum + char.charCodeAt(0), 0) % locationChipPalette.length;
   return locationChipPalette[index];
+}
+
+function getLocationTagChipColors(tag: string) {
+  return locationTagChipColors[tag] ?? locationChipPalette[1];
 }
 
 export function EncyclopediaListScreen({ category }: { category: EncyclopediaCategory }) {
@@ -463,7 +463,7 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
     setFishFacetFilters(EMPTY_FISH_FACET_FILTERS);
   };
 
-  const columns = isCreature(category) ? 5 : 2;
+  const columns = isCreature(category) ? 4 : 2;
   const fishFilterOptions = useMemo(
     () =>
       Object.fromEntries(
@@ -752,15 +752,34 @@ function EncyclopediaCard({
           style={styles.cardTextArea}>
           <Text numberOfLines={1} style={styles.itemName}>{item.nameKo}</Text>
           {creature ? (
-            item.location ? (
-              <View
-                style={[
-                  styles.locationChip,
-                  { backgroundColor: locationColors.backgroundColor, borderColor: locationColors.borderColor },
-                ]}>
-                <Text numberOfLines={1} style={[styles.locationChipText, { color: locationColors.color }]}>
-                  {localizeLocation(item.location) ?? item.location}
-                </Text>
+            item.location || item.locationTags?.length ? (
+              <View style={styles.locationChipRow}>
+                {item.location ? (
+                  <View
+                    style={[
+                      styles.locationChip,
+                      { backgroundColor: locationColors.backgroundColor, borderColor: locationColors.borderColor },
+                    ]}>
+                    <Text numberOfLines={1} style={[styles.locationChipText, { color: locationColors.color }]}>
+                      {localizeLocation(item.location) ?? item.location}
+                    </Text>
+                  </View>
+                ) : null}
+                {item.locationTags?.map((tag) => {
+                  const tagColors = getLocationTagChipColors(tag);
+                  return (
+                    <View
+                      key={tag}
+                      style={[
+                        styles.locationTagChip,
+                        { backgroundColor: tagColors.backgroundColor, borderColor: tagColors.borderColor },
+                      ]}>
+                      <Text numberOfLines={1} style={[styles.locationTagChipText, { color: tagColors.color }]}>
+                        {localizeLocationTag(tag) ?? tag}
+                      </Text>
+                    </View>
+                  );
+                })}
               </View>
             ) : null
           ) : (
@@ -782,7 +801,7 @@ function EncyclopediaCard({
 const styles = StyleSheet.create({
   screenRoot: { flex: 1 },
   safeArea: { backgroundColor: AppColors.background, flex: 1 },
-  listContent: { padding: 18, paddingBottom: 32 },
+  listContent: { paddingBottom: 32, paddingHorizontal: 18 },
   columnWrapper: { gap: 8 },
   headerRow: { alignItems: 'center', flexDirection: 'row', marginBottom: 20 },
   backButton: {
@@ -819,8 +838,11 @@ const styles = StyleSheet.create({
   imageFallback: { color: '#A0AAA0', fontSize: 22, fontWeight: '800' },
   itemName: { color: AppColors.primaryText, fontSize: 13, fontWeight: '800', marginTop: 8, maxWidth: '100%' },
   itemMeta: { color: '#8A958C', fontSize: 9, marginTop: 3, maxWidth: '100%' },
-  locationChip: { borderRadius: 999, borderWidth: 1, marginTop: 5, maxWidth: '100%', paddingHorizontal: 6, paddingVertical: 2 },
+  locationChipRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'nowrap', gap: 4, justifyContent: 'center', marginTop: 5, maxWidth: '100%' },
+  locationChip: { borderRadius: 999, borderWidth: 1, maxWidth: '100%', paddingHorizontal: 6, paddingVertical: 2 },
   locationChipText: { fontSize: 9, fontWeight: '900' },
+  locationTagChip: { backgroundColor: '#F4E8FF', borderColor: '#BE9AE8', borderRadius: 999, borderWidth: 1, maxWidth: '100%', paddingHorizontal: 6, paddingVertical: 2 },
+  locationTagChipText: { color: '#684397', fontSize: 9, fontWeight: '900' },
   cardStatusRow: { alignItems: 'center', flexDirection: 'row', gap: 4, justifyContent: 'center', marginTop: 7 },
   statusButton: { alignItems: 'center', backgroundColor: '#F0F4EE', borderRadius: 10, height: 24, justifyContent: 'center', width: 24 },
   statusButtonOverlay: { backgroundColor: 'rgba(255, 255, 255, 0.92)', borderColor: 'rgba(69, 83, 68, 0.12)', borderWidth: 1 },
