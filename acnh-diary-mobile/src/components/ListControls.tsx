@@ -9,6 +9,14 @@ export type ListSortOption<T extends string> = {
   label: string;
 };
 
+export type ListToolbarAction = {
+  accessibilityLabel?: string;
+  disabled?: boolean;
+  key: string;
+  label: string;
+  onPress: () => void;
+};
+
 export function ListSearchRow({ children }: { children: ReactNode }) {
   return <View style={styles.searchRow}>{children}</View>;
 }
@@ -81,22 +89,26 @@ export function ListFilterChip({
 }
 
 export function ListResultToolbar<T extends string>({
+  actions = [],
   descending,
   isFiltered,
   onReset,
   onSortChange,
   onToggleDirection,
   resultCount,
+  showReset = true,
   sortOptions,
   sortValue,
   totalCount,
 }: {
+  actions?: readonly ListToolbarAction[];
   descending: boolean;
   isFiltered: boolean;
   onReset: () => void;
   onSortChange: (value: T) => void;
   onToggleDirection: () => void;
   resultCount: number;
+  showReset?: boolean;
   sortOptions: readonly ListSortOption<T>[];
   sortValue: T;
   totalCount: number;
@@ -111,11 +123,33 @@ export function ListResultToolbar<T extends string>({
           <Text style={styles.resultCount}>
             {resultCount.toLocaleString('ko-KR')} / {totalCount.toLocaleString('ko-KR')}
           </Text>
-          {isFiltered ? <Text style={styles.resultCountHint}>필터 결과</Text> : null}
-          {isFiltered ? (
+          {isFiltered && showReset ? <Text style={styles.resultCountHint}>필터 결과</Text> : null}
+          {isFiltered && showReset ? (
             <Pressable accessibilityRole="button" onPress={onReset}>
               <Text style={styles.resetText}>초기화</Text>
             </Pressable>
+          ) : null}
+          {actions.length > 0 ? (
+            <View style={styles.toolbarActions}>
+              {actions.map((action) => (
+                <Pressable
+                  accessibilityLabel={action.accessibilityLabel ?? action.label}
+                  accessibilityRole="button"
+                  accessibilityState={{ disabled: action.disabled }}
+                  disabled={action.disabled}
+                  key={action.key}
+                  onPress={action.onPress}
+                  style={({ pressed }) => [
+                    styles.toolbarAction,
+                    action.disabled && styles.toolbarActionDisabled,
+                    pressed && styles.pressed,
+                  ]}>
+                  <Text style={[styles.toolbarActionText, action.disabled && styles.toolbarActionTextDisabled]}>
+                    {action.label}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
           ) : null}
         </View>
         <View style={styles.sortControls}>
@@ -245,6 +279,8 @@ const styles = StyleSheet.create({
   resultToolbar: {
     alignItems: 'center',
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
     justifyContent: 'space-between',
     marginBottom: 14,
     marginTop: 18,
@@ -252,6 +288,9 @@ const styles = StyleSheet.create({
   resultCountGroup: {
     alignItems: 'center',
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1,
+    gap: 6,
     minWidth: 0,
   },
   resultCount: {
@@ -268,7 +307,34 @@ const styles = StyleSheet.create({
     color: AppColors.primaryText,
     fontSize: 12,
     fontWeight: '800',
-    marginLeft: 8,
+  },
+  toolbarActions: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 5,
+  },
+  toolbarAction: {
+    alignItems: 'center',
+    backgroundColor: AppColors.primarySurface,
+    borderColor: AppColors.primaryBorder,
+    borderRadius: 11,
+    borderWidth: 1,
+    justifyContent: 'center',
+    minHeight: 28,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+  },
+  toolbarActionDisabled: {
+    opacity: 0.45,
+  },
+  toolbarActionText: {
+    color: AppColors.primaryText,
+    fontSize: 11,
+    fontWeight: '800',
+  },
+  toolbarActionTextDisabled: {
+    color: '#8E9B91',
   },
   sortControls: {
     alignItems: 'center',

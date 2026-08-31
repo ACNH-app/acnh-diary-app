@@ -100,7 +100,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/9/9f/Common_Butterfly_NH.png",
+      "url": "https://dodo.ac/np/images/8/83/Common_Butterfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/3083daa6f882e652.png"
     },
     "fossilGroup": null,
@@ -200,7 +200,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/7/74/Yellow_Butterfly_NH.png",
+      "url": "https://dodo.ac/np/images/1/17/Yellow_Butterfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/1c7a63fc50d8b965.png"
     },
     "fossilGroup": null,
@@ -302,7 +302,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/e/e1/Tiger_Butterfly_NH.png",
+      "url": "https://dodo.ac/np/images/8/8d/Tiger_Butterfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/1f0229ce0418b836.png"
     },
     "fossilGroup": null,
@@ -398,7 +398,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/8e/Peacock_Butterfly_NH.png",
+      "url": "https://dodo.ac/np/images/2/22/Peacock_Butterfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/cc7bf4b4dda11936.png"
     },
     "fossilGroup": null,
@@ -496,7 +496,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/b/b3/Common_Bluebottle_NH.png",
+      "url": "https://dodo.ac/np/images/d/d1/Common_Bluebottle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/768abb57afa9e5fb.png"
     },
     "fossilGroup": null,
@@ -608,7 +608,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/c/c7/Paper_Kite_Butterfly_NH.png",
+      "url": "https://dodo.ac/np/images/e/e0/Paper_Kite_Butterfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/851c066e545daeb5.png"
     },
     "fossilGroup": null,
@@ -704,7 +704,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/3/3f/Great_Purple_Emperor_NH.png",
+      "url": "https://dodo.ac/np/images/2/29/Great_Purple_Emperor_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/adb3667f631ac7ee.png"
     },
     "fossilGroup": null,
@@ -798,7 +798,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/e/ec/Monarch_Butterfly_NH.png",
+      "url": "https://dodo.ac/np/images/1/18/Monarch_Butterfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/fc59681aa8a9f0fd.png"
     },
     "fossilGroup": null,
@@ -902,7 +902,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/f/f1/Emperor_Butterfly_NH.png",
+      "url": "https://dodo.ac/np/images/c/c9/Emperor_Butterfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/81ed0f5c3b19ea67.png"
     },
     "fossilGroup": null,
@@ -1002,7 +1002,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/d/db/Agrias_Butterfly_NH.png",
+      "url": "https://dodo.ac/np/images/f/f6/Agrias_Butterfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/5fbd545fc6f42976.png"
     },
     "fossilGroup": null,
@@ -1108,7 +1108,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/b/b7/Rajah_Brooke%27s_Birdwing_NH.png",
+      "url": "https://dodo.ac/np/images/1/15/Rajah_Brooke%27s_Birdwing_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/60a1e84c82732db7.png"
     },
     "fossilGroup": null,
@@ -1206,7 +1206,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/8a/Queen_Alexandra%27s_Birdwing_NH.png",
+      "url": "https://dodo.ac/np/images/4/4d/Queen_Alexandra%27s_Birdwing_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/d31b63165b7dd694.png"
     },
     "fossilGroup": null,
@@ -1318,7 +1318,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/a/ab/Moth_NH.png",
+      "url": "https://dodo.ac/np/images/d/da/Moth_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/9f69afa0450de190.png"
     },
     "fossilGroup": null,
@@ -1418,7 +1418,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/a/a4/Atlas_Moth_NH.png",
+      "url": "https://dodo.ac/np/images/4/4e/Atlas_Moth_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/6ccd570b5f9e5185.png"
     },
     "fossilGroup": null,
@@ -1518,7 +1518,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/c/c8/Madagascan_Sunset_Moth_NH.png",
+      "url": "https://dodo.ac/np/images/6/67/Madagascan_Sunset_Moth_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/a202d6d5caaf9904.png"
     },
     "fossilGroup": null,
@@ -1622,7 +1622,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/8c/Long_Locust_NH.png",
+      "url": "https://dodo.ac/np/images/d/d2/Long_Locust_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/fa0b44e28614fcbf.png"
     },
     "fossilGroup": null,
@@ -1718,7 +1718,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/8b/Migratory_Locust_NH.png",
+      "url": "https://dodo.ac/np/images/7/7e/Migratory_Locust_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/90f9339eb601c8a4.png"
     },
     "fossilGroup": null,
@@ -1814,7 +1814,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/d/d4/Rice_Grasshopper_NH.png",
+      "url": "https://dodo.ac/np/images/5/55/Rice_Grasshopper_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/7824712ec14d2f43.png"
     },
     "fossilGroup": null,
@@ -1908,7 +1908,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/1/1d/Grasshopper_NH.png",
+      "url": "https://dodo.ac/np/images/7/7d/Grasshopper_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/fd011c47930c2a24.png"
     },
     "fossilGroup": null,
@@ -2002,7 +2002,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/1/1c/Cricket_NH.png",
+      "url": "https://dodo.ac/np/images/e/e2/Cricket_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/ce4e3de73b1dd0dc.png"
     },
     "fossilGroup": null,
@@ -2094,7 +2094,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/d/d2/Bell_Cricket_NH.png",
+      "url": "https://dodo.ac/np/images/2/2c/Bell_Cricket_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/4d9c35c4fdde2f6f.png"
     },
     "fossilGroup": null,
@@ -2200,7 +2200,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/d/da/Mantis_NH.png",
+      "url": "https://dodo.ac/np/images/8/8a/Mantis_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/1c0d18cac424a77c.png"
     },
     "fossilGroup": null,
@@ -2306,7 +2306,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/c/cd/Orchid_Mantis_NH.png",
+      "url": "https://dodo.ac/np/images/b/b5/Orchid_Mantis_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/87a2931596fb7fa2.png"
     },
     "fossilGroup": null,
@@ -2404,7 +2404,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/8b/Honeybee_NH.png",
+      "url": "https://dodo.ac/np/images/b/b2/Honeybee_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/2ca3ef2bd41a9197.png"
     },
     "fossilGroup": null,
@@ -2516,7 +2516,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/b/bb/Wasp_NH.png",
+      "url": "https://dodo.ac/np/images/f/fa/Wasp_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/90f06362052760a2.png"
     },
     "fossilGroup": null,
@@ -2608,7 +2608,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/2/2e/Brown_Cicada_NH.png",
+      "url": "https://dodo.ac/np/images/7/7d/Brown_Cicada_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/fda54db72d25a2ce.png"
     },
     "fossilGroup": null,
@@ -2700,7 +2700,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/8c/Robust_Cicada_NH.png",
+      "url": "https://dodo.ac/np/images/d/d0/Robust_Cicada_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/5ec54dbb7185b235.png"
     },
     "fossilGroup": null,
@@ -2792,7 +2792,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/5/59/Giant_Cicada_NH.png",
+      "url": "https://dodo.ac/np/images/9/9b/Giant_Cicada_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/6fea3c2ad27893cb.png"
     },
     "fossilGroup": null,
@@ -2884,7 +2884,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/80/Walker_Cicada_NH.png",
+      "url": "https://dodo.ac/np/images/7/70/Walker_Cicada_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/5853f2491b6788ad.png"
     },
     "fossilGroup": null,
@@ -2976,7 +2976,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/f/f6/Evening_Cicada_NH.png",
+      "url": "https://dodo.ac/np/images/9/96/Evening_Cicada_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/038cb53057ca6066.png"
     },
     "fossilGroup": null,
@@ -3068,7 +3068,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/7/77/Cicada_Shell_NH.png",
+      "url": "https://dodo.ac/np/images/5/52/Cicada_Shell_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/15e0cd279c948b4c.png"
     },
     "fossilGroup": null,
@@ -3160,7 +3160,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/1/1d/Red_Dragonfly_NH.png",
+      "url": "https://dodo.ac/np/images/e/e0/Red_Dragonfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/d2a3a6d724464160.png"
     },
     "fossilGroup": null,
@@ -3262,7 +3262,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/5/57/Darner_Dragonfly_NH.png",
+      "url": "https://dodo.ac/np/images/6/67/Darner_Dragonfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/fd0e6eb894df8b2f.png"
     },
     "fossilGroup": null,
@@ -3362,7 +3362,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/6/6e/Banded_Dragonfly_NH.png",
+      "url": "https://dodo.ac/np/images/2/29/Banded_Dragonfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/b5693d720180ab0b.png"
     },
     "fossilGroup": null,
@@ -3458,7 +3458,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/f/f6/Damselfly_NH.png",
+      "url": "https://dodo.ac/np/images/d/dc/Damselfly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/415c78c480723362.png"
     },
     "fossilGroup": null,
@@ -3548,7 +3548,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/5/50/Firefly_NH.png",
+      "url": "https://dodo.ac/np/images/c/cc/Firefly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/0b9a87bf388eb92d.png"
     },
     "fossilGroup": null,
@@ -3650,7 +3650,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/89/Mole_Cricket_NH.png",
+      "url": "https://dodo.ac/np/images/f/fe/Mole_Cricket_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/8ffe519dc8f8cae6.png"
     },
     "fossilGroup": null,
@@ -3748,7 +3748,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/e/ea/Pondskater_NH.png",
+      "url": "https://dodo.ac/np/images/7/74/Pondskater_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/8975ae6fc445c66f.png"
     },
     "fossilGroup": null,
@@ -3846,7 +3846,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/0/0e/Diving_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/c/c7/Diving_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/ea88249ae55f67c0.png"
     },
     "fossilGroup": null,
@@ -3946,7 +3946,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/6/68/Giant_Water_Bug_NH.png",
+      "url": "https://dodo.ac/np/images/5/55/Giant_Water_Bug_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/693e7d6b32ac475d.png"
     },
     "fossilGroup": null,
@@ -4050,7 +4050,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/5/5b/Stinkbug_NH.png",
+      "url": "https://dodo.ac/np/images/5/5a/Stinkbug_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/8c6370c39fcb8265.png"
     },
     "fossilGroup": null,
@@ -4154,7 +4154,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/1/1e/Man-Faced_Stink_Bug_NH.png",
+      "url": "https://dodo.ac/np/images/8/89/Man-Faced_Stink_Bug_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/9656d45af80a076d.png"
     },
     "fossilGroup": null,
@@ -4252,7 +4252,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/3/33/Ladybug_NH.png",
+      "url": "https://dodo.ac/np/images/f/fd/Ladybug_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/196a3a37669958fd.png"
     },
     "fossilGroup": null,
@@ -4358,7 +4358,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/a/a0/Tiger_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/7/7c/Tiger_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/26f2989541359b0b.png"
     },
     "fossilGroup": null,
@@ -4456,7 +4456,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/82/Jewel_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/f/f8/Jewel_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/746265817bb98a2b.png"
     },
     "fossilGroup": null,
@@ -4554,7 +4554,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/1/16/Violin_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/f/fb/Violin_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/8409fc7cb3c8df4c.png"
     },
     "fossilGroup": null,
@@ -4666,7 +4666,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/2/24/Citrus_Long-Horned_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/2/23/Citrus_Long-Horned_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/36e6214412e79ff5.png"
     },
     "fossilGroup": null,
@@ -4764,7 +4764,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/4/44/Rosalia_Batesi_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/6/6f/Rosalia_Batesi_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/5bcdec38985c23bc.png"
     },
     "fossilGroup": null,
@@ -4856,7 +4856,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/c/c3/Blue_Weevil_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/6/64/Blue_Weevil_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/bb3d6bb5c69d0708.png"
     },
     "fossilGroup": null,
@@ -4950,7 +4950,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/f/f8/Dung_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/4/46/Dung_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/f178eb91f28348b7.png"
     },
     "fossilGroup": null,
@@ -5044,7 +5044,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/1/12/Earth-Boring_Dung_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/7/72/Earth-Boring_Dung_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/ca78734f4b85800b.png"
     },
     "fossilGroup": null,
@@ -5136,7 +5136,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/d/db/Scarab_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/8/84/Scarab_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/8736d829fcfad715.png"
     },
     "fossilGroup": null,
@@ -5230,7 +5230,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/3/3f/Drone_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/b/b0/Drone_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/383a3afd649c2920.png"
     },
     "fossilGroup": null,
@@ -5326,7 +5326,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/4/43/Goliath_Beetle_NH.png",
+      "url": "https://dodo.ac/np/images/d/dc/Goliath_Beetle_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/ecc982109cb3d30f.png"
     },
     "fossilGroup": null,
@@ -5418,7 +5418,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/e/e0/Saw_Stag_NH.png",
+      "url": "https://dodo.ac/np/images/9/94/Saw_Stag_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/2f18dc84543cafd0.png"
     },
     "fossilGroup": null,
@@ -5510,7 +5510,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/5/56/Miyama_Stag_NH.png",
+      "url": "https://dodo.ac/np/images/2/2a/Miyama_Stag_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/50a6bdc999eae572.png"
     },
     "fossilGroup": null,
@@ -5602,7 +5602,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/6/6b/Giant_Stag_NH.png",
+      "url": "https://dodo.ac/np/images/5/55/Giant_Stag_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/b3623e0c52291bc5.png"
     },
     "fossilGroup": null,
@@ -5698,7 +5698,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/82/Rainbow_Stag_NH.png",
+      "url": "https://dodo.ac/np/images/a/ac/Rainbow_Stag_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/e455da63f0ee3ca6.png"
     },
     "fossilGroup": null,
@@ -5790,7 +5790,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/6/64/Cyclommatus_Stag_NH.png",
+      "url": "https://dodo.ac/np/images/6/68/Cyclommatus_Stag_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/7eb74471a9ab1b68.png"
     },
     "fossilGroup": null,
@@ -5882,7 +5882,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/1/1d/Golden_Stag_NH.png",
+      "url": "https://dodo.ac/np/images/d/db/Golden_Stag_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/af320fa273b4f82a.png"
     },
     "fossilGroup": null,
@@ -5974,7 +5974,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/a/a3/Giraffe_Stag_NH.png",
+      "url": "https://dodo.ac/np/images/9/9f/Giraffe_Stag_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/02180e9bdde86810.png"
     },
     "fossilGroup": null,
@@ -6066,7 +6066,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/4/4f/Horned_Dynastid_NH.png",
+      "url": "https://dodo.ac/np/images/c/c4/Horned_Dynastid_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/03db74a23ee69cf4.png"
     },
     "fossilGroup": null,
@@ -6158,7 +6158,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/0/06/Horned_Atlas_NH.png",
+      "url": "https://dodo.ac/np/images/4/41/Horned_Atlas_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/cd5be314a3949e61.png"
     },
     "fossilGroup": null,
@@ -6250,7 +6250,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/b/b9/Horned_Elephant_NH.png",
+      "url": "https://dodo.ac/np/images/0/01/Horned_Elephant_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/fe3f770becd1b58a.png"
     },
     "fossilGroup": null,
@@ -6342,7 +6342,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/4/47/Horned_Hercules_NH.png",
+      "url": "https://dodo.ac/np/images/5/5a/Horned_Hercules_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/a25eced10d00b88e.png"
     },
     "fossilGroup": null,
@@ -6440,7 +6440,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/0/0f/Walking_Stick_NH.png",
+      "url": "https://dodo.ac/np/images/e/e5/Walking_Stick_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/b112633685212a7b.png"
     },
     "fossilGroup": null,
@@ -6534,7 +6534,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/6/6e/Walking_Leaf_NH.png",
+      "url": "https://dodo.ac/np/images/7/7f/Walking_Leaf_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/2efdc2314f127e05.png"
     },
     "fossilGroup": null,
@@ -6646,7 +6646,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/0/08/Bagworm_NH.png",
+      "url": "https://dodo.ac/np/images/5/5b/Bagworm_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/66237a8651f58fd0.png"
     },
     "fossilGroup": null,
@@ -6758,7 +6758,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/4/4a/Ant_NH.png",
+      "url": "https://dodo.ac/np/images/2/2b/Ant_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/780386955e106556.png"
     },
     "fossilGroup": null,
@@ -6870,7 +6870,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/8f/Hermit_Crab_NH.png",
+      "url": "https://dodo.ac/np/images/f/fd/Hermit_Crab_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/8b0a990262aff896.png"
     },
     "fossilGroup": null,
@@ -6982,7 +6982,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/e/eb/Wharf_Roach_NH.png",
+      "url": "https://dodo.ac/np/images/5/5d/Wharf_Roach_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/5b2ed367c7226fc5.png"
     },
     "fossilGroup": null,
@@ -7094,7 +7094,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/d/d4/Fly_NH.png",
+      "url": "https://dodo.ac/np/images/f/f0/Fly_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/3fd0681885a0d5cd.png"
     },
     "fossilGroup": null,
@@ -7190,7 +7190,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/1/1c/Mosquito_NH.png",
+      "url": "https://dodo.ac/np/images/4/4f/Mosquito_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/f7a7573d7b3a8765.png"
     },
     "fossilGroup": null,
@@ -7294,7 +7294,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/3/3e/Flea_NH.png",
+      "url": "https://dodo.ac/np/images/7/75/Flea_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/07af401e90bfff65.png"
     },
     "fossilGroup": null,
@@ -7406,7 +7406,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/0/0b/Snail_NH.png",
+      "url": "https://dodo.ac/np/images/7/74/Snail_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/69bec4fd139bb07f.png"
     },
     "fossilGroup": null,
@@ -7514,7 +7514,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/0/02/Pill_Bug_NH.png",
+      "url": "https://dodo.ac/np/images/d/d3/Pill_Bug_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/95f339992496f2b1.png"
     },
     "fossilGroup": null,
@@ -7622,7 +7622,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/8/89/Centipede_NH.png",
+      "url": "https://dodo.ac/np/images/7/77/Centipede_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/6658f33dea2adeb9.png"
     },
     "fossilGroup": null,
@@ -7734,7 +7734,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/e/e5/Spider_NH.png",
+      "url": "https://dodo.ac/np/images/7/74/Spider_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/fe95f7034354bb79.png"
     },
     "fossilGroup": null,
@@ -7834,7 +7834,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/b/bf/Tarantula_NH.png",
+      "url": "https://dodo.ac/np/images/5/58/Tarantula_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/a8bdf82fa274f59f.png"
     },
     "fossilGroup": null,
@@ -7934,7 +7934,7 @@
       "length": 1.0
     },
     "tankImage": {
-      "url": "https://dodo.ac/np/images/f/fe/Scorpion_NH.png",
+      "url": "https://dodo.ac/np/images/e/e0/Scorpion_NH_Furniture_Icon.png",
       "localPath": "assets/encyclopedia/bugs/tank/98ad21a8c4e7eea3.png"
     },
     "fossilGroup": null,

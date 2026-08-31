@@ -237,6 +237,10 @@ export function EncyclopediaDetailScreen({
   const accent = categoryAccent[category];
   const creature = isCreature(category);
   const availability = getAvailability(item, hemisphere);
+  const showsCreatureLocationDetails = category !== 'sea';
+  const showsShadowInAvailability = category === 'fish' || category === 'sea';
+  const showsMovementInAvailability = category === 'sea' && Boolean(item.movementSpeed);
+  const showsSpecialPrice = category !== 'sea' && item.prices.special != null;
 
   const updateStatus = (status: EncyclopediaStatus) => {
     if (!islandId) {
@@ -313,15 +317,15 @@ export function EncyclopediaDetailScreen({
               />
               <InfoRow label="출현 월" value={localizeAvailabilityLabel(availability.label) ?? '정보 없음'} />
               <InfoRow label="이번 달 시간" value={localizeAvailabilityTime(availability.timesByMonth[String(currentMonth)]) ?? '정보 없음'} />
-              <InfoRow label="출현 장소" value={localizeLocation(item.location) ?? '정보 없음'} />
-              <InfoRow label="출현 조건" value={localizeCondition(item.condition) ?? '제한 없음'} />
-              <InfoRow label="출현 빈도" value={localizeRarity(item.rarity) || '정보 없음'} />
+              {showsCreatureLocationDetails ? <InfoRow label="출현 장소" value={localizeLocation(item.location) ?? '정보 없음'} /> : null}
+              {showsCreatureLocationDetails ? <InfoRow label="출현 조건" value={localizeCondition(item.condition) ?? '제한 없음'} /> : null}
+              {showsCreatureLocationDetails ? <InfoRow label="출현 빈도" value={localizeRarity(item.rarity) || '정보 없음'} /> : null}
+              {showsShadowInAvailability ? <InfoRow label="그림자 크기" value={localizeShadow(item.shadow) ?? '해당 없음'} /> : null}
+              {showsMovementInAvailability ? <InfoRow label="이동 속도" value={localizeMovementSpeed(item.movementSpeed) ?? item.movementSpeed ?? '정보 없음'} /> : null}
             </Section>
             <Section title="거래·크기 정보">
               <InfoRow label={item.prices.primaryLabel ?? '판매가'} value={formatPrice(item.prices.primary) ?? '정보 없음'} />
-              <InfoRow label={item.prices.specialLabel ?? '특수 가격'} value={formatPrice(item.prices.special) ?? '정보 없음'} />
-              <InfoRow label="그림자 크기" value={localizeShadow(item.shadow) ?? '해당 없음'} />
-              {item.movementSpeed ? <InfoRow label="이동 속도" value={localizeMovementSpeed(item.movementSpeed) ?? item.movementSpeed} /> : null}
+              {showsSpecialPrice ? <InfoRow label={item.prices.specialLabel ?? '특수 가격'} value={formatPrice(item.prices.special) ?? '정보 없음'} /> : null}
               <InfoRow label="수조 크기" value={formatTank(item.tank.width, item.tank.length)} />
               <TankPreview image={getEncyclopediaDetailAsset(category, item.id, 'tank')} />
             </Section>
@@ -471,7 +475,7 @@ function AvailabilityTimeline({
           return (
             <View key={monthValue} style={styles.monthSlot}>
               <Text style={[styles.monthArrow, current && { color: accent }]}>
-                {current ? '▲' : ' '}
+                {current ? '▼' : ' '}
               </Text>
               <View
                 style={[

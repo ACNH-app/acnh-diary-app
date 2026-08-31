@@ -306,6 +306,17 @@ export function setCatalogOwnedStatus(
   }
 }
 
+export function setCatalogOwnedStatusForItems(
+  islandId: string,
+  itemType: CatalogCategory,
+  items: Array<{ id: string; linkedVillager?: { id: string; status: VillagerStatus } }>,
+  value: boolean,
+) {
+  for (const item of items) {
+    setCatalogOwnedStatus(islandId, itemType, item.id, value, item.linkedVillager);
+  }
+}
+
 export function setCollectionStatusForItems(
   islandId: string,
   itemType: EncyclopediaCategory | CatalogCategory,

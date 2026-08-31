@@ -688,6 +688,39 @@ export function setCatalogOwnedStatus(
   });
 }
 
+export function setCatalogOwnedStatusForItems(
+  islandId: string,
+  itemType: CatalogCategory,
+  items: Array<{ id: string; linkedVillager?: { id: string; status: VillagerStatus } }>,
+  value: boolean,
+) {
+  if (items.length === 0) return;
+  db.withTransactionSync(() => {
+    for (const item of items) {
+      db.runSync(
+        `INSERT INTO collection_records (island_id, item_type, item_id, owned)
+         VALUES (?, ?, ?, ?)
+         ON CONFLICT(island_id, item_type, item_id) DO UPDATE SET
+           owned = excluded.owned,
+           updated_at = CURRENT_TIMESTAMP;`,
+        [islandId, itemType, item.id, value ? 1 : 0],
+      );
+
+      if (item.linkedVillager) {
+        const column = VILLAGER_STATUS_COLUMNS[item.linkedVillager.status];
+        db.runSync(
+          `INSERT INTO villager_states (island_id, villager_id, ${column})
+           VALUES (?, ?, ?)
+           ON CONFLICT(island_id, villager_id) DO UPDATE SET
+             ${column} = excluded.${column},
+             updated_at = CURRENT_TIMESTAMP;`,
+          [islandId, item.linkedVillager.id, value ? 1 : 0],
+        );
+      }
+    }
+  });
+}
+
 export function setCollectionStatusForItems(
   islandId: string,
   itemType: EncyclopediaCategory | CatalogCategory,

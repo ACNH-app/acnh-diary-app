@@ -39,6 +39,7 @@ import {
   getCollectionStatesForIsland,
   initializeDatabase,
   setCatalogOwnedStatus,
+  setCatalogOwnedStatusForItems,
 } from '@/db/database';
 import { villagers } from '@/data/villagers';
 import type { CatalogCategory, CatalogFilterFacet, CatalogItem } from '@/types/catalog';
@@ -143,6 +144,18 @@ function formatRecipeMaterials(item: CatalogItem) {
   return Array.isArray(materials) ? materials.join(' · ') : null;
 }
 
+function getLinkedVillagerForCatalogItem(item: CatalogItem) {
+  if (item.catalogType !== 'photos') return undefined;
+  const villager = villagers.find((candidate) =>
+    candidate.collectibles.framed_photo.item_id === item.id || candidate.collectibles.poster.item_id === item.id,
+  );
+  if (!villager) return undefined;
+  return {
+    id: villager.id,
+    status: villager.collectibles.framed_photo.item_id === item.id ? 'photoReceived' : 'posterOwned',
+  } as const;
+}
+
 export function CatalogListScreen({ initialCategory }: { initialCategory: CatalogCategory }) {
   const router = useRouter();
   const listRef = useRef<FlatList<CatalogItem>>(null);
@@ -233,18 +246,7 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
       return;
     }
     try {
-      let linkedVillager: { id: string; status: 'photoReceived' | 'posterOwned' } | undefined;
-      if (item.catalogType === 'photos') {
-        const villager = villagers.find((candidate) =>
-          candidate.collectibles.framed_photo.item_id === item.id || candidate.collectibles.poster.item_id === item.id,
-        );
-        if (villager) {
-          linkedVillager = {
-            id: villager.id,
-            status: item.classification === '사진' ? 'photoReceived' : 'posterOwned',
-          };
-        }
-      }
+      const linkedVillager = getLinkedVillagerForCatalogItem(item);
       setCatalogOwnedStatus(islandId, item.catalogType, item.id, value, linkedVillager);
       setStates((current) => ({
         ...current,
@@ -253,6 +255,36 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
           owned: value,
         },
       }));
+    } catch {
+      Alert.alert('보유 상태를 저장하지 못했어요', '변경 내용을 저장하는 중 문제가 발생했습니다.');
+    }
+  };
+
+  const applyBulkOwned = (value: boolean) => {
+    if (!islandId) {
+      Alert.alert('섬 정보가 필요해요', '먼저 섬 정보를 등록해 주세요.');
+      return;
+    }
+    try {
+      const itemsByType = new Map<CatalogCategory, Array<{ id: string; linkedVillager?: ReturnType<typeof getLinkedVillagerForCatalogItem> }>>();
+      for (const item of visibleItems) {
+        const group = itemsByType.get(item.catalogType) ?? [];
+        group.push({ id: item.id, linkedVillager: getLinkedVillagerForCatalogItem(item) });
+        itemsByType.set(item.catalogType, group);
+      }
+      for (const [itemType, itemGroup] of itemsByType) {
+        setCatalogOwnedStatusForItems(islandId, itemType, itemGroup, value);
+      }
+      setStates((current) => {
+        const next = { ...current };
+        for (const item of visibleItems) {
+          next[`${item.catalogType}/${item.id}`] = {
+            ...getState(current, item),
+            owned: value,
+          };
+        }
+        return next;
+      });
     } catch {
       Alert.alert('보유 상태를 저장하지 못했어요', '변경 내용을 저장하는 중 문제가 발생했습니다.');
     }
@@ -372,6 +404,17 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
             ) : null}
 
             <ListResultToolbar
+              actions={(() => {
+                const ownedActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item).owned);
+                return [
+                  {
+                    key: 'owned',
+                    label: ownedActive ? '보유 해제' : '전체 보유',
+                    disabled: visibleItems.length === 0,
+                    onPress: () => applyBulkOwned(!ownedActive),
+                  },
+                ];
+              })()}
               descending={sortDescending}
               isFiltered={isFiltered}
               onReset={clearFilters}

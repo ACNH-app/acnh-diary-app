@@ -25,8 +25,16 @@ import {
   type ListSortOption,
 } from '@/components/ListControls';
 import { SearchBar } from '@/components/SearchBar';
+import { UnderlineTabs } from '@/components/UnderlineTabs';
 import { encyclopediaCategories, getEncyclopediaItems, getEncyclopediaLabel } from '@/data/encyclopedia';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
+import {
+  localizeAvailabilityTime,
+  localizeCondition,
+  localizeLocation,
+  localizeRarity,
+  localizeShadow,
+} from '@/data/encyclopedia-labels';
 import {
   getActiveIsland,
   getCollectionStatesForIsland,
@@ -54,6 +62,14 @@ type FilterKey =
 type SortMode = 'number' | 'name' | 'group';
 type ArtTypeTab = 'all' | 'painting' | 'statue';
 type ArtAuthenticityTab = 'all' | 'genuineOnly' | 'hasFake';
+type Hemisphere = 'north' | 'south';
+type FishFilterFacet = 'location' | 'month' | 'time' | 'rarity' | 'condition' | 'shadow';
+type FishFacetFilters = Record<FishFilterFacet, string[]>;
+type LocationChipColors = {
+  backgroundColor: string;
+  borderColor: string;
+  color: string;
+};
 
 const EMPTY_STATE: EncyclopediaState = {
   caught: false,
@@ -81,6 +97,53 @@ const filterOptions: Record<EncyclopediaCategory, FilterKey[]> = {
   fossils: ['owned', 'unowned', 'donated', 'undonated'],
   art: ['donated', 'undonated', 'genuineOwned', 'fakeOwned'],
 };
+
+const EMPTY_FISH_FACET_FILTERS: FishFacetFilters = {
+  location: [],
+  month: [],
+  time: [],
+  rarity: [],
+  condition: [],
+  shadow: [],
+};
+
+const fishFilterFacets: FishFilterFacet[] = ['location', 'month', 'time', 'rarity', 'condition', 'shadow'];
+
+const fishFilterFacetLabels: Record<FishFilterFacet, string> = {
+  location: '출현 장소',
+  month: '출현 월',
+  time: '출현 시간',
+  rarity: '출현 빈도',
+  condition: '출현 조건',
+  shadow: '그림자 크기',
+};
+
+const fishLocationTabLabels: Record<string, string> = {
+  Pier: '부두',
+  Pond: '연못',
+  River: '강',
+  'River (clifftop)': '절벽 위 강',
+  Sea: '바다',
+};
+
+const locationChipColors: Record<string, LocationChipColors> = {
+  Pier: { backgroundColor: '#FFF0DA', borderColor: '#E2B475', color: '#7A4F15' },
+  Pond: { backgroundColor: '#EAF4D5', borderColor: '#B7D975', color: '#486815' },
+  River: { backgroundColor: '#DDF0FF', borderColor: '#85BFE1', color: '#1F6282' },
+  'River (clifftop)': { backgroundColor: '#EAE6FF', borderColor: '#A89EE8', color: '#55499D' },
+  'River (mouth)': { backgroundColor: '#DDF6E7', borderColor: '#80CCA0', color: '#236A43' },
+  Sea: { backgroundColor: '#D8F4F1', borderColor: '#7CCBC3', color: '#1F6C67' },
+  'Sea (raining)': { backgroundColor: '#E3EBFF', borderColor: '#91A9EC', color: '#3D579A' },
+};
+
+const locationChipPalette: LocationChipColors[] = [
+  { backgroundColor: '#FFE6E1', borderColor: '#E59B90', color: '#8A3C32' },
+  { backgroundColor: '#F4E8FF', borderColor: '#BE9AE8', color: '#684397' },
+  { backgroundColor: '#FFF5C9', borderColor: '#DFC85F', color: '#735F10' },
+  { backgroundColor: '#E7F6DD', borderColor: '#91CA75', color: '#426A29' },
+  { backgroundColor: '#E1F0FF', borderColor: '#85B6E4', color: '#2D5E8E' },
+  { backgroundColor: '#FFE9F1', borderColor: '#E69AB7', color: '#873B5B' },
+];
 
 function isCreature(category: EncyclopediaCategory) {
   return category === 'bugs' || category === 'fish' || category === 'sea';
@@ -123,10 +186,10 @@ function formatPrice(value: number | null) {
   return value == null ? null : `${value.toLocaleString('ko-KR')}벨`;
 }
 
-function statusForBulk(category: EncyclopediaCategory): EncyclopediaStatus[] {
-  if (category === 'art') return ['donated', 'genuineOwned', 'fakeOwned'];
-  if (category === 'fossils') return ['owned', 'donated'];
-  return ['caught', 'donated'];
+function primaryBulkStatus(category: EncyclopediaCategory): EncyclopediaStatus {
+  if (category === 'art') return 'genuineOwned';
+  if (category === 'fossils') return 'owned';
+  return 'caught';
 }
 
 function statusLabel(status: EncyclopediaStatus) {
@@ -135,6 +198,119 @@ function statusLabel(status: EncyclopediaStatus) {
   if (status === 'donated') return '기증';
   if (status === 'genuineOwned') return '진품';
   return '가품';
+}
+
+function bulkActionLabel(status: EncyclopediaStatus, allActive: boolean) {
+  if (status === 'caught') return allActive ? '채집 해제' : '전체 채집';
+  if (status === 'donated') return allActive ? '기증 해제' : '전체 기증';
+  if (status === 'genuineOwned') return allActive ? '진품 해제' : '전체 진품';
+  return allActive ? '보유 해제' : '전체 보유';
+}
+
+function normalizeFacetValue(value: string | null | undefined) {
+  return value?.replace(/[\u00a0\u202f]/g, ' ').replace(/\s+/g, ' ').trim() || null;
+}
+
+function getFishCondition(item: EncyclopediaItem) {
+  if (item.condition) return item.condition;
+  return item.location === 'Sea (raining)' ? 'Rain only' : 'Any weather';
+}
+
+function getFishLocationTabKey(location: string | null) {
+  if (location === 'River (clifftop)') return 'River';
+  if (location === 'River (mouth)') return 'River';
+  if (location === 'Sea (raining)') return 'Sea';
+  return location ?? 'unknown';
+}
+
+function getAvailability(item: EncyclopediaItem, hemisphere: Hemisphere) {
+  return item.availability[hemisphere];
+}
+
+function getFishFacetValues(item: EncyclopediaItem, facet: FishFilterFacet, hemisphere: Hemisphere) {
+  const availability = getAvailability(item, hemisphere);
+
+  if (facet === 'location') return [normalizeFacetValue(item.location)].filter(Boolean) as string[];
+  if (facet === 'month') return availability.months.map(String);
+  if (facet === 'time') {
+    const periodTimes = availability.periods
+      .map((period) => normalizeFacetValue(period.time))
+      .filter((time) => time && time !== 'NA') as string[];
+    if (periodTimes.length > 0) return Array.from(new Set(periodTimes));
+    return Array.from(
+      new Set(
+        Object.values(availability.timesByMonth)
+          .map((time) => normalizeFacetValue(time))
+          .filter((time) => time && time !== 'NA') as string[],
+      ),
+    );
+  }
+  if (facet === 'rarity') return [normalizeFacetValue(item.rarity)].filter(Boolean) as string[];
+  if (facet === 'condition') return [getFishCondition(item)];
+  if (facet === 'shadow') return [normalizeFacetValue(item.shadow)].filter(Boolean) as string[];
+  return [];
+}
+
+function formatFishFacetLabel(facet: FishFilterFacet, value: string) {
+  if (facet === 'location') return localizeLocation(value) ?? value;
+  if (facet === 'month') return `${value}월`;
+  if (facet === 'time') return localizeAvailabilityTime(value) ?? value;
+  if (facet === 'rarity') return localizeRarity(value) ?? value;
+  if (facet === 'condition') return localizeCondition(value) ?? value;
+  if (facet === 'shadow') return localizeShadow(value) ?? value;
+  return value;
+}
+
+function getFishFacetOptions(items: EncyclopediaItem[], facet: FishFilterFacet, hemisphere: Hemisphere) {
+  const counts = new Map<string, number>();
+  for (const item of items) {
+    for (const value of getFishFacetValues(item, facet, hemisphere)) {
+      counts.set(value, (counts.get(value) ?? 0) + 1);
+    }
+  }
+
+  return [...counts.entries()]
+    .map(([key, itemCount]) => ({ key, itemCount, label: formatFishFacetLabel(facet, key) }))
+    .sort((left, right) => {
+      if (facet === 'month') return Number(left.key) - Number(right.key);
+      return left.label.localeCompare(right.label, 'ko');
+    });
+}
+
+function getFishLocationTabs(items: EncyclopediaItem[]) {
+  const counts = new Map<string, number>();
+  for (const item of items) {
+    const key = getFishLocationTabKey(item.location);
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+
+  return [
+    { key: 'all', label: '전체' },
+    ...[...counts.entries()]
+      .map(([key]) => ({
+        key,
+        label: fishLocationTabLabels[key] ?? localizeLocation(key) ?? key,
+      }))
+      .sort((left, right) => left.label.localeCompare(right.label, 'ko')),
+  ];
+}
+
+function matchesFishFacetFilters(item: EncyclopediaItem, filters: FishFacetFilters, hemisphere: Hemisphere) {
+  return fishFilterFacets.every((facet) => {
+    const selected = filters[facet];
+    if (selected.length === 0) return true;
+    const values = getFishFacetValues(item, facet, hemisphere);
+    return selected.some((value) => values.includes(value));
+  });
+}
+
+function getLocationChipColors(location: string | null) {
+  if (!location) return locationChipPalette[0];
+  const matched = locationChipColors[location];
+  if (matched) return matched;
+
+  const index = [...location].reduce((sum, char) => sum + char.charCodeAt(0), 0) % locationChipPalette.length;
+  return locationChipPalette[index];
 }
 
 export function EncyclopediaListScreen({ category }: { category: EncyclopediaCategory }) {
@@ -148,16 +324,19 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
   const [sortDescending, setSortDescending] = useState(false);
   const [artTypeTab, setArtTypeTab] = useState<ArtTypeTab>('all');
   const [artAuthenticityTab, setArtAuthenticityTab] = useState<ArtAuthenticityTab>('all');
+  const [activeFishLocationTab, setActiveFishLocationTab] = useState('all');
+  const [fishFacetFilters, setFishFacetFilters] = useState<FishFacetFilters>(EMPTY_FISH_FACET_FILTERS);
   const [filterExpanded, setFilterExpanded] = useState(false);
-  const [showBulkControls, setShowBulkControls] = useState(false);
   const [states, setStates] = useState<Record<string, EncyclopediaState>>({});
   const [islandId, setIslandId] = useState<string | null>(null);
+  const [hemisphere, setHemisphere] = useState<Hemisphere>('north');
 
   const refresh = useCallback(() => {
     try {
       initializeDatabase();
       const island = getActiveIsland();
       setIslandId(island?.id ?? null);
+      setHemisphere(island?.hemisphere === 'south' ? 'south' : 'north');
       setStates(island ? getCollectionStatesForIsland(island.id) : {});
     } catch {
       Alert.alert('도감 상태를 불러오지 못했어요', '잠시 후 다시 시도해 주세요.');
@@ -179,6 +358,9 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
         String(item.number ?? '').includes(normalizedSearch);
       return (
         matchesSearch &&
+        (category !== 'fish' ||
+          ((activeFishLocationTab === 'all' || getFishLocationTabKey(item.location) === activeFishLocationTab) &&
+            matchesFishFacetFilters(item, fishFacetFilters, hemisphere))) &&
         (category !== 'art' ||
           ((artTypeTab === 'all' ||
             (artTypeTab === 'painting' && artwork?.type === 'Painting') ||
@@ -193,7 +375,20 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
       const result = compareItems(left, right, sortMode);
       return sortDescending ? -result : result;
     });
-  }, [activeFilters, artAuthenticityTab, artTypeTab, category, items, normalizedSearch, sortDescending, sortMode, states]);
+  }, [
+    activeFilters,
+    activeFishLocationTab,
+    artAuthenticityTab,
+    artTypeTab,
+    category,
+    fishFacetFilters,
+    hemisphere,
+    items,
+    normalizedSearch,
+    sortDescending,
+    sortMode,
+    states,
+  ]);
 
   const updateState = (item: EncyclopediaItem, status: EncyclopediaStatus, value: boolean) => {
     if (!islandId) {
@@ -245,6 +440,18 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
     );
   };
 
+  const toggleFishFacetFilter = (facet: FishFilterFacet, value: string) => {
+    setFishFacetFilters((current) => {
+      const selected = current[facet];
+      return {
+        ...current,
+        [facet]: selected.includes(value)
+          ? selected.filter((item) => item !== value)
+          : [...selected, value],
+      };
+    });
+  };
+
   const clearFilters = () => {
     setActiveFilters([]);
     setSearch('');
@@ -252,9 +459,22 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
     setSortDescending(false);
     setArtTypeTab('all');
     setArtAuthenticityTab('all');
+    setActiveFishLocationTab('all');
+    setFishFacetFilters(EMPTY_FISH_FACET_FILTERS);
   };
 
   const columns = isCreature(category) ? 5 : 2;
+  const fishFilterOptions = useMemo(
+    () =>
+      Object.fromEntries(
+        fishFilterFacets.map((facet) => [facet, getFishFacetOptions(items, facet, hemisphere)]),
+      ) as Record<FishFilterFacet, ReturnType<typeof getFishFacetOptions>>,
+    [hemisphere, items],
+  );
+  const fishLocationTabs = useMemo(
+    () => getFishLocationTabs(items),
+    [items],
+  );
   const sortOptions: Array<ListSortOption<SortMode>> = category === 'fossils'
     ? [
         { key: 'number', label: '번호순' },
@@ -268,7 +488,8 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
   const activeFilterCount =
     activeFilters.length +
     (artTypeTab !== 'all' ? 1 : 0) +
-    (artAuthenticityTab !== 'all' ? 1 : 0);
+    (artAuthenticityTab !== 'all' ? 1 : 0) +
+    (category === 'fish' ? (activeFishLocationTab !== 'all' ? 1 : 0) + fishFilterFacets.reduce((count, facet) => count + fishFacetFilters[facet].length, 0) : 0);
   const isFiltered = Boolean(search || activeFilterCount || sortMode !== 'number' || sortDescending);
 
   return (
@@ -292,6 +513,15 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
         }
         ListHeaderComponent={
           <View>
+            {category === 'fish' ? (
+              <UnderlineTabs
+                accessibilityLabel={(tab) => `${tab.label} 출현 장소 물고기 보기`}
+                onChange={setActiveFishLocationTab}
+                tabs={fishLocationTabs}
+                value={activeFishLocationTab}
+              />
+            ) : null}
+
             <ListSearchRow>
               <SearchBar
                 accessibilityLabel={`${getEncyclopediaLabel(category)} 검색`}
@@ -310,6 +540,15 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
 
             {filterExpanded ? (
               <ListFilterPanel>
+                {isFiltered ? (
+                  <View style={styles.filterPanelHeader}>
+                    <Text style={styles.filterPanelHint}>현재 조건을 적용 중이에요</Text>
+                    <Pressable accessibilityRole="button" onPress={clearFilters} style={styles.filterResetButton}>
+                      <Text style={styles.filterResetText}>초기화</Text>
+                    </Pressable>
+                  </View>
+                ) : null}
+
                 <ListFilterGroup title="수집 상태">
                   {filterOptions[category].map((filter) => (
                     <ListFilterChip
@@ -320,6 +559,31 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
                     />
                   ))}
                 </ListFilterGroup>
+
+                {category === 'fish' ? (
+                  <>
+                    {fishFilterFacets.map((facet) => {
+                      const options = fishFilterOptions[facet];
+                      if (options.length === 0) return null;
+                      return (
+                        <ListFilterGroup key={facet} title={fishFilterFacetLabels[facet]}>
+                          {options.map((option) => {
+                            const selected = fishFacetFilters[facet].includes(option.key);
+                            return (
+                              <ListFilterChip
+                                accessibilityLabel={`${option.label} ${fishFilterFacetLabels[facet]} 필터`}
+                                key={option.key}
+                                label={`${option.label} ${option.itemCount}`}
+                                onPress={() => toggleFishFacetFilter(facet, option.key)}
+                                selected={selected}
+                              />
+                            );
+                          })}
+                        </ListFilterGroup>
+                      );
+                    })}
+                  </>
+                ) : null}
 
                 {category === 'art' ? (
                   <>
@@ -354,45 +618,40 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
                     </ListFilterGroup>
                   </>
                 ) : null}
-
-                <Pressable
-                  accessibilityLabel="도감 일괄 변경 열기"
-                  accessibilityRole="button"
-                  onPress={() => setShowBulkControls((value) => !value)}
-                  style={styles.bulkButton}>
-                  <Text style={styles.bulkButtonText}>{showBulkControls ? '일괄 변경 닫기' : '일괄 변경'}</Text>
-                </Pressable>
               </ListFilterPanel>
             ) : null}
 
             <ListResultToolbar
+              actions={(() => {
+                const primaryStatus = primaryBulkStatus(category);
+                const primaryActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item)[primaryStatus]);
+                const donatedActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item).donated);
+                return [
+                  {
+                    key: primaryStatus,
+                    label: bulkActionLabel(primaryStatus, primaryActive),
+                    disabled: visibleItems.length === 0,
+                    onPress: () => applyBulkStatus(primaryStatus, !primaryActive),
+                  },
+                  {
+                    key: 'donated',
+                    label: bulkActionLabel('donated', donatedActive),
+                    disabled: visibleItems.length === 0,
+                    onPress: () => applyBulkStatus('donated', !donatedActive),
+                  },
+                ];
+              })()}
               descending={sortDescending}
               isFiltered={isFiltered}
               onReset={clearFilters}
               onSortChange={setSortMode}
               onToggleDirection={() => setSortDescending((value) => !value)}
               resultCount={visibleItems.length}
+              showReset={false}
               sortOptions={sortOptions}
               sortValue={sortMode}
               totalCount={items.length}
             />
-
-            {showBulkControls ? (
-              <View style={styles.bulkPanel}>
-                <Text style={styles.bulkTitle}>{visibleItems.length}개 결과에 적용</Text>
-                {statusForBulk(category).map((status) => (
-                  <View key={status} style={styles.bulkRow}>
-                    <Text style={styles.bulkLabel}>{statusLabel(status)}</Text>
-                    <Pressable onPress={() => applyBulkStatus(status, true)} style={styles.bulkAction}>
-                      <Text style={styles.bulkActionText}>전체 체크</Text>
-                    </Pressable>
-                    <Pressable onPress={() => applyBulkStatus(status, false)} style={styles.bulkActionMuted}>
-                      <Text style={styles.bulkActionMutedText}>해제</Text>
-                    </Pressable>
-                  </View>
-                ))}
-              </View>
-            ) : null}
 
           </View>
         }
@@ -445,43 +704,77 @@ function EncyclopediaCard({
     : item.category === 'fossils'
       ? (['owned', 'donated'] as EncyclopediaStatus[])
       : (['caught', 'donated'] as EncyclopediaStatus[]);
+  const locationColors = getLocationChipColors(item.location);
+  const renderStatusButton = (status: EncyclopediaStatus, placementStyle?: object) => {
+    const active = status === 'owned' ? state.owned : state[status];
+    return (
+      <Pressable
+        accessibilityLabel={`${item.nameKo} ${statusLabel(status)} ${active ? '해제' : '설정'}`}
+        accessibilityRole="button"
+        key={status}
+        onPress={() => onToggle(status)}
+        style={[styles.statusButton, placementStyle, creature && styles.statusButtonOverlay, active && styles.statusButtonActive]}>
+        <CollectionStatusIcon active={active} status={status} />
+      </Pressable>
+    );
+  };
 
   return (
     <View style={[styles.itemCard, creature ? styles.creatureCard : styles.artCard]}>
-      <Pressable accessibilityLabel={`${item.nameKo} 상세 보기`} onPress={onOpen} style={styles.cardOpenArea}>
+      <View style={styles.cardOpenArea}>
         <View style={[styles.imageFrame, creature && styles.creatureImageFrame]}>
-          {image ? (
-            <Image
-              resizeMode="contain"
-              source={image}
-              style={[styles.cardImage, creature && styles.creatureImage]}
-            />
-          ) : (
-            <Text style={styles.imageFallback}>?</Text>
-          )}
+          <Pressable
+            accessibilityLabel={`${item.nameKo} 상세 보기`}
+            accessibilityRole="button"
+            onPress={onOpen}
+            style={styles.imageTapArea}>
+            {image ? (
+              <Image
+                resizeMode="contain"
+                source={image}
+                style={[styles.cardImage, creature && styles.creatureImage]}
+              />
+            ) : (
+              <Text style={styles.imageFallback}>?</Text>
+            )}
+          </Pressable>
+          {creature ? (
+            <>
+              {renderStatusButton('donated', styles.statusOverlayLeft)}
+              {renderStatusButton('caught', styles.statusOverlayRight)}
+            </>
+          ) : null}
         </View>
-        <Text numberOfLines={1} style={styles.itemName}>{item.nameKo}</Text>
-        {creature ? null : (
-          <Text numberOfLines={1} style={styles.itemMeta}>
-            {item.number == null ? getEncyclopediaLabel(item.category) : `#${item.number} · ${getEncyclopediaLabel(item.category)}`}
-          </Text>
-        )}
-      </Pressable>
-      <View style={styles.cardStatusRow}>
-        {statuses.map((status) => {
-          const active = status === 'owned' ? state.owned : state[status];
-          return (
-            <Pressable
-              accessibilityLabel={`${item.nameKo} ${statusLabel(status)} ${active ? '해제' : '설정'}`}
-              accessibilityRole="button"
-              key={status}
-              onPress={() => onToggle(status)}
-              style={[styles.statusButton, active && styles.statusButtonActive]}>
-              <CollectionStatusIcon active={active} status={status} />
-            </Pressable>
-          );
-        })}
+        <Pressable
+          accessibilityLabel={`${item.nameKo} 상세 보기`}
+          accessibilityRole="button"
+          onPress={onOpen}
+          style={styles.cardTextArea}>
+          <Text numberOfLines={1} style={styles.itemName}>{item.nameKo}</Text>
+          {creature ? (
+            item.location ? (
+              <View
+                style={[
+                  styles.locationChip,
+                  { backgroundColor: locationColors.backgroundColor, borderColor: locationColors.borderColor },
+                ]}>
+                <Text numberOfLines={1} style={[styles.locationChipText, { color: locationColors.color }]}>
+                  {localizeLocation(item.location) ?? item.location}
+                </Text>
+              </View>
+            ) : null
+          ) : (
+            <Text numberOfLines={1} style={styles.itemMeta}>
+              {item.number == null ? getEncyclopediaLabel(item.category) : `#${item.number} · ${getEncyclopediaLabel(item.category)}`}
+            </Text>
+          )}
+        </Pressable>
       </View>
+      {creature ? null : (
+        <View style={styles.cardStatusRow}>
+          {statuses.map((status) => renderStatusButton(status))}
+        </View>
+      )}
     </View>
   );
 }
@@ -509,30 +802,31 @@ const styles = StyleSheet.create({
   countBadge: { alignItems: 'center', backgroundColor: AppColors.primaryAction, borderRadius: 24, height: 48, justifyContent: 'center', width: 48 },
   countBadgeText: { color: AppColors.primaryText, fontSize: 17, fontWeight: '800' },
   searchBar: { flex: 1, minWidth: 0 },
-  bulkButton: { backgroundColor: AppColors.primaryAction, borderRadius: 14, paddingHorizontal: 11, paddingVertical: 8 },
-  bulkButtonText: { color: AppColors.primaryText, fontSize: 11, fontWeight: '800' },
-  bulkPanel: { backgroundColor: AppColors.primarySurface, borderRadius: 16, marginTop: 10, padding: 12 },
-  bulkTitle: { color: AppColors.primaryText, fontSize: 12, fontWeight: '800', marginBottom: 8 },
-  bulkRow: { alignItems: 'center', flexDirection: 'row', marginTop: 5 },
-  bulkLabel: { color: AppColors.primaryText, flex: 1, fontSize: 12, fontWeight: '700' },
-  bulkAction: { backgroundColor: AppColors.primaryAction, borderRadius: 9, marginLeft: 5, paddingHorizontal: 8, paddingVertical: 6 },
-  bulkActionText: { color: AppColors.primaryText, fontSize: 10, fontWeight: '800' },
-  bulkActionMuted: { backgroundColor: AppColors.primarySoft, borderRadius: 9, marginLeft: 5, paddingHorizontal: 8, paddingVertical: 6 },
-  bulkActionMutedText: { color: AppColors.primaryText, fontSize: 10, fontWeight: '800' },
+  filterPanelHeader: { alignItems: 'center', borderBottomColor: '#DDE8D7', borderBottomWidth: 1, flexDirection: 'row', gap: 8, marginBottom: 2, paddingBottom: 10 },
+  filterPanelHint: { color: '#6F7D70', flex: 1, fontSize: 11, fontWeight: '700' },
+  filterResetButton: { backgroundColor: '#FFFFFF', borderColor: '#D9E3D3', borderRadius: 999, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 6 },
+  filterResetText: { color: AppColors.primaryText, fontSize: 11, fontWeight: '900' },
   itemCard: { backgroundColor: '#FFF', borderColor: '#E2E8DF', borderRadius: 14, borderWidth: 1, marginBottom: 8, minWidth: 0, overflow: 'hidden' },
   creatureCard: { flex: 1, padding: 6 },
   artCard: { flex: 1, padding: 9 },
   cardOpenArea: { alignItems: 'center' },
-  imageFrame: { alignItems: 'center', backgroundColor: '#F5F8F2', borderRadius: 10, height: 116, justifyContent: 'center', width: '100%' },
+  cardTextArea: { alignItems: 'center', maxWidth: '100%' },
+  imageFrame: { alignItems: 'center', backgroundColor: '#F5F8F2', borderRadius: 10, height: 116, justifyContent: 'center', overflow: 'hidden', position: 'relative', width: '100%' },
+  imageTapArea: { alignItems: 'center', height: '100%', justifyContent: 'center', width: '100%' },
   creatureImageFrame: { height: 74 },
   cardImage: { height: 106, width: '92%' },
   creatureImage: { height: 70, width: '94%' },
   imageFallback: { color: '#A0AAA0', fontSize: 22, fontWeight: '800' },
   itemName: { color: AppColors.primaryText, fontSize: 13, fontWeight: '800', marginTop: 8, maxWidth: '100%' },
   itemMeta: { color: '#8A958C', fontSize: 9, marginTop: 3, maxWidth: '100%' },
+  locationChip: { borderRadius: 999, borderWidth: 1, marginTop: 5, maxWidth: '100%', paddingHorizontal: 6, paddingVertical: 2 },
+  locationChipText: { fontSize: 9, fontWeight: '900' },
   cardStatusRow: { alignItems: 'center', flexDirection: 'row', gap: 4, justifyContent: 'center', marginTop: 7 },
   statusButton: { alignItems: 'center', backgroundColor: '#F0F4EE', borderRadius: 10, height: 24, justifyContent: 'center', width: 24 },
+  statusButtonOverlay: { backgroundColor: 'rgba(255, 255, 255, 0.92)', borderColor: 'rgba(69, 83, 68, 0.12)', borderWidth: 1 },
   statusButtonActive: { backgroundColor: AppColors.primarySurface },
+  statusOverlayLeft: { left: 4, position: 'absolute', top: 4 },
+  statusOverlayRight: { position: 'absolute', right: 4, top: 4 },
   emptyState: { alignItems: 'center', paddingHorizontal: 20, paddingTop: 80 },
   emptyIcon: { color: '#8EA18E', fontSize: 38 },
   emptyTitle: { color: AppColors.primaryText, fontSize: 17, fontWeight: '800', marginTop: 14 },
