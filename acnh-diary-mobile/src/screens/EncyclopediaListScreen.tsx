@@ -461,9 +461,11 @@ function EncyclopediaCard({
           )}
         </View>
         <Text numberOfLines={1} style={styles.itemName}>{item.nameKo}</Text>
-        <Text numberOfLines={1} style={styles.itemMeta}>
-          {item.number == null ? getEncyclopediaLabel(item.category) : `#${item.number} · ${getEncyclopediaLabel(item.category)}`}
-        </Text>
+        {creature ? null : (
+          <Text numberOfLines={1} style={styles.itemMeta}>
+            {item.number == null ? getEncyclopediaLabel(item.category) : `#${item.number} · ${getEncyclopediaLabel(item.category)}`}
+          </Text>
+        )}
       </Pressable>
       <View style={styles.cardStatusRow}>
         {statuses.map((status) => {
