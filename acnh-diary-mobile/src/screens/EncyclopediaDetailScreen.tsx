@@ -9,6 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import type { DimensionValue } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useRouter } from 'expo-router';
 
@@ -42,6 +43,7 @@ import {
   setCollectionStatus,
 } from '@/db/database';
 import type {
+  EncyclopediaAvailability,
   EncyclopediaCategory,
   EncyclopediaItem,
   EncyclopediaState,
@@ -63,6 +65,10 @@ const categoryAccent: Record<EncyclopediaCategory, string> = {
   fossils: '#8A6849',
   art: '#9A6073',
 };
+
+const MONTHS = Array.from({ length: 12 }, (_, index) => index + 1);
+const HOURS = Array.from({ length: 24 }, (_, index) => index);
+const TIME_AXIS_HOURS = [0, 3, 6, 9, 12, 15, 18, 21];
 
 function isCreature(category: EncyclopediaCategory) {
   return category === 'bugs' || category === 'fish' || category === 'sea';
@@ -87,6 +93,96 @@ function getAvailability(item: EncyclopediaItem, hemisphere: 'north' | 'south') 
   return item.availability[hemisphere];
 }
 
+function getCurrentDateMarkers(timezone: string) {
+  try {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      hour: '2-digit',
+      hour12: false,
+      minute: '2-digit',
+      month: 'numeric',
+      timeZone: timezone,
+    }).formatToParts(new Date());
+    const month = Number(parts.find((part) => part.type === 'month')?.value);
+    const rawHour = Number(parts.find((part) => part.type === 'hour')?.value);
+    const minute = Number(parts.find((part) => part.type === 'minute')?.value);
+    const hour = rawHour === 24 ? 0 : rawHour;
+
+    return {
+      currentMinute: (Number.isFinite(hour) ? hour : new Date().getHours()) * 60 + (Number.isFinite(minute) ? minute : new Date().getMinutes()),
+      currentMonth: month >= 1 && month <= 12 ? month : new Date().getMonth() + 1,
+    };
+  } catch {
+    const now = new Date();
+    return { currentMinute: now.getHours() * 60 + now.getMinutes(), currentMonth: now.getMonth() + 1 };
+  }
+}
+
+function formatHourLabel(hour: number) {
+  if (hour === 0) return '12am';
+  if (hour === 12) return '12pm';
+  return hour < 12 ? `${hour}am` : `${hour - 12}pm`;
+}
+
+function normalizeAvailabilityTime(value?: string | null) {
+  return value?.replace(/\u00a0/g, ' ').trim() ?? '';
+}
+
+function toHour(hourValue: string, meridiem: string) {
+  const hour = Number(hourValue) % 12;
+  return meridiem.toUpperCase() === 'PM' ? hour + 12 : hour;
+}
+
+function parseAvailabilitySegments(value?: string | null) {
+  const normalized = normalizeAvailabilityTime(value);
+  if (!normalized || normalized.toLowerCase() === 'na') return [];
+  if (normalized.toLowerCase() === 'all day') return [{ start: 0, end: 24 }];
+
+  const matches = [...normalized.matchAll(/(\d{1,2})\s*(AM|PM)\s*(?:-|–|—|~|to)\s*(\d{1,2})\s*(AM|PM)/gi)];
+
+  return matches.flatMap((match) => {
+    const start = toHour(match[1], match[2]);
+    const end = toHour(match[3], match[4]);
+
+    if (start === end) return [{ start: 0, end: 24 }];
+    if (start < end) return [{ start, end }];
+    return [
+      { start, end: 24 },
+      { start: 0, end },
+    ];
+  });
+}
+
+function isHourActive(hour: number, segments: Array<{ start: number; end: number }>) {
+  return segments.some((segment) => hour >= segment.start && hour < segment.end);
+}
+
+function getTimeRows(availability: EncyclopediaAvailability) {
+  const rows = availability.periods
+    .filter((period) => period.time && normalizeAvailabilityTime(period.time).toLowerCase() !== 'na')
+    .map((period) => ({
+      label: localizeAvailabilityLabel(period.months ?? availability.label) ?? '출현 기간',
+      rawTime: period.time ?? '',
+      segments: parseAvailabilitySegments(period.time),
+    }))
+    .filter((row) => row.segments.length > 0);
+
+  if (rows.length > 0) return rows;
+
+  const uniqueTimes = Array.from(
+    new Set(
+      Object.values(availability.timesByMonth)
+        .map((time) => normalizeAvailabilityTime(time))
+        .filter((time) => time && time.toLowerCase() !== 'na'),
+    ),
+  );
+
+  return uniqueTimes.map((time) => ({
+    label: localizeAvailabilityTime(time) ?? '출현 시간',
+    rawTime: time,
+    segments: parseAvailabilitySegments(time),
+  }));
+}
+
 export function EncyclopediaDetailScreen({
   category,
   itemId,
@@ -101,8 +197,9 @@ export function EncyclopediaDetailScreen({
   const [state, setState] = useState<EncyclopediaState>(EMPTY_STATE);
   const [islandId, setIslandId] = useState<string | null>(null);
   const [hemisphere, setHemisphere] = useState<'north' | 'south'>('north');
+  const [timezone, setTimezone] = useState('Asia/Seoul');
   const item = getEncyclopediaItem(category, itemId);
-  const month = new Date().getMonth() + 1;
+  const { currentMinute, currentMonth } = getCurrentDateMarkers(timezone);
 
   const refresh = useCallback(() => {
     try {
@@ -110,6 +207,7 @@ export function EncyclopediaDetailScreen({
       const island = getActiveIsland();
       setIslandId(island?.id ?? null);
       setHemisphere(island?.hemisphere ?? 'north');
+      setTimezone(island?.timezone ?? 'Asia/Seoul');
       const states = island ? getCollectionStatesForIsland(island.id) : {};
       setState(item ? states[`${category}/${item.id}`] ?? EMPTY_STATE : EMPTY_STATE);
     } catch {
@@ -206,8 +304,15 @@ export function EncyclopediaDetailScreen({
         {creature ? (
           <>
             <Section title="출현 정보">
+              <AvailabilityTimeline
+                accent={accent}
+                availability={availability}
+                currentMinute={currentMinute}
+                currentMonth={currentMonth}
+                hemisphere={hemisphere}
+              />
               <InfoRow label="출현 월" value={localizeAvailabilityLabel(availability.label) ?? '정보 없음'} />
-              <InfoRow label="이번 달 시간" value={localizeAvailabilityTime(availability.timesByMonth[String(month)]) ?? '정보 없음'} />
+              <InfoRow label="이번 달 시간" value={localizeAvailabilityTime(availability.timesByMonth[String(currentMonth)]) ?? '정보 없음'} />
               <InfoRow label="출현 장소" value={localizeLocation(item.location) ?? '정보 없음'} />
               <InfoRow label="출현 조건" value={localizeCondition(item.condition) ?? '제한 없음'} />
               <InfoRow label="출현 빈도" value={localizeRarity(item.rarity) || '정보 없음'} />
@@ -338,6 +443,108 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   );
 }
 
+function AvailabilityTimeline({
+  accent,
+  availability,
+  currentMinute,
+  currentMonth,
+  hemisphere,
+}: {
+  accent: string;
+  availability: EncyclopediaAvailability;
+  currentMinute: number;
+  currentMonth: number;
+  hemisphere: 'north' | 'south';
+}) {
+  const timeRows = getTimeRows(availability);
+  const currentHour = Math.floor(currentMinute / 60);
+  const currentTimeLeft = `${Math.min(Math.max(currentMinute / 1440, 0), 1) * 100}%` as DimensionValue;
+
+  return (
+    <View style={styles.availabilityPanel}>
+      <Text style={styles.availabilityLabel}>{hemisphere === 'south' ? '남반구 출현월' : '북반구 출현월'}</Text>
+      <View style={styles.monthGrid}>
+        {MONTHS.map((monthValue) => {
+          const active = availability.months.includes(monthValue);
+          const current = monthValue === currentMonth;
+
+          return (
+            <View key={monthValue} style={styles.monthSlot}>
+              <Text style={[styles.monthArrow, current && { color: accent }]}>
+                {current ? '▲' : ' '}
+              </Text>
+              <View
+                style={[
+                  styles.monthChip,
+                  active && { backgroundColor: `${accent}18`, borderColor: accent },
+                  current && { borderColor: accent, borderWidth: 2 },
+                ]}>
+                <Text style={[styles.monthText, active && { color: accent }, current && styles.currentMonthText]}>
+                  {monthValue}월
+                </Text>
+              </View>
+            </View>
+          );
+        })}
+      </View>
+
+      <Text style={[styles.availabilityLabel, styles.timeChartLabel]}>
+        {hemisphere === 'south' ? '남반구 출현 시간' : '북반구 출현 시간'}
+      </Text>
+      {timeRows.length ? (
+        timeRows.map((row, index) => (
+          <View key={`${row.label}-${row.rawTime}-${index}`} style={styles.timeRowBlock}>
+            {timeRows.length > 1 ? (
+              <View style={styles.timeRowHeader}>
+                <Text style={styles.timeRowLabel}>{row.label}</Text>
+                <Text style={styles.timeRowValue}>{localizeAvailabilityTime(row.rawTime) ?? row.rawTime}</Text>
+              </View>
+            ) : null}
+            <View style={styles.timeMarkerTrack}>
+              <View style={[styles.currentTimeMarker, { left: currentTimeLeft }]}>
+                <Text style={[styles.currentTimeArrow, { color: accent }]}>▼</Text>
+                <View style={[styles.currentTimeLine, { backgroundColor: accent }]} />
+              </View>
+              <View style={styles.hourGrid}>
+                {HOURS.map((hour) => {
+                  const active = isHourActive(hour, row.segments);
+                  const current = hour === currentHour;
+
+                  return (
+                    <View
+                      key={hour}
+                      style={[
+                        styles.hourCell,
+                        active && { backgroundColor: accent },
+                        current && { borderColor: '#2F5C3A', borderLeftWidth: 2 },
+                      ]}
+                    />
+                  );
+                })}
+              </View>
+            </View>
+          </View>
+        ))
+      ) : (
+        <Text style={styles.noAvailabilityText}>출현 시간이 등록되어 있지 않아요.</Text>
+      )}
+      <View style={styles.timeAxis}>
+        {TIME_AXIS_HOURS.map((hour) => (
+          <Text
+            key={hour}
+            style={[
+              styles.timeAxisLabel,
+              { left: `${(hour / 24) * 100}%` as DimensionValue },
+              hour === 0 && styles.timeAxisLabelFirst,
+            ]}>
+            {formatHourLabel(hour)}
+          </Text>
+        ))}
+      </View>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   screenRoot: { flex: 1 },
   safeArea: { backgroundColor: AppColors.background, flex: 1 },
@@ -374,6 +581,29 @@ const styles = StyleSheet.create({
   infoRow: { alignItems: 'flex-start', borderBottomColor: '#EDF1EB', borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 },
   infoLabel: { color: '#819087', fontSize: 12, paddingRight: 14 },
   infoValue: { color: AppColors.primaryText, flex: 1, fontSize: 13, fontWeight: '700', textAlign: 'right' },
+  availabilityPanel: { borderBottomColor: '#EDF1EB', borderBottomWidth: 1, marginBottom: 4, paddingBottom: 14 },
+  availabilityLabel: { color: '#68796D', fontSize: 12, fontWeight: '800' },
+  monthGrid: { alignItems: 'flex-start', flexDirection: 'row', gap: 3, marginTop: 4 },
+  monthSlot: { alignItems: 'center', flex: 1, minWidth: 0 },
+  monthArrow: { fontSize: 10, fontWeight: '900', height: 12, lineHeight: 12 },
+  monthChip: { alignItems: 'center', backgroundColor: '#F0F2EA', borderColor: '#D7DECD', borderRadius: 10, borderWidth: 1, height: 25, justifyContent: 'center', width: '100%' },
+  monthText: { color: '#8A9589', fontSize: 10, fontWeight: '800' },
+  currentMonthText: { fontWeight: '900' },
+  timeChartLabel: { marginTop: 14 },
+  timeRowBlock: { marginTop: 8 },
+  timeRowHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 },
+  timeRowLabel: { color: '#819087', flex: 1, fontSize: 11, fontWeight: '800', paddingRight: 8 },
+  timeRowValue: { color: AppColors.primaryText, fontSize: 11, fontWeight: '800' },
+  timeMarkerTrack: { paddingTop: 13, position: 'relative' },
+  currentTimeMarker: { alignItems: 'center', marginLeft: -5, position: 'absolute', top: 0, width: 10, zIndex: 2 },
+  currentTimeArrow: { fontSize: 10, fontWeight: '900', height: 10, lineHeight: 10 },
+  currentTimeLine: { borderRadius: 1, height: 18, marginTop: -1, width: 2 },
+  hourGrid: { backgroundColor: '#EEF1E9', borderColor: '#D7DECD', borderRadius: 4, borderWidth: 1, flexDirection: 'row', height: 14, overflow: 'hidden' },
+  hourCell: { borderRightColor: '#FFFFFF', borderRightWidth: 1, flex: 1 },
+  timeAxis: { height: 16, marginTop: 4, position: 'relative' },
+  timeAxisLabel: { color: '#6F8E50', fontSize: 10, fontWeight: '800', marginLeft: -12, position: 'absolute', width: 34 },
+  timeAxisLabelFirst: { marginLeft: 0 },
+  noAvailabilityText: { color: '#819087', fontSize: 12, fontWeight: '700', marginTop: 8 },
   chipRow: { alignItems: 'center', borderBottomColor: '#EDF1EB', borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 },
   infoChip: { backgroundColor: '#F0F2EF', borderRadius: 12, color: '#78847B', fontSize: 11, fontWeight: '800', overflow: 'hidden', paddingHorizontal: 9, paddingVertical: 5 },
   infoChipActive: { backgroundColor: AppColors.primarySurface, color: AppColors.primaryText },
