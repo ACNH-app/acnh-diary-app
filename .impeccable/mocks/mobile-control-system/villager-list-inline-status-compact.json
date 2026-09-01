@@ -1,0 +1,7 @@
+{
+  "approved": false,
+  "useCase": "ui-mockup",
+  "assetType": "iOS/Android adaptive mobile app screen comp",
+  "surface": "resident list compact inline status controls",
+  "prompt": "Edit the referenced mobile UI mockup. Preserve the overall design feeling, warm paper background, title/search/category rail, one-column resident cards, portrait placement, typography mood, colors, and bottom navigation.\n\nChange only the resident card status controls:\n- Make the five status controls much more compact and less visually dominant.\n- Place all five controls in one single horizontal row inside each resident card: 위시, 우리 섬, 이사, 캠핑, 액자.\n- Each visible icon button should be about 34-38 px visually, with enough surrounding spacing implying a 44pt/48dp tappable area.\n- Remove the large two-row circular buttons from the previous comp.\n- Keep selected states readable with a small filled chip, subtle checkmark, or colored ring, but do not make them oversized.\n- Keep short labels under or beside each icon if they fit; labels should be compact and secondary.\n- The resident portrait and resident name should regain visual priority over status controls.\n- Keep the optional detail chevron on the right.\n\nConstraints: no bottom sheet, no modal, no dense two-column grid, no instructional text blocks, no tiny inaccessible controls, no Nintendo logos. The screen must still clearly communicate direct status editing from the resident list."
+}
