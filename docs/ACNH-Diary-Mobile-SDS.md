@@ -658,7 +658,7 @@ CREATE TABLE app_settings (
 );
 ```
 
-`app_settings.manual_game_date`가 없으면 기기 시각과 섬 시간대의 오전 5시 경계로 계산하고, 값이 있으면 `YYYY-MM-DD` 수동 기준 날짜로 사용한다. `app_settings.active_data_version`은 항상 문자열로 저장해 번들 기준 데이터 manifest와 비교한다. 현재 NPC 방문은 `(island_id, visit_date)`에 `npc_name`을 저장하고 주간 범위 삭제를 지원한다.
+`app_settings.manual_game_date`가 없으면 기기 시각과 섬 시간대의 오전 5시 경계로 계산하고, 값이 있으면 `YYYY-MM-DD` 수동 기준 날짜로 사용한다. `app_settings.active_data_version`은 항상 문자열로 저장해 번들 기준 데이터 manifest와 비교한다. 현재 NPC 방문은 `(island_id, visit_date)`에 `npc_name`을 저장하고 주간 범위 삭제를 지원한다. `npc_name`은 여러 방문 NPC를 담는 JSON 문자열 배열로 저장하며, 이전 단일 이름 문자열 데이터는 읽을 때 배열로 정규화한다. 토요일 K.K.와 일요일 무파니는 해당 날짜의 저장 행이 없을 때만 화면 기본값으로 합성하고, 저장된 빈 배열은 사용자 명시 기록으로 처리한다.
 
 ## 5. Migration
 
@@ -1340,7 +1340,7 @@ test/fixtures/routines.ts
 - 액자 사진 owned → 주민 액자 상태
 - 레시피 재료·시즌·이벤트·재료별 필터
 - 가구 변형별 보유·수량 0~999 저장
-- NPC 방문 주간 범위와 토·일 기본값
+- NPC 방문 주간 범위와 낮·주말 고정·밤 방문 NPC 중복 규칙
 - 루틴 유효기간과 과거 로그 보존
 
 첫 수직 슬라이스의 필수 Given/When/Then:

@@ -6,6 +6,7 @@ import type {
   EncyclopediaStatus,
 } from '../types/encyclopedia';
 import type { CatalogCategory } from '../types/catalog';
+import { DEFAULT_ROUTINE_OPTIONS } from '../data/routines';
 import type {
   Island,
   IslandInput,
@@ -29,22 +30,6 @@ export const TEST_ISLAND: IslandInput = {
   timezone: 'Asia/Seoul',
   playerName: '그랑',
 };
-
-const DEFAULT_ROUTINES = [
-  { title: '레시피 보틀', goalCount: 1 },
-  { title: '돈나무', goalCount: 1 },
-  { title: '바위치기', goalCount: 6 },
-  { title: '화석 캐기', goalCount: 4 },
-  { title: '나무 흔들기 · 가구', goalCount: 2 },
-  { title: '나무 흔들기 · 벌', goalCount: 5 },
-  { title: '나무 흔들기 · 동전', goalCount: 15 },
-  { title: '갑돌보', goalCount: 1 },
-  { title: '마추릴라 · 우정 확인', goalCount: 1 },
-  { title: '마추릴라 · 오늘의 운세', goalCount: 1 },
-  { title: '과일 수확', goalCount: 1 },
-  { title: '채소 수확', goalCount: 1 },
-  { title: '선물주기', goalCount: 10 },
-] as const;
 
 type IslandRow = {
   id: string;
@@ -213,6 +198,24 @@ function toRoutine(row: RoutineRow): Routine {
     repeatType: row.repeat_type,
     createdAt: row.created_at,
   };
+}
+
+function parseNpcNames(value: string): string[] {
+  const trimmedValue = value.trim();
+  if (!trimmedValue) return [];
+  try {
+    const parsed = JSON.parse(trimmedValue);
+    if (Array.isArray(parsed)) {
+      return parsed.map((item) => String(item).trim()).filter(Boolean);
+    }
+  } catch {
+    // Older rows stored a single NPC name in this column.
+  }
+  return [trimmedValue];
+}
+
+function serializeNpcNames(names: string[]) {
+  return JSON.stringify([...new Set(names.map((name) => name.trim()).filter(Boolean))]);
 }
 
 export function initializeDatabase() {
@@ -514,25 +517,26 @@ export function deleteRoutine(routineId: string) {
   db.runSync('DELETE FROM routines WHERE id = ?;', [routineId]);
 }
 
-export function getNpcVisitsForIsland(islandId: string, startDate: string, endDate: string): Record<string, string> {
+export function getNpcVisitsForIsland(islandId: string, startDate: string, endDate: string): Record<string, string[]> {
   const rows = db.getAllSync<NpcVisitRow>(
     `SELECT island_id, visit_date, npc_name FROM npc_visits
      WHERE island_id = ? AND visit_date BETWEEN ? AND ? ORDER BY visit_date ASC;`,
     [islandId, startDate, endDate],
   );
-  return Object.fromEntries(rows.map((row) => [row.visit_date, row.npc_name]));
+  return Object.fromEntries(rows.map((row) => [row.visit_date, parseNpcNames(row.npc_name)]));
 }
 
 export function setNpcVisit(visit: NpcVisit) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(visit.visitDate) || !visit.npcName.trim()) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(visit.visitDate)) {
     throw new Error('VALIDATION_ERROR');
   }
+  const npcNames = serializeNpcNames(visit.npcNames);
   db.runSync(
     `INSERT INTO npc_visits (island_id, visit_date, npc_name)
      VALUES (?, ?, ?)
      ON CONFLICT(island_id, visit_date) DO UPDATE SET
        npc_name = excluded.npc_name, updated_at = CURRENT_TIMESTAMP;`,
-    [visit.islandId, visit.visitDate, visit.npcName.trim()],
+    [visit.islandId, visit.visitDate, npcNames],
   );
 }
 
@@ -557,6 +561,25 @@ export function setManualGameDate(value: string | null) {
   }
   db.runSync(
     `INSERT INTO app_settings (key, value) VALUES ('manual_game_date', ?)
+     ON CONFLICT(key) DO UPDATE SET value = excluded.value;`,
+    [value],
+  );
+}
+
+export function getManualGameTime() {
+  return db.getAllSync<{ value: string | null }>(
+    `SELECT value FROM app_settings WHERE key = 'manual_game_time' LIMIT 1;`,
+  )[0]?.value ?? null;
+}
+
+export function setManualGameTime(value: string | null) {
+  if (value != null && !/^\d{2}:\d{2}$/.test(value)) throw new Error('VALIDATION_ERROR');
+  if (value == null) {
+    db.runSync(`DELETE FROM app_settings WHERE key = 'manual_game_time';`);
+    return;
+  }
+  db.runSync(
+    `INSERT INTO app_settings (key, value) VALUES ('manual_game_time', ?)
      ON CONFLICT(key) DO UPDATE SET value = excluded.value;`,
     [value],
   );
@@ -861,7 +884,7 @@ export function createIsland(input: IslandInput) {
       [id, input.playerName.trim(), input.birthdayMonth ?? null, input.birthdayDay ?? null]
     );
 
-    for (const [index, routine] of DEFAULT_ROUTINES.entries()) {
+    for (const [index, routine] of DEFAULT_ROUTINE_OPTIONS.entries()) {
       db.runSync(
         `INSERT INTO routines (id, island_id, title, goal_count, repeat_type, created_at)
          VALUES (?, ?, ?, ?, 'daily', ?);`,

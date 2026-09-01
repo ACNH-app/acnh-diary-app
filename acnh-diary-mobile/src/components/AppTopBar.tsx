@@ -7,6 +7,7 @@ type AppTopBarProps = {
   title: string;
   breadcrumbs?: string[];
   eyebrow?: string;
+  contextLabel?: string;
   showBack?: boolean;
   showMenu?: boolean;
   onBack?: () => void;
@@ -17,6 +18,7 @@ export function AppTopBar({
   title,
   breadcrumbs = [],
   eyebrow,
+  contextLabel,
   showBack = false,
   showMenu = true,
   onBack,
@@ -54,6 +56,12 @@ export function AppTopBar({
             {title}
           </Text>
         </View>
+
+        {contextLabel ? (
+          <Text numberOfLines={1} style={styles.contextLabel}>
+            {contextLabel}
+          </Text>
+        ) : null}
 
         {showMenu ? (
           <Pressable
@@ -100,6 +108,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '800',
     letterSpacing: -0.2,
+  },
+  contextLabel: {
+    backgroundColor: AppColors.primarySurface,
+    borderRadius: 999,
+    color: AppColors.primaryText,
+    flexShrink: 1,
+    fontSize: 11,
+    fontWeight: '800',
+    maxWidth: 116,
+    overflow: 'hidden',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
   },
   iconButton: {
     alignItems: 'center',

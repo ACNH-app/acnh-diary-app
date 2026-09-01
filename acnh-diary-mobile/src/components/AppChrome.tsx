@@ -60,6 +60,7 @@ export function useTabBarVisibility(navigationVisible: boolean) {
 type AppChromeProps = {
   title: string;
   breadcrumbs?: string[];
+  contextLabel?: string;
   showBack?: boolean;
   showMenu?: boolean;
   onBack?: () => void;
@@ -68,6 +69,7 @@ type AppChromeProps = {
 export function AppChrome({
   title,
   breadcrumbs,
+  contextLabel,
   showBack,
   showMenu = true,
   onBack,
@@ -114,6 +116,7 @@ export function AppChrome({
     <>
       <AppTopBar
         breadcrumbs={breadcrumbs}
+        contextLabel={contextLabel}
         eyebrow={getTopBarEyebrow(title)}
         onBack={onBack ?? (() => router.back())}
         onMenuPress={openDrawer}

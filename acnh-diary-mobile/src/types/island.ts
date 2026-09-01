@@ -48,5 +48,5 @@ export type RoutineProgress = {
 export type NpcVisit = {
   islandId: string;
   visitDate: string;
-  npcName: string;
+  npcNames: string[];
 };

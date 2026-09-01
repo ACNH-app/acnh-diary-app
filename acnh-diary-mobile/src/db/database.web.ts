@@ -1,4 +1,5 @@
 import type { CatalogCategory } from '@/types/catalog';
+import { DEFAULT_ROUTINE_OPTIONS } from '@/data/routines';
 import type {
   EncyclopediaCategory,
   EncyclopediaState,
@@ -58,13 +59,15 @@ let islands: Island[] = [
 ];
 
 let manualGameDate: string | null = null;
+let manualGameTime: string | null = null;
 const routines = new Map<string, Routine[]>();
 const routineProgress = new Map<string, RoutineProgress>();
-const npcVisits = new Map<string, string>();
+const npcVisits = new Map<string, string[]>();
 const villagerStates = new Map<string, VillagerState>();
 const collectionStates = new Map<string, EncyclopediaState>();
 const collectionQuantities = new Map<string, number>();
 const campsiteVisits = new Map<string, Set<string>>();
+const seededRoutineIslandIds = new Set<string>();
 
 export const db = {
   execSync: () => undefined,
@@ -96,8 +99,26 @@ function getActiveIslandId() {
   return getActiveIsland()?.id ?? 'preview-island';
 }
 
+function seedDefaultRoutinesForIsland(islandId: string) {
+  if (seededRoutineIslandIds.has(islandId) || getRoutinesForIsland(islandId).length > 0) return;
+  routines.set(
+    islandId,
+    DEFAULT_ROUTINE_OPTIONS.map((routine, index) => ({
+      id: createId(`routine-${index + 1}`),
+      islandId,
+      title: routine.title,
+      goalCount: routine.goalCount,
+      repeatType: 'daily',
+      createdAt: now,
+    })),
+  );
+  seededRoutineIslandIds.add(islandId);
+}
+
 export function initializeDatabase() {
   seedInitialIslandIfNeeded();
+  const activeIsland = getActiveIsland();
+  if (activeIsland) seedDefaultRoutinesForIsland(activeIsland.id);
 }
 
 export function getIslandCount() {
@@ -224,17 +245,19 @@ export function getNpcVisitsForIsland(
   islandId: string,
   startDate: string,
   endDate: string,
-): Record<string, string> {
+): Record<string, string[]> {
   return Object.fromEntries(
     [...npcVisits.entries()]
       .filter(([key]) => key.startsWith(`${islandId}/`))
-      .map(([key, npcName]) => [key.slice(islandId.length + 1), npcName])
+      .map(([key, npcNames]) => [key.slice(islandId.length + 1), npcNames])
       .filter(([visitDate]) => visitDate >= startDate && visitDate <= endDate),
   );
 }
 
 export function setNpcVisit(visit: NpcVisit) {
-  npcVisits.set(npcVisitKey(visit.islandId, visit.visitDate), visit.npcName);
+  const npcNames = [...new Set(visit.npcNames.map((name) => name.trim()).filter(Boolean))];
+  const key = npcVisitKey(visit.islandId, visit.visitDate);
+  npcVisits.set(key, npcNames);
 }
 
 export function clearNpcVisitsForWeek(islandId: string, startDate: string, endDate: string) {
@@ -252,6 +275,14 @@ export function getManualGameDate() {
 
 export function setManualGameDate(value: string | null) {
   manualGameDate = value;
+}
+
+export function getManualGameTime() {
+  return manualGameTime;
+}
+
+export function setManualGameTime(value: string | null) {
+  manualGameTime = value;
 }
 
 export function getVillagerStatesForIsland() {
@@ -357,6 +388,7 @@ export function removeCampsiteVisit(_islandId: string, villagerId: string, visit
 
 export function createIsland(input: IslandInput) {
   const id = createId('island');
+  const createdAt = new Date().toISOString();
   islands = islands.map((island) => ({ ...island, isActive: false }));
   islands.push({
     id,
@@ -366,10 +398,11 @@ export function createIsland(input: IslandInput) {
     hemisphere: input.hemisphere,
     timezone: input.timezone,
     playerName: input.playerName,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt,
+    updatedAt: createdAt,
     isActive: true,
   });
+  seedDefaultRoutinesForIsland(id);
   return id;
 }
 
