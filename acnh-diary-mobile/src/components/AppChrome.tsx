@@ -9,12 +9,6 @@ import { getActiveIsland } from '@/db/database';
 import type { Island } from '@/types/island';
 
 function getTopBarEyebrow(title: string) {
-  if (title === '오늘') return 'TODAY ON';
-  if (title === '주민') return 'ISLAND RESIDENTS';
-  if (title === '도감') return 'MUSEUM NOTES';
-  if (title === '카탈로그') return 'ISLAND CATALOG';
-  if (title === '공략') return 'GUIDES';
-  if (title === '섬 관리') return 'ISLAND MANAGEMENT';
   return undefined;
 }
 

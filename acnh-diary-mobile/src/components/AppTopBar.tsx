@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { AppColors } from '@/constants/theme';
+import { AppColors, AppControlSizes, AppRadii, AppShadows } from '@/constants/theme';
 
 type AppTopBarProps = {
   title: string;
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
     flexDirection: 'row',
-    minHeight: 64,
+    minHeight: 62,
     paddingHorizontal: 18,
   },
   titleBlock: {
@@ -95,24 +95,26 @@ const styles = StyleSheet.create({
     minWidth: 0,
     paddingHorizontal: 12,
   },
-  eyebrow: { color: AppColors.primaryText, fontSize: 10, fontWeight: '800', letterSpacing: 1.6, marginBottom: 2 },
+  eyebrow: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800', letterSpacing: 0, marginBottom: 2 },
   breadcrumb: {
-    color: AppColors.primaryText,
+    color: AppColors.inkMuted,
     fontSize: 10,
     fontWeight: '700',
     letterSpacing: 0.2,
     marginBottom: 2,
   },
   title: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
     fontSize: 20,
     fontWeight: '800',
-    letterSpacing: -0.2,
+    letterSpacing: 0,
   },
   contextLabel: {
-    backgroundColor: AppColors.primarySurface,
-    borderRadius: 999,
-    color: AppColors.primaryText,
+    backgroundColor: AppColors.paperRaised,
+    borderColor: AppColors.line,
+    borderRadius: AppRadii.pill,
+    borderWidth: 1,
+    color: AppColors.ink,
     flexShrink: 1,
     fontSize: 11,
     fontWeight: '800',
@@ -123,31 +125,31 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     alignItems: 'center',
-    backgroundColor: AppColors.primarySurface,
-    borderRadius: 20,
-    height: 42,
+    backgroundColor: AppColors.paperRaised,
+    borderColor: AppColors.line,
+    borderRadius: AppRadii.pill,
+    borderWidth: 1,
+    height: AppControlSizes.navMin,
     justifyContent: 'center',
-    width: 42,
+    width: AppControlSizes.navMin,
   },
   backText: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
     fontSize: 30,
     lineHeight: 32,
     marginTop: -3,
   },
   menuButton: {
     alignItems: 'center',
-    backgroundColor: AppColors.primarySurface,
-    borderRadius: 20,
-    elevation: 3,
-    height: 42,
+    backgroundColor: AppColors.paperRaised,
+    borderColor: AppColors.line,
+    borderRadius: AppRadii.pill,
+    borderWidth: 1,
+    height: AppControlSizes.navMin,
     justifyContent: 'center',
-    shadowColor: AppColors.primaryBorder,
-    shadowOffset: { height: 2, width: 0 },
-    shadowOpacity: 0.14,
-    shadowRadius: 4,
-    width: 42,
+    width: AppControlSizes.navMin,
+    ...AppShadows.card,
   },
-  menuText: { color: AppColors.primaryText, fontSize: 21 },
+  menuText: { color: AppColors.ink, fontSize: 21 },
   pressed: { opacity: 0.72 },
 });

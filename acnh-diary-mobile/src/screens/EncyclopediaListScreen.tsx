@@ -12,7 +12,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
-import { AppColors } from '@/constants/theme';
+import { AppColors, AppControlSizes, AppRadii, AppShadows, AppStatusColors } from '@/constants/theme';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import {
@@ -709,13 +709,27 @@ function EncyclopediaCard({
   const locationColors = getLocationChipColors(item.location);
   const renderStatusButton = (status: EncyclopediaStatus, placementStyle?: object) => {
     const active = status === 'owned' ? state.owned : state[status];
+    const tone =
+      status === 'donated'
+        ? AppStatusColors.museum
+        : status === 'owned' || status === 'genuineOwned'
+          ? AppStatusColors.catalog
+          : status === 'fakeOwned'
+            ? AppStatusColors.danger
+            : AppStatusColors.leaf;
     return (
       <Pressable
         accessibilityLabel={`${item.nameKo} ${statusLabel(status)} ${active ? '해제' : '설정'}`}
         accessibilityRole="button"
         key={status}
         onPress={() => onToggle(status)}
-        style={[styles.statusButton, placementStyle, creature && styles.statusButtonOverlay, active && styles.statusButtonActive]}>
+        style={[
+          styles.statusButton,
+          placementStyle,
+          creature && styles.statusButtonOverlay,
+          { borderColor: active ? tone.border : AppColors.line },
+          active && { backgroundColor: tone.background },
+        ]}>
         <CollectionStatusIcon active={active} status={status} />
       </Pressable>
     );
@@ -824,29 +838,29 @@ const styles = StyleSheet.create({
   countBadgeText: { color: AppColors.primaryText, fontSize: 17, fontWeight: '800' },
   searchBar: { flex: 1, minWidth: 0 },
   filterPanelHeader: { alignItems: 'center', borderBottomColor: '#DDE8D7', borderBottomWidth: 1, flexDirection: 'row', gap: 8, marginBottom: 2, paddingBottom: 10 },
-  filterPanelHint: { color: '#6F7D70', flex: 1, fontSize: 11, fontWeight: '700' },
-  filterResetButton: { backgroundColor: '#FFFFFF', borderColor: '#D9E3D3', borderRadius: 999, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 6 },
-  filterResetText: { color: AppColors.primaryText, fontSize: 11, fontWeight: '900' },
-  itemCard: { backgroundColor: '#FFF', borderColor: '#E2E8DF', borderRadius: 14, borderWidth: 1, marginBottom: 8, minWidth: 0, overflow: 'hidden' },
+  filterPanelHint: { color: AppColors.inkMuted, flex: 1, fontSize: 11, fontWeight: '700' },
+  filterResetButton: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 6 },
+  filterResetText: { color: AppColors.leaf, fontSize: 11, fontWeight: '900' },
+  itemCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, marginBottom: 8, minWidth: 0, overflow: 'hidden', ...AppShadows.card },
   creatureCard: { flex: 1, padding: 6 },
   artCard: { flex: 1, padding: 9 },
   cardOpenArea: { alignItems: 'center' },
   cardTextArea: { alignItems: 'center', maxWidth: '100%' },
-  imageFrame: { alignItems: 'center', backgroundColor: '#F5F8F2', borderRadius: 10, height: 116, justifyContent: 'center', overflow: 'hidden', position: 'relative', width: '100%' },
+  imageFrame: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.control, height: 116, justifyContent: 'center', overflow: 'hidden', position: 'relative', width: '100%' },
   imageTapArea: { alignItems: 'center', height: '100%', justifyContent: 'center', width: '100%' },
   creatureImageFrame: { height: 74 },
   cardImage: { height: 106, width: '92%' },
   creatureImage: { height: 70, width: '94%' },
   imageFallback: { color: '#A0AAA0', fontSize: 22, fontWeight: '800' },
-  itemName: { color: AppColors.primaryText, fontSize: 13, fontWeight: '800', marginTop: 8, maxWidth: '100%' },
-  itemMeta: { color: '#8A958C', fontSize: 9, marginTop: 3, maxWidth: '100%' },
+  itemName: { color: AppColors.ink, fontSize: 13, fontWeight: '800', marginTop: 8, maxWidth: '100%' },
+  itemMeta: { color: AppColors.inkMuted, fontSize: 9, marginTop: 3, maxWidth: '100%' },
   locationChipRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'nowrap', gap: 4, justifyContent: 'center', marginTop: 5, maxWidth: '100%' },
   locationChip: { borderRadius: 999, borderWidth: 1, maxWidth: '100%', paddingHorizontal: 6, paddingVertical: 2 },
   locationChipText: { fontSize: 9, fontWeight: '900' },
   locationTagChip: { backgroundColor: '#F4E8FF', borderColor: '#BE9AE8', borderRadius: 999, borderWidth: 1, maxWidth: '100%', paddingHorizontal: 6, paddingVertical: 2 },
   locationTagChipText: { color: '#684397', fontSize: 9, fontWeight: '900' },
   cardStatusRow: { alignItems: 'center', flexDirection: 'row', gap: 4, justifyContent: 'center', marginTop: 7 },
-  statusButton: { alignItems: 'center', backgroundColor: '#F0F4EE', borderRadius: 10, height: 24, justifyContent: 'center', width: 24 },
+  statusButton: { alignItems: 'center', backgroundColor: AppColors.card, borderRadius: AppRadii.pill, borderWidth: 1, height: AppControlSizes.compactStatus, justifyContent: 'center', width: AppControlSizes.compactStatus },
   statusButtonOverlay: { backgroundColor: 'rgba(255, 255, 255, 0.92)', borderColor: 'rgba(69, 83, 68, 0.12)', borderWidth: 1 },
   statusButtonActive: { backgroundColor: AppColors.primarySurface },
   statusOverlayLeft: { left: 4, position: 'absolute', top: 4 },

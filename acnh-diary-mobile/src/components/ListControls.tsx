@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { AppColors } from '@/constants/theme';
+import { AppColors, AppControlSizes, AppRadii, AppShadows } from '@/constants/theme';
 
 export type ListSortOption<T extends string> = {
   key: T;
@@ -208,27 +208,29 @@ const styles = StyleSheet.create({
   },
   filterToggle: {
     alignItems: 'center',
-    backgroundColor: AppColors.primarySurface,
-    borderRadius: 12,
+    backgroundColor: AppColors.paperRaised,
+    borderColor: AppColors.line,
+    borderRadius: AppRadii.control,
+    borderWidth: 1,
     flexDirection: 'row',
-    height: 48,
+    height: AppControlSizes.fieldHeight,
     justifyContent: 'center',
     minWidth: 58,
     paddingHorizontal: 9,
   },
   filterToggleIcon: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
     fontSize: 18,
     marginRight: 5,
   },
   filterToggleText: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
     fontSize: 11,
     fontWeight: '800',
   },
   filterBadge: {
     alignItems: 'center',
-    backgroundColor: AppColors.primaryAction,
+    backgroundColor: AppColors.leaf,
     borderRadius: 8,
     height: 16,
     justifyContent: 'center',
@@ -237,21 +239,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
   },
   filterBadgeText: {
-    color: AppColors.primaryText,
+    color: AppColors.card,
     fontSize: 9,
     fontWeight: '800',
   },
   filterPanel: {
-    backgroundColor: AppColors.primarySurface,
-    borderRadius: 16,
+    backgroundColor: AppColors.paperRaised,
+    borderColor: AppColors.line,
+    borderRadius: AppRadii.panel,
+    borderWidth: 1,
     marginTop: 8,
     padding: 12,
+    ...AppShadows.card,
   },
   filterGroup: {
     marginTop: 10,
   },
   filterGroupTitle: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
     fontSize: 11,
     fontWeight: '800',
     marginBottom: 6,
@@ -260,21 +265,25 @@ const styles = StyleSheet.create({
     gap: 7,
   },
   filterChip: {
-    backgroundColor: AppColors.primarySurface,
-    borderRadius: 16,
+    backgroundColor: AppColors.card,
+    borderColor: AppColors.line,
+    borderRadius: AppRadii.pill,
+    borderWidth: 1,
     paddingHorizontal: 12,
     paddingVertical: 9,
   },
   filterChipActive: {
-    backgroundColor: AppColors.primaryAction,
+    backgroundColor: AppColors.leafSoft,
+    borderColor: AppColors.leaf,
   },
   filterChipText: {
-    color: '#657468',
+    color: AppColors.inkMuted,
     fontSize: 12,
     fontWeight: '700',
   },
   filterChipTextActive: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
+    fontWeight: '900',
   },
   resultToolbar: {
     alignItems: 'center',
@@ -294,17 +303,17 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   resultCount: {
-    color: '#6F7F74',
+    color: AppColors.inkMuted,
     fontSize: 12,
     fontWeight: '800',
   },
   resultCountHint: {
-    color: '#98A39A',
+    color: '#9A8D78',
     fontSize: 10,
     marginLeft: 7,
   },
   resetText: {
-    color: AppColors.primaryText,
+    color: AppColors.leaf,
     fontSize: 12,
     fontWeight: '800',
   },
@@ -316,8 +325,8 @@ const styles = StyleSheet.create({
   },
   toolbarAction: {
     alignItems: 'center',
-    backgroundColor: AppColors.primarySurface,
-    borderColor: AppColors.primaryBorder,
+    backgroundColor: AppColors.paperRaised,
+    borderColor: AppColors.line,
     borderRadius: 11,
     borderWidth: 1,
     justifyContent: 'center',
@@ -329,12 +338,12 @@ const styles = StyleSheet.create({
     opacity: 0.45,
   },
   toolbarActionText: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
     fontSize: 11,
     fontWeight: '800',
   },
   toolbarActionTextDisabled: {
-    color: '#8E9B91',
+    color: '#A99C86',
   },
   sortControls: {
     alignItems: 'center',
@@ -346,43 +355,39 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   sortSelectLabel: {
-    color: '#7B887F',
+    color: AppColors.inkMuted,
     fontSize: 11,
     fontWeight: '700',
     marginRight: 10,
   },
   sortSelectValue: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
     fontSize: 13,
     fontWeight: '800',
   },
   sortSelectChevron: {
-    color: '#6C7D71',
+    color: AppColors.inkMuted,
     fontSize: 16,
     lineHeight: 18,
     marginLeft: 7,
     marginTop: -2,
   },
   sortDivider: {
-    backgroundColor: '#DDE5DE',
+    backgroundColor: AppColors.line,
     height: 28,
     marginHorizontal: 10,
     width: 1,
   },
   sortDropdown: {
     alignSelf: 'flex-end',
-    backgroundColor: '#FFF',
-    borderColor: '#DFE8DF',
+    backgroundColor: AppColors.card,
+    borderColor: AppColors.line,
     borderRadius: 14,
     borderWidth: 1,
-    elevation: 4,
     marginBottom: 8,
     marginTop: -4,
     overflow: 'hidden',
-    shadowColor: AppColors.primaryBorder,
-    shadowOffset: { height: 3, width: 0 },
-    shadowOpacity: 0.12,
-    shadowRadius: 7,
+    ...AppShadows.card,
     width: 144,
   },
   sortOption: {
@@ -393,31 +398,33 @@ const styles = StyleSheet.create({
     paddingVertical: 11,
   },
   sortOptionActive: {
-    backgroundColor: AppColors.primarySurface,
+    backgroundColor: AppColors.leafSoft,
   },
   sortOptionText: {
-    color: '#66766B',
+    color: AppColors.inkMuted,
     fontSize: 12,
     fontWeight: '700',
   },
   sortOptionTextActive: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
   },
   sortOptionCheck: {
-    color: AppColors.primaryText,
+    color: AppColors.leaf,
     fontSize: 14,
     fontWeight: '800',
   },
   directionButton: {
     alignItems: 'center',
-    backgroundColor: AppColors.primarySurface,
-    borderRadius: 12,
-    height: 24,
+    backgroundColor: AppColors.paperRaised,
+    borderColor: AppColors.line,
+    borderRadius: AppRadii.control,
+    borderWidth: 1,
+    height: 30,
     justifyContent: 'center',
-    width: 24,
+    width: 30,
   },
   directionText: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
     fontSize: 15,
     fontWeight: '500',
     lineHeight: 17,

@@ -25,21 +25,108 @@ export const Colors = {
 } as const;
 
 export const AppColors = {
-  background: '#FFFCF5',
-  border: '#D6E2C7',
-  topBar: '#FFFDFC',
-  tabBar: '#FFFFFF',
-  tabBarBorder: '#D9E3CE',
-  tabBarActive: '#A7D18C',
-  tabBarActiveSurface: '#F0F8EA',
-  tabBarActiveText: '#356B43',
-  tabBarInactive: '#849087',
-  primary: '#A7D18C',
-  primaryAction: '#79AC5F',
-  primarySurface: '#F0F8EA',
-  primarySoft: '#DCEFD2',
-  primaryText: '#3F4A43',
-  primaryBorder: '#BCD9A8',
+  paper: '#FFFCF3',
+  card: '#FFFFFF',
+  paperRaised: '#FFF6E4',
+  ink: '#3F2A14',
+  inkMuted: '#786D5B',
+  line: '#E6D8BC',
+  leaf: '#6FAE54',
+  leafSoft: '#EAF6DC',
+  resident: '#EF6E68',
+  residentSoft: '#FFE7E2',
+  museum: '#3F94C5',
+  museumSoft: '#E6F3FA',
+  catalog: '#E7A334',
+  catalogSoft: '#FFF1D6',
+  camp: '#2FA99F',
+  campSoft: '#DDF6F2',
+  danger: '#C95548',
+  background: '#FFFCF3',
+  border: '#E6D8BC',
+  topBar: '#FFFCF3',
+  tabBar: '#FFFDF8',
+  tabBarBorder: '#E6D8BC',
+  tabBarActive: '#6FAE54',
+  tabBarActiveSurface: '#EAF6DC',
+  tabBarActiveText: '#3F2A14',
+  tabBarInactive: '#786D5B',
+  primary: '#6FAE54',
+  primaryAction: '#6FAE54',
+  primarySurface: '#EAF6DC',
+  primarySoft: '#DCEFCB',
+  primaryText: '#3F2A14',
+  primaryBorder: '#BFD7A7',
+} as const;
+
+export const AppStatusColors = {
+  leaf: {
+    background: AppColors.leafSoft,
+    border: '#BFD7A7',
+    foreground: AppColors.leaf,
+  },
+  resident: {
+    background: AppColors.residentSoft,
+    border: '#F2B6AC',
+    foreground: AppColors.resident,
+  },
+  museum: {
+    background: AppColors.museumSoft,
+    border: '#A7D3EA',
+    foreground: AppColors.museum,
+  },
+  catalog: {
+    background: AppColors.catalogSoft,
+    border: '#EBC276',
+    foreground: AppColors.catalog,
+  },
+  camp: {
+    background: AppColors.campSoft,
+    border: '#9AD8D0',
+    foreground: AppColors.camp,
+  },
+  neutral: {
+    background: '#F8F1E4',
+    border: AppColors.line,
+    foreground: AppColors.inkMuted,
+  },
+  danger: {
+    background: '#F8E5E1',
+    border: '#E5A39B',
+    foreground: AppColors.danger,
+  },
+} as const;
+
+export const AppRadii = {
+  control: 12,
+  card: 16,
+  panel: 20,
+  pill: 999,
+} as const;
+
+export const AppControlSizes = {
+  navMin: Platform.select({ ios: 44, android: 48, default: 44 }) ?? 44,
+  fieldHeight: 48,
+  compactStatus: 32,
+  compactStatusMax: 38,
+  quickAction: 44,
+} as const;
+
+export const AppShadows = {
+  card: {
+    elevation: 2,
+    shadowColor: '#8C6B35',
+    shadowOffset: { height: 2, width: 0 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+  },
+  floating: {
+    elevation: 5,
+    shadowColor: '#8C6B35',
+    shadowOffset: { height: 3, width: 0 },
+    shadowOpacity: 0.14,
+    shadowRadius: 8,
+  },
 } as const;
 
 export const AppTabBarStyle = {

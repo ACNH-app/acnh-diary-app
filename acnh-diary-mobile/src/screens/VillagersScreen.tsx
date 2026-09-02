@@ -16,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 
 import { AppChrome } from '@/components/AppChrome';
-import { AppColors } from '@/constants/theme';
+import { AppColors, AppControlSizes, AppRadii, AppShadows, AppStatusColors } from '@/constants/theme';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import {
   ListFilterChip,
@@ -79,22 +79,31 @@ const hobbyOptions = Array.from(new Set(villagers.map((villager) => villager.hob
 const subtypeOptions = Array.from(new Set(villagers.map((villager) => villager.subtype))).sort();
 
 const categoryOptions: Array<{ category: Category; icon?: string; label: string }> = [
-  { category: 'all', label: '전체' },
+  { category: 'all', icon: '▦', label: '전체' },
   { category: 'wishlist', icon: '♡', label: '위시' },
   { category: 'islandResident', icon: '⌂', label: '우리 섬' },
-  { category: 'movedOut', icon: '↗', label: '이사 감' },
+  { category: 'movedOut', icon: '↗', label: '이사' },
   { category: 'campsiteVisited', icon: '?', label: '캠핑장' },
   { category: 'outside', label: '섬 외' },
   { category: 'photoReceived', icon: '▣', label: '액자' },
 ];
 
 const statusOptions: Array<{ status: VillagerStatus; icon: string; label: string }> = [
-  { status: 'wishlist', icon: '♡', label: '위시 주민' },
-  { status: 'campsiteVisited', icon: '?', label: '캠핑장 방문' },
-  { status: 'islandResident', icon: '⌂', label: '섬 주민' },
-  { status: 'movedOut', icon: '↗', label: '이사 감' },
-  { status: 'photoReceived', icon: '▣', label: '액자 선물' },
+  { status: 'wishlist', icon: '♡', label: '위시' },
+  { status: 'islandResident', icon: '⌂', label: '우리 섬' },
+  { status: 'movedOut', icon: '↗', label: '이사' },
+  { status: 'campsiteVisited', icon: '?', label: '캠핑' },
+  { status: 'photoReceived', icon: '▣', label: '액자' },
 ];
+
+function getVillagerStatusTone(status: VillagerStatus) {
+  if (status === 'wishlist') return AppStatusColors.resident;
+  if (status === 'islandResident') return AppStatusColors.leaf;
+  if (status === 'movedOut') return AppStatusColors.catalog;
+  if (status === 'campsiteVisited') return AppStatusColors.camp;
+  if (status === 'photoReceived') return AppStatusColors.museum;
+  return AppStatusColors.neutral;
+}
 
 function getImageSource(villager: Villager, imageType: VillagerImageType) {
   const localAsset = villagerImageAssets[villager.id]?.[imageType];
@@ -577,9 +586,6 @@ function VillagerCard({
         style={({ pressed }) => [styles.cardTapArea, pressed && styles.villagerCardPressed]}>
         <View style={styles.cardImageWrap}>
           <Image resizeMode="contain" source={getImageSource(villager, 'icon')} style={styles.cardImage} />
-          <View style={styles.cardSpeciesPill}>
-            <Text style={styles.cardSpeciesText}>{villager.species_ko}</Text>
-          </View>
         </View>
         <Text numberOfLines={1} style={styles.cardNameKo}>
           {villager.name_ko}
@@ -589,10 +595,6 @@ function VillagerCard({
         </Text>
         <View style={styles.cardMetaRow}>
           <Text style={styles.cardMeta}>{villager.personality_ko}</Text>
-          <Text style={styles.cardMetaDot}>·</Text>
-          <Text style={styles.cardMeta}>{villager.subtype}타입</Text>
-          <Text style={styles.cardMetaDot}>·</Text>
-          <Text style={styles.cardMeta}>{formatKoreanBirthday(villager)}</Text>
         </View>
       </Pressable>
       <VillagerStateToggleGroup
@@ -619,6 +621,7 @@ function VillagerStateToggleGroup({
     <View style={styles.statusToggleGroup}>
       {statusOptions.map((option) => {
         const selected = state[option.status];
+        const tone = getVillagerStatusTone(option.status);
         return (
           <Pressable
             accessibilityLabel={`${villagerName} ${option.label} ${selected ? '해제' : '설정'}`}
@@ -627,10 +630,16 @@ function VillagerStateToggleGroup({
             hitSlop={5}
             key={option.status}
             onPress={() => onToggle(option.status)}
-            style={[styles.statusToggle, showLabels && styles.detailStatusToggle, selected && styles.statusToggleSelected]}>
+            style={[
+              styles.statusToggle,
+              { borderColor: selected ? tone.border : AppColors.line },
+              showLabels && styles.detailStatusToggle,
+              selected && { backgroundColor: tone.background },
+            ]}>
             <Text style={[styles.statusToggleIcon, selected && styles.statusToggleIconSelected]}>
               {option.icon}
             </Text>
+            {selected ? <View style={[styles.statusCheckDot, { backgroundColor: tone.foreground }]} /> : null}
             {showLabels ? <Text style={styles.detailStatusLabel}>{option.label}</Text> : null}
           </Pressable>
         );
@@ -995,7 +1004,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingBottom: 38,
-    paddingHorizontal: 16,
+    paddingHorizontal: 14,
   },
   searchBar: {
     flex: 1,
@@ -1076,17 +1085,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   villagerCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    backgroundColor: AppColors.card,
+    borderRadius: AppRadii.card,
     flex: 1,
-    marginBottom: 10,
+    marginBottom: 9,
     marginHorizontal: 4,
     maxWidth: '50%',
     overflow: 'hidden',
-    padding: 10,
+    padding: 9,
+    ...AppShadows.card,
   },
   cardTapArea: {
-    borderRadius: 13,
+    borderRadius: AppRadii.control,
   },
   villagerCardPressed: {
     opacity: 0.78,
@@ -1094,8 +1104,8 @@ const styles = StyleSheet.create({
   },
   cardImageWrap: {
     alignItems: 'center',
-    backgroundColor: AppColors.primarySurface,
-    borderRadius: 13,
+    backgroundColor: AppColors.leafSoft,
+    borderRadius: AppRadii.control,
     height: 142,
     justifyContent: 'center',
     overflow: 'hidden',
@@ -1105,39 +1115,33 @@ const styles = StyleSheet.create({
     height: 128,
     width: '94%',
   },
-  cardSpeciesPill: {
-    backgroundColor: 'rgba(255,255,255,0.88)',
-    borderRadius: 8,
-    bottom: 7,
-    left: 7,
-    paddingHorizontal: 7,
-    paddingVertical: 4,
-    position: 'absolute',
-  },
-  cardSpeciesText: {
-    color: AppColors.primaryText,
-    fontSize: 10,
-    fontWeight: '700',
-  },
   cardNameKo: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
     fontSize: 16,
     fontWeight: '800',
     marginTop: 10,
   },
   cardNameEn: {
-    color: '#89948A',
+    color: AppColors.inkMuted,
     fontSize: 11,
     marginTop: 2,
   },
   cardMetaRow: {
     alignItems: 'center',
+    alignSelf: 'flex-start',
+    backgroundColor: AppColors.paperRaised,
+    borderColor: AppColors.line,
+    borderRadius: AppRadii.pill,
+    borderWidth: 1,
     flexDirection: 'row',
     marginTop: 8,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
   },
   cardMeta: {
-    color: '#718074',
+    color: AppColors.ink,
     fontSize: 10,
+    fontWeight: '800',
   },
   cardMetaDot: {
     color: '#B0B9B0',
@@ -1146,7 +1150,7 @@ const styles = StyleSheet.create({
   },
   statusToggleGroup: {
     alignItems: 'center',
-    borderTopColor: '#EEF2EC',
+    borderTopColor: AppColors.line,
     borderTopWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -1155,22 +1159,32 @@ const styles = StyleSheet.create({
   },
   statusToggle: {
     alignItems: 'center',
-    backgroundColor: AppColors.primarySurface,
-    borderRadius: 9,
-    height: 29,
+    backgroundColor: AppColors.card,
+    borderRadius: AppRadii.pill,
+    borderWidth: 1,
+    height: AppControlSizes.compactStatus,
     justifyContent: 'center',
-    width: 29,
-  },
-  statusToggleSelected: {
-    backgroundColor: AppColors.primarySoft,
+    position: 'relative',
+    width: AppControlSizes.compactStatus,
   },
   statusToggleIcon: {
-    color: '#A3ADA3',
+    color: AppColors.inkMuted,
     fontSize: 16,
     fontWeight: '700',
   },
   statusToggleIconSelected: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
+  },
+  statusCheckDot: {
+    alignItems: 'center',
+    borderColor: AppColors.card,
+    borderRadius: 5,
+    borderWidth: 1,
+    bottom: -1,
+    height: 10,
+    position: 'absolute',
+    right: -1,
+    width: 10,
   },
   emptyState: {
     alignItems: 'center',

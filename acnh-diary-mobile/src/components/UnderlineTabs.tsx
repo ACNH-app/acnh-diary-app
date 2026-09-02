@@ -1,6 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { AppColors } from '@/constants/theme';
+import { AppColors, AppRadii } from '@/constants/theme';
 
 export type UnderlineTab<T extends string> = {
   icon?: string;
@@ -57,30 +57,33 @@ export function UnderlineTabs<T extends string>({
 
 const styles = StyleSheet.create({
   tabBar: {
-    borderBottomColor: AppColors.primaryBorder,
-    borderBottomWidth: 1,
     marginBottom: 14,
   },
   tabs: {
     alignItems: 'stretch',
     flexGrow: 1,
+    gap: 7,
+    paddingBottom: 2,
   },
   tab: {
     alignItems: 'center',
-    borderBottomColor: 'transparent',
-    borderBottomWidth: 4,
+    backgroundColor: AppColors.card,
+    borderColor: AppColors.line,
+    borderRadius: AppRadii.panel,
+    borderWidth: 1,
     flexGrow: 1,
     justifyContent: 'center',
     minWidth: 62,
-    paddingHorizontal: 4,
-    paddingVertical: 13,
+    paddingHorizontal: 10,
+    paddingVertical: 9,
   },
   tabFitToWidth: {
-    minWidth: 44,
-    paddingHorizontal: 2,
+    minWidth: 48,
+    paddingHorizontal: 7,
   },
   tabActive: {
-    borderBottomColor: AppColors.primary,
+    backgroundColor: AppColors.leafSoft,
+    borderColor: AppColors.leaf,
   },
   tabText: {
     color: AppColors.tabBarInactive,
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   tabTextCompact: {
-    fontSize: 11,
+    fontSize: 10,
   },
   tabLabelRow: {
     alignItems: 'center',
@@ -96,17 +99,17 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   tabLabelRowCompact: {
-    gap: 0,
+    gap: 3,
   },
   tabIcon: {
     color: AppColors.tabBarInactive,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '700',
   },
   tabIconCompact: {
-    fontSize: 12,
+    fontSize: 13,
   },
   tabTextActive: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
   },
 });

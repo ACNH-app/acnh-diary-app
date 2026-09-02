@@ -1,10 +1,18 @@
 import type { BottomTabBarProps } from 'expo-router/build/react-navigation/bottom-tabs';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { AppColors, AppTabBarStyle } from '@/constants/theme';
+import { AppColors, AppControlSizes, AppRadii, AppTabBarStyle } from '@/constants/theme';
 
 function getRouteLabel(routeName: string, options: BottomTabBarProps['descriptors'][string]['options']) {
   return typeof options.tabBarLabel === 'string' ? options.tabBarLabel : options.title ?? routeName;
+}
+
+function getRouteIcon(routeName: string) {
+  if (routeName === 'today') return '◎';
+  if (routeName === 'villagers') return '⌂';
+  if (routeName === 'encyclopedia') return '▣';
+  if (routeName === 'catalog') return '◫';
+  return '☰';
 }
 
 export function AppBottomNav({ state, descriptors, navigation, insets }: BottomTabBarProps) {
@@ -49,11 +57,15 @@ export function AppBottomNav({ state, descriptors, navigation, insets }: BottomT
             onPress={onPress}
             style={({ pressed }) => [
               styles.tab,
-              isFocused && { backgroundColor: AppColors.tabBarActiveSurface },
+              isFocused && styles.tabActive,
               pressed && styles.pressed,
             ]}
             testID={options.tabBarButtonTestID}>
-            <View style={[styles.indicator, { backgroundColor: isFocused ? AppColors.tabBarActive : 'transparent' }]} />
+            <View style={[styles.iconDisc, isFocused && styles.iconDiscActive]}>
+              <Text style={[styles.icon, { color: isFocused ? AppColors.leaf : AppColors.tabBarInactive }]}>
+                {getRouteIcon(route.name)}
+              </Text>
+            </View>
             <Text numberOfLines={1} style={[styles.label, { color: isFocused ? AppColors.tabBarActiveText : AppColors.tabBarInactive }, isFocused && styles.labelActive]}>
               {label}
             </Text>
@@ -66,28 +78,45 @@ export function AppBottomNav({ state, descriptors, navigation, insets }: BottomT
 
 const styles = StyleSheet.create({
   bar: {
+    backgroundColor: AppColors.tabBar,
     flexDirection: 'row',
-    minHeight: 66,
-    paddingHorizontal: 8,
-    paddingTop: 6,
+    minHeight: 72,
+    paddingHorizontal: 7,
+    paddingTop: 7,
   },
   tab: {
     alignItems: 'center',
-    borderRadius: 15,
+    borderRadius: AppRadii.control,
     flex: 1,
     justifyContent: 'center',
     marginHorizontal: 2,
-    minHeight: 48,
+    minHeight: AppControlSizes.navMin,
     paddingHorizontal: 3,
   },
-  indicator: {
-    borderRadius: 2,
-    height: 3,
-    marginBottom: 5,
-    width: 18,
+  tabActive: {
+    backgroundColor: AppColors.tabBarActiveSurface,
+  },
+  iconDisc: {
+    alignItems: 'center',
+    borderColor: 'transparent',
+    borderRadius: 15,
+    borderWidth: 1,
+    height: 30,
+    justifyContent: 'center',
+    marginBottom: 2,
+    width: 30,
+  },
+  iconDiscActive: {
+    backgroundColor: AppColors.card,
+    borderColor: AppColors.primaryBorder,
+  },
+  icon: {
+    fontSize: 19,
+    fontWeight: '900',
+    lineHeight: 22,
   },
   label: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '700',
     textAlign: 'center',
   },

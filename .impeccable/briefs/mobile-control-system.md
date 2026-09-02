@@ -5,7 +5,7 @@
 - Date: 2026-09-01
 - Mode: Operate
 - Platform: iOS first, Android planned
-- Scope: design decision only; app code is not changed by this brief
+- Scope: implemented as shared mobile control tokens and representative screen styling
 - Approved direction: overall visual feeling from the generated comps is acceptable, but screen-level layout needs common control rules before implementation
 
 ## Job And Audience
@@ -53,11 +53,14 @@ State cannot rely on color alone. Every selected state must also use a check, fi
 
 ## Control Rules
 
-- Minimum touch target: 44pt on iOS and 48dp on Android.
-- Visible icon size can be smaller than the touch target. Preferred visible control sizes:
+- Touch target guidance should follow iOS 44pt and Android 48dp as the baseline for primary controls, navigation, form controls, and destructive actions. This is not an absolute rule for every repeated compact status icon.
+- Dense repeated controls may intentionally use smaller targets when the card layout would otherwise become oversized. Compact status controls can use a visible and tappable control around 32-38, as long as adjacent controls have enough spacing and accidental taps stay unlikely.
+- The tappable area should match what visually reads as the control. Do not create large invisible hit areas where tapping unrelated surrounding card background feels like tapping the icon.
+- Preferred visible control sizes:
   - nav icon: 24-28
   - category icon: 22-28
-  - compact status icon: 28-34
+  - compact status icon: 28-32
+  - compact status button/ring: 32-38
   - major quick-action icon: 36-44
 - Use icon-only only when the surrounding context is unambiguous and accessibility labels are present.
 - Icon + short Korean label is preferred for navigation, filters, and status controls used by new users.
@@ -120,7 +123,7 @@ The collection comp is the strongest control-system reference.
 
 ## Next Implementation Order
 
-1. Add shared color/control tokens.
-2. Update common navigation, search, filter, and status-control components.
-3. Apply the system to Today, 주민, 도감, and 카탈로그 in small passes.
+1. Done: add shared color/control tokens.
+2. Done: update common navigation, search, filter, and status-control components.
+3. Done: apply the system to Today, 주민, 도감, and 카탈로그 in small passes.
 4. Verify iOS-sized and Android-sized mobile viewports before treating the design as ready.

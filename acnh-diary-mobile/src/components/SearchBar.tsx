@@ -1,6 +1,6 @@
 import { Pressable, StyleProp, StyleSheet, Text, TextInput, View, ViewStyle } from 'react-native';
 
-import { AppColors } from '@/constants/theme';
+import { AppColors, AppControlSizes, AppRadii } from '@/constants/theme';
 
 type SearchBarProps = {
   accessibilityLabel: string;
@@ -28,7 +28,7 @@ export function SearchBar({
         autoCorrect={false}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor="#99A49B"
+        placeholderTextColor="#9A8D78"
         returnKeyType="search"
         style={styles.input}
         value={value}
@@ -50,23 +50,22 @@ export function SearchBar({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderColor: '#E2E8DF',
-    borderRadius: 16,
+    backgroundColor: AppColors.card,
+    borderColor: AppColors.line,
+    borderRadius: AppRadii.panel,
     borderWidth: 1,
     flexDirection: 'row',
-    height: 48,
+    height: AppControlSizes.fieldHeight,
     paddingHorizontal: 14,
   },
   searchIcon: {
-    color: AppColors.primaryText,
-    fontSize: 22,
-    lineHeight: 25,
+    color: AppColors.inkMuted,
+    fontSize: 20,
+    lineHeight: 23,
     marginRight: 8,
-    transform: [{ rotate: '-20deg' }],
   },
   input: {
-    color: AppColors.primaryText,
+    color: AppColors.ink,
     flex: 1,
     fontSize: 14,
     height: 46,
@@ -74,14 +73,14 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     alignItems: 'center',
-    backgroundColor: AppColors.primarySurface,
-    borderRadius: 14,
+    backgroundColor: AppColors.paperRaised,
+    borderRadius: AppRadii.pill,
     height: 28,
     justifyContent: 'center',
     width: 28,
   },
   clearText: {
-    color: AppColors.tabBarInactive,
+    color: AppColors.inkMuted,
     fontSize: 20,
     lineHeight: 22,
   },

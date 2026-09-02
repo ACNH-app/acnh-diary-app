@@ -1,7 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { AppColors } from '@/constants/theme';
+import { AppStatusColors } from '@/constants/theme';
 import type { EncyclopediaStatus } from '@/types/encyclopedia';
+
+function getStatusTone(status: EncyclopediaStatus) {
+  if (status === 'donated') return AppStatusColors.museum;
+  if (status === 'owned') return AppStatusColors.catalog;
+  if (status === 'caught') return AppStatusColors.leaf;
+  if (status === 'genuineOwned') return AppStatusColors.catalog;
+  if (status === 'fakeOwned') return AppStatusColors.danger;
+  return AppStatusColors.neutral;
+}
 
 export function CollectionStatusIcon({
   active,
@@ -10,11 +19,12 @@ export function CollectionStatusIcon({
   active: boolean;
   status: EncyclopediaStatus;
 }) {
-  const color = active ? AppColors.primaryText : '#9BA69D';
+  const tone = getStatusTone(status);
+  const color = active ? tone.foreground : '#9A8D78';
 
   if (status === 'caught') {
     return (
-      <View style={[styles.caughtIcon, { borderColor: color }, active && styles.caughtIconActive]}>
+      <View style={[styles.caughtIcon, { borderColor: color }, active && { backgroundColor: tone.background }]}>
         {active ? <View style={[styles.checkMark, { borderColor: color }]} /> : null}
       </View>
     );
@@ -49,7 +59,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 15,
   },
-  caughtIconActive: { backgroundColor: AppColors.primarySurface },
   checkMark: {
     borderBottomWidth: 1.8,
     borderLeftWidth: 1.8,
