@@ -11,6 +11,7 @@ This directory contains the files bundled into the mobile app.
 - Encyclopedia detail images: `assets/encyclopedia/{bugs,fish,sea}/tank/` and `assets/encyclopedia/art/{real,fake}/`
 - Encyclopedia data: `content/encyclopedia/{bugs,fish,sea,fossils,art}.json`
 - Catalog images: `assets/catalog/{furniture,interior,clothing,music,items,tools,special_items,gyroids,photos,recipes,reactions}/`
+- Plant item images: `assets/plants/items/`
 - Catalog data: `content/catalog/catalog.json` (7,443 base items)
 - Catalog variations: `content/catalog/catalog-variations.json` (24,897 display-only variants)
 - House music images: `assets/catalog/music/items/`

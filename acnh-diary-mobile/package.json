@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "expo-router/entry",
   "dependencies": {
-    "expo": "~57.0.18",
-    "expo-constants": "~57.0.16",
-    "expo-linking": "~57.0.8",
-    "expo-router": "~57.0.17",
+    "@expo/vector-icons": "^15.0.2",
+    "expo": "~57.0.19",
+    "expo-constants": "~57.0.17",
+    "expo-font": "~57.0.3",
+    "expo-linking": "~57.0.9",
+    "expo-router": "~57.0.18",
     "expo-sqlite": "~57.0.2",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
@@ -24,6 +26,7 @@
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
+    "build": "expo export --platform web",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "postinstall": "patch-package"

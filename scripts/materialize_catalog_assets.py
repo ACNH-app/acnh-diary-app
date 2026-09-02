@@ -25,6 +25,53 @@ INDEX_OUTPUTS = (
 )
 IMAGE_EXTENSIONS = (".png", ".jpg", ".jpeg")
 ENCYCLOPEDIA_TYPES = frozenset({"art", "bugs", "fish", "fossils", "sea"})
+PLANT_ITEM_IDS = frozenset(
+    {
+        "01e0b8d5595a50d3",
+        "04a58853f4bc17d9",
+        "11d3141ed7f7b02d",
+        "123fd798d0ad2df8",
+        "1898790fc6a00a83",
+        "2624ee149b04811d",
+        "29601c609aab2a19",
+        "3589137455ecfb16",
+        "37ec7718ad45eaab",
+        "389d03903e6042d1",
+        "38a41a168c0de895",
+        "47f553be35d2a20c",
+        "499db758addab72c",
+        "4a9a553f06ff28c8",
+        "56a53ea7bd1e9725",
+        "56f9ac1a9c89c5fa",
+        "5aeb5c2dd6eb89de",
+        "5f0d14d868d0404d",
+        "60cd48a71fe8d864",
+        "63f28e99bb1cbf41",
+        "68b2b2ac64862817",
+        "693df8a8a5f75aac",
+        "70b303ab72ef61c8",
+        "722326bf11c641be",
+        "8b32062539dae175",
+        "8e66d208b0ad50be",
+        "89b026ba459582b1",
+        "95472f791c8ff646",
+        "a42202e12d1c234c",
+        "a632ffb300c178ca",
+        "bdd78affd8afd644",
+        "c1f5b37427e7e3ec",
+        "c36cef096c9ee741",
+        "c3dbc8a96268bb90",
+        "ca59d0ac8a02d64f",
+        "cef913414ed21129",
+        "d0bb45df9e94958b",
+        "d8ef65efc4e332f9",
+        "e338697b148e07fe",
+        "eb917611314f1eaf",
+        "ebc27fe57d15b1ba",
+        "f66d3a132d2b556a",
+        "fe148dfab1b3ebb9",
+    }
+)
 
 
 def read_rows(filename: str) -> list[dict[str, str]]:
@@ -57,6 +104,8 @@ def target_path(row: dict[str, str], variation: bool, extension: str) -> Path:
     catalog_type = safe_part(row["catalog_type"])
     item_id = safe_part(row["item_id"])
     section = asset_section(row["catalog_type"])
+    if row["catalog_type"] == "items" and row["item_id"] in PLANT_ITEM_IDS and not variation:
+        return Path("plants") / "items" / f"{item_id}{extension}"
     if variation:
         variation_id = safe_part(row["variation_id"])
         return (

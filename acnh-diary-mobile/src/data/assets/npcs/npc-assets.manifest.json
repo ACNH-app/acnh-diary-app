@@ -1,0 +1,1562 @@
+{
+  "downloadedAt": "2026-09-02T07:44:16.497Z",
+  "source": {
+    "characterList": "https://nookipedia.com/wiki/Animal_Crossing%3A_New_Horizons%2FCharacters",
+    "iconSource": "https://nookipedia.com/wiki/Tom_Nook"
+  },
+  "count": 66,
+  "records": [
+    {
+      "slug": "blanca",
+      "nameEn": "Blanca",
+      "pageTitle": "Blanca",
+      "pageUrl": "https://nookipedia.com/wiki/Blanca",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Blanca NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/7/73/Blanca_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/blanca.png",
+        "bytes": 6006,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Blanca NH Model.png",
+        "url": "https://dodo.ac/np/images/6/66/Blanca_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/blanca.png",
+        "bytes": 313403,
+        "width": 1230,
+        "height": 1230
+      }
+    },
+    {
+      "slug": "blathers",
+      "nameEn": "Blathers",
+      "pageTitle": "Blathers",
+      "pageUrl": "https://nookipedia.com/wiki/Blathers",
+      "aliasesKo": [
+        "부엉"
+      ],
+      "icon": {
+        "fileTitle": "File:Blathers NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/0/0b/Blathers_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/blathers.png",
+        "bytes": 7691,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Blathers NH Model.png",
+        "url": "https://dodo.ac/np/images/e/ed/Blathers_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/blathers.png",
+        "bytes": 480594,
+        "width": 1183,
+        "height": 1183
+      }
+    },
+    {
+      "slug": "booker",
+      "nameEn": "Booker",
+      "pageTitle": "Booker",
+      "pageUrl": "https://nookipedia.com/wiki/Booker",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Booker NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/4/45/Booker_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/booker.png",
+        "bytes": 8198,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Booker NH Model.png",
+        "url": "https://dodo.ac/np/images/b/b7/Booker_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/booker.png",
+        "bytes": 507610,
+        "width": 1186,
+        "height": 1186
+      }
+    },
+    {
+      "slug": "brewster",
+      "nameEn": "Brewster",
+      "pageTitle": "Brewster",
+      "pageUrl": "https://nookipedia.com/wiki/Brewster",
+      "aliasesKo": [
+        "마스터"
+      ],
+      "icon": {
+        "fileTitle": "File:Brewster NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/3/3b/Brewster_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/brewster.png",
+        "bytes": 4336,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Brewster NH Model.png",
+        "url": "https://dodo.ac/np/images/c/c9/Brewster_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/brewster.png",
+        "bytes": 469614,
+        "width": 1316,
+        "height": 1316
+      }
+    },
+    {
+      "slug": "c-j",
+      "nameEn": "C.J.",
+      "pageTitle": "C.J.",
+      "pageUrl": "https://nookipedia.com/wiki/C.J.",
+      "aliasesKo": [
+        "저스틴"
+      ],
+      "icon": {
+        "fileTitle": "File:C.J. NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/c/c1/C.J._NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/c-j.png",
+        "bytes": 8079,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:C.J. NH Model.png",
+        "url": "https://dodo.ac/np/images/1/1c/C.J._NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/c-j.png",
+        "bytes": 400188,
+        "width": 1188,
+        "height": 1188
+      }
+    },
+    {
+      "slug": "celeste",
+      "nameEn": "Celeste",
+      "pageTitle": "Celeste",
+      "pageUrl": "https://nookipedia.com/wiki/Celeste",
+      "aliasesKo": [
+        "부옥"
+      ],
+      "icon": {
+        "fileTitle": "File:Celeste NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/4/4c/Celeste_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/celeste.png",
+        "bytes": 7035,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Celeste NH Model.png",
+        "url": "https://dodo.ac/np/images/7/77/Celeste_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/celeste.png",
+        "bytes": 450119,
+        "width": 1050,
+        "height": 1050
+      }
+    },
+    {
+      "slug": "chip",
+      "nameEn": "Chip",
+      "pageTitle": "Chip",
+      "pageUrl": "https://nookipedia.com/wiki/Chip",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Chip NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/1/11/Chip_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/chip.png",
+        "bytes": 7735,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Chip NH Model.png",
+        "url": "https://dodo.ac/np/images/4/4e/Chip_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/chip.png",
+        "bytes": 496227,
+        "width": 1213,
+        "height": 1213
+      }
+    },
+    {
+      "slug": "copper",
+      "nameEn": "Copper",
+      "pageTitle": "Copper",
+      "pageUrl": "https://nookipedia.com/wiki/Copper",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Copper NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/4/44/Copper_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/copper.png",
+        "bytes": 6453,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Copper NH Model.png",
+        "url": "https://dodo.ac/np/images/5/5e/Copper_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/copper.png",
+        "bytes": 503679,
+        "width": 1457,
+        "height": 1457
+      }
+    },
+    {
+      "slug": "cornimer",
+      "nameEn": "Cornimer",
+      "pageTitle": "Cornimer",
+      "pageUrl": "https://nookipedia.com/wiki/Cornimer",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Cornimer NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/f/f7/Cornimer_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/cornimer.png",
+        "bytes": 7483,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Cornimer NH Model.png",
+        "url": "https://dodo.ac/np/images/1/1b/Cornimer_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/cornimer.png",
+        "bytes": 63337,
+        "width": 172,
+        "height": 267
+      }
+    },
+    {
+      "slug": "cyrus",
+      "nameEn": "Cyrus",
+      "pageTitle": "Cyrus",
+      "pageUrl": "https://nookipedia.com/wiki/Cyrus",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Cyrus NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/7/75/Cyrus_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/cyrus.png",
+        "bytes": 8756,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Cyrus NH Model.png",
+        "url": "https://dodo.ac/np/images/c/cb/Cyrus_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/cyrus.png",
+        "bytes": 543619,
+        "width": 1350,
+        "height": 1350
+      }
+    },
+    {
+      "slug": "daisy-mae",
+      "nameEn": "Daisy Mae",
+      "pageTitle": "Daisy Mae",
+      "pageUrl": "https://nookipedia.com/wiki/Daisy_Mae",
+      "aliasesKo": [
+        "무파니"
+      ],
+      "icon": {
+        "fileTitle": "File:Daisy Mae NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/f/f8/Daisy_Mae_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/daisy-mae.png",
+        "bytes": 9419,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Daisy Mae NH Model.png",
+        "url": "https://dodo.ac/np/images/c/c3/Daisy_Mae_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/daisy-mae.png",
+        "bytes": 552164,
+        "width": 1316,
+        "height": 1316
+      }
+    },
+    {
+      "slug": "digby",
+      "nameEn": "Digby",
+      "pageTitle": "Digby",
+      "pageUrl": "https://nookipedia.com/wiki/Digby",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Digby NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/6/6e/Digby_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/digby.png",
+        "bytes": 6491,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Digby NH Model.png",
+        "url": "https://dodo.ac/np/images/a/a2/Digby_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/digby.png",
+        "bytes": 398160,
+        "width": 1262,
+        "height": 1262
+      }
+    },
+    {
+      "slug": "dj-kk",
+      "nameEn": "DJ KK",
+      "pageTitle": "DJ KK",
+      "pageUrl": "https://nookipedia.com/wiki/DJ_KK",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:DJ KK NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/3/3e/DJ_KK_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/dj-kk.png",
+        "bytes": 7954,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:DJ KK NH Model.png",
+        "url": "https://dodo.ac/np/images/5/5b/DJ_KK_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/dj-kk.png",
+        "bytes": 410051,
+        "width": 1402,
+        "height": 1402
+      }
+    },
+    {
+      "slug": "don-resetti",
+      "nameEn": "Don Resetti",
+      "pageTitle": "Don Resetti",
+      "pageUrl": "https://nookipedia.com/wiki/Don_Resetti",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Don NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/e/e2/Don_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/don-resetti.png",
+        "bytes": 6541,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Don Resetti NH Model.png",
+        "url": "https://dodo.ac/np/images/2/27/Don_Resetti_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/don-resetti.png",
+        "bytes": 493066,
+        "width": 1343,
+        "height": 1343
+      }
+    },
+    {
+      "slug": "dr-shrunk",
+      "nameEn": "Dr. Shrunk",
+      "pageTitle": "Dr. Shrunk",
+      "pageUrl": "https://nookipedia.com/wiki/Dr._Shrunk",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Shrunk NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/c/ca/Shrunk_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/dr-shrunk.png",
+        "bytes": 7501,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Dr. Shrunk NH Model.png",
+        "url": "https://dodo.ac/np/images/c/ca/Dr._Shrunk_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/dr-shrunk.png",
+        "bytes": 301273,
+        "width": 1028,
+        "height": 1028
+      }
+    },
+    {
+      "slug": "flick",
+      "nameEn": "Flick",
+      "pageTitle": "Flick",
+      "pageUrl": "https://nookipedia.com/wiki/Flick",
+      "aliasesKo": [
+        "레온"
+      ],
+      "icon": {
+        "fileTitle": "File:Flick NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/4/47/Flick_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/flick.png",
+        "bytes": 6316,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Flick NH Model.png",
+        "url": "https://dodo.ac/np/images/8/82/Flick_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/flick.png",
+        "bytes": 426806,
+        "width": 1463,
+        "height": 1463
+      }
+    },
+    {
+      "slug": "franklin",
+      "nameEn": "Franklin",
+      "pageTitle": "Franklin",
+      "pageUrl": "https://nookipedia.com/wiki/Franklin",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Franklin NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/d/d5/Franklin_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/franklin.png",
+        "bytes": 6384,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Franklin NH Model.png",
+        "url": "https://dodo.ac/np/images/d/de/Franklin_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/franklin.png",
+        "bytes": 359731,
+        "width": 1528,
+        "height": 1528
+      }
+    },
+    {
+      "slug": "gracie",
+      "nameEn": "Gracie",
+      "pageTitle": "Gracie",
+      "pageUrl": "https://nookipedia.com/wiki/Gracie",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Gracie NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/2/29/Gracie_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/gracie.png",
+        "bytes": 8138,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Gracie NH Model.png",
+        "url": "https://dodo.ac/np/images/5/59/Gracie_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/gracie.png",
+        "bytes": 602629,
+        "width": 1693,
+        "height": 1693
+      }
+    },
+    {
+      "slug": "grams",
+      "nameEn": "Grams",
+      "pageTitle": "Grams",
+      "pageUrl": "https://nookipedia.com/wiki/Grams",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Grams NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/a/a8/Grams_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/grams.png",
+        "bytes": 7190,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Grams NH Model.png",
+        "url": "https://dodo.ac/np/images/6/6f/Grams_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/grams.png",
+        "bytes": 296278,
+        "width": 1153,
+        "height": 1153
+      }
+    },
+    {
+      "slug": "gullivarrr",
+      "nameEn": "Gullivarrr",
+      "pageTitle": "Gullivarrr",
+      "pageUrl": "https://nookipedia.com/wiki/Gullivarrr",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Gullivarrr NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/c/ca/Gullivarrr_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/gullivarrr.png",
+        "bytes": 6067,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Gullivarrr NH.png",
+        "url": "https://dodo.ac/np/images/9/9d/Gullivarrr_NH.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/gullivarrr.png",
+        "bytes": 49648,
+        "width": 202,
+        "height": 218
+      }
+    },
+    {
+      "slug": "gulliver",
+      "nameEn": "Gulliver",
+      "pageTitle": "Gulliver",
+      "pageUrl": "https://nookipedia.com/wiki/Gulliver",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Gulliver NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/5/54/Gulliver_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/gulliver.png",
+        "bytes": 4663,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Gulliver NH Model.png",
+        "url": "https://dodo.ac/np/images/6/6f/Gulliver_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/gulliver.png",
+        "bytes": 319474,
+        "width": 1265,
+        "height": 1265
+      }
+    },
+    {
+      "slug": "harriet",
+      "nameEn": "Harriet",
+      "pageTitle": "Harriet",
+      "pageUrl": "https://nookipedia.com/wiki/Harriet",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Harriet NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/5/57/Harriet_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/harriet.png",
+        "bytes": 5531,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Harriet NH Model.png",
+        "url": "https://dodo.ac/np/images/2/2e/Harriet_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/harriet.png",
+        "bytes": 354589,
+        "width": 1236,
+        "height": 1236
+      }
+    },
+    {
+      "slug": "harvey",
+      "nameEn": "Harvey",
+      "pageTitle": "Harvey",
+      "pageUrl": "https://nookipedia.com/wiki/Harvey",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Harvey NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/0/0c/Harvey_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/harvey.png",
+        "bytes": 9827,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Harvey NH Model.png",
+        "url": "https://dodo.ac/np/images/5/58/Harvey_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/harvey.png",
+        "bytes": 527603,
+        "width": 1324,
+        "height": 1324
+      }
+    },
+    {
+      "slug": "isabelle",
+      "nameEn": "Isabelle",
+      "pageTitle": "Isabelle",
+      "pageUrl": "https://nookipedia.com/wiki/Isabelle",
+      "aliasesKo": [
+        "여울"
+      ],
+      "icon": {
+        "fileTitle": "File:Isabelle NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/9/91/Isabelle_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/isabelle.png",
+        "bytes": 6057,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Isabelle NH Model.png",
+        "url": "https://dodo.ac/np/images/a/a0/Isabelle_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/isabelle.png",
+        "bytes": 406496,
+        "width": 1397,
+        "height": 1397
+      }
+    },
+    {
+      "slug": "jack",
+      "nameEn": "Jack",
+      "pageTitle": "Jack",
+      "pageUrl": "https://nookipedia.com/wiki/Jack",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Jack NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/b/b0/Jack_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/jack.png",
+        "bytes": 7270,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Jack NH Model.png",
+        "url": "https://dodo.ac/np/images/b/bd/Jack_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/jack.png",
+        "bytes": 352875,
+        "width": 1128,
+        "height": 1128
+      }
+    },
+    {
+      "slug": "jingle",
+      "nameEn": "Jingle",
+      "pageTitle": "Jingle",
+      "pageUrl": "https://nookipedia.com/wiki/Jingle",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Jingle NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/b/b1/Jingle_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/jingle.png",
+        "bytes": 6230,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Jingle NH Model.png",
+        "url": "https://dodo.ac/np/images/9/93/Jingle_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/jingle.png",
+        "bytes": 462881,
+        "width": 1393,
+        "height": 1393
+      }
+    },
+    {
+      "slug": "joan",
+      "nameEn": "Joan",
+      "pageTitle": "Joan",
+      "pageUrl": "https://nookipedia.com/wiki/Joan",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Joan NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/2/2d/Joan_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/joan.png",
+        "bytes": 8108,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Joan NH Model.png",
+        "url": "https://dodo.ac/np/images/e/e1/Joan_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/joan.png",
+        "bytes": 477483,
+        "width": 1180,
+        "height": 1180
+      }
+    },
+    {
+      "slug": "k-k-slider",
+      "nameEn": "K.K. Slider",
+      "pageTitle": "K.K. Slider",
+      "pageUrl": "https://nookipedia.com/wiki/K.K._Slider",
+      "aliasesKo": [
+        "K.K."
+      ],
+      "icon": {
+        "fileTitle": "File:K.K. NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/c/c2/K.K._NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/k-k-slider.png",
+        "bytes": 7787,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:K.K. Slider NH Model.png",
+        "url": "https://dodo.ac/np/images/b/bf/K.K._Slider_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/k-k-slider.png",
+        "bytes": 336836,
+        "width": 1343,
+        "height": 1343
+      }
+    },
+    {
+      "slug": "kappn",
+      "nameEn": "Kapp'n",
+      "pageTitle": "Kapp'n",
+      "pageUrl": "https://nookipedia.com/wiki/Kapp'n",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Kapp'n NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/1/1d/Kapp%27n_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/kappn.png",
+        "bytes": 4973,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Kapp'n NH Model.png",
+        "url": "https://dodo.ac/np/images/3/32/Kapp%27n_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/kappn.png",
+        "bytes": 305723,
+        "width": 1108,
+        "height": 1108
+      }
+    },
+    {
+      "slug": "katie",
+      "nameEn": "Katie",
+      "pageTitle": "Katie",
+      "pageUrl": "https://nookipedia.com/wiki/Katie",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Katie NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/7/78/Katie_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/katie.png",
+        "bytes": 6273,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Katie NH Model.png",
+        "url": "https://dodo.ac/np/images/a/a3/Katie_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/katie.png",
+        "bytes": 275504,
+        "width": 1056,
+        "height": 1056
+      }
+    },
+    {
+      "slug": "katrina",
+      "nameEn": "Katrina",
+      "pageTitle": "Katrina",
+      "pageUrl": "https://nookipedia.com/wiki/Katrina",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Katrina NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/4/4e/Katrina_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/katrina.png",
+        "bytes": 9100,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Katrina NH Model.png",
+        "url": "https://dodo.ac/np/images/5/5c/Katrina_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/katrina.png",
+        "bytes": 489858,
+        "width": 1194,
+        "height": 1194
+      }
+    },
+    {
+      "slug": "kicks",
+      "nameEn": "Kicks",
+      "pageTitle": "Kicks",
+      "pageUrl": "https://nookipedia.com/wiki/Kicks",
+      "aliasesKo": [
+        "패트릭"
+      ],
+      "icon": {
+        "fileTitle": "File:Kicks NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/6/67/Kicks_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/kicks.png",
+        "bytes": 7967,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Kicks NH Model.png",
+        "url": "https://dodo.ac/np/images/2/23/Kicks_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/kicks.png",
+        "bytes": 415010,
+        "width": 1073,
+        "height": 1073
+      }
+    },
+    {
+      "slug": "label",
+      "nameEn": "Label",
+      "pageTitle": "Label",
+      "pageUrl": "https://nookipedia.com/wiki/Label",
+      "aliasesKo": [
+        "고숙이"
+      ],
+      "icon": {
+        "fileTitle": "File:Label NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/c/c6/Label_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/label.png",
+        "bytes": 11662,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Label NH Model.png",
+        "url": "https://dodo.ac/np/images/0/04/Label_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/label.png",
+        "bytes": 473453,
+        "width": 1164,
+        "height": 1164
+      }
+    },
+    {
+      "slug": "leif",
+      "nameEn": "Leif",
+      "pageTitle": "Leif",
+      "pageUrl": "https://nookipedia.com/wiki/Leif",
+      "aliasesKo": [
+        "늘봉"
+      ],
+      "icon": {
+        "fileTitle": "File:Leif NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/2/25/Leif_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/leif.png",
+        "bytes": 7354,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Leif NH Model.png",
+        "url": "https://dodo.ac/np/images/4/46/Leif_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/leif.png",
+        "bytes": 438092,
+        "width": 1140,
+        "height": 1140
+      }
+    },
+    {
+      "slug": "leila",
+      "nameEn": "Leila",
+      "pageTitle": "Leila",
+      "pageUrl": "https://nookipedia.com/wiki/Leila",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Leila NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/f/f1/Leila_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/leila.png",
+        "bytes": 5336,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Leila NH Model.png",
+        "url": "https://dodo.ac/np/images/f/f6/Leila_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/leila.png",
+        "bytes": 245183,
+        "width": 962,
+        "height": 962
+      }
+    },
+    {
+      "slug": "leilani",
+      "nameEn": "Leilani",
+      "pageTitle": "Leilani",
+      "pageUrl": "https://nookipedia.com/wiki/Leilani",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Leilani NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/4/45/Leilani_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/leilani.png",
+        "bytes": 5889,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Leilani NH Model.png",
+        "url": "https://dodo.ac/np/images/1/12/Leilani_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/leilani.png",
+        "bytes": 325892,
+        "width": 1159,
+        "height": 1159
+      }
+    },
+    {
+      "slug": "lloid",
+      "nameEn": "Lloid",
+      "pageTitle": "Lloid",
+      "pageUrl": "https://nookipedia.com/wiki/Lloid",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Lloid NH Question Icon.png",
+        "url": "https://dodo.ac/np/images/f/f2/Lloid_NH_Question_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/lloid.png",
+        "bytes": 20577,
+        "width": 256,
+        "height": 256
+      },
+      "image": {
+        "fileTitle": "File:Lloid NH.png",
+        "url": "https://dodo.ac/np/images/a/a6/Lloid_NH.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/lloid.png",
+        "bytes": 58665,
+        "width": 213,
+        "height": 234
+      }
+    },
+    {
+      "slug": "lottie",
+      "nameEn": "Lottie",
+      "pageTitle": "Lottie",
+      "pageUrl": "https://nookipedia.com/wiki/Lottie",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Lottie NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/7/78/Lottie_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/lottie.png",
+        "bytes": 7309,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Lottie NH Model.png",
+        "url": "https://dodo.ac/np/images/a/af/Lottie_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/lottie.png",
+        "bytes": 361908,
+        "width": 1234,
+        "height": 1234
+      }
+    },
+    {
+      "slug": "luna",
+      "nameEn": "Luna",
+      "pageTitle": "Luna",
+      "pageUrl": "https://nookipedia.com/wiki/Luna",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Luna NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/7/75/Luna_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/luna.png",
+        "bytes": 7200,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Luna NH Model.png",
+        "url": "https://dodo.ac/np/images/1/1a/Luna_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/luna.png",
+        "bytes": 470637,
+        "width": 1392,
+        "height": 1392
+      }
+    },
+    {
+      "slug": "lyle",
+      "nameEn": "Lyle",
+      "pageTitle": "Lyle",
+      "pageUrl": "https://nookipedia.com/wiki/Lyle",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Lyle NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/8/81/Lyle_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/lyle.png",
+        "bytes": 7619,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Lyle NH Model.png",
+        "url": "https://dodo.ac/np/images/d/dd/Lyle_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/lyle.png",
+        "bytes": 354929,
+        "width": 1104,
+        "height": 1104
+      }
+    },
+    {
+      "slug": "mabel",
+      "nameEn": "Mabel",
+      "pageTitle": "Mabel",
+      "pageUrl": "https://nookipedia.com/wiki/Mabel",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Mabel NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/6/68/Mabel_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/mabel.png",
+        "bytes": 8974,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Mabel NH Model.png",
+        "url": "https://dodo.ac/np/images/c/c3/Mabel_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/mabel.png",
+        "bytes": 573924,
+        "width": 1163,
+        "height": 1163
+      }
+    },
+    {
+      "slug": "mr-resetti",
+      "nameEn": "Mr. Resetti",
+      "pageTitle": "Mr. Resetti",
+      "pageUrl": "https://nookipedia.com/wiki/Mr._Resetti",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Resetti NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/0/0b/Resetti_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/mr-resetti.png",
+        "bytes": 6295,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Mr. Resetti NH Model.png",
+        "url": "https://dodo.ac/np/images/1/16/Mr._Resetti_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/mr-resetti.png",
+        "bytes": 533638,
+        "width": 1213,
+        "height": 1213
+      }
+    },
+    {
+      "slug": "nat",
+      "nameEn": "Nat",
+      "pageTitle": "Nat",
+      "pageUrl": "https://nookipedia.com/wiki/Nat",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Nat NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/5/58/Nat_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/nat.png",
+        "bytes": 7591,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Nat NH Model.png",
+        "url": "https://dodo.ac/np/images/d/dd/Nat_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/nat.png",
+        "bytes": 408956,
+        "width": 1192,
+        "height": 1192
+      }
+    },
+    {
+      "slug": "niko",
+      "nameEn": "Niko",
+      "pageTitle": "Niko",
+      "pageUrl": "https://nookipedia.com/wiki/Niko",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Niko NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/2/22/Niko_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/niko.png",
+        "bytes": 7111,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Niko NH Model.png",
+        "url": "https://dodo.ac/np/images/8/8a/Niko_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/niko.png",
+        "bytes": 274838,
+        "width": 827,
+        "height": 827
+      }
+    },
+    {
+      "slug": "orville",
+      "nameEn": "Orville",
+      "pageTitle": "Orville",
+      "pageUrl": "https://nookipedia.com/wiki/Orville",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Orville NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/3/30/Orville_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/orville.png",
+        "bytes": 7121,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Orville NH Model.png",
+        "url": "https://dodo.ac/np/images/a/a7/Orville_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/orville.png",
+        "bytes": 361765,
+        "width": 1265,
+        "height": 1265
+      }
+    },
+    {
+      "slug": "pascal",
+      "nameEn": "Pascal",
+      "pageTitle": "Pascal",
+      "pageUrl": "https://nookipedia.com/wiki/Pascal",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Pascal NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/6/67/Pascal_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/pascal.png",
+        "bytes": 7187,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Pascal NH Model.png",
+        "url": "https://dodo.ac/np/images/0/09/Pascal_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/pascal.png",
+        "bytes": 412563,
+        "width": 1132,
+        "height": 1132
+      }
+    },
+    {
+      "slug": "pave",
+      "nameEn": "Pavé",
+      "pageTitle": "Pavé",
+      "pageUrl": "https://nookipedia.com/wiki/Pav%C3%A9",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Pavé NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/3/39/Pav%C3%A9_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/pave.png",
+        "bytes": 11287,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Pavé NH Model.png",
+        "url": "https://dodo.ac/np/images/8/8b/Pav%C3%A9_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/pave.png",
+        "bytes": 955281,
+        "width": 1489,
+        "height": 1489
+      }
+    },
+    {
+      "slug": "pelly",
+      "nameEn": "Pelly",
+      "pageTitle": "Pelly",
+      "pageUrl": "https://nookipedia.com/wiki/Pelly",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Pelly NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/1/1f/Pelly_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/pelly.png",
+        "bytes": 4432,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Pelly NH Model.png",
+        "url": "https://dodo.ac/np/images/5/5c/Pelly_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/pelly.png",
+        "bytes": 289216,
+        "width": 1122,
+        "height": 1122
+      }
+    },
+    {
+      "slug": "pete",
+      "nameEn": "Pete",
+      "pageTitle": "Pete",
+      "pageUrl": "https://nookipedia.com/wiki/Pete",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Pete NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/0/09/Pete_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/pete.png",
+        "bytes": 5097,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Pete NH Model.png",
+        "url": "https://dodo.ac/np/images/5/56/Pete_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/pete.png",
+        "bytes": 328145,
+        "width": 1234,
+        "height": 1234
+      }
+    },
+    {
+      "slug": "phineas",
+      "nameEn": "Phineas",
+      "pageTitle": "Phineas",
+      "pageUrl": "https://nookipedia.com/wiki/Phineas",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Phineas NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/1/13/Phineas_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/phineas.png",
+        "bytes": 8427,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Phineas NH Model.png",
+        "url": "https://dodo.ac/np/images/2/2e/Phineas_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/phineas.png",
+        "bytes": 693745,
+        "width": 1519,
+        "height": 1519
+      }
+    },
+    {
+      "slug": "phyllis",
+      "nameEn": "Phyllis",
+      "pageTitle": "Phyllis",
+      "pageUrl": "https://nookipedia.com/wiki/Phyllis",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Phyllis NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/7/76/Phyllis_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/phyllis.png",
+        "bytes": 6021,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Phyllis NH Model.png",
+        "url": "https://dodo.ac/np/images/c/c1/Phyllis_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/phyllis.png",
+        "bytes": 286683,
+        "width": 1123,
+        "height": 1123
+      }
+    },
+    {
+      "slug": "porter",
+      "nameEn": "Porter",
+      "pageTitle": "Porter",
+      "pageUrl": "https://nookipedia.com/wiki/Porter",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Porter NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/b/b5/Porter_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/porter.png",
+        "bytes": 7391,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Porter NH Model.png",
+        "url": "https://dodo.ac/np/images/6/61/Porter_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/porter.png",
+        "bytes": 342197,
+        "width": 1278,
+        "height": 1278
+      }
+    },
+    {
+      "slug": "redd",
+      "nameEn": "Redd",
+      "pageTitle": "Redd",
+      "pageUrl": "https://nookipedia.com/wiki/Redd",
+      "aliasesKo": [
+        "여욱"
+      ],
+      "icon": {
+        "fileTitle": "File:Redd NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/4/40/Redd_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/redd.png",
+        "bytes": 5736,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Redd NH Model.png",
+        "url": "https://dodo.ac/np/images/0/08/Redd_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/redd.png",
+        "bytes": 373485,
+        "width": 1313,
+        "height": 1313
+      }
+    },
+    {
+      "slug": "reese",
+      "nameEn": "Reese",
+      "pageTitle": "Reese",
+      "pageUrl": "https://nookipedia.com/wiki/Reese",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Reese NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/0/01/Reese_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/reese.png",
+        "bytes": 6656,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Reese NH Model.png",
+        "url": "https://dodo.ac/np/images/0/0d/Reese_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/reese.png",
+        "bytes": 441690,
+        "width": 1337,
+        "height": 1337
+      }
+    },
+    {
+      "slug": "rover",
+      "nameEn": "Rover",
+      "pageTitle": "Rover",
+      "pageUrl": "https://nookipedia.com/wiki/Rover",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Rover NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/2/2e/Rover_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/rover.png",
+        "bytes": 8925,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Rover NH Model.png",
+        "url": "https://dodo.ac/np/images/d/dd/Rover_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/rover.png",
+        "bytes": 379583,
+        "width": 1230,
+        "height": 1230
+      }
+    },
+    {
+      "slug": "sable",
+      "nameEn": "Sable",
+      "pageTitle": "Sable",
+      "pageUrl": "https://nookipedia.com/wiki/Sable",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Sable NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/2/2f/Sable_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/sable.png",
+        "bytes": 13810,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Sable NH Model.png",
+        "url": "https://dodo.ac/np/images/c/ca/Sable_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/sable.png",
+        "bytes": 533932,
+        "width": 1160,
+        "height": 1160
+      }
+    },
+    {
+      "slug": "saharah",
+      "nameEn": "Saharah",
+      "pageTitle": "Saharah",
+      "pageUrl": "https://nookipedia.com/wiki/Saharah",
+      "aliasesKo": [
+        "사하라"
+      ],
+      "icon": {
+        "fileTitle": "File:Saharah NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/6/6f/Saharah_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/saharah.png",
+        "bytes": 6128,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Saharah NH Model.png",
+        "url": "https://dodo.ac/np/images/f/fe/Saharah_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/saharah.png",
+        "bytes": 564638,
+        "width": 1384,
+        "height": 1384
+      }
+    },
+    {
+      "slug": "snowboy",
+      "nameEn": "Snowboy",
+      "pageTitle": "Snowboy",
+      "pageUrl": "https://nookipedia.com/wiki/Snowboy",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Snowboy HHD Character Icon.png",
+        "url": "https://dodo.ac/np/images/9/95/Snowboy_HHD_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/snowboy.png",
+        "bytes": 4678,
+        "width": 64,
+        "height": 64
+      },
+      "image": {
+        "fileTitle": "File:Snowboy NH.png",
+        "url": "https://dodo.ac/np/images/b/be/Snowboy_NH.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/snowboy.png",
+        "bytes": 44881,
+        "width": 172,
+        "height": 229
+      }
+    },
+    {
+      "slug": "timmy-and-tommy",
+      "nameEn": "Timmy and Tommy",
+      "pageTitle": "Timmy and Tommy",
+      "pageUrl": "https://nookipedia.com/wiki/Timmy_and_Tommy",
+      "aliasesKo": [
+        "콩돌이와 밤돌이",
+        "콩돌이",
+        "밤돌이"
+      ],
+      "icon": {
+        "fileTitle": "File:Nookling NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/3/36/Nookling_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/timmy-and-tommy.png",
+        "bytes": 6987,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Nookling NH Model.png",
+        "url": "https://dodo.ac/np/images/4/49/Nookling_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/timmy-and-tommy.png",
+        "bytes": 291880,
+        "width": 868,
+        "height": 868
+      }
+    },
+    {
+      "slug": "tom-nook",
+      "nameEn": "Tom Nook",
+      "pageTitle": "Tom Nook",
+      "pageUrl": "https://nookipedia.com/wiki/Tom_Nook",
+      "aliasesKo": [
+        "너굴"
+      ],
+      "icon": {
+        "fileTitle": "File:Tom Nook HHD Character Icon.png",
+        "url": "https://dodo.ac/np/images/2/2b/Tom_Nook_HHD_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/tom-nook.png",
+        "bytes": 5460,
+        "width": 64,
+        "height": 64
+      },
+      "image": {
+        "fileTitle": "File:Tom Nook NH Model.png",
+        "url": "https://dodo.ac/np/images/8/8c/Tom_Nook_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/tom-nook.png",
+        "bytes": 542923,
+        "width": 1213,
+        "height": 1213
+      }
+    },
+    {
+      "slug": "tortimer",
+      "nameEn": "Tortimer",
+      "pageTitle": "Tortimer",
+      "pageUrl": "https://nookipedia.com/wiki/Tortimer",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Tortimer NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/4/48/Tortimer_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/tortimer.png",
+        "bytes": 5544,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Tortimer NH Model.png",
+        "url": "https://dodo.ac/np/images/e/ec/Tortimer_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/tortimer.png",
+        "bytes": 383879,
+        "width": 1091,
+        "height": 1091
+      }
+    },
+    {
+      "slug": "wardell",
+      "nameEn": "Wardell",
+      "pageTitle": "Wardell",
+      "pageUrl": "https://nookipedia.com/wiki/Wardell",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Wardell NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/2/22/Wardell_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/wardell.png",
+        "bytes": 4486,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Wardell NH Model.png",
+        "url": "https://dodo.ac/np/images/2/28/Wardell_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/wardell.png",
+        "bytes": 700454,
+        "width": 1502,
+        "height": 1502
+      }
+    },
+    {
+      "slug": "wendell",
+      "nameEn": "Wendell",
+      "pageTitle": "Wendell",
+      "pageUrl": "https://nookipedia.com/wiki/Wendell",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Wendell NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/f/f2/Wendell_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/wendell.png",
+        "bytes": 6253,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Wendell NH Model.png",
+        "url": "https://dodo.ac/np/images/6/65/Wendell_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/wendell.png",
+        "bytes": 493519,
+        "width": 1426,
+        "height": 1426
+      }
+    },
+    {
+      "slug": "wilbur",
+      "nameEn": "Wilbur",
+      "pageTitle": "Wilbur",
+      "pageUrl": "https://nookipedia.com/wiki/Wilbur",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Wilbur NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/0/05/Wilbur_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/wilbur.png",
+        "bytes": 8947,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Wilbur NH Model.png",
+        "url": "https://dodo.ac/np/images/5/59/Wilbur_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/wilbur.png",
+        "bytes": 401429,
+        "width": 1264,
+        "height": 1264
+      }
+    },
+    {
+      "slug": "wisp",
+      "nameEn": "Wisp",
+      "pageTitle": "Wisp",
+      "pageUrl": "https://nookipedia.com/wiki/Wisp",
+      "aliasesKo": [
+        "깨빈"
+      ],
+      "icon": {
+        "fileTitle": "File:Wisp NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/2/2d/Wisp_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/wisp.png",
+        "bytes": 4529,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Wisp NH Model.png",
+        "url": "https://dodo.ac/np/images/d/d5/Wisp_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/wisp.png",
+        "bytes": 104526,
+        "width": 738,
+        "height": 738
+      }
+    },
+    {
+      "slug": "zipper-t-bunny",
+      "nameEn": "Zipper T. Bunny",
+      "pageTitle": "Zipper T. Bunny",
+      "pageUrl": "https://nookipedia.com/wiki/Zipper_T._Bunny",
+      "aliasesKo": [],
+      "icon": {
+        "fileTitle": "File:Zipper NH Character Icon.png",
+        "url": "https://dodo.ac/np/images/3/3a/Zipper_NH_Character_Icon.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/icons/zipper-t-bunny.png",
+        "bytes": 8424,
+        "width": 128,
+        "height": 128
+      },
+      "image": {
+        "fileTitle": "File:Zipper T. Bunny NH Model.png",
+        "url": "https://dodo.ac/np/images/4/4c/Zipper_T._Bunny_NH_Model.png",
+        "path": "acnh-diary-mobile/src/data/assets/npcs/images/zipper-t-bunny.png",
+        "bytes": 522542,
+        "width": 1588,
+        "height": 1588
+      }
+    }
+  ]
+}

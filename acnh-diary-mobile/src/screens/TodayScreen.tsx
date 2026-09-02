@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
+  type ColorValue,
   Image,
   Modal,
   Pressable,
@@ -10,18 +11,21 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { useFocusEffect } from 'expo-router';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppChrome } from '@/components/AppChrome';
-import { AppColors, AppControlSizes, AppRadii, AppShadows } from '@/constants/theme';
+import { AppColors, AppControlSizes, AppRadii, AppShadows, Fonts } from '@/constants/theme';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import { getMonthlyAvailabilityFlags, isAvailableAtMinute } from '@/data/availability';
+import { getBloomingBushes, type BloomingBush } from '@/data/bush-blooms';
 import { getCatalogItems } from '@/data/catalog';
 import { getEncyclopediaItems } from '@/data/encyclopedia';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
 import { localizeAvailabilityLabel, localizeAvailabilityTime, localizeLocation } from '@/data/encyclopedia-labels';
+import { npcAssets } from '@/data/npc-assets';
 import { DEFAULT_ROUTINE_OPTIONS } from '@/data/routines';
 import { villagers } from '@/data/villagers';
 import {
@@ -35,6 +39,7 @@ import {
   getNpcVisitsForIsland,
   getRoutineProgressForIsland,
   getRoutinesForIsland,
+  getVillagerStatesForIsland,
   initializeDatabase,
   setCollectionStatus,
   setManualGameDate,
@@ -45,6 +50,7 @@ import {
 } from '@/db/database';
 import type { EncyclopediaItem, EncyclopediaState, EncyclopediaStatus } from '@/types/encyclopedia';
 import type { Island, NpcVisit, Routine, RoutineProgress } from '@/types/island';
+import type { VillagerState } from '@/types/villager-state';
 
 type TodayScreenProps = { island?: Island | null; routines?: Routine[] };
 type CalendarMode = 'week' | 'month';
@@ -52,13 +58,31 @@ type CalendarItemKind = 'birthday' | 'event';
 type CalendarItem = { id: string; kind: CalendarItemKind; label: string };
 type CritterTab = 'bugs' | 'fish' | 'sea' | 'newThisMonth' | 'leavingThisMonth';
 type CritterCategory = 'bugs' | 'fish' | 'sea';
+type TodaySectionIcon = 'summary' | 'routine' | 'npc' | 'critter' | 'calendar';
+type TodayActionIcon = 'edit' | 'reset' | 'open';
 
 const EMPTY_STATE: EncyclopediaState = { caught: false, owned: false, donated: false, genuineOwned: false, fakeOwned: false };
 const DEFAULT_ROUTINE_TITLES = new Set(DEFAULT_ROUTINE_OPTIONS.map((routine) => routine.title));
+const CRITTER_CATEGORIES: CritterCategory[] = ['bugs', 'fish', 'sea'];
+const DAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
+const ROUTINE_MARKS = ['DIY', '$', 'R', 'F', 'T', 'F', 'B', '$', 'S', 'N', 'DIY', 'D', 'S', 'K', 'M', 'M', 'FR', 'VG', 'G'];
 const DAY_NPC_OPTIONS = ['레온', '저스틴', '고숙이', '사하라', '패트릭', '여욱', '늘봉'];
 const WEEKEND_NPC_OPTIONS = ['K.K.', '무파니'];
 const NIGHT_NPC_OPTIONS = ['부옥', '깨빈'];
 const NPC_OPTIONS = [...DAY_NPC_OPTIONS, ...WEEKEND_NPC_OPTIONS, ...NIGHT_NPC_OPTIONS];
+const NPC_ASSET_KEYS: Record<string, string> = {
+  레온: 'flick',
+  저스틴: 'c-j',
+  고숙이: 'label',
+  사하라: 'saharah',
+  패트릭: 'kicks',
+  여욱: 'redd',
+  늘봉: 'leif',
+  'K.K.': 'k-k-slider',
+  무파니: 'daisy-mae',
+  부옥: 'celeste',
+  깨빈: 'wisp',
+};
 const NPC_ICON_LABELS: Record<string, string> = {
   레온: '레',
   저스틴: '저',
@@ -176,6 +200,11 @@ function formatMonthDayShort(value: string) {
   return new Intl.DateTimeFormat('ko-KR', { month: 'numeric', day: 'numeric', timeZone: 'UTC' }).format(parseIsoDate(value) ?? new Date());
 }
 
+function formatWeekdayShort(value: string) {
+  const date = parseIsoDate(value);
+  return date ? `${DAY_LABELS[date.getUTCDay()] ?? ''}요일` : '';
+}
+
 function seasonFor(month: number, hemisphere: Island['hemisphere']) {
   const north = month <= 2 || month === 12 ? '겨울' : month <= 5 ? '봄' : month <= 8 ? '여름' : '가을';
   if (hemisphere !== 'south') return north;
@@ -279,7 +308,7 @@ function getTodayEventNames(date: Date, hemisphere: Island['hemisphere']) {
   return events;
 }
 
-function getCalendarItemsForDate(date: string, hemisphere: Island['hemisphere']): CalendarItem[] {
+function getCalendarItemsForDate(date: string, hemisphere: Island['hemisphere'], residentVillagerIds?: Set<string>): CalendarItem[] {
   const dateObject = parseIsoDate(date);
   if (!dateObject) return [];
 
@@ -287,6 +316,7 @@ function getCalendarItemsForDate(date: string, hemisphere: Island['hemisphere'])
   const day = dateObject.getUTCDate();
   const birthdays = villagers
     .filter((villager) => villager.birth_month === month && villager.birth_day === day)
+    .filter((villager) => !residentVillagerIds || residentVillagerIds.has(villager.id))
     .map((villager) => ({
       id: `birthday-${villager.id}`,
       kind: 'birthday' as const,
@@ -341,9 +371,33 @@ function getNpcIconLabel(name: string | null) {
   return name ? NPC_ICON_LABELS[name] ?? name.slice(0, 1) : '+';
 }
 
+function getNpcAssetForName(name: string | null) {
+  if (!name) return null;
+  const key = NPC_ASSET_KEYS[name];
+  return key ? npcAssets[key] ?? null : null;
+}
+
 function getNpcDisplayLabel(names: string[]) {
   if (names.length <= 2) return names.join('\n');
   return `${names[0]}\n외 ${names.length - 1}명`;
+}
+
+function getRoutineMark(title: string) {
+  const defaultIndex = DEFAULT_ROUTINE_OPTIONS.findIndex((routine) => routine.title === title);
+  if (defaultIndex >= 0) return ROUTINE_MARKS[defaultIndex] ?? 'OK';
+  return title.trim().slice(0, 2).toUpperCase() || 'OK';
+}
+
+function getCritterStateRank(state: EncyclopediaState) {
+  if (!state.caught) return 0;
+  if (!state.donated) return 1;
+  return 2;
+}
+
+function getCategoryLabel(category: CritterCategory) {
+  if (category === 'fish') return '물고기';
+  if (category === 'bugs') return '곤충';
+  return '해산물';
 }
 
 function isAvailableNow(item: EncyclopediaItem, island: Island, gameDate: string, gameTime: string) {
@@ -355,6 +409,7 @@ function isAvailableNow(item: EncyclopediaItem, island: Island, gameDate: string
 }
 
 export function TodayScreen({ island: initialIsland, routines: initialRoutines }: TodayScreenProps) {
+  const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
   const [island, setIsland] = useState<Island | null>(initialIsland ?? null);
   const [routines, setRoutines] = useState<Routine[]>(initialRoutines ?? []);
@@ -362,9 +417,8 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const [manualTime, setManualTime] = useState<string | null>(null);
   const [routineProgress, setRoutineProgressState] = useState<Record<string, RoutineProgress>>({});
   const [collectionStates, setCollectionStates] = useState<Record<string, EncyclopediaState>>({});
+  const [villagerStates, setVillagerStates] = useState<Record<string, VillagerState>>({});
   const [npcVisits, setNpcVisits] = useState<Record<string, string[]>>({});
-  const [critterTab, setCritterTab] = useState<CritterTab>('bugs');
-  const [calendarMode, setCalendarMode] = useState<CalendarMode>('week');
   const [npcDate, setNpcDate] = useState<string | null>(null);
   const [dateTimeModalOpen, setDateTimeModalOpen] = useState(false);
   const [routineModalOpen, setRoutineModalOpen] = useState(false);
@@ -395,6 +449,7 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
       setRoutines(nextRoutines);
       setRoutineProgressState(getRoutineProgressForIsland(activeIsland.id, date));
       setCollectionStates(getCollectionStatesForIsland(activeIsland.id));
+      setVillagerStates(getVillagerStatesForIsland(activeIsland.id));
       const week = getWeekDates(date);
       setNpcVisits(getNpcVisitsForIsland(activeIsland.id, week[0], week[6]));
     } catch {
@@ -443,32 +498,22 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const availableCritters = useMemo(() => {
     if (!island || !gameDate) return [];
 
-    const hemisphere = island.hemisphere === 'south' ? 'south' : 'north';
-    const categories: CritterCategory[] = ['bugs', 'fish', 'sea'];
-    const sourceItems = critterTab === 'newThisMonth' || critterTab === 'leavingThisMonth'
-      ? categories.flatMap((category) => getEncyclopediaItems(category))
-      : getEncyclopediaItems(critterTab);
+    const sourceItems = CRITTER_CATEGORIES.flatMap((category) => getEncyclopediaItems(category));
 
     return sourceItems.filter((item) => {
       if (!isAvailableNow(item, island, gameDate, gameTime)) return false;
-      const flags = getMonthlyAvailabilityFlags(item, hemisphere, month);
-      if (critterTab === 'newThisMonth') return flags.isNewThisMonth;
-      if (critterTab === 'leavingThisMonth') return flags.isLeavingThisMonth;
       return true;
     });
-  }, [critterTab, gameDate, gameTime, island, month]);
-  const calendarDates = useMemo(() => {
-    if (!gameDate) return [];
-    if (calendarMode === 'week') return getWeekDates(gameDate);
-    const start = `${gameDate.slice(0, 8)}01`;
-    const days = new Date(Date.UTC(Number(gameDate.slice(0, 4)), month, 0)).getUTCDate();
-    return Array.from({ length: days }, (_, index) => shiftIsoDate(start, index));
-  }, [calendarMode, gameDate, month]);
-  const calendarCells = useMemo(() => getCalendarGridCells(calendarMode, calendarDates), [calendarDates, calendarMode]);
+  }, [gameDate, gameTime, island]);
+  const calendarDates = useMemo(() => gameDate ? getWeekDates(gameDate) : [], [gameDate]);
+  const residentVillagerIds = useMemo(
+    () => new Set(Object.entries(villagerStates).filter(([, state]) => state.islandResident).map(([key]) => key.split('/').pop() ?? key)),
+    [villagerStates],
+  );
   const calendarItemsByDate = useMemo(() => Object.fromEntries(calendarDates.map((date) => {
-    const items = getCalendarItemsForDate(date, hemisphere);
+    const items = getCalendarItemsForDate(date, hemisphere, residentVillagerIds);
     return [date, items];
-  }).filter(([, items]) => items.length)), [calendarDates, hemisphere]);
+  }).filter(([, items]) => items.length)), [calendarDates, hemisphere, residentVillagerIds]);
   const selectedDefaultRoutineTitles = useMemo(
     () => routines.filter((routine) => DEFAULT_ROUTINE_TITLES.has(routine.title)).map((routine) => routine.title),
     [routines],
@@ -484,8 +529,29 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const nookShoppingSummary = summarizeNames(nookShoppingItems.map((item) => item.nameKo), '오늘 판매 시즌 아이템 없음');
   const todayBirthdays = villagers
     .filter((villager) => villager.birth_month === month && villager.birth_day === day)
+    .filter((villager) => residentVillagerIds.has(villager.id))
     .map((villager) => `${villager.name_ko} 생일`);
-  const todayEventSummary = summarizeNames([...getTodayEventNames(dateObject, hemisphere), ...todayBirthdays], '행사·이벤트·생일 없음');
+  const todayEventSummary = summarizeNames(getTodayEventNames(dateObject, hemisphere), '이벤트 없음');
+  const bloomingBushes = getBloomingBushes(month, day, hemisphere);
+  const allMonthlyCritters = CRITTER_CATEGORIES.flatMap((category) => getEncyclopediaItems(category));
+  const leavingThisMonthCount = allMonthlyCritters.filter((item) => getMonthlyAvailabilityFlags(item, hemisphere, month).isLeavingThisMonth).length;
+  const newThisMonthCount = allMonthlyCritters.filter((item) => getMonthlyAvailabilityFlags(item, hemisphere, month).isNewThisMonth).length;
+  const prioritizedCritters = [...availableCritters].sort((a, b) => {
+    const aState = collectionStates[`${a.category}/${a.id}`] ?? EMPTY_STATE;
+    const bState = collectionStates[`${b.category}/${b.id}`] ?? EMPTY_STATE;
+    const rankDiff = getCritterStateRank(aState) - getCritterStateRank(bState);
+    if (rankDiff !== 0) return rankDiff;
+    return a.nameKo.localeCompare(b.nameKo, 'ko-KR');
+  });
+  const progressNeededCritters = prioritizedCritters.filter((item) => {
+    const state = collectionStates[`${item.category}/${item.id}`] ?? EMPTY_STATE;
+    return getCritterStateRank(state) < 2;
+  });
+  const critterPreviewItems = (progressNeededCritters.length ? progressNeededCritters : prioritizedCritters).slice(0, 4);
+  const progressCountsByCategory = CRITTER_CATEGORIES.map((category) => ({
+    category,
+    count: progressNeededCritters.filter((item) => item.category === category).length,
+  })).filter((item) => item.count > 0);
 
   const toggleRoutine = (routine: Routine) => {
     if (!island || !gameDate) return;
@@ -593,84 +659,61 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
     <View style={styles.screenRoot}>
       <AppChrome contextLabel={island.name} title="오늘" />
       <SafeAreaView edges={[]} style={[styles.safeArea, { backgroundColor: AppColors.background }]}>
-        <ScrollView contentContainerStyle={styles.content} ref={scrollRef} showsVerticalScrollIndicator={false}>
-        <View style={styles.summaryCard}>
-          <View style={styles.summaryHeader}>
-            <View style={styles.summaryCopy}>
-              <Text style={styles.summaryLabel}>오늘의 요약</Text>
-              <Pressable
-                accessibilityLabel="게임 날짜와 시간 변경"
-                accessibilityRole="button"
-                onPress={() => setDateTimeModalOpen(true)}
-                style={({ pressed }) => [dateTimeFieldStyles.field, pressed && dateTimeFieldStyles.fieldPressed]}>
-                <View style={dateTimeFieldStyles.valueBlock}>
-                  <Text numberOfLines={1} style={dateTimeFieldStyles.value}>{formatDate(gameDate)} · {gameTime}</Text>
-                  <Text numberOfLines={1} style={dateTimeFieldStyles.hint}>오전 5시 기준 · {timezone}</Text>
-                </View>
-                <Text style={dateTimeFieldStyles.editIcon}>✎</Text>
-              </Pressable>
+        <ScrollView contentContainerStyle={todayStyles.content} ref={scrollRef} showsVerticalScrollIndicator={false}>
+          <View style={todayStyles.summaryCard}>
+            <View style={todayStyles.summaryHeader}>
+              <View style={todayStyles.summaryTitleBlock}>
+                <SectionGlyph kind="summary" tone="leaf" />
+                <Text style={todayStyles.summaryTitle}>오늘의 섬 요약</Text>
+              </View>
+            </View>
+            <Pressable
+              accessibilityLabel="게임 날짜와 시간 변경"
+              accessibilityRole="button"
+              onPress={() => setDateTimeModalOpen(true)}
+              style={({ pressed }) => [todayStyles.dateTimeControl, pressed && todayStyles.dateTimeControlPressed]}>
+              <View style={todayStyles.dateBlock}>
+                <Text numberOfLines={1} style={todayStyles.dateBlockMonth}>{formatMonthDayShort(gameDate)}</Text>
+                <Text numberOfLines={1} style={todayStyles.dateBlockZone}>{formatWeekdayShort(gameDate)}</Text>
+              </View>
+              <View style={todayStyles.dateTimeDivider} />
+              <View style={todayStyles.timeBlock}>
+                <Text adjustsFontSizeToFit minimumFontScale={0.8} numberOfLines={1} style={todayStyles.timeBlockValue}>{gameTime}</Text>
+                <ActionGlyph kind="edit" tone="leaf" />
+              </View>
+            </Pressable>
+            <View style={todayStyles.summaryGrid}>
+              <SummaryItem label="시즌" value={season} mark="SE" tone="leaf" />
+              <SummaryItem label="시즌 레시피" value={seasonalRecipeSummary} mark="DIY" tone="catalog" />
+              <SummaryItem label="별자리" value={zodiac} mark="ST" tone="museum" />
+              <SummaryItem label="개화 낮은나무" value={bloomingBushes.length ? bloomingBushes.map((bush) => bush.nameKo).join(', ') : '개화 중인 낮은나무 없음'} mark="FL" tone="leaf">
+                <BloomingBushIcons bushes={bloomingBushes} />
+              </SummaryItem>
+              <SummaryItem label="이벤트" value={todayEventSummary} mark="EV" tone="camp" />
+              <SummaryItem label="월말 생물" value={`종료 ${leavingThisMonthCount} · 신규 ${newThisMonthCount}`} mark="CR" tone="museum" />
+              {todayBirthdays.length ? <SummaryItem label="우리 섬 생일" value={todayBirthdays.join(', ')} mark="BD" tone="resident" /> : null}
             </View>
           </View>
-          <View style={styles.summaryGrid}>
-            <SummaryItem label="계절" value={season} />
-            <SummaryItem label="시즌 레시피" value={seasonalRecipeSummary} />
-            <SummaryItem label="별자리" value={zodiac} />
-            <SummaryItem label="너굴쇼핑 시즌 아이템" value={nookShoppingSummary} />
-          </View>
-          <View style={styles.eventStrip}>
-            <Text style={styles.eventLabel}>이벤트</Text>
-            <Text style={styles.eventText}>{todayEventSummary}</Text>
-          </View>
-        </View>
 
-        <SectionHeader title="지금 잡을 수 있는 생물" description="선택한 게임 시간에 출현하는 생물과 이번 달 변동을 확인해요." />
-        <ScrollView contentContainerStyle={styles.tabRow} horizontal showsHorizontalScrollIndicator={false}>
-          {([
-            ['bugs', '곤충'],
-            ['fish', '물고기'],
-            ['sea', '해산물'],
-            ['newThisMonth', '이번 달 신규'],
-            ['leavingThisMonth', '이번 달 종료'],
-          ] as Array<[CritterTab, string]>).map(([value, label]) => (
-            <Pressable
-              key={value}
-              onPress={() => setCritterTab(value)}
-              style={[
-                styles.tabChip,
-                value === 'newThisMonth' && { backgroundColor: '#FFF0D8' },
-                value === 'leavingThisMonth' && { backgroundColor: '#FBE3E0' },
-                critterTab === value && styles.tabChipActive,
-                critterTab === value && value === 'newThisMonth' && { backgroundColor: '#F6C879' },
-                critterTab === value && value === 'leavingThisMonth' && { backgroundColor: '#E9A39A' },
-              ]}>
-              <Text
-                style={[
-                  styles.tabChipText,
-                  value === 'newThisMonth' && { color: '#A26A2D' },
-                  value === 'leavingThisMonth' && { color: '#AE584B' },
-                  critterTab === value && styles.tabChipTextActive,
-                ]}>
-                {label}
-              </Text>
-            </Pressable>
-          ))}
-        </ScrollView>
-        <View style={styles.critterList}>{availableCritters.length ? availableCritters.map((item) => { const availability = item.availability[island.hemisphere === 'south' ? 'south' : 'north']; const availabilityTime = availability.timesByMonth[String(month)] ?? null; return <TodayCritterCard key={`${item.category}/${item.id}`} item={item} month={month} hemisphere={island.hemisphere === 'south' ? 'south' : 'north'} availabilityLabel={localizeAvailabilityLabel(availability.label)} availabilityTime={localizeAvailabilityTime(availabilityTime)} state={collectionStates[`${item.category}/${item.id}`] ?? EMPTY_STATE} onToggle={(status) => updateCritterStatus(item, status)} />; }) : <Text style={styles.noData}>선택한 게임 시간에 출현하는 생물이 없어요.</Text>}</View>
+          <SectionHeader icon="routine" title="매일 루틴" actionIcon="edit" actionLabel="루틴 편집" onAction={() => { setEditingRoutine(null); setRoutineTitle(''); setRoutineGoal('1'); setRoutineModalOpen(true); }} />
+          <RoutineGrid progressById={routineProgress} routines={routines} onToggle={toggleRoutine} />
 
-        <SectionHeader title="오늘의 루틴" description="" actionLabel="루틴 편집" onAction={() => { setEditingRoutine(null); setRoutineTitle(''); setRoutineGoal('1'); setRoutineModalOpen(true); }} />
-        <RoutineGrid progressById={routineProgress} routines={routines} onToggle={toggleRoutine} />
+          <SectionHeader icon="npc" tone="resident" title="이번 주 방문 NPC" actionIcon="reset" actionLabel="주간 초기화" onAction={() => { clearNpcVisitsForWeek(island.id, weekDates[0], weekDates[6]); setNpcVisits({}); }} />
+          <NpcWeekCard currentDate={gameDate} visits={npcVisits} weekDates={weekDates} onSelectDate={setNpcDate} />
 
-        <SectionHeader title="최근 방문 NPC" description="현재 날짜가 포함된 월요일부터 일요일까지 기록해요." actionLabel="주간 초기화" onAction={() => { clearNpcVisitsForWeek(island.id, weekDates[0], weekDates[6]); setNpcVisits({}); }} />
-        <NpcWeekCard currentDate={gameDate} visits={npcVisits} weekDates={weekDates} onSelectDate={setNpcDate} />
+          <CritterPreview
+            availableCount={availableCritters.length}
+            categoryCounts={progressCountsByCategory}
+            items={critterPreviewItems}
+            progressNeededCount={progressNeededCritters.length}
+            month={month}
+            hemisphere={island.hemisphere === 'south' ? 'south' : 'north'}
+            states={collectionStates}
+            onOpenFull={() => router.push('/encyclopedia')}
+            onToggle={updateCritterStatus}
+          />
 
-        <SectionHeader title="캘린더" description="주민 생일과 기준 데이터 이벤트를 확인해요." />
-        <CalendarSection
-          cells={calendarCells}
-          currentDate={gameDate}
-          itemsByDate={calendarItemsByDate}
-          mode={calendarMode}
-          onChangeMode={setCalendarMode}
-        />
+          <CalendarPreview currentDate={gameDate} dates={weekDates} itemsByDate={calendarItemsByDate} />
         </ScrollView>
         <FloatingTopButton
           accessibilityLabel="오늘 화면 맨 위로 이동"
@@ -684,15 +727,124 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   );
 }
 
-function SectionHeader({ title, description, actionLabel, onAction }: { title: string; description: string; actionLabel?: string; onAction?: () => void }) { return <View style={styles.sectionHeader}><View style={styles.sectionHeaderCopy}><Text style={styles.sectionTitle}>{title}</Text>{description ? <Text style={styles.sectionDescription}>{description}</Text> : null}</View>{actionLabel && onAction ? <Pressable onPress={onAction}><Text style={styles.sectionAction}>{actionLabel}</Text></Pressable> : null}</View>; }
-function SummaryItem({ label, value }: { label: string; value: string }) { return <View style={styles.summaryItem}><Text style={styles.summaryItemLabel}>{label}</Text><Text numberOfLines={2} style={styles.summaryItemValue}>{value}</Text></View>; }
-function RoutineGrid({ routines, progressById, onToggle }: { routines: Routine[]; progressById: Record<string, RoutineProgress>; onToggle: (routine: Routine) => void }) {
-  if (!routines.length) {
-    return <Text style={styles.noData}>루틴 편집에서 표시할 루틴을 선택해 주세요.</Text>;
+type TileTone = 'leaf' | 'resident' | 'museum' | 'catalog' | 'camp';
+
+function getTone(tone: TileTone) {
+  if (tone === 'resident') return { backgroundColor: AppColors.residentSoft, borderColor: '#F2B6AC', color: AppColors.resident };
+  if (tone === 'museum') return { backgroundColor: AppColors.museumSoft, borderColor: '#A7D3EA', color: AppColors.museum };
+  if (tone === 'catalog') return { backgroundColor: AppColors.catalogSoft, borderColor: '#EBC276', color: AppColors.catalog };
+  if (tone === 'camp') return { backgroundColor: AppColors.campSoft, borderColor: '#9AD8D0', color: AppColors.camp };
+  return { backgroundColor: AppColors.leafSoft, borderColor: '#BFD7A7', color: AppColors.leaf };
+}
+
+function SectionHeader({
+  actionIcon,
+  actionLabel,
+  icon,
+  title,
+  tone = 'leaf',
+  onAction,
+}: {
+  actionIcon?: TodayActionIcon;
+  actionLabel?: string;
+  icon: TodaySectionIcon;
+  title: string;
+  tone?: TileTone;
+  onAction?: () => void;
+}) {
+  return (
+    <View style={todayStyles.sectionHeader}>
+      <View style={todayStyles.sectionTitleWrap}>
+        <SectionGlyph kind={icon} tone={tone} />
+        <Text adjustsFontSizeToFit minimumFontScale={0.86} numberOfLines={1} style={todayStyles.sectionTitle}>{title}</Text>
+      </View>
+      {actionLabel && onAction ? (
+        <Pressable accessibilityLabel={actionLabel} accessibilityRole="button" onPress={onAction} style={actionIcon ? todayStyles.sectionIconActionButton : todayStyles.sectionActionButton}>
+          {actionIcon ? <ActionGlyph kind={actionIcon} tone={tone} /> : <Text style={todayStyles.sectionAction}>{actionLabel}</Text>}
+        </Pressable>
+      ) : null}
+    </View>
+  );
+}
+
+function SectionGlyph({ kind, tone }: { kind: TodaySectionIcon; tone: TileTone }) {
+  const colors = getTone(tone);
+  const iconName = kind === 'summary'
+    ? 'island'
+    : kind === 'routine'
+      ? 'format-list-checks'
+      : kind === 'npc'
+        ? 'account-star-outline'
+        : kind === 'critter'
+          ? 'butterfly-outline'
+          : 'calendar-week-outline';
+  return (
+    <View style={[todayStyles.sectionGlyph, { backgroundColor: colors.backgroundColor, borderColor: colors.borderColor }]}>
+      <MaterialCommunityIcons color={colors.color as ColorValue} name={iconName} size={18} />
+    </View>
+  );
+}
+
+function ActionGlyph({ kind, tone }: { kind: TodayActionIcon; tone: TileTone }) {
+  const colors = getTone(tone);
+  const iconName = kind === 'edit' ? 'pencil-outline' : kind === 'reset' ? 'restart' : 'chevron-right';
+  return (
+    <View style={todayStyles.actionGlyph}>
+      <MaterialCommunityIcons color={colors.color as ColorValue} name={iconName} size={kind === 'open' ? 20 : 19} />
+    </View>
+  );
+}
+
+function SummaryItem({
+  children,
+  label,
+  value,
+  mark,
+  tone,
+}: {
+  children?: ReactNode;
+  label: string;
+  value: string;
+  mark: string;
+  tone: TileTone;
+}) {
+  const colors = getTone(tone);
+  return (
+    <View style={[todayStyles.summaryItem, { backgroundColor: colors.backgroundColor, borderColor: colors.borderColor }]}>
+      <View style={[todayStyles.summaryMark, { backgroundColor: AppColors.card }]}>
+        <Text numberOfLines={1} adjustsFontSizeToFit style={[todayStyles.summaryMarkText, { color: colors.color }]}>{mark}</Text>
+      </View>
+      <View style={todayStyles.summaryItemCopy}>
+        <Text style={todayStyles.summaryItemLabel}>{label}</Text>
+        {children ?? <Text numberOfLines={2} style={todayStyles.summaryItemValue}>{value}</Text>}
+      </View>
+    </View>
+  );
+}
+
+function BloomingBushIcons({ bushes }: { bushes: BloomingBush[] }) {
+  if (!bushes.length) {
+    return <Text numberOfLines={2} style={todayStyles.summaryItemValue}>개화 중인 낮은나무 없음</Text>;
   }
 
   return (
-    <View style={styles.routineCard}>
+    <View accessibilityLabel={`개화 중인 낮은나무 ${bushes.map((bush) => bush.nameKo).join(', ')}`} style={todayStyles.bushIconRow}>
+      {bushes.map((bush) => (
+        <View key={bush.id} style={todayStyles.bushIconChip}>
+          <Image accessibilityLabel={bush.nameKo} resizeMode="contain" source={bush.icon} style={todayStyles.bushIconImage} />
+        </View>
+      ))}
+    </View>
+  );
+}
+
+function RoutineGrid({ routines, progressById, onToggle }: { routines: Routine[]; progressById: Record<string, RoutineProgress>; onToggle: (routine: Routine) => void }) {
+  if (!routines.length) {
+    return <Text style={todayStyles.noData}>루틴 편집에서 표시할 루틴을 선택해 주세요.</Text>;
+  }
+
+  return (
+    <View style={todayStyles.routineCard}>
       {routines.map((routine) => {
         const progress = progressById[routine.id]?.currentCount ?? 0;
         const complete = progress >= routine.goalCount;
@@ -703,17 +855,22 @@ function RoutineGrid({ routines, progressById, onToggle }: { routines: Routine[]
             accessibilityState={{ checked: complete }}
             key={routine.id}
             onPress={() => onToggle(routine)}
-            style={[styles.routineTile, !complete && styles.routineTileDimmed, complete && styles.routineTileComplete]}>
+            style={[todayStyles.routineTile, !complete && todayStyles.routineTileIdle, complete && todayStyles.routineTileComplete]}>
+            <View style={[todayStyles.routineIcon, complete && todayStyles.routineIconComplete]}>
+              <Text numberOfLines={1} adjustsFontSizeToFit style={[todayStyles.routineIconText, complete && todayStyles.routineIconTextComplete]}>
+                {getRoutineMark(routine.title)}
+              </Text>
+            </View>
             <Text
               adjustsFontSizeToFit
               minimumFontScale={0.75}
               numberOfLines={2}
-              style={[styles.routineTileText, !complete && styles.routineTileTextDimmed, complete && styles.routineTileTextComplete]}>
+              style={[todayStyles.routineTileText, !complete && todayStyles.routineTileTextIdle, complete && todayStyles.routineTileTextComplete]}>
               {routine.title}
             </Text>
             {complete ? (
-              <View style={styles.routineCheckBadge}>
-                <Text style={styles.routineCheckText}>✓</Text>
+              <View style={todayStyles.routineCheckBadge}>
+                <Text style={todayStyles.routineCheckText}>✓</Text>
               </View>
             ) : null}
           </Pressable>
@@ -724,10 +881,10 @@ function RoutineGrid({ routines, progressById, onToggle }: { routines: Routine[]
 }
 function NpcWeekCard({ currentDate, visits, weekDates, onSelectDate }: { currentDate: string; visits: Record<string, string[]>; weekDates: string[]; onSelectDate: (date: string) => void }) {
   return (
-    <View style={styles.npcCard}>
+    <View style={todayStyles.npcCard}>
       {weekDates.map((date) => {
         const dateObject = parseIsoDate(date) ?? new Date();
-        const weekday = new Intl.DateTimeFormat('ko-KR', { weekday: 'short', timeZone: 'UTC' }).format(dateObject);
+        const weekday = DAY_LABELS[dateObject.getUTCDay()] ?? '';
         const npcs = getResolvedNpcNames(date, visits);
         const isCurrentDate = date === currentDate;
         const hasNpcs = npcs.length > 0;
@@ -738,24 +895,146 @@ function NpcWeekCard({ currentDate, visits, weekDates, onSelectDate }: { current
             accessibilityRole="button"
             key={date}
             onPress={() => onSelectDate(date)}
-            style={[styles.npcDayCell, isCurrentDate && styles.npcDayCellToday]}>
-            <Text style={styles.npcWeekday}>{weekday}</Text>
-            <Text style={styles.npcDateNumber}>{dateObject.getUTCDate()}</Text>
-            <View style={styles.npcAvatarStack}>
+            style={[todayStyles.npcDayCell, isCurrentDate && todayStyles.npcDayCellToday]}>
+            <Text style={[todayStyles.npcWeekday, isCurrentDate && todayStyles.npcWeekdayToday]}>{isCurrentDate ? '오늘' : weekday}</Text>
+            <View style={todayStyles.npcAvatarStack}>
               {hasNpcs ? npcs.map((npc) => (
-                <View key={npc} style={[styles.npcAvatar, styles.npcWeekAvatar]}>
-                  <Text style={styles.npcAvatarText}>{getNpcIconLabel(npc)}</Text>
-                </View>
+                <NpcAvatar current={isCurrentDate} key={npc} name={npc} />
               )) : (
-                <View style={[styles.npcAvatar, styles.npcWeekAvatar, styles.npcAvatarEmpty]}>
-                  <Text style={styles.npcAvatarText}>{getNpcIconLabel(null)}</Text>
-                </View>
+                <NpcAvatar current={isCurrentDate} empty name={null} />
               )}
             </View>
-            <Text numberOfLines={2} style={[styles.npcName, !hasNpcs && styles.npcNameEmpty]}>{hasNpcs ? getNpcDisplayLabel(npcs) : '선택'}</Text>
+            <Text numberOfLines={1} style={[todayStyles.npcName, !hasNpcs && todayStyles.npcNameEmpty]}>{hasNpcs ? getNpcDisplayLabel(npcs).replace('\n', ' ') : '선택'}</Text>
           </Pressable>
         );
       })}
+    </View>
+  );
+}
+
+function NpcAvatar({
+  current = false,
+  empty = false,
+  name,
+  selected = false,
+  variant = 'week',
+}: {
+  current?: boolean;
+  empty?: boolean;
+  name: string | null;
+  selected?: boolean;
+  variant?: 'week' | 'option';
+}) {
+  const asset = getNpcAssetForName(name);
+  return (
+    <View
+      style={[
+        todayStyles.npcAvatar,
+        variant === 'option' && todayStyles.npcOptionAvatar,
+        empty && todayStyles.npcAvatarEmpty,
+        current && todayStyles.npcAvatarToday,
+        selected && todayStyles.npcAvatarSelected,
+      ]}>
+      {asset ? (
+        <Image source={asset.icon} style={variant === 'option' ? todayStyles.npcOptionAvatarImage : todayStyles.npcAvatarImage} />
+      ) : (
+        <Text style={[todayStyles.npcAvatarText, empty && todayStyles.npcAvatarEmptyText]}>{getNpcIconLabel(name)}</Text>
+      )}
+    </View>
+  );
+}
+
+function CritterPreview({
+  availableCount,
+  categoryCounts,
+  hemisphere,
+  items,
+  month,
+  progressNeededCount,
+  states,
+  onOpenFull,
+  onToggle,
+}: {
+  availableCount: number;
+  categoryCounts: Array<{ category: CritterCategory; count: number }>;
+  hemisphere: 'north' | 'south';
+  items: EncyclopediaItem[];
+  month: number;
+  progressNeededCount: number;
+  states: Record<string, EncyclopediaState>;
+  onOpenFull: () => void;
+  onToggle: (item: EncyclopediaItem, status: EncyclopediaStatus) => void;
+}) {
+  return (
+    <View style={todayStyles.critterSection}>
+      <View style={todayStyles.sectionHeader}>
+        <View style={todayStyles.sectionTitleWrap}>
+          <SectionGlyph kind="critter" tone="museum" />
+          <Text adjustsFontSizeToFit minimumFontScale={0.86} numberOfLines={1} style={todayStyles.sectionTitle}>지금 잡을 수 있는 생물</Text>
+        </View>
+        <Pressable accessibilityLabel={`지금 잡을 수 있는 생물 전체 ${availableCount}개 보기`} accessibilityRole="button" onPress={onOpenFull} style={todayStyles.sectionActionButton}>
+          <Text style={[todayStyles.sectionAction, todayStyles.museumAction]}>전체 {availableCount} 보기</Text>
+          <ActionGlyph kind="open" tone="museum" />
+        </Pressable>
+      </View>
+      <View style={todayStyles.critterCard}>
+        <View style={todayStyles.critterStatRail}>
+          <View style={todayStyles.critterMainStat}>
+            <Text style={todayStyles.critterStatLabel}>진척 필요</Text>
+            <Text style={todayStyles.critterStatValue}>{progressNeededCount}</Text>
+          </View>
+          <View style={todayStyles.critterCategoryRow}>
+            {categoryCounts.length ? categoryCounts.map((item) => (
+              <View key={item.category} style={todayStyles.critterCategoryChip}>
+                <Text style={todayStyles.critterCategoryText}>{getCategoryLabel(item.category)} {item.count}</Text>
+              </View>
+            )) : (
+              <Text style={todayStyles.critterHelperText}>진척 필요한 생물이 없어요. 전체보기에서 완료 생물까지 확인할 수 있어요.</Text>
+            )}
+          </View>
+        </View>
+        <ScrollView contentContainerStyle={todayStyles.critterPreviewList} horizontal showsHorizontalScrollIndicator={false}>
+          {items.length ? items.map((item) => {
+            const availability = item.availability[hemisphere];
+            const availabilityTime = availability.timesByMonth[String(month)] ?? null;
+            return (
+              <TodayCritterPreviewCard
+                key={`${item.category}/${item.id}`}
+                availabilityLabel={localizeAvailabilityLabel(availability.label)}
+                availabilityTime={localizeAvailabilityTime(availabilityTime)}
+                item={item}
+                state={states[`${item.category}/${item.id}`] ?? EMPTY_STATE}
+                onToggle={(status) => onToggle(item, status)}
+              />
+            );
+          }) : (
+            <Text style={todayStyles.noData}>선택한 게임 시간에 출현하는 생물이 없어요.</Text>
+          )}
+        </ScrollView>
+      </View>
+    </View>
+  );
+}
+
+function CalendarPreview({ currentDate, dates, itemsByDate }: { currentDate: string; dates: string[]; itemsByDate: Record<string, CalendarItem[]> }) {
+  return (
+    <View style={todayStyles.calendarPreview}>
+      <SectionHeader icon="calendar" tone="catalog" title="이번 주 한눈에 보기" />
+      <View style={todayStyles.calendarStrip}>
+        {dates.map((date) => {
+          const dateObject = parseIsoDate(date) ?? new Date();
+          const isCurrentDate = date === currentDate;
+          const items = itemsByDate[date] ?? [];
+          const firstItem = items[0];
+          return (
+            <View key={date} style={[todayStyles.calendarPreviewDay, isCurrentDate && todayStyles.calendarPreviewDayToday]}>
+              <Text style={[todayStyles.calendarPreviewWeekday, isCurrentDate && todayStyles.calendarPreviewWeekdayToday]}>{DAY_LABELS[dateObject.getUTCDay()]}</Text>
+              <Text style={[todayStyles.calendarPreviewDate, isCurrentDate && todayStyles.calendarPreviewDateToday]}>{dateObject.getUTCDate()}</Text>
+              <View style={[todayStyles.calendarDot, firstItem?.kind === 'birthday' && todayStyles.calendarBirthdayDot, firstItem?.kind === 'event' && todayStyles.calendarEventDot]} />
+            </View>
+          );
+        })}
+      </View>
     </View>
   );
 }
@@ -963,6 +1242,51 @@ function DateTimeModal({
     </Modal>
   );
 }
+function TodayCritterPreviewCard({
+  item,
+  availabilityLabel,
+  availabilityTime,
+  state,
+  onToggle,
+}: {
+  item: EncyclopediaItem;
+  availabilityLabel: string | null;
+  availabilityTime: string | null;
+  state: EncyclopediaState;
+  onToggle: (status: EncyclopediaStatus) => void;
+}) {
+  const image = getEncyclopediaAsset(item.category, item.id);
+  const rank = getCritterStateRank(state);
+  const statusLabel = rank === 0 ? '미채집' : rank === 1 ? '미기증' : '완료';
+
+  return (
+    <View style={todayStyles.critterPreviewItem}>
+      <View style={todayStyles.critterPreviewImageFrame}>
+        {image ? (
+          <Image source={image} resizeMode="contain" style={[todayStyles.critterPreviewImage, !state.caught && todayStyles.critterPreviewImageUncaught]} />
+        ) : (
+          <Text style={todayStyles.critterFallback}>?</Text>
+        )}
+      </View>
+      <Text numberOfLines={1} style={todayStyles.critterPreviewName}>{item.nameKo}</Text>
+      <Text numberOfLines={1} style={todayStyles.critterPreviewMeta}>{localizeLocation(item.location) ?? '출현 장소 정보 없음'}</Text>
+      <Text numberOfLines={1} style={todayStyles.critterPreviewMeta}>{availabilityLabel ?? '출현 정보 확인 중'} · {availabilityTime ?? '시간 정보 없음'}</Text>
+      <Text style={[todayStyles.critterStateLabel, rank === 0 && todayStyles.critterStateUncaught, rank === 1 && todayStyles.critterStateUndonated]}>{statusLabel}</Text>
+      <View style={todayStyles.critterStatus}>
+        {(['caught', 'donated'] as EncyclopediaStatus[]).map((status) => (
+          <Pressable
+            accessibilityLabel={`${item.nameKo} ${status === 'caught' ? '채집' : '기증'} ${state[status] ? '해제' : '설정'}`}
+            key={status}
+            onPress={() => onToggle(status)}
+            style={todayStyles.critterStatusButton}>
+            <CollectionStatusIcon active={state[status]} status={status} />
+          </Pressable>
+        ))}
+      </View>
+    </View>
+  );
+}
+
 function TodayCritterCard({
   item,
   availabilityLabel,
@@ -1098,12 +1422,13 @@ function NpcModal({
         accessibilityState={{ checked: selected }}
         key={name}
         onPress={() => setDraftNames((current) => toggleNpcName(current, name))}
-        style={[styles.optionRow, selected && styles.optionRowSelected]}>
-        <View style={[styles.npcAvatar, selected && styles.npcAvatarSelected]}>
-          <Text style={styles.npcAvatarText}>{getNpcIconLabel(name)}</Text>
-        </View>
-        <Text style={styles.optionText}>{name}</Text>
-        <Text style={styles.optionCheck}>{selected ? '✓' : ''}</Text>
+        style={[todayStyles.npcOptionTile, selected && todayStyles.npcOptionTileSelected]}>
+        <NpcAvatar name={name} selected={selected} variant="option" />
+        {selected ? (
+          <View style={todayStyles.npcOptionCheck}>
+            <Text style={todayStyles.npcOptionCheckText}>✓</Text>
+          </View>
+        ) : null}
       </Pressable>
     );
   };
@@ -1116,11 +1441,11 @@ function NpcModal({
           <Text style={styles.sheetTitle}>{date ? `${formatDate(date)} 방문 NPC` : '방문 NPC'}</Text>
           <Text style={styles.npcModalHint}>낮 방문 NPC는 하루 한 명만, K.K./무파니와 밤 NPC는 함께 기록할 수 있어요.</Text>
           <Text style={styles.optionGroupTitle}>낮 방문</Text>
-          {DAY_NPC_OPTIONS.map(renderOption)}
+          <View style={todayStyles.npcOptionGrid}>{DAY_NPC_OPTIONS.map(renderOption)}</View>
           <Text style={styles.optionGroupTitle}>주말 고정 방문</Text>
-          {WEEKEND_NPC_OPTIONS.map(renderOption)}
+          <View style={todayStyles.npcOptionGrid}>{WEEKEND_NPC_OPTIONS.map(renderOption)}</View>
           <Text style={styles.optionGroupTitle}>밤 방문</Text>
-          {NIGHT_NPC_OPTIONS.map(renderOption)}
+          <View style={todayStyles.npcOptionGrid}>{NIGHT_NPC_OPTIONS.map(renderOption)}</View>
           <View style={styles.modalActions}>
             <Pressable onPress={() => setDraftNames([])} style={styles.deleteButton}>
               <Text style={styles.deleteButtonText}>비우기</Text>
@@ -1202,24 +1527,27 @@ function RoutineModal({
               <Text style={styles.npcModalHint}>기본 루틴을 선택하면 오늘의 루틴에 바로 표시돼요.</Text>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <Text style={styles.optionGroupTitle}>기본 루틴</Text>
-                {DEFAULT_ROUTINE_OPTIONS.map((routine) => {
-                  const selected = draftTitles.includes(routine.title);
-                  return (
-                    <Pressable
-                      accessibilityLabel={`${routine.title} ${routine.goalLabel ?? `${routine.goalCount}회`} ${selected ? '선택됨' : '선택 안 됨'}`}
-                      accessibilityRole="checkbox"
-                      accessibilityState={{ checked: selected }}
-                      key={routine.title}
-                      onPress={() => toggleTitle(routine.title)}
-                      style={[styles.optionRow, selected && styles.optionRowSelected]}>
-                      <View style={[styles.routineIcon, selected && styles.routineIconDone]}>
-                        <Text style={styles.routineIconText}>{selected ? '✓' : '○'}</Text>
-                      </View>
-                      <Text style={styles.optionText}>{routine.title}</Text>
-                      <Text style={styles.drawerBadge}>{routine.goalLabel ?? `${routine.goalCount}회`}</Text>
-                    </Pressable>
-                  );
-                })}
+                <View style={todayStyles.routineEditGrid}>
+                  {DEFAULT_ROUTINE_OPTIONS.map((routine) => {
+                    const selected = draftTitles.includes(routine.title);
+                    return (
+                      <Pressable
+                        accessibilityLabel={`${routine.title} ${routine.goalLabel ?? `${routine.goalCount}회`} ${selected ? '선택됨' : '선택 안 됨'}`}
+                        accessibilityRole="checkbox"
+                        accessibilityState={{ checked: selected }}
+                        key={routine.title}
+                        onPress={() => toggleTitle(routine.title)}
+                        style={[todayStyles.routineEditTile, selected && todayStyles.routineEditTileSelected]}>
+                        <Text numberOfLines={1} adjustsFontSizeToFit style={[todayStyles.routineEditMark, selected && todayStyles.routineEditMarkSelected]}>
+                          {selected ? '✓' : getRoutineMark(routine.title)}
+                        </Text>
+                        <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.72} style={[todayStyles.routineEditLabel, selected && todayStyles.routineEditLabelSelected]}>
+                          {routine.title}
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
+                </View>
                 <Text style={styles.optionGroupTitle}>직접 추가</Text>
                 <TextInput accessibilityLabel="직접 추가할 루틴 이름" onChangeText={setCustomTitle} placeholder="예: 꽃 물주기" placeholderTextColor="#A2AAA0" style={styles.modalInput} value={customTitle} />
                 <Text style={styles.modalLabel}>목표 횟수</Text>
@@ -1236,6 +1564,119 @@ function RoutineModal({
     </Modal>
   );
 }
+
+const todayStyles = StyleSheet.create({
+  content: { gap: 18, padding: 18, paddingBottom: 112 },
+  summaryCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.panel, padding: 14, ...AppShadows.card },
+  summaryHeader: { alignItems: 'center', flexDirection: 'row', gap: 12, justifyContent: 'space-between' },
+  summaryTitleBlock: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 9, minWidth: 0 },
+  summaryTitle: { color: AppColors.ink, flex: 1, fontFamily: Fonts.rounded, fontSize: 20, fontWeight: '900' },
+  summaryMeta: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '800', marginTop: 3 },
+  dateTimeControl: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.primaryBorder, borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 12, marginTop: 12, marginBottom: 12, minHeight: 58, paddingHorizontal: 13, paddingVertical: 9 },
+  dateTimeControlPressed: { backgroundColor: AppColors.leafSoft },
+  dateBlock: { minWidth: 82 },
+  dateBlockMonth: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900', lineHeight: 19 },
+  dateBlockZone: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', lineHeight: 12, marginTop: 2 },
+  dateTimeDivider: { alignSelf: 'stretch', backgroundColor: AppColors.line, width: 1 },
+  timeBlock: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 8, justifyContent: 'flex-end', minWidth: 0 },
+  timeBlockValue: { color: AppColors.ink, flexShrink: 1, fontFamily: Fonts.rounded, fontSize: 28, fontWeight: '900', lineHeight: 32, textAlign: 'right' },
+  summaryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  summaryItem: { borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 8, minHeight: 62, padding: 9, width: '48.6%' },
+  summaryMark: { alignItems: 'center', borderRadius: 10, height: 34, justifyContent: 'center', width: 34 },
+  summaryMarkText: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900', maxWidth: 28 },
+  summaryItemCopy: { flex: 1, minWidth: 0 },
+  summaryItemLabel: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900' },
+  summaryItemValue: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900', lineHeight: 16, marginTop: 4 },
+  bushIconRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginTop: 5, minHeight: 32 },
+  bushIconChip: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
+  bushIconImage: { height: 25, width: 25 },
+  sectionHeader: { alignItems: 'center', flexDirection: 'row', gap: 10, justifyContent: 'space-between' },
+  sectionTitleWrap: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 9, minWidth: 0 },
+  sectionTitle: { color: AppColors.ink, flex: 1, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900', lineHeight: 19 },
+  sectionGlyph: { alignItems: 'center', borderRadius: 10, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
+  sectionActionButton: { alignItems: 'center', borderRadius: AppRadii.pill, flexDirection: 'row', gap: 2, minHeight: 34, paddingHorizontal: 4, paddingVertical: 6 },
+  sectionIconActionButton: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: AppControlSizes.navMin, justifyContent: 'center', width: AppControlSizes.navMin },
+  sectionAction: { color: AppColors.leaf, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900' },
+  museumAction: { color: AppColors.museum },
+  actionGlyph: { alignItems: 'center', height: 20, justifyContent: 'center', width: 20 },
+  routineCard: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
+  routineTile: { alignItems: 'center', borderColor: AppColors.line, borderRadius: 10, borderWidth: 1, justifyContent: 'center', minHeight: 58, overflow: 'hidden', paddingHorizontal: 3, paddingVertical: 5, position: 'relative', width: '15.25%' },
+  routineTileIdle: { backgroundColor: AppColors.card },
+  routineTileComplete: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.leaf },
+  routineIcon: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, height: 24, justifyContent: 'center', marginBottom: 4, width: 30 },
+  routineIconComplete: { backgroundColor: AppColors.card },
+  routineIconText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '900', maxWidth: 26 },
+  routineIconTextComplete: { color: AppColors.leaf },
+  routineTileText: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '900', lineHeight: 10, textAlign: 'center' },
+  routineTileTextIdle: { color: AppColors.inkMuted },
+  routineTileTextComplete: { color: AppColors.ink },
+  routineCheckBadge: { alignItems: 'center', backgroundColor: AppColors.leaf, borderRadius: AppRadii.pill, height: 14, justifyContent: 'center', position: 'absolute', right: 3, top: 3, width: 14 },
+  routineCheckText: { color: AppColors.card, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', lineHeight: 12 },
+  routineEditGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
+  routineEditTile: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: 10, borderWidth: 1, justifyContent: 'center', minHeight: 56, paddingHorizontal: 3, paddingVertical: 5, width: '15.25%' },
+  routineEditTileSelected: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.leaf },
+  routineEditMark: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '900', maxWidth: 26 },
+  routineEditMarkSelected: { color: AppColors.leaf, fontSize: 12 },
+  routineEditLabel: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 7, fontWeight: '900', lineHeight: 9, marginTop: 4, textAlign: 'center' },
+  routineEditLabelSelected: { color: AppColors.ink },
+  npcCard: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.card, borderWidth: 1, flexDirection: 'row', overflow: 'hidden', ...AppShadows.card },
+  npcDayCell: { alignItems: 'center', borderRightColor: AppColors.line, borderRightWidth: 1, flex: 1, minHeight: 88, minWidth: 0, paddingHorizontal: 2, paddingVertical: 8 },
+  npcDayCellToday: { backgroundColor: AppColors.residentSoft },
+  npcWeekday: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '900', marginBottom: 6 },
+  npcWeekdayToday: { color: AppColors.resident },
+  npcAvatarStack: { alignItems: 'center', justifyContent: 'center', minHeight: 32 },
+  npcAvatar: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
+  npcAvatarToday: { borderColor: AppColors.resident },
+  npcAvatarEmpty: { backgroundColor: AppColors.card },
+  npcAvatarSelected: { borderColor: AppColors.resident, borderWidth: 2 },
+  npcAvatarImage: { height: 26, resizeMode: 'contain', width: 26 },
+  npcAvatarText: { color: AppColors.ink, fontSize: 10, fontWeight: '900' },
+  npcAvatarEmptyText: { color: AppColors.resident, fontSize: 15 },
+  npcName: { color: AppColors.ink, fontSize: 9, fontWeight: '900', lineHeight: 12, marginTop: 6, maxWidth: '100%', textAlign: 'center' },
+  npcNameEmpty: { color: AppColors.inkMuted },
+  npcOptionGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 9, marginTop: 8 },
+  npcOptionTile: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, height: 58, justifyContent: 'center', position: 'relative', width: 58 },
+  npcOptionTileSelected: { backgroundColor: AppColors.residentSoft, borderColor: AppColors.resident },
+  npcOptionAvatar: { backgroundColor: AppColors.card, height: 44, width: 44 },
+  npcOptionAvatarImage: { height: 40, resizeMode: 'contain', width: 40 },
+  npcOptionCheck: { alignItems: 'center', backgroundColor: AppColors.resident, borderColor: AppColors.card, borderRadius: AppRadii.pill, borderWidth: 1, height: 18, justifyContent: 'center', position: 'absolute', right: 3, top: 3, width: 18 },
+  npcOptionCheckText: { color: AppColors.card, fontSize: 11, fontWeight: '900', lineHeight: 14 },
+  critterSection: { gap: 10 },
+  critterCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, padding: 12, ...AppShadows.card },
+  critterStatRail: { alignItems: 'center', flexDirection: 'row', gap: 10, marginBottom: 10 },
+  critterMainStat: { alignItems: 'center', backgroundColor: AppColors.museumSoft, borderRadius: AppRadii.control, minWidth: 82, paddingHorizontal: 10, paddingVertical: 8 },
+  critterStatLabel: { color: AppColors.museum, fontSize: 10, fontWeight: '900' },
+  critterStatValue: { color: AppColors.museum, fontSize: 28, fontWeight: '900', lineHeight: 31 },
+  critterCategoryRow: { flex: 1, flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
+  critterCategoryChip: { backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, paddingHorizontal: 8, paddingVertical: 5 },
+  critterCategoryText: { color: AppColors.ink, fontSize: 10, fontWeight: '900' },
+  critterHelperText: { color: AppColors.inkMuted, flex: 1, fontSize: 11, fontWeight: '800', lineHeight: 15 },
+  critterPreviewList: { gap: 9 },
+  critterPreviewItem: { backgroundColor: AppColors.museumSoft, borderRadius: AppRadii.control, padding: 8, width: 112 },
+  critterPreviewImageFrame: { alignItems: 'center', backgroundColor: AppColors.card, borderRadius: AppRadii.control, height: 58, justifyContent: 'center' },
+  critterPreviewImage: { height: 52, width: 52 },
+  critterPreviewImageUncaught: { opacity: 0.48 },
+  critterFallback: { color: AppColors.inkMuted, fontSize: 15, fontWeight: '900' },
+  critterPreviewName: { color: AppColors.ink, fontSize: 11, fontWeight: '900', marginTop: 7, textAlign: 'center' },
+  critterPreviewMeta: { color: AppColors.inkMuted, fontSize: 8, fontWeight: '800', marginTop: 3, textAlign: 'center' },
+  critterStateLabel: { color: AppColors.inkMuted, fontSize: 9, fontWeight: '900', marginTop: 5, textAlign: 'center' },
+  critterStateUncaught: { color: AppColors.resident },
+  critterStateUndonated: { color: AppColors.museum },
+  critterStatus: { flexDirection: 'row', gap: 6, justifyContent: 'center', marginTop: 7 },
+  critterStatusButton: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: AppControlSizes.compactStatus, justifyContent: 'center', width: AppControlSizes.compactStatus },
+  calendarPreview: { gap: 10 },
+  calendarStrip: { backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.card, borderWidth: 1, flexDirection: 'row', overflow: 'hidden' },
+  calendarPreviewDay: { alignItems: 'center', flex: 1, minHeight: 58, paddingVertical: 8 },
+  calendarPreviewDayToday: { backgroundColor: AppColors.residentSoft },
+  calendarPreviewWeekday: { color: AppColors.inkMuted, fontSize: 9, fontWeight: '900' },
+  calendarPreviewWeekdayToday: { color: AppColors.resident },
+  calendarPreviewDate: { color: AppColors.ink, fontSize: 15, fontWeight: '900', marginTop: 3 },
+  calendarPreviewDateToday: { color: AppColors.resident },
+  calendarDot: { backgroundColor: AppColors.line, borderRadius: AppRadii.pill, height: 6, marginTop: 5, width: 6 },
+  calendarBirthdayDot: { backgroundColor: AppColors.resident },
+  calendarEventDot: { backgroundColor: AppColors.museum },
+  noData: { color: AppColors.inkMuted, padding: 18, textAlign: 'center' },
+});
 
 const styles = StyleSheet.create({
   screenRoot: { flex: 1 }, safeArea: { backgroundColor: AppColors.background, flex: 1 }, content: { padding: 20, paddingBottom: 112 }, headerRow: { alignItems: 'flex-start', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }, kicker: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800', letterSpacing: 0 }, title: { color: AppColors.ink, fontSize: 36, fontWeight: '800', marginTop: 4 }, date: { color: AppColors.inkMuted, fontSize: 13, marginTop: 4 }, menuButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: AppControlSizes.navMin, justifyContent: 'center', width: AppControlSizes.navMin }, menuText: { color: AppColors.ink, fontSize: 22 }, islandCard: { backgroundColor: AppColors.leafSoft, borderRadius: AppRadii.panel, padding: 20, ...AppShadows.card }, cardEyebrow: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800', letterSpacing: 0 }, islandName: { color: AppColors.ink, fontSize: 27, fontWeight: '800', marginTop: 5 }, islandRule: { backgroundColor: AppColors.primaryBorder, height: 1, marginVertical: 16 }, profileText: { color: AppColors.ink, fontSize: 12, fontWeight: '700' }, summaryCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, padding: 14, ...AppShadows.card }, summaryHeader: { alignItems: 'center', flexDirection: 'row', gap: 10, justifyContent: 'space-between' }, summaryCopy: { borderRadius: 12, flex: 1, minWidth: 0, padding: 2 }, summaryDatePressed: { backgroundColor: AppColors.paperRaised }, summaryLabel: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800' }, summaryTitle: { color: AppColors.ink, fontSize: 20, fontWeight: '800', marginTop: 3 }, summaryMeta: { color: AppColors.inkMuted, fontSize: 10, marginTop: 4 }, summaryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 13 }, summaryItem: { backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, minHeight: 74, padding: 10, width: '48%' }, summaryItemLabel: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800', marginBottom: 5 }, summaryItemValue: { color: AppColors.ink, fontSize: 12, fontWeight: '800', lineHeight: 17 }, eventStrip: { alignItems: 'center', backgroundColor: AppColors.leafSoft, borderRadius: AppRadii.control, flexDirection: 'row', gap: 10, marginTop: 10, padding: 10 }, eventLabel: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800' }, eventText: { color: AppColors.ink, flex: 1, fontSize: 12, fontWeight: '800' }, dateCard: { alignItems: 'center', backgroundColor: AppColors.card, borderRadius: AppRadii.card, flexDirection: 'row', justifyContent: 'space-between', marginTop: 12, padding: 14, ...AppShadows.card }, dateCopy: { flex: 1 }, dateHint: { color: AppColors.inkMuted, fontSize: 10, marginTop: 4 }, dateActions: { alignItems: 'center', flexDirection: 'row', gap: 5 }, dateButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, height: 32, justifyContent: 'center', width: 32 }, dateButtonText: { color: AppColors.ink, fontSize: 22, lineHeight: 25 }, todayButton: { backgroundColor: AppColors.leaf, borderRadius: AppRadii.control, paddingHorizontal: 9, paddingVertical: 8 }, todayButtonText: { color: AppColors.card, fontSize: 10, fontWeight: '800' }, sectionHeader: { alignItems: 'flex-end', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginTop: 24 }, sectionHeaderCopy: { flex: 1 }, sectionTitle: { color: AppColors.ink, fontSize: 19, fontWeight: '800' }, sectionDescription: { color: AppColors.inkMuted, fontSize: 11, marginTop: 3 }, sectionAction: { color: AppColors.leaf, fontSize: 11, fontWeight: '800', paddingBottom: 2 }, infoGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 9 }, infoTile: { alignItems: 'center', backgroundColor: AppColors.card, borderRadius: AppRadii.card, flexDirection: 'row', minHeight: 70, padding: 12, width: '48%', ...AppShadows.card }, infoIcon: { color: AppColors.leaf, fontSize: 22, marginRight: 9 }, infoLabel: { color: AppColors.inkMuted, fontSize: 10 }, infoValue: { color: AppColors.ink, fontSize: 13, fontWeight: '800', marginTop: 4 }, noticeCard: { backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.card, marginTop: 10, padding: 14 }, noticeTitle: { color: AppColors.ink, fontSize: 12, fontWeight: '800' }, noticeText: { color: AppColors.inkMuted, fontSize: 11, lineHeight: 17, marginTop: 4 }, tabRow: { gap: 8, paddingBottom: 10 }, tabChip: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, paddingHorizontal: 13, paddingVertical: 8 }, tabChipActive: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.leaf }, tabChipText: { color: AppColors.inkMuted, fontSize: 12, fontWeight: '800' }, tabChipTextActive: { color: AppColors.ink }, critterList: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, overflow: 'hidden', ...AppShadows.card }, critterRow: { alignItems: 'center', borderBottomColor: AppColors.line, borderBottomWidth: 1, flexDirection: 'row', minHeight: 78, padding: 9 }, critterImageFrame: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.control, height: 58, justifyContent: 'center', width: 58 }, critterImage: { height: 52, width: 52 }, critterImageUncaught: { opacity: 0.35 }, critterCopy: { flex: 1, marginLeft: 10, minWidth: 0 }, critterName: { color: AppColors.ink, fontSize: 13, fontWeight: '800' }, critterMeta: { color: AppColors.inkMuted, fontSize: 10, marginTop: 5 }, critterStatus: { flexDirection: 'row', gap: 4 }, critterStatusButton: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: AppControlSizes.compactStatus, justifyContent: 'center', width: AppControlSizes.compactStatus }, noData: { color: AppColors.inkMuted, padding: 22, textAlign: 'center' }, routineCard: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, routineTile: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, justifyContent: 'center', minHeight: 58, overflow: 'hidden', paddingHorizontal: 5, paddingVertical: 8, position: 'relative', width: '23%' }, routineTileDimmed: { backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, opacity: 0.55 }, routineTileComplete: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.leaf, opacity: 1 }, routineTileText: { color: AppColors.ink, fontSize: 10, fontWeight: '900', lineHeight: 13, textAlign: 'center' }, routineTileTextDimmed: { color: AppColors.inkMuted }, routineTileTextComplete: { color: AppColors.ink }, routineCheckBadge: { alignItems: 'center', backgroundColor: AppColors.leaf, borderRadius: 8, height: 16, justifyContent: 'center', position: 'absolute', right: 3, top: 3, width: 16 }, routineCheckText: { color: AppColors.card, fontSize: 10, fontWeight: '900', lineHeight: 13 }, routineRow: { alignItems: 'center', flexDirection: 'row', minHeight: 66 }, routineDivider: { borderTopColor: AppColors.line, borderTopWidth: 1 }, routineIcon: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, height: 35, justifyContent: 'center', marginRight: 11, width: 35 }, routineIconDone: { backgroundColor: AppColors.leafSoft }, routineIconText: { color: AppColors.ink, fontSize: 20, fontWeight: '800' }, routineIconTextDone: { color: AppColors.leaf }, routineCopy: { flex: 1 }, routineTitle: { color: AppColors.ink, fontSize: 13, fontWeight: '800' }, routineTitleDone: { color: AppColors.leaf }, routineGoal: { color: AppColors.inkMuted, fontSize: 10, marginTop: 4 }, smallAction: { color: AppColors.leaf, fontSize: 10, fontWeight: '800', padding: 6 }, npcCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, flexDirection: 'row', padding: 7, ...AppShadows.card }, npcDayCell: { alignItems: 'center', borderRadius: AppRadii.control, flex: 1, minHeight: 126, minWidth: 0, paddingHorizontal: 2, paddingVertical: 8 }, npcDayCellToday: { backgroundColor: AppColors.leafSoft }, npcWeekday: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800' }, npcDateNumber: { color: AppColors.ink, fontSize: 11, fontWeight: '800', marginTop: 3 }, npcAvatarStack: { alignContent: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 3, justifyContent: 'center', marginTop: 7, minHeight: 51 }, npcAvatar: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, height: 32, justifyContent: 'center', width: 32 }, npcWeekAvatar: { borderRadius: 12, height: 24, width: 24 }, npcAvatarEmpty: { backgroundColor: '#F5F1E8', borderColor: AppColors.line, borderWidth: 1 }, npcAvatarSelected: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.leaf, borderWidth: 1 }, npcAvatarText: { color: AppColors.ink, fontSize: 13, fontWeight: '800' }, npcName: { color: AppColors.ink, fontSize: 10, fontWeight: '800', lineHeight: 13, marginTop: 5, maxWidth: '100%', textAlign: 'center' }, npcNameEmpty: { color: AppColors.inkMuted }, rowArrow: { color: AppColors.inkMuted, fontSize: 21 }, calendarCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, paddingHorizontal: 10, paddingBottom: 12, ...AppShadows.card }, calendarToggle: { backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.control, flexDirection: 'row', marginVertical: 12, padding: 3 }, calendarToggleButton: { alignItems: 'center', borderRadius: 8, flex: 1, paddingVertical: 7 }, calendarToggleActive: { backgroundColor: AppColors.leafSoft }, calendarToggleText: { color: AppColors.inkMuted, fontSize: 11, fontWeight: '800' }, calendarToggleTextActive: { color: AppColors.ink }, calendarPeriodTitle: { color: AppColors.ink, fontSize: 14, fontWeight: '900', marginBottom: 10, textAlign: 'center' }, calendarWeekdayRow: { borderBottomColor: AppColors.line, borderBottomWidth: 1, flexDirection: 'row', paddingBottom: 7 }, calendarWeekdayText: { color: AppColors.inkMuted, flex: 1, fontSize: 10, fontWeight: '800', textAlign: 'center' }, calendarBoard: { flexDirection: 'row', flexWrap: 'wrap' }, calendarDayCell: { borderBottomColor: AppColors.line, borderBottomWidth: 1, borderRightColor: AppColors.line, borderRightWidth: 1, minHeight: 78, padding: 4, width: '14.2857%' }, calendarWeekCell: { minHeight: 104 }, calendarDayCellEmpty: { backgroundColor: '#FAFBF8' }, calendarDayCellToday: { backgroundColor: AppColors.leafSoft }, calendarDayNumber: { color: AppColors.ink, fontSize: 11, fontWeight: '800', marginBottom: 4, textAlign: 'center' }, calendarDayNumberToday: { color: AppColors.leaf, fontWeight: '900' }, calendarItemStack: { gap: 3, minHeight: 40 }, calendarBadge: { borderRadius: 5, minHeight: 16, paddingHorizontal: 3, paddingVertical: 2 }, calendarBirthdayBadge: { backgroundColor: AppColors.catalogSoft }, calendarEventBadge: { backgroundColor: AppColors.museumSoft }, calendarBadgeText: { fontSize: 8, fontWeight: '800', lineHeight: 11 }, calendarBirthdayText: { color: '#A26A2D' }, calendarEventText: { color: AppColors.museum }, calendarMoreText: { color: AppColors.inkMuted, fontSize: 8, fontWeight: '800', textAlign: 'center' }, calendarHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }, monthButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, height: 34, justifyContent: 'center', width: 34 }, monthButtonText: { color: AppColors.ink, fontSize: 24, lineHeight: 28 }, monthTitle: { color: AppColors.ink, fontSize: 16, fontWeight: '800' }, weekdayRow: { flexDirection: 'row', marginTop: 14 }, weekdayText: { color: AppColors.inkMuted, flex: 1, fontSize: 10, fontWeight: '800', textAlign: 'center' }, calendarGrid: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 6 }, dayCell: { alignItems: 'center', aspectRatio: 1, borderRadius: 10, justifyContent: 'center', width: '14.2857%' }, dayCellSelected: { backgroundColor: AppColors.leafSoft }, dayCellText: { color: AppColors.ink, fontSize: 12, fontWeight: '700' }, dayCellTextSelected: { color: AppColors.leaf, fontWeight: '900' }, timePicker: { alignItems: 'center', flexDirection: 'row', justifyContent: 'center', marginTop: 16 }, timeColumn: { alignItems: 'center', width: 76 }, timeLabel: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800', marginBottom: 5 }, timeAdjustButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, height: 32, justifyContent: 'center', width: 48 }, timeAdjustText: { color: AppColors.ink, fontSize: 16, fontWeight: '900' }, timeValue: { color: AppColors.ink, fontSize: 26, fontWeight: '900', marginVertical: 5 }, timeDivider: { color: AppColors.ink, fontSize: 24, fontWeight: '900', marginTop: 18 }, resetButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.control, justifyContent: 'center', paddingHorizontal: 14, paddingVertical: 12 }, resetButtonText: { color: AppColors.ink, fontSize: 12, fontWeight: '800' }, floatingTop: { alignItems: 'center', backgroundColor: AppColors.leaf, borderRadius: 22, bottom: 23, paddingHorizontal: 14, paddingVertical: 11, position: 'absolute', right: 18, ...AppShadows.floating }, floatingTopText: { color: AppColors.card, fontSize: 11, fontWeight: '800' }, modalBackdrop: { backgroundColor: 'rgba(63, 42, 20, 0.26)', flex: 1, justifyContent: 'flex-end' }, drawer: { backgroundColor: AppColors.background, borderTopLeftRadius: 28, borderTopRightRadius: 28, minHeight: '78%', padding: 21 }, drawerHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }, drawerKicker: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800', letterSpacing: 0 }, closeText: { color: AppColors.ink, fontSize: 28 }, drawerTitle: { color: AppColors.ink, fontSize: 27, fontWeight: '800', marginTop: 9 }, passportCard: { backgroundColor: AppColors.leafSoft, borderRadius: AppRadii.card, marginTop: 17, padding: 17 }, passportLabel: { color: AppColors.inkMuted, fontSize: 10, marginTop: 7 }, passportValue: { color: AppColors.ink, fontSize: 14, fontWeight: '800', marginTop: 3 }, drawerAction: { alignItems: 'center', backgroundColor: AppColors.card, borderBottomColor: AppColors.line, borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between', minHeight: 57, paddingHorizontal: 14 }, drawerActionText: { color: AppColors.ink, fontSize: 12, fontWeight: '800' }, drawerMuted: { color: AppColors.inkMuted, fontSize: 12, fontWeight: '700' }, drawerBadge: { backgroundColor: AppColors.paperRaised, borderRadius: 9, color: AppColors.inkMuted, fontSize: 9, fontWeight: '800', overflow: 'hidden', paddingHorizontal: 7, paddingVertical: 5 }, bottomSheet: { backgroundColor: AppColors.background, borderTopLeftRadius: 25, borderTopRightRadius: 25, maxHeight: '82%', padding: 21 }, sheetTitle: { color: AppColors.ink, fontSize: 20, fontWeight: '800', marginBottom: 8 }, npcModalHint: { color: AppColors.inkMuted, fontSize: 11, lineHeight: 17, marginBottom: 8 }, optionGroupTitle: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '900', marginTop: 12 }, optionRow: { alignItems: 'center', borderBottomColor: AppColors.line, borderBottomWidth: 1, flexDirection: 'row', minHeight: 48 }, optionRowSelected: { backgroundColor: AppColors.leafSoft }, optionText: { color: AppColors.ink, flex: 1, fontSize: 13, fontWeight: '700', marginLeft: 10 }, optionCheck: { color: AppColors.leaf, fontSize: 16, fontWeight: '900', width: 22 }, cancelButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.control, justifyContent: 'center', paddingHorizontal: 14, paddingVertical: 12 }, cancelButtonText: { color: AppColors.ink, fontSize: 12, fontWeight: '800' }, modalLabel: { color: AppColors.inkMuted, fontSize: 11, fontWeight: '800', marginBottom: 5, marginTop: 10 }, modalInput: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, color: AppColors.ink, fontSize: 14, paddingHorizontal: 12, paddingVertical: 11 }, modalActions: { flexDirection: 'row', gap: 8, justifyContent: 'flex-end', marginTop: 18 }, deleteButton: { alignItems: 'center', backgroundColor: AppColors.residentSoft, borderRadius: AppRadii.control, justifyContent: 'center', paddingHorizontal: 14, paddingVertical: 12 }, deleteButtonText: { color: AppColors.danger, fontSize: 12, fontWeight: '800' }, saveButton: { alignItems: 'center', backgroundColor: AppColors.leaf, borderRadius: AppRadii.control, justifyContent: 'center', paddingHorizontal: 19, paddingVertical: 12 }, saveButtonText: { color: AppColors.card, fontSize: 12, fontWeight: '800' }, emptyContainer: { alignItems: 'center', backgroundColor: AppColors.background, flex: 1, justifyContent: 'center', padding: 24 }, emptyTitle: { color: AppColors.ink, fontSize: 22, fontWeight: '800' }, emptyDescription: { color: AppColors.inkMuted, fontSize: 14, marginTop: 8 },

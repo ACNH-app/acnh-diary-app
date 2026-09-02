@@ -1,0 +1,24 @@
+{
+  "approved": false,
+  "screen": "today-dashboard-priority",
+  "mode": "Operate",
+  "platform": "iOS first, Android planned",
+  "intent": "Today screen redesign comp for an ACNH diary app. The screen separates automatic daily island context from direct user recording controls.",
+  "layout": [
+    "Top header shows island/date/time context only.",
+    "Today summary board contains automatic facts: birthday, seasonal recipes/materials, zodiac, tree/material prompt, current event, monthly critter movement.",
+    "Daily routines are icon-first tap controls.",
+    "Weekly visiting NPC is a separate recording strip, not part of the summary.",
+    "Catchable now prioritizes critters that are uncaught or caught-but-undonated. Full view includes completed critters too.",
+    "Calendar is reduced to a compact schedule preview so it does not duplicate the summary."
+  ],
+  "assetPlan": [
+    "Replace placeholder routine symbols with official or locally cached game item icons.",
+    "Replace NPC emoji placeholders with NPC face assets.",
+    "Replace critter emoji placeholders with existing encyclopedia thumbnail assets."
+  ],
+  "openQuestions": [
+    "Whether Today should show 4 or 6 routine controls above the fold by default.",
+    "Whether catchable-now full view should be a full-screen route or a tall modal sheet."
+  ]
+}
