@@ -127,6 +127,24 @@ const recipeFilterLabels: Record<string, string> = {
   vine_moss: '덩굴/빛이끼',
 };
 
+const recipeTabFilters = [
+  'season:young_spring_bamboo',
+  'season:cherry_blossom',
+  'season:summer_shell',
+  'season:mushroom',
+  'season:maple_leaf',
+  'season:tree_bounty',
+  'season:winter_snowflake',
+  'season:christmas_ornament',
+  'event:bunny_day',
+  'event:festivale',
+  'event:wedding_season',
+  'event:halloween',
+  'event:turkey_day',
+  'event:celeste',
+  'event:pascal',
+] as const;
+
 const orderedSubcategories: Partial<Record<CatalogCategory, Array<{ label: string; values: string[] }>>> = {
   furniture: [
     { label: '가구', values: ['가구'] },
@@ -244,6 +262,38 @@ export function getCatalogItems(category: CatalogCategory) {
 }
 
 export function getCatalogSubcategories(category: CatalogCategory): CatalogSubcategoryDefinition[] {
+  if (category === 'seasonal_recipes') {
+    const items = getCatalogItems(category);
+    const counts = new Map<string, number>();
+    for (const item of items) {
+      const filters = item.details.recipeFilters;
+      if (!Array.isArray(filters)) continue;
+      for (const filter of filters) {
+        const key = String(filter);
+        if (recipeTabFilters.includes(key as (typeof recipeTabFilters)[number])) {
+          counts.set(key, (counts.get(key) ?? 0) + 1);
+        }
+      }
+    }
+    const recipeSubcategories = recipeTabFilters
+      .filter((filter) => counts.has(filter))
+      .map((filter) => {
+        const [, value] = filter.split(':');
+        return {
+          key: filter,
+          label: recipeFilterLabels[value] ?? value,
+          itemCount: counts.get(filter) ?? 0,
+          values: [],
+          filterKeys: [filter],
+        };
+      });
+
+    return [
+      { key: 'all', label: '전체', itemCount: items.length, values: [] },
+      ...recipeSubcategories,
+    ];
+  }
+
   const counts = new Map<string, number>();
   for (const item of getCatalogItems(category)) {
     const label = item.classification.trim();

@@ -1,6 +1,7 @@
 import type { ImageSourcePropType } from 'react-native';
 
 export const plantAssets: Record<string, ImageSourcePropType> = {
+  'money-tree': require('./assets/plants/items/4fd646a4edb4301d.png'),
   'bush-start/pink-azalea': require('./assets/plants/items/04a58853f4bc17d9.png'),
   'bush-start/white-azalea': require('./assets/plants/items/4a9a553f06ff28c8.png'),
   'bush-start/blue-hydrangea': require('./assets/plants/items/37ec7718ad45eaab.png'),

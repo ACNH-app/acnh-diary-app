@@ -1,6 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { AppColors, AppRadii } from '@/constants/theme';
+import { AppColors } from '@/constants/theme';
 
 export type UnderlineTab<T extends string> = {
   icon?: string;
@@ -57,33 +57,32 @@ export function UnderlineTabs<T extends string>({
 
 const styles = StyleSheet.create({
   tabBar: {
-    marginBottom: 14,
+    borderBottomColor: AppColors.line,
+    borderBottomWidth: 1,
+    marginBottom: 10,
   },
   tabs: {
     alignItems: 'stretch',
     flexGrow: 1,
-    gap: 7,
-    paddingBottom: 2,
+    gap: 0,
   },
   tab: {
     alignItems: 'center',
-    backgroundColor: AppColors.card,
-    borderColor: AppColors.line,
-    borderRadius: AppRadii.panel,
-    borderWidth: 1,
+    borderBottomColor: 'transparent',
+    borderBottomWidth: 3,
+    borderRadius: 0,
     flexGrow: 1,
     justifyContent: 'center',
     minWidth: 62,
     paddingHorizontal: 10,
-    paddingVertical: 9,
+    paddingVertical: 8,
   },
   tabFitToWidth: {
     minWidth: 48,
     paddingHorizontal: 7,
   },
   tabActive: {
-    backgroundColor: AppColors.leafSoft,
-    borderColor: AppColors.leaf,
+    borderBottomColor: AppColors.leaf,
   },
   tabText: {
     color: AppColors.tabBarInactive,
@@ -110,6 +109,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   tabTextActive: {
-    color: AppColors.ink,
+    color: AppColors.leaf,
   },
 });

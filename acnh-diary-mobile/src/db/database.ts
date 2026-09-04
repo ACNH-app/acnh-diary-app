@@ -6,7 +6,11 @@ import type {
   EncyclopediaStatus,
 } from '../types/encyclopedia';
 import type { CatalogCategory } from '../types/catalog';
-import { DEFAULT_ROUTINE_OPTIONS } from '../data/routines';
+import {
+  DEFAULT_ROUTINE_OPTIONS,
+  LEGACY_ROUTINE_TITLES,
+  ROUTINE_TITLE_MIGRATIONS,
+} from '../data/routines';
 import type {
   Island,
   IslandInput,
@@ -313,6 +317,17 @@ export function initializeDatabase() {
       value TEXT
     );
   `);
+
+  for (const [oldTitle, newTitle] of Object.entries(ROUTINE_TITLE_MIGRATIONS)) {
+    db.runSync('UPDATE routines SET title = ? WHERE title = ?;', [newTitle, oldTitle]);
+  }
+
+  // Remove retired routines left by older development builds without touching other records.
+  const legacyRoutineTitles = [...LEGACY_ROUTINE_TITLES];
+  db.runSync(
+    `DELETE FROM routines WHERE title IN (${legacyRoutineTitles.map(() => '?').join(', ')});`,
+    legacyRoutineTitles,
+  );
 
   // Existing Phase 0 databases need these columns before the active-island index is created.
   ensureColumn('islands', 'is_active', 'INTEGER NOT NULL DEFAULT 0');

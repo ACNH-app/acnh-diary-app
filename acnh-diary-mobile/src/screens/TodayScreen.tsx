@@ -27,6 +27,7 @@ import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
 import { localizeAvailabilityLabel, localizeAvailabilityTime, localizeLocation } from '@/data/encyclopedia-labels';
 import { npcAssets } from '@/data/npc-assets';
 import { DEFAULT_ROUTINE_OPTIONS } from '@/data/routines';
+import { getRoutineIconSource } from '@/data/routine-assets';
 import { villagers } from '@/data/villagers';
 import {
   addRoutine,
@@ -34,6 +35,7 @@ import {
   deleteRoutine,
   getActiveIsland,
   getCollectionStatesForIsland,
+  getIslands,
   getManualGameDate,
   getManualGameTime,
   getNpcVisitsForIsland,
@@ -42,6 +44,7 @@ import {
   getVillagerStatesForIsland,
   initializeDatabase,
   setCollectionStatus,
+  setActiveIsland,
   setManualGameDate,
   setManualGameTime,
   setNpcVisit,
@@ -54,6 +57,8 @@ import type { VillagerState } from '@/types/villager-state';
 
 type TodayScreenProps = { island?: Island | null; routines?: Routine[] };
 type CalendarMode = 'week' | 'month';
+type CalendarPickerKind = 'year' | 'month';
+type TimePickerKind = 'hour' | 'minute';
 type CalendarItemKind = 'birthday' | 'event';
 type CalendarItem = { id: string; kind: CalendarItemKind; label: string };
 type CritterTab = 'bugs' | 'fish' | 'sea' | 'newThisMonth' | 'leavingThisMonth';
@@ -62,10 +67,10 @@ type TodaySectionIcon = 'summary' | 'routine' | 'npc' | 'critter' | 'calendar';
 type TodayActionIcon = 'edit' | 'reset' | 'open';
 
 const EMPTY_STATE: EncyclopediaState = { caught: false, owned: false, donated: false, genuineOwned: false, fakeOwned: false };
+const CRITTERPEDIA_ICON = require('../data/assets/icons/critterpedia.png');
 const DEFAULT_ROUTINE_TITLES = new Set(DEFAULT_ROUTINE_OPTIONS.map((routine) => routine.title));
 const CRITTER_CATEGORIES: CritterCategory[] = ['bugs', 'fish', 'sea'];
 const DAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
-const ROUTINE_MARKS = ['DIY', '$', 'R', 'F', 'T', 'F', 'B', '$', 'S', 'N', 'DIY', 'D', 'S', 'K', 'M', 'M', 'FR', 'VG', 'G'];
 const DAY_NPC_OPTIONS = ['레온', '저스틴', '고숙이', '사하라', '패트릭', '여욱', '늘봉'];
 const WEEKEND_NPC_OPTIONS = ['K.K.', '무파니'];
 const NIGHT_NPC_OPTIONS = ['부옥', '깨빈'];
@@ -192,6 +197,19 @@ function getWeekDates(gameDate: string) {
   return Array.from({ length: 7 }, (_, index) => shiftIsoDate(monday, index));
 }
 
+function getMonthDates(gameDate: string) {
+  const date = parseIsoDate(gameDate);
+  if (!date) return [];
+  const year = date.getUTCFullYear();
+  const month = date.getUTCMonth() + 1;
+  const dayCount = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  return Array.from({ length: dayCount }, (_, index) => toIsoDate(year, month, index + 1));
+}
+
+function getCalendarYearOptions(centerYear: number) {
+  return Array.from({ length: 9 }, (_, index) => centerYear - 4 + index);
+}
+
 function formatDate(value: string) {
   return new Intl.DateTimeFormat('ko-KR', { month: 'long', day: 'numeric', weekday: 'long', timeZone: 'UTC' }).format(parseIsoDate(value) ?? new Date());
 }
@@ -200,9 +218,9 @@ function formatMonthDayShort(value: string) {
   return new Intl.DateTimeFormat('ko-KR', { month: 'numeric', day: 'numeric', timeZone: 'UTC' }).format(parseIsoDate(value) ?? new Date());
 }
 
-function formatWeekdayShort(value: string) {
+function formatWeekdayInitial(value: string) {
   const date = parseIsoDate(value);
-  return date ? `${DAY_LABELS[date.getUTCDay()] ?? ''}요일` : '';
+  return date ? DAY_LABELS[date.getUTCDay()] ?? '' : '';
 }
 
 function seasonFor(month: number, hemisphere: Island['hemisphere']) {
@@ -382,12 +400,6 @@ function getNpcDisplayLabel(names: string[]) {
   return `${names[0]}\n외 ${names.length - 1}명`;
 }
 
-function getRoutineMark(title: string) {
-  const defaultIndex = DEFAULT_ROUTINE_OPTIONS.findIndex((routine) => routine.title === title);
-  if (defaultIndex >= 0) return ROUTINE_MARKS[defaultIndex] ?? 'OK';
-  return title.trim().slice(0, 2).toUpperCase() || 'OK';
-}
-
 function getCritterStateRank(state: EncyclopediaState) {
   if (!state.caught) return 0;
   if (!state.donated) return 1;
@@ -412,6 +424,8 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
   const [island, setIsland] = useState<Island | null>(initialIsland ?? null);
+  const [islands, setIslands] = useState<Island[]>(initialIsland ? [initialIsland] : []);
+  const [islandPickerOpen, setIslandPickerOpen] = useState(false);
   const [routines, setRoutines] = useState<Routine[]>(initialRoutines ?? []);
   const [gameDate, setGameDateState] = useState('');
   const [manualTime, setManualTime] = useState<string | null>(null);
@@ -421,6 +435,7 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const [npcVisits, setNpcVisits] = useState<Record<string, string[]>>({});
   const [npcDate, setNpcDate] = useState<string | null>(null);
   const [dateTimeModalOpen, setDateTimeModalOpen] = useState(false);
+  const [timePickerKind, setTimePickerKind] = useState<TimePickerKind | null>(null);
   const [routineModalOpen, setRoutineModalOpen] = useState(false);
   const [editingRoutine, setEditingRoutine] = useState<Routine | null>(null);
   const [routineTitle, setRoutineTitle] = useState('');
@@ -437,6 +452,7 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
       initializeDatabase();
       const activeIsland = getActiveIsland();
       setIsland(activeIsland);
+      setIslands(getIslands());
       if (!activeIsland) return;
       const savedManualDate = getManualGameDate();
       const savedManualTime = getManualGameTime();
@@ -473,17 +489,28 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
     }
   };
 
-  const resetGameDateTime = () => {
+  const applyGameTime = (time: string) => {
     try {
-      setManualGameDate(null);
-      setManualGameTime(null);
-      setManualTime(null);
-      const next = island ? getGameDate(island.timezone ?? 'Asia/Seoul') : '';
-      setGameDateState(next);
-      if (island) setRoutineProgressState(getRoutineProgressForIsland(island.id, next));
-      setDateTimeModalOpen(false);
+      if (!isValidGameTime(time)) throw new Error('VALIDATION_ERROR');
+      setManualGameTime(time);
+      setManualTime(time);
+      setTimePickerKind(null);
     } catch {
-      Alert.alert('현실 시간으로 돌리지 못했어요', '잠시 후 다시 시도해 주세요.');
+      Alert.alert('게임 시간을 변경하지 못했어요', '시간을 다시 확인해 주세요.');
+    }
+  };
+
+  const switchIsland = (islandId: string) => {
+    if (island?.id === islandId) {
+      setIslandPickerOpen(false);
+      return;
+    }
+    try {
+      setActiveIsland(islandId);
+      setIslandPickerOpen(false);
+      refresh();
+    } catch {
+      Alert.alert('섬을 변경하지 못했어요', '잠시 후 다시 시도해 주세요.');
     }
   };
 
@@ -495,6 +522,8 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const timezone = island?.timezone ?? 'Asia/Seoul';
   const hemisphere = island?.hemisphere ?? 'north';
   const gameTime = manualTime ?? getCurrentGameTime(clockNow, timezone);
+  const [gameHour, gameMinute] = gameTime.split(':').map(Number);
+  const applyGameDate = (date: string) => applyGameDateTime(date, gameTime);
   const availableCritters = useMemo(() => {
     if (!island || !gameDate) return [];
 
@@ -505,15 +534,10 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
       return true;
     });
   }, [gameDate, gameTime, island]);
-  const calendarDates = useMemo(() => gameDate ? getWeekDates(gameDate) : [], [gameDate]);
   const residentVillagerIds = useMemo(
     () => new Set(Object.entries(villagerStates).filter(([, state]) => state.islandResident).map(([key]) => key.split('/').pop() ?? key)),
     [villagerStates],
   );
-  const calendarItemsByDate = useMemo(() => Object.fromEntries(calendarDates.map((date) => {
-    const items = getCalendarItemsForDate(date, hemisphere, residentVillagerIds);
-    return [date, items];
-  }).filter(([, items]) => items.length)), [calendarDates, hemisphere, residentVillagerIds]);
   const selectedDefaultRoutineTitles = useMemo(
     () => routines.filter((routine) => DEFAULT_ROUTINE_TITLES.has(routine.title)).map((routine) => routine.title),
     [routines],
@@ -563,6 +587,27 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
     } catch {
       Alert.alert('루틴을 저장하지 못했어요', '잠시 후 다시 시도해 주세요.');
     }
+  };
+
+  const resetRoutineProgress = () => {
+    if (!island || !gameDate || !routines.length) return;
+    Alert.alert('루틴 체크 초기화', '오늘 체크한 루틴을 모두 초기화할까요?', [
+      { text: '취소', style: 'cancel' },
+      {
+        text: '초기화',
+        style: 'destructive',
+        onPress: () => {
+          try {
+            routines.forEach((routine) => setRoutineProgress(island.id, routine.id, gameDate, 0, routine.goalCount));
+            setRoutineProgressState(
+              Object.fromEntries(routines.map((routine) => [routine.id, { currentCount: 0, isComplete: false }])),
+            );
+          } catch {
+            Alert.alert('루틴을 초기화하지 못했어요', '잠시 후 다시 시도해 주세요.');
+          }
+        },
+      },
+    ]);
   };
 
   const saveRoutineEdit = () => {
@@ -657,31 +702,61 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const weekDates = getWeekDates(gameDate);
   return (
     <View style={styles.screenRoot}>
-      <AppChrome contextLabel={island.name} title="오늘" />
+        <AppChrome
+          islandPicker={{
+            onChange: switchIsland,
+            onToggle: () => setIslandPickerOpen((value) => !value),
+            open: islandPickerOpen,
+            options: islands.map((availableIsland) => ({ id: availableIsland.id, label: availableIsland.name, selected: availableIsland.id === island.id })),
+            value: island.name,
+          }}
+          title="오늘"
+        />
       <SafeAreaView edges={[]} style={[styles.safeArea, { backgroundColor: AppColors.background }]}>
         <ScrollView contentContainerStyle={todayStyles.content} ref={scrollRef} showsVerticalScrollIndicator={false}>
           <View style={todayStyles.summaryCard}>
             <View style={todayStyles.summaryHeader}>
-              <View style={todayStyles.summaryTitleBlock}>
-                <SectionGlyph kind="summary" tone="leaf" />
-                <Text style={todayStyles.summaryTitle}>오늘의 섬 요약</Text>
+              <View style={todayStyles.summaryDateTimeRow}>
+                <Pressable
+                  accessibilityLabel="캘린더 열기"
+                  accessibilityRole="button"
+                  onPress={() => { setTimePickerKind(null); setDateTimeModalOpen(true); }}
+                  style={({ pressed }) => [todayStyles.summaryDateButton, pressed && todayStyles.summaryDateTimeButtonPressed]}>
+                  <MaterialCommunityIcons color={AppColors.leaf} name="calendar-month" size={16} />
+                  <Text numberOfLines={1} style={todayStyles.summaryDateTimeText}>
+                    {formatMonthDayShort(gameDate)} ({formatWeekdayInitial(gameDate)})
+                  </Text>
+                  <MaterialCommunityIcons color={AppColors.inkMuted} name="chevron-down" size={14} />
+                </Pressable>
+                <View style={todayStyles.summaryTimeGroup}>
+                  <Pressable
+                    accessibilityLabel={`${gameHour}시 선택`}
+                    accessibilityRole="button"
+                    onPress={() => setTimePickerKind((current) => current === 'hour' ? null : 'hour')}
+                    style={({ pressed }) => [todayStyles.summaryTimeButton, pressed && todayStyles.summaryDateTimeButtonPressed]}>
+                    <Text style={todayStyles.summaryDateTimeText}>{String(gameHour).padStart(2, '0')}시</Text>
+                    <MaterialCommunityIcons color={AppColors.inkMuted} name={timePickerKind === 'hour' ? 'chevron-up' : 'chevron-down'} size={14} />
+                  </Pressable>
+                  <Text style={todayStyles.summaryTimeDivider}>:</Text>
+                  <Pressable
+                    accessibilityLabel={`${gameMinute}분 선택`}
+                    accessibilityRole="button"
+                    onPress={() => setTimePickerKind((current) => current === 'minute' ? null : 'minute')}
+                    style={({ pressed }) => [todayStyles.summaryTimeButton, pressed && todayStyles.summaryDateTimeButtonPressed]}>
+                    <Text style={todayStyles.summaryDateTimeText}>{String(gameMinute).padStart(2, '0')}분</Text>
+                    <MaterialCommunityIcons color={AppColors.inkMuted} name={timePickerKind === 'minute' ? 'chevron-up' : 'chevron-down'} size={14} />
+                  </Pressable>
+                </View>
               </View>
             </View>
-            <Pressable
-              accessibilityLabel="게임 날짜와 시간 변경"
-              accessibilityRole="button"
-              onPress={() => setDateTimeModalOpen(true)}
-              style={({ pressed }) => [todayStyles.dateTimeControl, pressed && todayStyles.dateTimeControlPressed]}>
-              <View style={todayStyles.dateBlock}>
-                <Text numberOfLines={1} style={todayStyles.dateBlockMonth}>{formatMonthDayShort(gameDate)}</Text>
-                <Text numberOfLines={1} style={todayStyles.dateBlockZone}>{formatWeekdayShort(gameDate)}</Text>
-              </View>
-              <View style={todayStyles.dateTimeDivider} />
-              <View style={todayStyles.timeBlock}>
-                <Text adjustsFontSizeToFit minimumFontScale={0.8} numberOfLines={1} style={todayStyles.timeBlockValue}>{gameTime}</Text>
-                <ActionGlyph kind="edit" tone="leaf" />
-              </View>
-            </Pressable>
+            {timePickerKind ? (
+              <TimePickerMenu
+                kind={timePickerKind}
+                onClose={() => setTimePickerKind(null)}
+                onSelect={(value) => applyGameTime(`${String(timePickerKind === 'hour' ? value : gameHour).padStart(2, '0')}:${String(timePickerKind === 'minute' ? value : gameMinute).padStart(2, '0')}`)}
+                value={timePickerKind === 'hour' ? gameHour : gameMinute}
+              />
+            ) : null}
             <View style={todayStyles.summaryGrid}>
               <SummaryItem label="시즌" value={season} mark="SE" tone="leaf" />
               <SummaryItem label="시즌 레시피" value={seasonalRecipeSummary} mark="DIY" tone="catalog" />
@@ -695,11 +770,28 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
             </View>
           </View>
 
-          <SectionHeader icon="routine" title="매일 루틴" actionIcon="edit" actionLabel="루틴 편집" onAction={() => { setEditingRoutine(null); setRoutineTitle(''); setRoutineGoal('1'); setRoutineModalOpen(true); }} />
-          <RoutineGrid progressById={routineProgress} routines={routines} onToggle={toggleRoutine} />
+          <View style={todayStyles.sectionBlock}>
+            <SectionHeader
+              actionIcon="edit"
+              actionLabel="루틴 편집"
+              icon="routine"
+              onAction={() => { setEditingRoutine(null); setRoutineTitle(''); setRoutineGoal('1'); setRoutineModalOpen(true); }}
+              onSecondaryAction={resetRoutineProgress}
+              secondaryActionIcon="reset"
+              secondaryActionLabel="루틴 체크 초기화"
+              title="루틴 체크"
+            />
+            <SectionCard>
+              <RoutineGrid progressById={routineProgress} routines={routines} onToggle={toggleRoutine} />
+            </SectionCard>
+          </View>
 
-          <SectionHeader icon="npc" tone="resident" title="이번 주 방문 NPC" actionIcon="reset" actionLabel="주간 초기화" onAction={() => { clearNpcVisitsForWeek(island.id, weekDates[0], weekDates[6]); setNpcVisits({}); }} />
-          <NpcWeekCard currentDate={gameDate} visits={npcVisits} weekDates={weekDates} onSelectDate={setNpcDate} />
+          <View style={todayStyles.sectionBlock}>
+            <SectionHeader icon="npc" tone="resident" title="이번 주 방문 NPC" actionIcon="reset" actionLabel="주간 초기화" onAction={() => { clearNpcVisitsForWeek(island.id, weekDates[0], weekDates[6]); setNpcVisits({}); }} />
+            <SectionCard>
+              <NpcWeekCard currentDate={gameDate} visits={npcVisits} weekDates={weekDates} onSelectDate={setNpcDate} />
+            </SectionCard>
+          </View>
 
           <CritterPreview
             availableCount={availableCritters.length}
@@ -713,13 +805,19 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
             onToggle={updateCritterStatus}
           />
 
-          <CalendarPreview currentDate={gameDate} dates={weekDates} itemsByDate={calendarItemsByDate} />
         </ScrollView>
         <FloatingTopButton
           accessibilityLabel="오늘 화면 맨 위로 이동"
           onPress={() => scrollRef.current?.scrollTo({ animated: true, y: 0 })}
         />
-        <DateTimeModal date={gameDate} time={gameTime} visible={dateTimeModalOpen} onApply={applyGameDateTime} onClose={() => setDateTimeModalOpen(false)} onReset={resetGameDateTime} />
+        <DateTimeModal
+          date={gameDate}
+          hemisphere={hemisphere}
+          todayDate={getGameDate(timezone)}
+          visible={dateTimeModalOpen}
+          onApply={applyGameDate}
+          onClose={() => setDateTimeModalOpen(false)}
+        />
         <NpcModal date={npcDate} selectedNames={npcDate ? getResolvedNpcNames(npcDate, npcVisits) : []} visible={Boolean(npcDate)} onClose={() => setNpcDate(null)} onSave={saveNpc} />
         <RoutineModal visible={routineModalOpen} editingRoutine={editingRoutine} title={routineTitle} goal={routineGoal} selectedDefaultTitles={selectedDefaultRoutineTitles} onChangeTitle={setRoutineTitle} onChangeGoal={setRoutineGoal} onClose={() => setRoutineModalOpen(false)} onSaveEdit={saveRoutineEdit} onSaveSelection={saveRoutineSelection} onDelete={editingRoutine ? () => { setRoutineModalOpen(false); removeRoutine(editingRoutine); } : undefined} />
       </SafeAreaView>
@@ -741,16 +839,22 @@ function SectionHeader({
   actionIcon,
   actionLabel,
   icon,
+  onSecondaryAction,
   title,
   tone = 'leaf',
   onAction,
+  secondaryActionIcon,
+  secondaryActionLabel,
 }: {
   actionIcon?: TodayActionIcon;
   actionLabel?: string;
   icon: TodaySectionIcon;
+  onSecondaryAction?: () => void;
   title: string;
   tone?: TileTone;
   onAction?: () => void;
+  secondaryActionIcon?: TodayActionIcon;
+  secondaryActionLabel?: string;
 }) {
   return (
     <View style={todayStyles.sectionHeader}>
@@ -758,13 +862,24 @@ function SectionHeader({
         <SectionGlyph kind={icon} tone={tone} />
         <Text adjustsFontSizeToFit minimumFontScale={0.86} numberOfLines={1} style={todayStyles.sectionTitle}>{title}</Text>
       </View>
-      {actionLabel && onAction ? (
-        <Pressable accessibilityLabel={actionLabel} accessibilityRole="button" onPress={onAction} style={actionIcon ? todayStyles.sectionIconActionButton : todayStyles.sectionActionButton}>
-          {actionIcon ? <ActionGlyph kind={actionIcon} tone={tone} /> : <Text style={todayStyles.sectionAction}>{actionLabel}</Text>}
-        </Pressable>
-      ) : null}
+      <View style={todayStyles.sectionActions}>
+        {secondaryActionLabel && onSecondaryAction ? (
+          <Pressable accessibilityLabel={secondaryActionLabel} accessibilityRole="button" onPress={onSecondaryAction} style={secondaryActionIcon ? todayStyles.sectionIconActionButton : todayStyles.sectionActionButton}>
+            {secondaryActionIcon ? <ActionGlyph kind={secondaryActionIcon} tone={tone} /> : <Text style={todayStyles.sectionAction}>{secondaryActionLabel}</Text>}
+          </Pressable>
+        ) : null}
+        {actionLabel && onAction ? (
+          <Pressable accessibilityLabel={actionLabel} accessibilityRole="button" onPress={onAction} style={actionIcon ? todayStyles.sectionIconActionButton : todayStyles.sectionActionButton}>
+            {actionIcon ? <ActionGlyph kind={actionIcon} tone={tone} /> : <Text style={todayStyles.sectionAction}>{actionLabel}</Text>}
+          </Pressable>
+        ) : null}
+      </View>
     </View>
   );
+}
+
+function SectionCard({ children }: { children: ReactNode }) {
+  return <View style={todayStyles.sectionCard}>{children}</View>;
 }
 
 function SectionGlyph({ kind, tone }: { kind: TodaySectionIcon; tone: TileTone }) {
@@ -775,12 +890,16 @@ function SectionGlyph({ kind, tone }: { kind: TodaySectionIcon; tone: TileTone }
       ? 'format-list-checks'
       : kind === 'npc'
         ? 'account-star-outline'
-        : kind === 'critter'
-          ? 'butterfly-outline'
-          : 'calendar-week-outline';
+        : 'calendar-week-outline';
   return (
-    <View style={[todayStyles.sectionGlyph, { backgroundColor: colors.backgroundColor, borderColor: colors.borderColor }]}>
-      <MaterialCommunityIcons color={colors.color as ColorValue} name={iconName} size={18} />
+    <View style={todayStyles.sectionGlyph}>
+      {kind === 'npc' ? (
+        <Image source={npcAssets.isabelle.icon} style={todayStyles.sectionGlyphImage} />
+      ) : kind === 'critter' ? (
+        <Image source={CRITTERPEDIA_ICON} style={todayStyles.sectionGlyphImage} />
+      ) : (
+        <MaterialCommunityIcons color={colors.color as ColorValue} name={iconName} size={18} />
+      )}
     </View>
   );
 }
@@ -838,44 +957,69 @@ function BloomingBushIcons({ bushes }: { bushes: BloomingBush[] }) {
   );
 }
 
+function RoutineIcon({ title, complete = false, variant = 'card', selected = false }: { title: string; complete?: boolean; variant?: 'card' | 'edit'; selected?: boolean }) {
+  const source = getRoutineIconSource(title);
+  const isEdit = variant === 'edit';
+  const isCompactImage = title === '나무 흔들기 · 가구';
+  const iconColor = complete || selected ? AppColors.leaf : AppColors.inkMuted;
+
+  return (
+    <View style={isEdit ? todayStyles.routineEditIcon : todayStyles.routineIcon}>
+      {source ? (
+        <Image
+          accessibilityLabel={`${title} 아이콘`}
+          resizeMode="contain"
+          source={source}
+          style={isEdit
+            ? [todayStyles.routineEditIconImage, isCompactImage && todayStyles.routineEditIconImageCompact]
+            : [todayStyles.routineIconImage, isCompactImage && todayStyles.routineIconImageCompact]}
+        />
+      ) : (
+        <MaterialCommunityIcons color={iconColor} name="clipboard-check-outline" size={isEdit ? 16 : 32} />
+      )}
+      {isEdit && selected ? (
+        <View style={todayStyles.routineEditCheckBadge}>
+          <MaterialCommunityIcons color={AppColors.card} name="check" size={9} />
+        </View>
+      ) : null}
+    </View>
+  );
+}
+
 function RoutineGrid({ routines, progressById, onToggle }: { routines: Routine[]; progressById: Record<string, RoutineProgress>; onToggle: (routine: Routine) => void }) {
   if (!routines.length) {
     return <Text style={todayStyles.noData}>루틴 편집에서 표시할 루틴을 선택해 주세요.</Text>;
   }
 
+  const rows = Array.from({ length: Math.ceil(routines.length / 6) }, (_, index) => routines.slice(index * 6, index * 6 + 6));
+
   return (
     <View style={todayStyles.routineCard}>
-      {routines.map((routine) => {
-        const progress = progressById[routine.id]?.currentCount ?? 0;
-        const complete = progress >= routine.goalCount;
-        return (
-          <Pressable
-            accessibilityLabel={`${routine.title} ${complete ? '완료' : '미완료'}`}
-            accessibilityRole="checkbox"
-            accessibilityState={{ checked: complete }}
-            key={routine.id}
-            onPress={() => onToggle(routine)}
-            style={[todayStyles.routineTile, !complete && todayStyles.routineTileIdle, complete && todayStyles.routineTileComplete]}>
-            <View style={[todayStyles.routineIcon, complete && todayStyles.routineIconComplete]}>
-              <Text numberOfLines={1} adjustsFontSizeToFit style={[todayStyles.routineIconText, complete && todayStyles.routineIconTextComplete]}>
-                {getRoutineMark(routine.title)}
-              </Text>
-            </View>
-            <Text
-              adjustsFontSizeToFit
-              minimumFontScale={0.75}
-              numberOfLines={2}
-              style={[todayStyles.routineTileText, !complete && todayStyles.routineTileTextIdle, complete && todayStyles.routineTileTextComplete]}>
-              {routine.title}
-            </Text>
-            {complete ? (
-              <View style={todayStyles.routineCheckBadge}>
-                <Text style={todayStyles.routineCheckText}>✓</Text>
-              </View>
-            ) : null}
-          </Pressable>
-        );
-      })}
+      {rows.map((row, rowIndex) => (
+        <View key={`routine-row-${rowIndex}`} style={todayStyles.routineRowGrid}>
+          {row.map((routine) => {
+            const progress = progressById[routine.id]?.currentCount ?? 0;
+            const complete = progress >= routine.goalCount;
+            return (
+              <Pressable
+                accessibilityLabel={`${routine.title} ${complete ? '완료' : '미완료'}`}
+                accessibilityRole="checkbox"
+                accessibilityState={{ checked: complete }}
+                key={routine.id}
+                onPress={() => onToggle(routine)}
+                style={todayStyles.routineTile}>
+                <RoutineIcon complete={complete} title={routine.title} />
+                {complete ? (
+                  <View style={todayStyles.routineCheckBadge}>
+                    <MaterialCommunityIcons color={AppColors.card} name="check" size={10} />
+                  </View>
+                ) : null}
+              </Pressable>
+            );
+          })}
+          {row.length < 6 ? Array.from({ length: 6 - row.length }, (_, index) => <View key={`routine-spacer-${rowIndex}-${index}`} style={todayStyles.routineTileSpacer} />) : null}
+        </View>
+      ))}
     </View>
   );
 }
@@ -966,18 +1110,16 @@ function CritterPreview({
   onToggle: (item: EncyclopediaItem, status: EncyclopediaStatus) => void;
 }) {
   return (
-    <View style={todayStyles.critterSection}>
-      <View style={todayStyles.sectionHeader}>
-        <View style={todayStyles.sectionTitleWrap}>
-          <SectionGlyph kind="critter" tone="museum" />
-          <Text adjustsFontSizeToFit minimumFontScale={0.86} numberOfLines={1} style={todayStyles.sectionTitle}>지금 잡을 수 있는 생물</Text>
-        </View>
-        <Pressable accessibilityLabel={`지금 잡을 수 있는 생물 전체 ${availableCount}개 보기`} accessibilityRole="button" onPress={onOpenFull} style={todayStyles.sectionActionButton}>
-          <Text style={[todayStyles.sectionAction, todayStyles.museumAction]}>전체 {availableCount} 보기</Text>
-          <ActionGlyph kind="open" tone="museum" />
-        </Pressable>
-      </View>
-      <View style={todayStyles.critterCard}>
+    <View style={todayStyles.sectionBlock}>
+      <SectionHeader
+        actionLabel={`전체 ${availableCount} 보기`}
+        icon="critter"
+        onAction={onOpenFull}
+        title="지금 잡을 수 있는 생물"
+        tone="museum"
+      />
+      <View style={[todayStyles.sectionCard, todayStyles.critterSection]}>
+        <View style={todayStyles.critterCard}>
         <View style={todayStyles.critterStatRail}>
           <View style={todayStyles.critterMainStat}>
             <Text style={todayStyles.critterStatLabel}>진척 필요</Text>
@@ -1011,33 +1153,88 @@ function CritterPreview({
             <Text style={todayStyles.noData}>선택한 게임 시간에 출현하는 생물이 없어요.</Text>
           )}
         </ScrollView>
+        </View>
       </View>
     </View>
   );
 }
 
-function CalendarPreview({ currentDate, dates, itemsByDate }: { currentDate: string; dates: string[]; itemsByDate: Record<string, CalendarItem[]> }) {
-  return (
-    <View style={todayStyles.calendarPreview}>
-      <SectionHeader icon="calendar" tone="catalog" title="이번 주 한눈에 보기" />
-      <View style={todayStyles.calendarStrip}>
-        {dates.map((date) => {
-          const dateObject = parseIsoDate(date) ?? new Date();
-          const isCurrentDate = date === currentDate;
-          const items = itemsByDate[date] ?? [];
-          const firstItem = items[0];
-          return (
-            <View key={date} style={[todayStyles.calendarPreviewDay, isCurrentDate && todayStyles.calendarPreviewDayToday]}>
-              <Text style={[todayStyles.calendarPreviewWeekday, isCurrentDate && todayStyles.calendarPreviewWeekdayToday]}>{DAY_LABELS[dateObject.getUTCDay()]}</Text>
-              <Text style={[todayStyles.calendarPreviewDate, isCurrentDate && todayStyles.calendarPreviewDateToday]}>{dateObject.getUTCDate()}</Text>
-              <View style={[todayStyles.calendarDot, firstItem?.kind === 'birthday' && todayStyles.calendarBirthdayDot, firstItem?.kind === 'event' && todayStyles.calendarEventDot]} />
-            </View>
-          );
-        })}
-      </View>
-    </View>
-  );
-}
+const calendarStyles = StyleSheet.create({
+  calendarSheet: { height: '82%', overflow: 'hidden', paddingBottom: 16 },
+  calendarCardCompact: { backgroundColor: 'transparent', borderRadius: 0, elevation: 0, paddingBottom: 0, paddingHorizontal: 0, shadowOpacity: 0 },
+  calendarDayCellCompact: { minHeight: 48, padding: 2 },
+  calendarDayCellSelected: { backgroundColor: AppColors.calendarSelected, borderColor: AppColors.calendarSelectedBorder, borderWidth: 1 },
+  calendarDayCellToday: { backgroundColor: AppColors.calendarToday },
+  calendarDayNumberCompact: { fontSize: 10, marginBottom: 2 },
+  calendarDayNumberSelected: { color: AppColors.calendarSelectedText, fontWeight: '900' },
+  calendarDayNumberToday: { color: AppColors.calendarTodayText, fontWeight: '900' },
+  calendarDayNumberRow: { alignItems: 'center', flexDirection: 'row', gap: 3, justifyContent: 'center' },
+  calendarTodayMarker: { backgroundColor: AppColors.calendarTodayText, borderRadius: 3, height: 5, width: 5 },
+  calendarTodayMarkerSelected: { backgroundColor: AppColors.calendarTodayText },
+  calendarItemStackCompact: { gap: 1, minHeight: 20 },
+  calendarBadgeCompact: { borderRadius: 3, minHeight: 11, paddingHorizontal: 1, paddingVertical: 1 },
+  calendarBadgeTextCompact: { fontSize: 8, lineHeight: 10 },
+  calendarBirthdayBadge: { backgroundColor: AppColors.calendarBirthday },
+  calendarEventBadge: { backgroundColor: AppColors.calendarEvent },
+  calendarBirthdayText: { color: AppColors.calendarBirthdayText },
+  calendarEventText: { color: AppColors.calendarEventText },
+  calendarMoreTextCompact: { fontSize: 8 },
+  calendarPeriodButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
+  calendarPeriodNavigation: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
+  calendarPeriodNavigationCompact: { marginBottom: 5 },
+  calendarPeriodTitleCompact: { marginBottom: 0 },
+  calendarMonthHeader: { alignItems: 'center', flexDirection: 'row', gap: 4, justifyContent: 'center' },
+  calendarMonthPickerButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 3, height: 30, justifyContent: 'center', paddingHorizontal: 5, width: 78 },
+  calendarMonthPickerText: { color: AppColors.ink, fontSize: 12, fontWeight: '900' },
+  calendarMonthPickerIcon: { color: AppColors.inkMuted },
+  calendarPickerPanel: { backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, marginBottom: 6, padding: 7 },
+  calendarPickerPanelTitle: { color: AppColors.inkMuted, fontSize: 9, fontWeight: '900', marginBottom: 5 },
+  calendarPickerGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 4 },
+  calendarPickerOption: { alignItems: 'center', borderColor: 'transparent', borderRadius: 8, borderWidth: 1, justifyContent: 'center', minHeight: 26, width: '23%' },
+  calendarPickerOptionSelected: { backgroundColor: AppColors.calendarSelected, borderColor: AppColors.calendarSelectedBorder },
+  calendarPickerOptionText: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800' },
+  calendarPickerOptionTextSelected: { color: AppColors.calendarSelectedText, fontWeight: '900' },
+  calendarCloseButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: 32, justifyContent: 'center', marginLeft: 6, width: 32 },
+  calendarToggleCompact: { marginVertical: 6 },
+  calendarWeekCellCompact: { minHeight: 60 },
+  calendarWeekdayRowCompact: { paddingBottom: 4 },
+  calendarWeekdayTextCompact: { fontSize: 9 },
+  calendarWeekList: { borderColor: AppColors.line, borderTopWidth: 1 },
+  calendarWeekRow: { alignItems: 'center', borderBottomColor: AppColors.line, borderBottomWidth: 1, flexDirection: 'row', minHeight: 38, paddingHorizontal: 6, paddingVertical: 3 },
+  calendarWeekRowToday: { backgroundColor: AppColors.calendarToday },
+  calendarWeekRowSelected: { backgroundColor: AppColors.calendarSelected, borderColor: AppColors.calendarSelectedBorder, borderWidth: 1 },
+  calendarWeekDateColumn: { alignItems: 'center', borderRightColor: AppColors.line, borderRightWidth: 1, justifyContent: 'center', width: 54 },
+  calendarWeekdayLabel: { color: AppColors.inkMuted, fontSize: 9, fontWeight: '800' },
+  calendarWeekDateText: { color: AppColors.ink, fontSize: 12, fontWeight: '900', marginTop: 1 },
+  calendarWeekDateTextToday: { color: AppColors.calendarTodayText },
+  calendarWeekDateTextSelected: { color: AppColors.calendarSelectedText },
+  calendarWeekItemStack: { alignItems: 'center', flex: 1, flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginLeft: 8, minWidth: 0 },
+  calendarWeekItemBadge: { borderRadius: 3, maxWidth: '46%', minHeight: 14, paddingHorizontal: 4, paddingVertical: 1 },
+  calendarWeekItemText: { fontSize: 8, fontWeight: '800', lineHeight: 11 },
+  calendarWeekEmptyText: { color: AppColors.inkMuted, fontSize: 9 },
+  calendarWeekArrow: { color: AppColors.inkMuted, marginLeft: 4 },
+  calendarSelectedDateCard: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, marginTop: 8, paddingHorizontal: 10, paddingVertical: 7 },
+  calendarSelectedDateHeader: { alignItems: 'center', flexDirection: 'row', gap: 6, marginBottom: 4 },
+  calendarSelectedDateIcon: { color: AppColors.calendarSelectedText },
+  calendarSelectedDateTitle: { color: AppColors.ink, flex: 1, fontSize: 13, fontWeight: '900' },
+  calendarDetailRow: { alignItems: 'center', flexDirection: 'row', gap: 6, minHeight: 15 },
+  calendarDetailDot: { borderRadius: 4, height: 8, width: 8 },
+  calendarDetailBirthdayDot: { backgroundColor: AppColors.calendarBirthdayText },
+  calendarDetailEventDot: { backgroundColor: AppColors.calendarEventText },
+  calendarDetailText: { color: AppColors.inkMuted, flex: 1, fontSize: 12, fontWeight: '700' },
+  calendarNoDetail: { color: AppColors.inkMuted, fontSize: 11 },
+  calendarLegend: { alignItems: 'center', flexDirection: 'row', gap: 14, justifyContent: 'flex-start', marginBottom: 4 },
+  calendarLegendItem: { alignItems: 'center', flexDirection: 'row', gap: 4 },
+  calendarLegendText: { color: AppColors.inkMuted, fontSize: 9, fontWeight: '700' },
+  calendarLegendTodayDot: { backgroundColor: AppColors.calendarTodayText, borderRadius: 4, height: 8, width: 8 },
+  calendarLegendSelectedDot: { backgroundColor: AppColors.calendarSelected, borderColor: AppColors.calendarSelectedBorder, borderRadius: 4, borderWidth: 1, height: 8, width: 8 },
+  calendarLegendBirthdayDot: { backgroundColor: AppColors.calendarBirthdayText, borderRadius: 4, height: 8, width: 8 },
+  calendarLegendEventDot: { backgroundColor: AppColors.calendarEventText, borderRadius: 4, height: 8, width: 8 },
+  sheetHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
+  sheetTitleCompact: { flex: 1, marginBottom: 0, marginRight: 10 },
+  todayPickerButton: { alignItems: 'center', backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder, borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 6, justifyContent: 'center', minHeight: 40, paddingHorizontal: 10, paddingVertical: 8 },
+  todayPickerButtonText: { color: AppColors.leaf, fontSize: 11, fontWeight: '900' },
+});
 
 function CalendarSection({
   cells,
@@ -1045,22 +1242,41 @@ function CalendarSection({
   itemsByDate,
   mode,
   onChangeMode,
+  compact = false,
+  onSelectDate,
+  periodHeader,
+  periodNavigation,
+  periodPicker,
+  selectedDate,
 }: {
   cells: Array<string | null>;
   currentDate: string;
   itemsByDate: Record<string, CalendarItem[]>;
   mode: CalendarMode;
   onChangeMode: (mode: CalendarMode) => void;
+  compact?: boolean;
+  onSelectDate?: (date: string) => void;
+  periodHeader?: ReactNode;
+  periodNavigation?: { onNext: () => void; onPrevious: () => void };
+  periodPicker?: ReactNode;
+  selectedDate?: string;
 }) {
   const currentDateObject = parseIsoDate(currentDate) ?? new Date();
   const visibleDates = cells.filter((date): date is string => Boolean(date));
-  const title = mode === 'week' && visibleDates.length
-    ? `${formatMonthDayShort(visibleDates[0])} - ${formatMonthDayShort(visibleDates[visibleDates.length - 1])}`
-    : `${currentDateObject.getUTCFullYear()}년 ${currentDateObject.getUTCMonth() + 1}월`;
+  const periodDate = visibleDates[0] ? (parseIsoDate(visibleDates[0]) ?? currentDateObject) : currentDateObject;
+  const title = mode === 'week'
+    ? `${formatMonthDayShort(selectedDate ?? currentDate)} (${formatWeekdayInitial(selectedDate ?? currentDate)})`
+    : `${periodDate.getUTCFullYear()}년 ${periodDate.getUTCMonth() + 1}월`;
+  const weekdayLabels = mode === 'week'
+    ? visibleDates.map((date) => (parseIsoDate(date) ?? new Date()).getUTCDay()).map((dayIndex) => DAY_LABELS[dayIndex])
+    : ['일', '월', '화', '수', '목', '금', '토'];
+  const cardStyle = [styles.calendarCard, compact && calendarStyles.calendarCardCompact];
+  const weekdayStyle = [styles.calendarWeekdayRow, compact && calendarStyles.calendarWeekdayRowCompact];
+  const weekdayTextStyle = [styles.calendarWeekdayText, compact && calendarStyles.calendarWeekdayTextCompact];
 
   return (
-    <View style={styles.calendarCard}>
-      <View style={styles.calendarToggle}>
+    <View style={cardStyle}>
+      <View style={[styles.calendarToggle, compact && calendarStyles.calendarToggleCompact]}>
         {(['week', 'month'] as CalendarMode[]).map((value) => (
           <Pressable
             accessibilityRole="button"
@@ -1072,24 +1288,176 @@ function CalendarSection({
           </Pressable>
         ))}
       </View>
-      <Text style={styles.calendarPeriodTitle}>{title}</Text>
-      <View style={styles.calendarWeekdayRow}>
-        {['일', '월', '화', '수', '목', '금', '토'].map((label) => <Text key={label} style={styles.calendarWeekdayText}>{label}</Text>)}
+      <View style={[calendarStyles.calendarPeriodNavigation, compact && calendarStyles.calendarPeriodNavigationCompact]}>
+        {periodNavigation ? (
+          <Pressable accessibilityLabel="이전 기간" onPress={periodNavigation.onPrevious} style={calendarStyles.calendarPeriodButton}>
+            <MaterialCommunityIcons color={AppColors.ink} name="chevron-left" size={18} />
+          </Pressable>
+        ) : null}
+        {periodHeader ?? <Text style={[styles.calendarPeriodTitle, compact && calendarStyles.calendarPeriodTitleCompact]}>{title}</Text>}
+        {periodNavigation ? (
+          <Pressable accessibilityLabel="다음 기간" onPress={periodNavigation.onNext} style={calendarStyles.calendarPeriodButton}>
+            <MaterialCommunityIcons color={AppColors.ink} name="chevron-right" size={18} />
+          </Pressable>
+        ) : null}
       </View>
-      <View style={styles.calendarBoard}>
-        {cells.map((date, index) => (
-          date ? (
-            <CalendarDayCell
+      {periodPicker ?? (mode === 'week' ? (
+        <View style={calendarStyles.calendarWeekList}>
+          {visibleDates.map((date) => (
+            <CalendarWeekRow
               date={date}
               isCurrentDate={date === currentDate}
               items={itemsByDate[date] ?? []}
               key={date}
-              mode={mode}
+              onSelectDate={onSelectDate}
+              selected={date === selectedDate}
             />
-          ) : (
-            <View key={`calendar-empty-${index}`} style={[styles.calendarDayCell, styles.calendarDayCellEmpty]} />
-          )
-        ))}
+          ))}
+        </View>
+      ) : (
+        <>
+          <View style={weekdayStyle}>
+            {weekdayLabels.map((label, index) => <Text key={`${label}-${index}`} style={weekdayTextStyle}>{label}</Text>)}
+          </View>
+          <View style={styles.calendarBoard}>
+            {cells.map((date, index) => (
+              date ? (
+                <CalendarDayCell
+                  date={date}
+                  isCurrentDate={date === currentDate}
+                  items={itemsByDate[date] ?? []}
+                  key={date}
+                  mode={mode}
+                  onSelectDate={onSelectDate}
+                  selected={date === selectedDate}
+                  compact={compact}
+                />
+              ) : (
+                <View key={`calendar-empty-${index}`} style={[styles.calendarDayCell, compact && calendarStyles.calendarDayCellCompact, styles.calendarDayCellEmpty]} />
+              )
+            ))}
+          </View>
+        </>
+      ))}
+    </View>
+  );
+}
+
+function CalendarPickerPanel({
+  kind,
+  selectedYear,
+  selectedMonth,
+  yearOptions,
+  onSelectYear,
+  onSelectMonth,
+}: {
+  kind: CalendarPickerKind;
+  selectedYear: number;
+  selectedMonth: number;
+  yearOptions: number[];
+  onSelectYear: (year: number) => void;
+  onSelectMonth: (month: number) => void;
+}) {
+  const isYearPicker = kind === 'year';
+  const options = isYearPicker ? yearOptions : Array.from({ length: 12 }, (_, index) => index + 1);
+
+  return (
+    <View style={calendarStyles.calendarPickerPanel}>
+      <Text style={calendarStyles.calendarPickerPanelTitle}>{isYearPicker ? '연도 선택' : '월 선택'}</Text>
+      <View style={calendarStyles.calendarPickerGrid}>
+        {options.map((value) => {
+          const selected = isYearPicker ? value === selectedYear : value === selectedMonth;
+          return (
+            <Pressable
+              accessibilityLabel={isYearPicker ? `${value}년 선택` : `${value}월 선택`}
+              accessibilityRole="button"
+              accessibilityState={{ selected }}
+              key={value}
+              onPress={() => (isYearPicker ? onSelectYear(value) : onSelectMonth(value))}
+              style={[calendarStyles.calendarPickerOption, selected && calendarStyles.calendarPickerOptionSelected]}>
+              <Text style={[calendarStyles.calendarPickerOptionText, selected && calendarStyles.calendarPickerOptionTextSelected]}>
+                {isYearPicker ? `${value}년` : `${value}월`}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
+function CalendarDateHeader({
+  year,
+  month,
+  openPicker,
+  onTogglePicker,
+}: {
+  year: number;
+  month: number;
+  openPicker: CalendarPickerKind | null;
+  onTogglePicker: (kind: CalendarPickerKind) => void;
+}) {
+  return (
+    <View style={calendarStyles.calendarMonthHeader}>
+      {(['year', 'month'] as CalendarPickerKind[]).map((kind) => {
+        const isYear = kind === 'year';
+        const isOpen = openPicker === kind;
+        return (
+          <Pressable
+            accessibilityLabel={isYear ? `${year}년 선택` : `${month}월 선택`}
+            accessibilityRole="button"
+            accessibilityState={{ expanded: isOpen }}
+            key={kind}
+            onPress={() => onTogglePicker(kind)}
+            style={calendarStyles.calendarMonthPickerButton}>
+            <Text style={calendarStyles.calendarMonthPickerText}>{isYear ? `${year}년` : `${month}월`}</Text>
+            <MaterialCommunityIcons color={AppColors.inkMuted} name={isOpen ? 'chevron-up' : 'chevron-down'} size={15} style={calendarStyles.calendarMonthPickerIcon} />
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+}
+
+function TimePickerMenu({
+  kind,
+  value,
+  onClose,
+  onSelect,
+}: {
+  kind: TimePickerKind;
+  value: number;
+  onClose: () => void;
+  onSelect: (value: number) => void;
+}) {
+  const isHour = kind === 'hour';
+  const options = isHour ? Array.from({ length: 24 }, (_, index) => index) : Array.from({ length: 12 }, (_, index) => index * 5);
+
+  return (
+    <View style={todayStyles.timeDropdown}>
+      <View style={todayStyles.timeDropdownHeader}>
+        <Text style={todayStyles.timeDropdownTitle}>{isHour ? '시 선택' : '분 선택'}</Text>
+        <Pressable accessibilityLabel="시간 선택 닫기" onPress={onClose} style={todayStyles.timeDropdownClose}>
+          <MaterialCommunityIcons color={AppColors.inkMuted} name="close" size={16} />
+        </Pressable>
+      </View>
+      <View style={todayStyles.timeDropdownGrid}>
+        {options.map((option) => {
+          const selected = option === value;
+          return (
+            <Pressable
+              accessibilityLabel={isHour ? `${option}시 선택` : `${option}분 선택`}
+              accessibilityRole="button"
+              accessibilityState={{ selected }}
+              key={option}
+              onPress={() => onSelect(option)}
+              style={[todayStyles.timeDropdownOption, selected && todayStyles.timeDropdownOptionSelected]}>
+              <Text style={[todayStyles.timeDropdownOptionText, selected && todayStyles.timeDropdownOptionTextSelected]}>
+                {String(option).padStart(2, '0')}
+              </Text>
+            </Pressable>
+          );
+        })}
       </View>
     </View>
   );
@@ -1100,148 +1468,355 @@ function CalendarDayCell({
   isCurrentDate,
   items,
   mode,
+  onSelectDate,
+  selected = false,
+  compact = false,
 }: {
   date: string;
   isCurrentDate: boolean;
   items: CalendarItem[];
   mode: CalendarMode;
+  onSelectDate?: (date: string) => void;
+  selected?: boolean;
+  compact?: boolean;
 }) {
   const dateObject = parseIsoDate(date) ?? new Date();
   const visibleItems = items.slice(0, mode === 'week' ? 3 : 2);
   const hiddenCount = Math.max(0, items.length - visibleItems.length);
-
-  return (
-    <View
-      accessibilityLabel={`${formatDate(date)} ${items.length ? items.map((item) => item.label).join(', ') : '기록된 일정 없음'}`}
-      style={[
-        styles.calendarDayCell,
-        mode === 'week' && styles.calendarWeekCell,
-        isCurrentDate && styles.calendarDayCellToday,
-      ]}>
-      <Text style={[styles.calendarDayNumber, isCurrentDate && styles.calendarDayNumberToday]}>{dateObject.getUTCDate()}</Text>
-      <View style={styles.calendarItemStack}>
+  const cellStyle = [
+    styles.calendarDayCell,
+    mode === 'week' && styles.calendarWeekCell,
+    compact && calendarStyles.calendarDayCellCompact,
+    compact && mode === 'week' && calendarStyles.calendarWeekCellCompact,
+    isCurrentDate && calendarStyles.calendarDayCellToday,
+    selected && calendarStyles.calendarDayCellSelected,
+  ];
+  const dayNumberStyle = [
+    styles.calendarDayNumber,
+    compact && calendarStyles.calendarDayNumberCompact,
+    isCurrentDate && calendarStyles.calendarDayNumberToday,
+    selected && calendarStyles.calendarDayNumberSelected,
+  ];
+  const itemStackStyle = [styles.calendarItemStack, compact && calendarStyles.calendarItemStackCompact];
+  const badgeStyle = [styles.calendarBadge, compact && calendarStyles.calendarBadgeCompact];
+  const badgeTextStyle = [styles.calendarBadgeText, compact && calendarStyles.calendarBadgeTextCompact];
+  const content = (
+    <>
+      <View style={calendarStyles.calendarDayNumberRow}>
+        <Text style={dayNumberStyle}>{dateObject.getUTCDate()}</Text>
+        {isCurrentDate ? <View style={calendarStyles.calendarTodayMarker} /> : null}
+      </View>
+      <View style={itemStackStyle}>
         {visibleItems.map((item) => (
           <View
             key={item.id}
             style={[
-              styles.calendarBadge,
-              item.kind === 'birthday' ? styles.calendarBirthdayBadge : styles.calendarEventBadge,
+              badgeStyle,
+              item.kind === 'birthday' ? calendarStyles.calendarBirthdayBadge : calendarStyles.calendarEventBadge,
             ]}>
             <Text
               numberOfLines={1}
               style={[
-                styles.calendarBadgeText,
-                item.kind === 'birthday' ? styles.calendarBirthdayText : styles.calendarEventText,
+                badgeTextStyle,
+                item.kind === 'birthday' ? calendarStyles.calendarBirthdayText : calendarStyles.calendarEventText,
               ]}>
               {item.kind === 'birthday' ? `생일 ${item.label.replace(' 생일', '')}` : item.label}
             </Text>
           </View>
         ))}
         {hiddenCount > 0 ? (
-          <Text numberOfLines={1} style={styles.calendarMoreText}>+{hiddenCount}</Text>
+          <Text numberOfLines={1} style={[styles.calendarMoreText, compact && calendarStyles.calendarMoreTextCompact]}>+{hiddenCount}</Text>
         ) : null}
       </View>
+    </>
+  );
+
+  const commonProps = {
+    accessibilityLabel: `${formatDate(date)} ${items.length ? items.map((item) => item.label).join(', ') : '기록된 일정 없음'}`,
+    style: cellStyle,
+  };
+
+  return onSelectDate ? (
+    <Pressable {...commonProps} accessibilityRole="button" accessibilityState={{ selected }} onPress={() => onSelectDate(date)}>
+      {content}
+    </Pressable>
+  ) : (
+    <View {...commonProps}>
+      {content}
     </View>
   );
 }
+
+function CalendarWeekRow({
+  date,
+  isCurrentDate,
+  items,
+  onSelectDate,
+  selected = false,
+}: {
+  date: string;
+  isCurrentDate: boolean;
+  items: CalendarItem[];
+  onSelectDate?: (date: string) => void;
+  selected?: boolean;
+}) {
+  const dateObject = parseIsoDate(date) ?? new Date();
+  const visibleItems = items.slice(0, 2);
+  const hiddenCount = Math.max(0, items.length - visibleItems.length);
+  const rowStyle = [
+    calendarStyles.calendarWeekRow,
+    isCurrentDate && calendarStyles.calendarWeekRowToday,
+    selected && calendarStyles.calendarWeekRowSelected,
+  ];
+  const content = (
+    <>
+      <View style={calendarStyles.calendarWeekDateColumn}>
+        <Text style={calendarStyles.calendarWeekdayLabel}>{DAY_LABELS[dateObject.getUTCDay()]}</Text>
+        <Text style={[
+          calendarStyles.calendarWeekDateText,
+          isCurrentDate && calendarStyles.calendarWeekDateTextToday,
+          selected && calendarStyles.calendarWeekDateTextSelected,
+        ]}>{dateObject.getUTCMonth() + 1}/{dateObject.getUTCDate()}</Text>
+      </View>
+      <View style={calendarStyles.calendarWeekItemStack}>
+        {visibleItems.map((item) => (
+          <View
+            key={item.id}
+            style={[
+              calendarStyles.calendarWeekItemBadge,
+              item.kind === 'birthday' ? { backgroundColor: AppColors.calendarBirthday } : { backgroundColor: AppColors.calendarEvent },
+            ]}>
+            <Text numberOfLines={1} style={[
+              calendarStyles.calendarWeekItemText,
+              item.kind === 'birthday' ? { color: AppColors.calendarBirthdayText } : { color: AppColors.calendarEventText },
+            ]}>
+              {item.kind === 'birthday' ? `생일 ${item.label.replace(' 생일', '')}` : item.label}
+            </Text>
+          </View>
+        ))}
+        {!items.length ? <Text style={calendarStyles.calendarWeekEmptyText}>일정 없음</Text> : null}
+        {hiddenCount > 0 ? <Text style={calendarStyles.calendarWeekEmptyText}>+{hiddenCount}</Text> : null}
+      </View>
+      {onSelectDate ? <MaterialCommunityIcons color={AppColors.inkMuted} name="chevron-right" size={16} style={calendarStyles.calendarWeekArrow} /> : null}
+    </>
+  );
+
+  const accessibilityLabel = `${formatDate(date)} ${items.length ? items.map((item) => item.label).join(', ') : '기록된 일정 없음'}`;
+  return onSelectDate ? (
+    <Pressable accessibilityLabel={accessibilityLabel} accessibilityRole="button" accessibilityState={{ selected }} onPress={() => onSelectDate(date)} style={rowStyle}>
+      {content}
+    </Pressable>
+  ) : (
+    <View style={rowStyle}>{content}</View>
+  );
+}
+
 function DateTimeModal({
   date,
-  time,
+  hemisphere,
+  todayDate,
   visible,
   onApply,
   onClose,
-  onReset,
 }: {
   date: string;
-  time: string;
+  hemisphere: Island['hemisphere'];
+  todayDate: string;
   visible: boolean;
-  onApply: (date: string, time: string) => void;
+  onApply: (date: string) => void;
   onClose: () => void;
-  onReset: () => void;
 }) {
   const [draftDate, setDraftDate] = useState(date);
   const [visibleMonth, setVisibleMonth] = useState(date.slice(0, 7));
-  const [draftHour, setDraftHour] = useState(0);
-  const [draftMinute, setDraftMinute] = useState(0);
+  const [visibleWeekDate, setVisibleWeekDate] = useState(date);
+  const [calendarMode, setCalendarMode] = useState<CalendarMode>('month');
+  const [openPicker, setOpenPicker] = useState<CalendarPickerKind | null>(null);
 
   useEffect(() => {
     if (!visible) return;
     setDraftDate(date);
     setVisibleMonth(date.slice(0, 7));
-    const [hour, minute] = (isValidGameTime(time) ? time : '00:00').split(':').map(Number);
-    setDraftHour(hour);
-    setDraftMinute(minute);
-  }, [date, time, visible]);
+    setVisibleWeekDate(date);
+    setOpenPicker(null);
+  }, [date, visible]);
 
-  const monthStart = parseIsoDate(`${visibleMonth}-01`) ?? new Date();
-  const year = monthStart.getUTCFullYear();
-  const month = monthStart.getUTCMonth() + 1;
-  const firstWeekday = monthStart.getUTCDay();
-  const dayCount = new Date(Date.UTC(year, month, 0)).getUTCDate();
-  const cells = [
-    ...Array.from({ length: firstWeekday }, () => null),
-    ...Array.from({ length: dayCount }, (_, index) => index + 1),
-  ];
+  const calendarDates = calendarMode === 'week'
+    ? getWeekDates(visibleWeekDate)
+    : getMonthDates(`${visibleMonth}-01`);
+  const calendarCells = getCalendarGridCells(calendarMode, calendarDates);
+  const calendarItemsByDate = Object.fromEntries(calendarDates.map((calendarDate) => [
+    calendarDate,
+    getCalendarItemsForDate(calendarDate, hemisphere),
+  ]));
+  const selectedDateItems = getCalendarItemsForDate(draftDate, hemisphere);
+  const visibleMonthDate = parseIsoDate(`${visibleMonth}-01`) ?? parseIsoDate(draftDate) ?? new Date();
+  const calendarHeaderDate = calendarMode === 'week' ? parseIsoDate(draftDate) ?? visibleMonthDate : visibleMonthDate;
+  const calendarHeaderYear = calendarHeaderDate.getUTCFullYear();
+  const calendarHeaderMonth = calendarHeaderDate.getUTCMonth() + 1;
+  const yearOptions = getCalendarYearOptions(calendarHeaderYear);
 
-  const changeMonth = (amount: number) => {
-    const next = new Date(Date.UTC(year, month - 1 + amount, 1));
-    setVisibleMonth(formatIsoDate(next).slice(0, 7));
+  const changeCalendarPeriod = (amount: number) => {
+    setOpenPicker(null);
+    if (calendarMode === 'week') {
+      const nextDate = shiftIsoDate(visibleWeekDate, amount * 7);
+      if (nextDate) {
+        setDraftDate(nextDate);
+        setVisibleWeekDate(nextDate);
+        setVisibleMonth(nextDate.slice(0, 7));
+      }
+      return;
+    }
+
+    const monthStart = parseIsoDate(`${visibleMonth}-01`) ?? parseIsoDate(draftDate) ?? new Date();
+    const next = new Date(Date.UTC(monthStart.getUTCFullYear(), monthStart.getUTCMonth() + amount, 1));
+    const nextMonth = next.getUTCMonth() + 1;
+    const currentDate = parseIsoDate(draftDate) ?? monthStart;
+    const day = Math.min(currentDate.getUTCDate(), new Date(Date.UTC(next.getUTCFullYear(), nextMonth, 0)).getUTCDate());
+    const nextDate = toIsoDate(next.getUTCFullYear(), nextMonth, day);
+    if (!nextDate) return;
+    setDraftDate(nextDate);
+    setVisibleWeekDate(nextDate);
+    setVisibleMonth(nextDate.slice(0, 7));
   };
 
-  const adjustHour = (amount: number) => setDraftHour((current) => (current + amount + 24) % 24);
-  const adjustMinute = (amount: number) => setDraftMinute((current) => (current + amount + 60) % 60);
-  const draftTime = `${String(draftHour).padStart(2, '0')}:${String(draftMinute).padStart(2, '0')}`;
+  const selectCalendarDate = (nextDate: string) => {
+    setDraftDate(nextDate);
+    setVisibleWeekDate(nextDate);
+    setVisibleMonth(nextDate.slice(0, 7));
+    setOpenPicker(null);
+  };
+
+  const selectCalendarYear = (year: number) => {
+    const currentDate = parseIsoDate(draftDate) ?? visibleMonthDate;
+    const month = calendarMode === 'week' ? currentDate.getUTCMonth() + 1 : calendarHeaderMonth;
+    const day = Math.min(currentDate.getUTCDate(), new Date(Date.UTC(year, month, 0)).getUTCDate());
+    const nextDate = toIsoDate(year, month, day);
+    if (!nextDate) return;
+    setDraftDate(nextDate);
+    setVisibleWeekDate(nextDate);
+    setVisibleMonth(nextDate.slice(0, 7));
+    setOpenPicker(null);
+  };
+
+  const selectCalendarMonth = (monthNumber: number) => {
+    const currentDate = parseIsoDate(draftDate) ?? visibleMonthDate;
+    const year = calendarMode === 'week' ? currentDate.getUTCFullYear() : calendarHeaderYear;
+    const day = Math.min(currentDate.getUTCDate(), new Date(Date.UTC(year, monthNumber, 0)).getUTCDate());
+    const nextDate = toIsoDate(year, monthNumber, day);
+    if (!nextDate) return;
+    setDraftDate(nextDate);
+    setVisibleWeekDate(nextDate);
+    setVisibleMonth(nextDate.slice(0, 7));
+    setOpenPicker(null);
+  };
+
+  const selectToday = () => {
+    setDraftDate(todayDate);
+    setVisibleWeekDate(todayDate);
+    setVisibleMonth(todayDate.slice(0, 7));
+    setOpenPicker(null);
+  };
+
+  const periodHeader = (
+    <CalendarDateHeader
+      month={calendarHeaderMonth}
+      onTogglePicker={(kind) => setOpenPicker((current) => current === kind ? null : kind)}
+      openPicker={openPicker}
+      year={calendarHeaderYear}
+    />
+  );
+  const periodPicker = openPicker ? (
+    <CalendarPickerPanel
+      kind={openPicker}
+      onSelectMonth={selectCalendarMonth}
+      onSelectYear={selectCalendarYear}
+      selectedMonth={calendarHeaderMonth}
+      selectedYear={calendarHeaderYear}
+      yearOptions={yearOptions}
+    />
+  ) : undefined;
+  const closeAndApply = () => onApply(draftDate);
 
   return (
-    <Modal animationType="slide" onRequestClose={onClose} transparent visible={visible}>
+    <Modal animationType="slide" onRequestClose={closeAndApply} transparent visible={visible}>
       <View style={styles.modalBackdrop}>
         <Pressable onPress={onClose} style={StyleSheet.absoluteFill} />
-        <View style={styles.bottomSheet}>
-          <Text style={styles.sheetTitle}>게임 날짜와 시간</Text>
-          <View style={styles.calendarHeader}>
-            <Pressable accessibilityLabel="이전 달" onPress={() => changeMonth(-1)} style={styles.monthButton}><Text style={styles.monthButtonText}>‹</Text></Pressable>
-            <Text style={styles.monthTitle}>{year}년 {month}월</Text>
-            <Pressable accessibilityLabel="다음 달" onPress={() => changeMonth(1)} style={styles.monthButton}><Text style={styles.monthButtonText}>›</Text></Pressable>
+        <View style={[styles.bottomSheet, calendarStyles.calendarSheet]}>
+          <View style={calendarStyles.sheetHeader}>
+            <Text style={[styles.sheetTitle, calendarStyles.sheetTitleCompact]}>캘린더</Text>
+            <Pressable accessibilityLabel="오늘 날짜로 이동" onPress={selectToday} style={calendarStyles.todayPickerButton}>
+              <MaterialCommunityIcons color={AppColors.leaf} name="calendar-today" size={16} />
+              <Text style={calendarStyles.todayPickerButtonText}>오늘</Text>
+            </Pressable>
+            <Pressable accessibilityLabel="캘린더 닫기" onPress={closeAndApply} style={calendarStyles.calendarCloseButton}>
+              <MaterialCommunityIcons color={AppColors.inkMuted} name="close" size={17} />
+            </Pressable>
           </View>
-          <View style={styles.weekdayRow}>
-            {['일', '월', '화', '수', '목', '금', '토'].map((label) => <Text key={label} style={styles.weekdayText}>{label}</Text>)}
-          </View>
-          <View style={styles.calendarGrid}>
-            {cells.map((dayNumber, index) => {
-              const value = dayNumber ? toIsoDate(year, month, dayNumber) : '';
-              const selected = value === draftDate;
-              return dayNumber ? (
-                <Pressable key={value} onPress={() => setDraftDate(value)} style={[styles.dayCell, selected && styles.dayCellSelected]}>
-                  <Text style={[styles.dayCellText, selected && styles.dayCellTextSelected]}>{dayNumber}</Text>
-                </Pressable>
-              ) : <View key={`blank-${index}`} style={styles.dayCell} />;
-            })}
-          </View>
-          <View style={styles.timePicker}>
-            <View style={styles.timeColumn}>
-              <Text style={styles.timeLabel}>시</Text>
-              <Pressable accessibilityLabel="한 시간 올리기" onPress={() => adjustHour(1)} style={styles.timeAdjustButton}><Text style={styles.timeAdjustText}>＋</Text></Pressable>
-              <Text style={styles.timeValue}>{String(draftHour).padStart(2, '0')}</Text>
-              <Pressable accessibilityLabel="한 시간 내리기" onPress={() => adjustHour(-1)} style={styles.timeAdjustButton}><Text style={styles.timeAdjustText}>－</Text></Pressable>
-            </View>
-            <Text style={styles.timeDivider}>:</Text>
-            <View style={styles.timeColumn}>
-              <Text style={styles.timeLabel}>분</Text>
-              <Pressable accessibilityLabel="5분 올리기" onPress={() => adjustMinute(5)} style={styles.timeAdjustButton}><Text style={styles.timeAdjustText}>＋</Text></Pressable>
-              <Text style={styles.timeValue}>{String(draftMinute).padStart(2, '0')}</Text>
-              <Pressable accessibilityLabel="5분 내리기" onPress={() => adjustMinute(-5)} style={styles.timeAdjustButton}><Text style={styles.timeAdjustText}>－</Text></Pressable>
-            </View>
-          </View>
-          <View style={styles.modalActions}>
-            <Pressable onPress={onReset} style={styles.resetButton}><Text style={styles.resetButtonText}>현실 시간</Text></Pressable>
-            <Pressable onPress={onClose} style={styles.cancelButton}><Text style={styles.cancelButtonText}>취소</Text></Pressable>
-            <Pressable onPress={() => onApply(draftDate, draftTime)} style={styles.saveButton}><Text style={styles.saveButtonText}>적용</Text></Pressable>
-          </View>
+          <CalendarLegend />
+          <CalendarSection
+            cells={calendarCells}
+            compact
+            currentDate={todayDate}
+            itemsByDate={calendarItemsByDate}
+            mode={calendarMode}
+            onChangeMode={(nextMode) => { setCalendarMode(nextMode); setOpenPicker(null); }}
+            onSelectDate={selectCalendarDate}
+            periodHeader={periodHeader}
+            periodNavigation={{ onNext: () => changeCalendarPeriod(1), onPrevious: () => changeCalendarPeriod(-1) }}
+            periodPicker={periodPicker}
+            selectedDate={draftDate}
+          />
+          <SelectedCalendarDateSummary date={draftDate} items={selectedDateItems} />
         </View>
       </View>
     </Modal>
   );
 }
+
+function SelectedCalendarDateSummary({ date, items }: { date: string; items: CalendarItem[] }) {
+  const birthdays = items.filter((item) => item.kind === 'birthday').map((item) => item.label.replace(' 생일', ''));
+  const events = items.filter((item) => item.kind === 'event').map((item) => item.label);
+  const details = [
+    birthdays.length ? { kind: 'birthday' as const, text: `생일 · ${summarizeNames(birthdays, '')}` } : null,
+    events.length ? { kind: 'event' as const, text: `이벤트 · ${summarizeNames(events, '')}` } : null,
+  ].filter((detail): detail is { kind: CalendarItemKind; text: string } => Boolean(detail));
+
+  return (
+    <View style={calendarStyles.calendarSelectedDateCard}>
+      <View style={calendarStyles.calendarSelectedDateHeader}>
+        <MaterialCommunityIcons color={AppColors.calendarSelectedText} name="calendar-check" size={15} style={calendarStyles.calendarSelectedDateIcon} />
+        <Text style={calendarStyles.calendarSelectedDateTitle}>{formatMonthDayShort(date)} ({formatWeekdayInitial(date)}) 상세</Text>
+      </View>
+      {details.length ? details.map((detail) => (
+        <View key={detail.kind} style={calendarStyles.calendarDetailRow}>
+          <View style={[calendarStyles.calendarDetailDot, detail.kind === 'birthday' ? calendarStyles.calendarDetailBirthdayDot : calendarStyles.calendarDetailEventDot]} />
+          <Text numberOfLines={1} style={calendarStyles.calendarDetailText}>{detail.text}</Text>
+        </View>
+      )) : <Text style={calendarStyles.calendarNoDetail}>등록된 생일이나 이벤트가 없어요.</Text>}
+    </View>
+  );
+}
+
+function CalendarLegend() {
+  const items = [
+    { label: '오늘', style: calendarStyles.calendarLegendTodayDot },
+    { label: '선택', style: calendarStyles.calendarLegendSelectedDot },
+    { label: '생일', style: calendarStyles.calendarLegendBirthdayDot },
+    { label: '이벤트', style: calendarStyles.calendarLegendEventDot },
+  ];
+
+  return (
+    <View accessibilityLabel="캘린더 범례" style={calendarStyles.calendarLegend}>
+      {items.map((item) => (
+        <View key={item.label} style={calendarStyles.calendarLegendItem}>
+          <View style={item.style} />
+          <Text style={calendarStyles.calendarLegendText}>{item.label}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
 function TodayCritterPreviewCard({
   item,
   availabilityLabel,
@@ -1278,7 +1853,7 @@ function TodayCritterPreviewCard({
             accessibilityLabel={`${item.nameKo} ${status === 'caught' ? '채집' : '기증'} ${state[status] ? '해제' : '설정'}`}
             key={status}
             onPress={() => onToggle(status)}
-            style={todayStyles.critterStatusButton}>
+            style={[todayStyles.critterStatusButton, todayStyles.statusIconOnly]}>
             <CollectionStatusIcon active={state[status]} status={status} />
           </Pressable>
         ))}
@@ -1336,7 +1911,7 @@ function TodayCritterCard({
             accessibilityLabel={`${item.nameKo} ${status === 'caught' ? '채집' : '기증'} ${state[status] ? '해제' : '설정'}`}
             key={status}
             onPress={() => onToggle(status)}
-            style={styles.critterStatusButton}>
+            style={[styles.critterStatusButton, { backgroundColor: 'transparent', borderColor: 'transparent', borderWidth: 0 }]}>
             <CollectionStatusIcon active={state[status]} status={status} />
           </Pressable>
         ))}
@@ -1355,44 +1930,6 @@ const critterBadgeStyles = StyleSheet.create({
   leavingBadgeText: { color: '#AE584B' },
 });
 
-const dateTimeFieldStyles = StyleSheet.create({
-  field: {
-    alignItems: 'center',
-    backgroundColor: '#F8FBF5',
-    borderColor: '#D6E4CF',
-    borderRadius: 12,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: 8,
-    marginTop: 6,
-    minHeight: 48,
-    paddingHorizontal: 11,
-    paddingVertical: 8,
-  },
-  fieldPressed: {
-    backgroundColor: '#EEF6E8',
-    borderColor: AppColors.primaryBorder,
-  },
-  valueBlock: {
-    flex: 1,
-    minWidth: 0,
-  },
-  value: {
-    color: AppColors.primaryText,
-    fontSize: 16,
-    fontWeight: '900',
-  },
-  hint: {
-    color: '#819082',
-    fontSize: 10,
-    marginTop: 3,
-  },
-  editIcon: {
-    color: AppColors.primaryText,
-    fontSize: 15,
-    fontWeight: '900',
-  },
-});
 function DrawerModal({ island, visible, onClose, onManage }: { island: Island; visible: boolean; onClose: () => void; onManage: () => void }) { return <Modal animationType="slide" onRequestClose={onClose} transparent visible={visible}><View style={styles.modalBackdrop}><Pressable onPress={onClose} style={StyleSheet.absoluteFill} /><View style={styles.drawer}><SafeAreaView edges={['top', 'bottom']}><View style={styles.drawerHeader}><Text style={styles.drawerKicker}>ISLAND PASSPORT</Text><Pressable onPress={onClose}><Text style={styles.closeText}>×</Text></Pressable></View><Text style={styles.drawerTitle}>{island.name}</Text><View style={styles.passportCard}><Text style={styles.passportLabel}>주민대표</Text><Text style={styles.passportValue}>{island.playerName ?? '미입력'}</Text><Text style={styles.passportLabel}>섬 정보</Text><Text style={styles.passportValue}>{island.hemisphere === 'south' ? '남반구' : '북반구'} · {island.fruit ?? '과일 미입력'} · {island.flower ?? '꽃 미입력'}</Text></View><Pressable onPress={onManage} style={styles.drawerAction}><Text style={styles.drawerActionText}>섬 추가·변경·수정·삭제</Text><Text style={styles.rowArrow}>›</Text></Pressable><View style={styles.drawerAction}><Text style={styles.drawerMuted}>날씨 데이터 추가</Text><Text style={styles.drawerBadge}>MVP 제외</Text></View><View style={styles.drawerAction}><Text style={styles.drawerMuted}>데이터 출처 및 라이선스</Text><Text style={styles.rowArrow}>›</Text></View></SafeAreaView></View></View></Modal>; }
 function NpcModal({
   date,
@@ -1504,6 +2041,11 @@ function RoutineModal({
       : [...current, routineTitle]);
   };
 
+  const routineRows = Array.from(
+    { length: Math.ceil(DEFAULT_ROUTINE_OPTIONS.length / 6) },
+    (_, index) => DEFAULT_ROUTINE_OPTIONS.slice(index * 6, index * 6 + 6),
+  );
+
   return (
     <Modal animationType="slide" onRequestClose={onClose} transparent visible={visible}>
       <View style={styles.modalBackdrop}>
@@ -1528,25 +2070,30 @@ function RoutineModal({
               <ScrollView showsVerticalScrollIndicator={false}>
                 <Text style={styles.optionGroupTitle}>기본 루틴</Text>
                 <View style={todayStyles.routineEditGrid}>
-                  {DEFAULT_ROUTINE_OPTIONS.map((routine) => {
-                    const selected = draftTitles.includes(routine.title);
-                    return (
-                      <Pressable
-                        accessibilityLabel={`${routine.title} ${routine.goalLabel ?? `${routine.goalCount}회`} ${selected ? '선택됨' : '선택 안 됨'}`}
-                        accessibilityRole="checkbox"
-                        accessibilityState={{ checked: selected }}
-                        key={routine.title}
-                        onPress={() => toggleTitle(routine.title)}
-                        style={[todayStyles.routineEditTile, selected && todayStyles.routineEditTileSelected]}>
-                        <Text numberOfLines={1} adjustsFontSizeToFit style={[todayStyles.routineEditMark, selected && todayStyles.routineEditMarkSelected]}>
-                          {selected ? '✓' : getRoutineMark(routine.title)}
-                        </Text>
-                        <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.72} style={[todayStyles.routineEditLabel, selected && todayStyles.routineEditLabelSelected]}>
-                          {routine.title}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
+                  {routineRows.map((row, rowIndex) => (
+                    <View key={`routine-edit-row-${rowIndex}`} style={todayStyles.routineEditRow}>
+                      {row.map((routine) => {
+                        const selected = draftTitles.includes(routine.title);
+                        return (
+                          <Pressable
+                            accessibilityLabel={`${routine.title} ${routine.goalLabel ?? `${routine.goalCount}회`} ${selected ? '선택됨' : '선택 안 됨'}`}
+                            accessibilityRole="checkbox"
+                            accessibilityState={{ checked: selected }}
+                            key={routine.title}
+                            onPress={() => toggleTitle(routine.title)}
+                            style={[todayStyles.routineEditTile, selected && todayStyles.routineEditTileSelected]}>
+                            <RoutineIcon selected={selected} title={routine.title} variant="edit" />
+                            <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.72} style={[todayStyles.routineEditLabel, selected && todayStyles.routineEditLabelSelected]}>
+                              {routine.title}
+                            </Text>
+                          </Pressable>
+                        );
+                      })}
+                      {row.length < 6 ? Array.from({ length: 6 - row.length }, (_, spacerIndex) => (
+                        <View key={`routine-edit-spacer-${rowIndex}-${spacerIndex}`} style={todayStyles.routineEditTileSpacer} />
+                      )) : null}
+                    </View>
+                  ))}
                 </View>
                 <Text style={styles.optionGroupTitle}>직접 추가</Text>
                 <TextInput accessibilityLabel="직접 추가할 루틴 이름" onChangeText={setCustomTitle} placeholder="예: 꽃 물주기" placeholderTextColor="#A2AAA0" style={styles.modalInput} value={customTitle} />
@@ -1568,18 +2115,24 @@ function RoutineModal({
 const todayStyles = StyleSheet.create({
   content: { gap: 18, padding: 18, paddingBottom: 112 },
   summaryCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.panel, padding: 14, ...AppShadows.card },
-  summaryHeader: { alignItems: 'center', flexDirection: 'row', gap: 12, justifyContent: 'space-between' },
-  summaryTitleBlock: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 9, minWidth: 0 },
-  summaryTitle: { color: AppColors.ink, flex: 1, fontFamily: Fonts.rounded, fontSize: 20, fontWeight: '900' },
+  summaryHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'flex-end' },
   summaryMeta: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '800', marginTop: 3 },
-  dateTimeControl: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.primaryBorder, borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 12, marginTop: 12, marginBottom: 12, minHeight: 58, paddingHorizontal: 13, paddingVertical: 9 },
-  dateTimeControlPressed: { backgroundColor: AppColors.leafSoft },
-  dateBlock: { minWidth: 82 },
-  dateBlockMonth: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900', lineHeight: 19 },
-  dateBlockZone: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', lineHeight: 12, marginTop: 2 },
-  dateTimeDivider: { alignSelf: 'stretch', backgroundColor: AppColors.line, width: 1 },
-  timeBlock: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 8, justifyContent: 'flex-end', minWidth: 0 },
-  timeBlockValue: { color: AppColors.ink, flexShrink: 1, fontFamily: Fonts.rounded, fontSize: 28, fontWeight: '900', lineHeight: 32, textAlign: 'right' },
+  summaryDateTimeRow: { alignItems: 'center', flexDirection: 'row', flexShrink: 0, gap: 3, width: 188 },
+  summaryDateButton: { alignItems: 'center', backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder, borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 3, height: 38, justifyContent: 'center', overflow: 'hidden', paddingHorizontal: 4, width: 96 },
+  summaryTimeGroup: { alignItems: 'center', flexDirection: 'row', gap: 2, height: 38, width: 89 },
+  summaryTimeButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, flex: 1, flexDirection: 'row', gap: 1, height: 38, justifyContent: 'center', minWidth: 0, overflow: 'hidden', paddingHorizontal: 2 },
+  summaryDateTimeText: { color: AppColors.ink, flexShrink: 1, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900' },
+  summaryDateTimeButtonPressed: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder },
+  summaryTimeDivider: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900' },
+  timeDropdown: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, marginTop: 8, padding: 10 },
+  timeDropdownHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
+  timeDropdownTitle: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
+  timeDropdownClose: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, height: 28, justifyContent: 'center', width: 28 },
+  timeDropdownGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 5 },
+  timeDropdownOption: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: 8, borderWidth: 1, height: 30, justifyContent: 'center', width: '23%' },
+  timeDropdownOptionSelected: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder },
+  timeDropdownOptionText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800' },
+  timeDropdownOptionTextSelected: { color: AppColors.leaf, fontWeight: '900' },
   summaryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   summaryItem: { borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 8, minHeight: 62, padding: 9, width: '48.6%' },
   summaryMark: { alignItems: 'center', borderRadius: 10, height: 34, justifyContent: 'center', width: 34 },
@@ -1590,36 +2143,39 @@ const todayStyles = StyleSheet.create({
   bushIconRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginTop: 5, minHeight: 32 },
   bushIconChip: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
   bushIconImage: { height: 25, width: 25 },
+  sectionBlock: { gap: 8 },
+  sectionCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, gap: 10, padding: 12, ...AppShadows.card },
   sectionHeader: { alignItems: 'center', flexDirection: 'row', gap: 10, justifyContent: 'space-between' },
+  sectionActions: { alignItems: 'center', flexDirection: 'row', gap: 2 },
   sectionTitleWrap: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 9, minWidth: 0 },
   sectionTitle: { color: AppColors.ink, flex: 1, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900', lineHeight: 19 },
-  sectionGlyph: { alignItems: 'center', borderRadius: 10, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
+  sectionGlyph: { alignItems: 'center', height: 30, justifyContent: 'center', width: 30 },
+  sectionGlyphImage: { height: 23, resizeMode: 'contain', width: 23 },
   sectionActionButton: { alignItems: 'center', borderRadius: AppRadii.pill, flexDirection: 'row', gap: 2, minHeight: 34, paddingHorizontal: 4, paddingVertical: 6 },
   sectionIconActionButton: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: AppControlSizes.navMin, justifyContent: 'center', width: AppControlSizes.navMin },
   sectionAction: { color: AppColors.leaf, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900' },
   museumAction: { color: AppColors.museum },
   actionGlyph: { alignItems: 'center', height: 20, justifyContent: 'center', width: 20 },
-  routineCard: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
-  routineTile: { alignItems: 'center', borderColor: AppColors.line, borderRadius: 10, borderWidth: 1, justifyContent: 'center', minHeight: 58, overflow: 'hidden', paddingHorizontal: 3, paddingVertical: 5, position: 'relative', width: '15.25%' },
-  routineTileIdle: { backgroundColor: AppColors.card },
-  routineTileComplete: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.leaf },
-  routineIcon: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, height: 24, justifyContent: 'center', marginBottom: 4, width: 30 },
-  routineIconComplete: { backgroundColor: AppColors.card },
-  routineIconText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '900', maxWidth: 26 },
-  routineIconTextComplete: { color: AppColors.leaf },
-  routineTileText: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '900', lineHeight: 10, textAlign: 'center' },
-  routineTileTextIdle: { color: AppColors.inkMuted },
-  routineTileTextComplete: { color: AppColors.ink },
+  routineCard: { gap: 8 },
+  routineRowGrid: { flexDirection: 'row' },
+  routineTile: { alignItems: 'center', flex: 1, justifyContent: 'center', marginHorizontal: 3, minHeight: 58, position: 'relative' },
+  routineTileSpacer: { flex: 1, marginHorizontal: 3, minHeight: 58 },
+  routineIcon: { alignItems: 'center', height: 58, justifyContent: 'center', width: '100%' },
+  routineIconImage: { height: 48, width: 48 },
+  routineIconImageCompact: { height: 32, width: 32 },
   routineCheckBadge: { alignItems: 'center', backgroundColor: AppColors.leaf, borderRadius: AppRadii.pill, height: 14, justifyContent: 'center', position: 'absolute', right: 3, top: 3, width: 14 },
-  routineCheckText: { color: AppColors.card, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', lineHeight: 12 },
-  routineEditGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 8 },
-  routineEditTile: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: 10, borderWidth: 1, justifyContent: 'center', minHeight: 56, paddingHorizontal: 3, paddingVertical: 5, width: '15.25%' },
+  routineEditGrid: { marginTop: 8, rowGap: 8 },
+  routineEditRow: { flexDirection: 'row' },
+  routineEditTile: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: 10, borderWidth: 1, flex: 1, justifyContent: 'center', minHeight: 64, paddingHorizontal: 1, paddingVertical: 6 },
+  routineEditTileSpacer: { flex: 1, minHeight: 64 },
   routineEditTileSelected: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.leaf },
-  routineEditMark: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '900', maxWidth: 26 },
-  routineEditMarkSelected: { color: AppColors.leaf, fontSize: 12 },
-  routineEditLabel: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 7, fontWeight: '900', lineHeight: 9, marginTop: 4, textAlign: 'center' },
+  routineEditIcon: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, height: 36, justifyContent: 'center', marginBottom: 3, position: 'relative', width: 38 },
+  routineEditIconImage: { height: 28, width: 28 },
+  routineEditIconImageCompact: { height: 21, width: 21 },
+  routineEditCheckBadge: { alignItems: 'center', backgroundColor: AppColors.leaf, borderRadius: AppRadii.pill, height: 14, justifyContent: 'center', position: 'absolute', right: -2, top: -2, width: 14 },
+  routineEditLabel: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 7, fontWeight: '900', lineHeight: 9, textAlign: 'center' },
   routineEditLabelSelected: { color: AppColors.ink },
-  npcCard: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.card, borderWidth: 1, flexDirection: 'row', overflow: 'hidden', ...AppShadows.card },
+  npcCard: { flexDirection: 'row', overflow: 'hidden', paddingTop: 2 },
   npcDayCell: { alignItems: 'center', borderRightColor: AppColors.line, borderRightWidth: 1, flex: 1, minHeight: 88, minWidth: 0, paddingHorizontal: 2, paddingVertical: 8 },
   npcDayCellToday: { backgroundColor: AppColors.residentSoft },
   npcWeekday: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '900', marginBottom: 6 },
@@ -1641,8 +2197,8 @@ const todayStyles = StyleSheet.create({
   npcOptionAvatarImage: { height: 40, resizeMode: 'contain', width: 40 },
   npcOptionCheck: { alignItems: 'center', backgroundColor: AppColors.resident, borderColor: AppColors.card, borderRadius: AppRadii.pill, borderWidth: 1, height: 18, justifyContent: 'center', position: 'absolute', right: 3, top: 3, width: 18 },
   npcOptionCheckText: { color: AppColors.card, fontSize: 11, fontWeight: '900', lineHeight: 14 },
-  critterSection: { gap: 10 },
-  critterCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, padding: 12, ...AppShadows.card },
+  critterSection: {},
+  critterCard: { paddingTop: 2 },
   critterStatRail: { alignItems: 'center', flexDirection: 'row', gap: 10, marginBottom: 10 },
   critterMainStat: { alignItems: 'center', backgroundColor: AppColors.museumSoft, borderRadius: AppRadii.control, minWidth: 82, paddingHorizontal: 10, paddingVertical: 8 },
   critterStatLabel: { color: AppColors.museum, fontSize: 10, fontWeight: '900' },
@@ -1664,17 +2220,7 @@ const todayStyles = StyleSheet.create({
   critterStateUndonated: { color: AppColors.museum },
   critterStatus: { flexDirection: 'row', gap: 6, justifyContent: 'center', marginTop: 7 },
   critterStatusButton: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: AppControlSizes.compactStatus, justifyContent: 'center', width: AppControlSizes.compactStatus },
-  calendarPreview: { gap: 10 },
-  calendarStrip: { backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.card, borderWidth: 1, flexDirection: 'row', overflow: 'hidden' },
-  calendarPreviewDay: { alignItems: 'center', flex: 1, minHeight: 58, paddingVertical: 8 },
-  calendarPreviewDayToday: { backgroundColor: AppColors.residentSoft },
-  calendarPreviewWeekday: { color: AppColors.inkMuted, fontSize: 9, fontWeight: '900' },
-  calendarPreviewWeekdayToday: { color: AppColors.resident },
-  calendarPreviewDate: { color: AppColors.ink, fontSize: 15, fontWeight: '900', marginTop: 3 },
-  calendarPreviewDateToday: { color: AppColors.resident },
-  calendarDot: { backgroundColor: AppColors.line, borderRadius: AppRadii.pill, height: 6, marginTop: 5, width: 6 },
-  calendarBirthdayDot: { backgroundColor: AppColors.resident },
-  calendarEventDot: { backgroundColor: AppColors.museum },
+  statusIconOnly: { backgroundColor: 'transparent', borderColor: 'transparent', borderWidth: 0 },
   noData: { color: AppColors.inkMuted, padding: 18, textAlign: 'center' },
 });
 

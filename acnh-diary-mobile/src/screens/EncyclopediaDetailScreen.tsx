@@ -266,7 +266,7 @@ export function EncyclopediaDetailScreen({
                   accessibilityRole="button"
                   key={status}
                   onPress={() => updateStatus(status)}
-                  style={[styles.heroStatusButton, active && styles.heroStatusButtonActive]}>
+                  style={styles.heroStatusButton}>
                   <CollectionStatusIcon active={active} status={status} />
                 </Pressable>
               );
@@ -629,8 +629,7 @@ const styles = StyleSheet.create({
   newMonthBadge: { backgroundColor: '#FFF0D8' },
   leavingMonthBadge: { backgroundColor: '#FBE3E0' },
   heroStatusIcons: { flexDirection: 'row', gap: 5, marginBottom: 2, marginTop: 10 },
-  heroStatusButton: { alignItems: 'center', backgroundColor: '#F0F2EF', borderColor: AppColors.primaryBorder, borderRadius: 10, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
-  heroStatusButtonActive: { backgroundColor: AppColors.primarySoft, borderColor: AppColors.primaryAction },
+  heroStatusButton: { alignItems: 'center', height: 30, justifyContent: 'center', width: 30 },
   creatureHeroPrices: { alignItems: 'center', marginTop: 10, maxWidth: '100%' },
   creatureHeroPrice: { color: AppColors.primaryText, fontSize: 12, fontWeight: '900', textAlign: 'center' },
   creatureHeroPriceLabel: { color: '#819087', fontSize: 11, fontWeight: '700' },

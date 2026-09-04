@@ -4,12 +4,18 @@ export type DefaultRoutineOption = {
   goalLabel?: string;
 };
 
+// Remove retired or placeholder routines when an existing store is opened.
+export const LEGACY_ROUTINE_TITLES = new Set(['토마토 심기', '집 정리', '나무 흔들기', '과일 수확', '채소 수확']);
+
+export const ROUTINE_TITLE_MIGRATIONS: Record<string, string> = {
+  '레시피 보틀': '메시지 보틀',
+};
+
 export const DEFAULT_ROUTINE_OPTIONS: DefaultRoutineOption[] = [
-  { title: '레시피 보틀', goalCount: 1, goalLabel: '1회' },
+  { title: '메시지 보틀', goalCount: 1, goalLabel: '1회' },
   { title: '돈나무', goalCount: 1, goalLabel: '1회' },
   { title: '바위치기', goalCount: 6, goalLabel: '6개' },
   { title: '화석 캐기', goalCount: 4, goalLabel: '4개' },
-  { title: '나무 흔들기', goalCount: 1, goalLabel: '가구 2개·동전' },
   { title: '나무 흔들기 · 가구', goalCount: 2, goalLabel: '2개' },
   { title: '나무 흔들기 · 벌', goalCount: 5, goalLabel: '5마리' },
   { title: '나무 흔들기 · 동전', goalCount: 15, goalLabel: '15개' },
@@ -21,7 +27,5 @@ export const DEFAULT_ROUTINE_OPTIONS: DefaultRoutineOption[] = [
   { title: '갑돌보', goalCount: 1, goalLabel: '1회' },
   { title: '마추릴라 · 우정 확인', goalCount: 1, goalLabel: '1회' },
   { title: '마추릴라 · 오늘의 운세', goalCount: 1, goalLabel: '1회' },
-  { title: '과일 수확', goalCount: 1, goalLabel: '사용자 설정' },
-  { title: '채소 수확', goalCount: 1, goalLabel: '사용자 설정' },
   { title: '선물주기', goalCount: 10, goalLabel: '1~10명' },
 ];

@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import { AppStatusColors } from '@/constants/theme';
 import type { EncyclopediaStatus } from '@/types/encyclopedia';
+
+const MUSEUM_ICON = require('../data/assets/icons/museum-map-icon-small.png');
 
 function getStatusTone(status: EncyclopediaStatus) {
   if (status === 'donated') return AppStatusColors.museum;
@@ -32,14 +34,13 @@ export function CollectionStatusIcon({
 
   if (status === 'donated') {
     return (
-      <View style={styles.museumIcon}>
-        <View style={[styles.museumRoof, { backgroundColor: color }]} />
-        <View style={[styles.museumBody, { borderColor: color }]}>
-          <View style={[styles.museumColumn, { backgroundColor: color }]} />
-          <View style={[styles.museumColumn, { backgroundColor: color }]} />
-          <View style={[styles.museumColumn, { backgroundColor: color }]} />
-        </View>
-      </View>
+      <Image
+        source={MUSEUM_ICON}
+        style={[
+          styles.museumIcon,
+          !active && styles.museumIconMuted,
+        ]}
+      />
     );
   }
 
@@ -53,34 +54,21 @@ export function CollectionStatusIcon({
 const styles = StyleSheet.create({
   caughtIcon: {
     alignItems: 'center',
-    borderRadius: 8,
-    borderWidth: 1.8,
-    height: 15,
+    borderRadius: 15,
+    borderWidth: 2.4,
+    height: 30,
     justifyContent: 'center',
-    width: 15,
+    width: 30,
   },
   checkMark: {
-    borderBottomWidth: 1.8,
-    borderLeftWidth: 1.8,
-    height: 5,
+    borderBottomWidth: 2.4,
+    borderLeftWidth: 2.4,
+    height: 10,
     transform: [{ rotate: '-45deg' }],
-    width: 8,
+    width: 16,
   },
-  museumIcon: { height: 16, justifyContent: 'flex-end', width: 17 },
-  museumRoof: { alignSelf: 'center', height: 4, transform: [{ rotate: '45deg' }], width: 12 },
-  museumBody: {
-    alignItems: 'center',
-    borderBottomWidth: 1.8,
-    borderLeftWidth: 1.8,
-    borderRightWidth: 1.8,
-    flexDirection: 'row',
-    gap: 2,
-    height: 8,
-    justifyContent: 'center',
-    marginTop: -2,
-    paddingHorizontal: 2,
-  },
-  museumColumn: { height: 5, width: 2 },
+  museumIcon: { height: 30, resizeMode: 'contain', width: 30 },
+  museumIconMuted: { opacity: 0.35 },
   ownedIcon: { borderWidth: 1.8, height: 11, transform: [{ rotate: '45deg' }], width: 11 },
   artIcon: { fontSize: 11, fontWeight: '900' },
 });

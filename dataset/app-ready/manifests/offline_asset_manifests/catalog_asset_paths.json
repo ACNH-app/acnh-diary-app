@@ -50460,7 +50460,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/6/67/Cherry_NH_Icon.png",
       "cache_file": "35036308430c6743db709aef29f44752593b1651e69c685e07b0e5e77bcb6c2d.png",
-      "local_path": "assets/catalog/items/items/05e5e6de22d3eadd.png"
+      "local_path": "assets/plants/items/05e5e6de22d3eadd.png"
     },
     {
       "asset_section": "catalog",
@@ -50515,7 +50515,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/d/de/Apple_Tree_NH_Icon.png",
       "cache_file": "16f915ee0629257c79e9d2c7a5b3072d0f27a0ef32d06adba95cbea07c26a200.png",
-      "local_path": "assets/catalog/items/items/08e898a1e9fb878f.png"
+      "local_path": "assets/plants/items/08e898a1e9fb878f.png"
     },
     {
       "asset_section": "catalog",
@@ -50735,7 +50735,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/5/57/Sapling_NH_Icon.png",
       "cache_file": "0586ac8740711a344ba85bfc548d86603c229a6f79c5ed1080baa5de594552f2.png",
-      "local_path": "assets/catalog/items/items/1468f2e27b4bd24a.png"
+      "local_path": "assets/plants/items/1468f2e27b4bd24a.png"
     },
     {
       "asset_section": "catalog",
@@ -50746,7 +50746,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/b/b7/Ripe_Orange-Pumpkin_Plant_NH_Icon.png",
       "cache_file": "0a6dcffa88e1e21a5ca3325779b99aea28dedd954d313d17e5349edfffa9136d.png",
-      "local_path": "assets/catalog/items/items/146b396ea4b2ddc0.png"
+      "local_path": "assets/plants/items/146b396ea4b2ddc0.png"
     },
     {
       "asset_section": "catalog",
@@ -50812,7 +50812,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/a/ab/Ripe_White-Pumpkin_Plant_NH_Icon.png",
       "cache_file": "2d7c7633d138253819d57d775bf9a15e5a5a1de5cd25485a46284cd2c5254cd2.png",
-      "local_path": "assets/catalog/items/items/187ccac5f558ca15.png"
+      "local_path": "assets/plants/items/187ccac5f558ca15.png"
     },
     {
       "asset_section": "catalog",
@@ -50867,7 +50867,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/7/7c/Orange_NH_Icon.png",
       "cache_file": "966704ca3df15a5837fb78671bcbe7bfd9d09496836929a387704efae6796f4d.png",
-      "local_path": "assets/catalog/items/items/198e8250ac13ca33.png"
+      "local_path": "assets/plants/items/198e8250ac13ca33.png"
     },
     {
       "asset_section": "catalog",
@@ -50933,7 +50933,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/6/63/Coconut_Tree_NH_Icon.png",
       "cache_file": "66ba380e51f1df4a39a3c92c090d720265dc18c594ece4295f574634cfa11e66.png",
-      "local_path": "assets/catalog/items/items/1c18c378d50d1c65.png"
+      "local_path": "assets/plants/items/1c18c378d50d1c65.png"
     },
     {
       "asset_section": "catalog",
@@ -50944,7 +50944,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/6/6d/Cherry_Tree_NH_Icon.png",
       "cache_file": "eb1d3d1d35d3f4cac5e59f52de1ea0ae22ebae5a9ce0a8e8556db1596140c96e.png",
-      "local_path": "assets/catalog/items/items/1c238723333d86ba.png"
+      "local_path": "assets/plants/items/1c238723333d86ba.png"
     },
     {
       "asset_section": "catalog",
@@ -51076,7 +51076,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/9/94/Ripe_Sugarcane_Plant_NH_Icon.png",
       "cache_file": "206aaed18d0306114bedf36ea5d686afc70afd6ca37e4aa7868cd45c152a2e99.png",
-      "local_path": "assets/catalog/items/items/230c9edacb9991a7.png"
+      "local_path": "assets/plants/items/230c9edacb9991a7.png"
     },
     {
       "asset_section": "catalog",
@@ -51131,7 +51131,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/9/94/Ripe_Tomato_Plant_NH_Icon.png",
       "cache_file": "01adc2f408c334bbcb5398ed9cddea9781f71695f37f18a01b562cb46df22267.png",
-      "local_path": "assets/catalog/items/items/2737f187d53a311b.png"
+      "local_path": "assets/plants/items/2737f187d53a311b.png"
     },
     {
       "asset_section": "catalog",
@@ -51241,7 +51241,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/3/39/Potato_NH_Icon.png",
       "cache_file": "60d4f587d745cbfb85190a952b66a819e5a62fd746e4eba107f572bfd5db0751.png",
-      "local_path": "assets/catalog/items/items/2e264c12e469de3d.png"
+      "local_path": "assets/plants/items/2e264c12e469de3d.png"
     },
     {
       "asset_section": "catalog",
@@ -51274,7 +51274,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/6/6b/Tomato_NH_Icon.png",
       "cache_file": "cef55a61d135dcf196c4ffc0dc1389e4e4e4e66e4c14a3ef4e44c43019ee1017.png",
-      "local_path": "assets/catalog/items/items/2fa90a0ee1d69661.png"
+      "local_path": "assets/plants/items/2fa90a0ee1d69661.png"
     },
     {
       "asset_section": "catalog",
@@ -51417,7 +51417,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/3/33/Coconut_NH_Icon.png",
       "cache_file": "2c27f054856f4dccadf5c36671a950736cb7e93e061f0df5302108a0fec05cb3.png",
-      "local_path": "assets/catalog/items/items/35bb52e97ff043ba.png"
+      "local_path": "assets/plants/items/35bb52e97ff043ba.png"
     },
     {
       "asset_section": "catalog",
@@ -51439,7 +51439,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/3/31/Wheat_NH_Icon.png",
       "cache_file": "f9df96dd08db9d34a1fb826defd73b743b9f8d6ee83ed47d53f9514b61158e7f.png",
-      "local_path": "assets/catalog/items/items/35fc3bbfbb6497be.png"
+      "local_path": "assets/plants/items/35fc3bbfbb6497be.png"
     },
     {
       "asset_section": "catalog",
@@ -51450,7 +51450,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/1/1a/White_Pumpkin_NH_Icon.png",
       "cache_file": "45f05f68ad4abd367b027253d9e8533b748343932652242fd79412f9dcd07bc5.png",
-      "local_path": "assets/catalog/items/items/362276af878e88b2.png"
+      "local_path": "assets/plants/items/362276af878e88b2.png"
     },
     {
       "asset_section": "catalog",
@@ -51571,7 +51571,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/d/d7/Apple_NH_Icon.png",
       "cache_file": "030bfe5df77b33dbcfad37783977482888ff5a7dbcd1006ef3d4b3689e7eb7d6.png",
-      "local_path": "assets/catalog/items/items/38012b9fd3719ae3.png"
+      "local_path": "assets/plants/items/38012b9fd3719ae3.png"
     },
     {
       "asset_section": "catalog",
@@ -51791,7 +51791,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/a/ae/Hardwood_Tree_NH_Icon.png",
       "cache_file": "f4be870ab0b2c2f3eb59f86c0f267b49b48ebd4d96e67f8de47083f5a1c30a09.png",
-      "local_path": "assets/catalog/items/items/4292b29d57e3d920.png"
+      "local_path": "assets/plants/items/4292b29d57e3d920.png"
     },
     {
       "asset_section": "catalog",
@@ -51835,7 +51835,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/6/6b/Ripe_Yellow-Pumpkin_Plant_NH_Icon.png",
       "cache_file": "32d2b63c5e921480c6be8ad6272f53497c1df007671d3fa9ba3993969f2ee944.png",
-      "local_path": "assets/catalog/items/items/44c7ec0dfebe3bcd.png"
+      "local_path": "assets/plants/items/44c7ec0dfebe3bcd.png"
     },
     {
       "asset_section": "catalog",
@@ -52000,7 +52000,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/5/5c/Money_Tree_NH_Icon.png",
       "cache_file": "84146088432c0f78e14fad6f9927520cd7bd82ff5fef4ffc370d629ac9456a3d.png",
-      "local_path": "assets/catalog/items/items/4fd646a4edb4301d.png"
+      "local_path": "assets/plants/items/4fd646a4edb4301d.png"
     },
     {
       "asset_section": "catalog",
@@ -52055,7 +52055,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/0/05/Ripe_Wheat_Plant_NH_Icon.png",
       "cache_file": "631868b0bff9d845182eda2d3b13a69707a2fbcbef5cb7cb84297e37e34db099.png",
-      "local_path": "assets/catalog/items/items/55880717fa823004.png"
+      "local_path": "assets/plants/items/55880717fa823004.png"
     },
     {
       "asset_section": "catalog",
@@ -52066,7 +52066,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/4/40/Pear_NH_Icon.png",
       "cache_file": "4c3cfbadd209951ac52b4e5382446b0571b01aff846e1f9fef43e16abacf1d2c.png",
-      "local_path": "assets/catalog/items/items/562f6679802ed7ba.png"
+      "local_path": "assets/plants/items/562f6679802ed7ba.png"
     },
     {
       "asset_section": "catalog",
@@ -52176,7 +52176,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/8/85/Carrot_NH_Icon.png",
       "cache_file": "ab27d7a72e0fed7079cd0bae195532cae00ac4a445c7e0e7cfeb73b5301a7290.png",
-      "local_path": "assets/catalog/items/items/5b5c8d01020ea42b.png"
+      "local_path": "assets/plants/items/5b5c8d01020ea42b.png"
     },
     {
       "asset_section": "catalog",
@@ -52187,7 +52187,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/7/74/Sugarcane_NH_Icon.png",
       "cache_file": "39ae7a2181f4bfe7987d2279e3f1f002717772701fae80e6a4c36c85d51869f0.png",
-      "local_path": "assets/catalog/items/items/5c26c9db49859277.png"
+      "local_path": "assets/plants/items/5c26c9db49859277.png"
     },
     {
       "asset_section": "catalog",
@@ -52198,7 +52198,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/3/33/Ripe_Carrot_Plant_NH_Icon.png",
       "cache_file": "f171f513ebb6cf7b987dcd9abe855b8d3f481b7a63a00b9a93b2d4a1af805eac.png",
-      "local_path": "assets/catalog/items/items/5d996609849b8f0a.png"
+      "local_path": "assets/plants/items/5d996609849b8f0a.png"
     },
     {
       "asset_section": "catalog",
@@ -52330,7 +52330,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/8/8a/Cedar_Tree_NH_Icon.png",
       "cache_file": "16db1dce69e339fdcdfc5a367afeb1962b9fad80e2d522f7c978023b3fd72b62.png",
-      "local_path": "assets/catalog/items/items/60e0c02b6554b173.png"
+      "local_path": "assets/plants/items/60e0c02b6554b173.png"
     },
     {
       "asset_section": "catalog",
@@ -52396,7 +52396,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/7/7d/Cedar_Sapling_NH_Icon.png",
       "cache_file": "ce1a85e63b34e3f542ffeeadaf0accf33d12c90fa13334497aed9b4c0373ea0a.png",
-      "local_path": "assets/catalog/items/items/63d504e5685d96ae.png"
+      "local_path": "assets/plants/items/63d504e5685d96ae.png"
     },
     {
       "asset_section": "catalog",
@@ -52946,7 +52946,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/c/ce/Peach_Tree_NH_Icon.png",
       "cache_file": "761345065d7acda9f8195a18075a3598a1eb6fc5e678f1bab49677e4c9edf776.png",
-      "local_path": "assets/catalog/items/items/83bd6eed6513afbe.png"
+      "local_path": "assets/plants/items/83bd6eed6513afbe.png"
     },
     {
       "asset_section": "catalog",
@@ -53155,7 +53155,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/2/21/Yellow_Pumpkin_NH_Icon.png",
       "cache_file": "d370474529863d8f13ddfeb66b6c9c0ac821ec9dcdf5112c49830411b10884cc.png",
-      "local_path": "assets/catalog/items/items/95710240cd95d5a3.png"
+      "local_path": "assets/plants/items/95710240cd95d5a3.png"
     },
     {
       "asset_section": "catalog",
@@ -53298,7 +53298,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/8/89/Bamboo_Tree_NH_Icon.png",
       "cache_file": "caaf9606d6452b1aef66f229e73d388636f2d01901b80a805b0e05f26d8017b6.png",
-      "local_path": "assets/catalog/items/items/9feca67c03ecee8d.png"
+      "local_path": "assets/plants/items/9feca67c03ecee8d.png"
     },
     {
       "asset_section": "catalog",
@@ -53408,7 +53408,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/6/62/Pear_Tree_NH_Icon.png",
       "cache_file": "681771483418b7b49505d9b5e421a03cadb0dc6cceb91eaecf82aaaedc217d05.png",
-      "local_path": "assets/catalog/items/items/a4d70e1c29255510.png"
+      "local_path": "assets/plants/items/a4d70e1c29255510.png"
     },
     {
       "asset_section": "catalog",
@@ -53430,7 +53430,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/1/18/Bamboo_Shoot_NH_Icon.png",
       "cache_file": "95989ba1e2b08cd44b3d5d47fe7e026f777ed84b9859678b8540df83bc51667c.png",
-      "local_path": "assets/catalog/items/items/a56fbe2df87c7390.png"
+      "local_path": "assets/plants/items/a56fbe2df87c7390.png"
     },
     {
       "asset_section": "catalog",
@@ -53496,7 +53496,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/0/02/Orange_Tree_NH_Icon.png",
       "cache_file": "a45d3fa08d63302d9ef358988ec222d6ca6e0ed48e1317dff283f39c0f6df52e.png",
-      "local_path": "assets/catalog/items/items/a793d51d5feb673e.png"
+      "local_path": "assets/plants/items/a793d51d5feb673e.png"
     },
     {
       "asset_section": "catalog",
@@ -54002,7 +54002,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/d/df/Ripe_Green-Pumpkin_Plant_NH_Icon.png",
       "cache_file": "fa9ea8fd56741697d50e742178e89e8b321d85af4d42d61d13101573788111c2.png",
-      "local_path": "assets/catalog/items/items/c0a19a5e372e7484.png"
+      "local_path": "assets/plants/items/c0a19a5e372e7484.png"
     },
     {
       "asset_section": "catalog",
@@ -54255,7 +54255,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/1/19/Peach_NH_Icon.png",
       "cache_file": "d51d0db79e7534cdd942097015ab8ed051b1a17a401765f3e53a9b9ded0696c4.png",
-      "local_path": "assets/catalog/items/items/cb2fbb9ac375f44a.png"
+      "local_path": "assets/plants/items/cb2fbb9ac375f44a.png"
     },
     {
       "asset_section": "catalog",
@@ -54695,7 +54695,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/c/ce/Orange_Pumpkin_NH_Icon.png",
       "cache_file": "fada6bfe58fdfeae9c781d599eda6f7cd2800dcc2e6a685669755e275f38ac41.png",
-      "local_path": "assets/catalog/items/items/df40941ed3761621.png"
+      "local_path": "assets/plants/items/df40941ed3761621.png"
     },
     {
       "asset_section": "catalog",
@@ -54772,7 +54772,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/0/08/Ripe_Potato_Plant_NH_Icon.png",
       "cache_file": "6d2cfc03a0a463b0aea545e44f5c2e7460098fb793e426d025e88062cc2fc8f8.png",
-      "local_path": "assets/catalog/items/items/e1ad388ecf84b5c8.png"
+      "local_path": "assets/plants/items/e1ad388ecf84b5c8.png"
     },
     {
       "asset_section": "catalog",
@@ -55146,7 +55146,7 @@
       "source_manifest": "catalog_remote_images.csv",
       "source_url": "https://dodo.ac/np/images/9/9f/Green_Pumpkin_NH_Icon.png",
       "cache_file": "c1d1e10c4f857e5e2c89c077e5225148966c3ff23f9e07d0cad01337b1f640eb.png",
-      "local_path": "assets/catalog/items/items/fac19ac661ee55d7.png"
+      "local_path": "assets/plants/items/fac19ac661ee55d7.png"
     },
     {
       "asset_section": "catalog",

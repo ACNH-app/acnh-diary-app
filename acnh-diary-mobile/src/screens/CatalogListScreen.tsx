@@ -193,7 +193,15 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
   const items = getCatalogItems(activeCategory);
   const subcategoryItems = activeSubcategory === 'all'
     ? items
-    : items.filter((item) => subcategories.find((subcategory) => subcategory.key === activeSubcategory)?.values.includes(item.classification));
+    : items.filter((item) => {
+      const subcategory = subcategories.find((candidate) => candidate.key === activeSubcategory);
+      if (!subcategory) return false;
+      if (subcategory.filterKeys?.length) {
+        const recipeFilters = item.details.recipeFilters;
+        return Array.isArray(recipeFilters) && subcategory.filterKeys.some((filter) => recipeFilters.includes(filter));
+      }
+      return subcategory.values.includes(item.classification);
+    });
   const filterOptions = getCatalogFilterOptions(subcategoryItems);
   const normalizedSearch = search.trim().toLocaleLowerCase('ko-KR');
   const visibleItems = useMemo(() => {

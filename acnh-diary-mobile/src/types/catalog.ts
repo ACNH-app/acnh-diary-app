@@ -66,6 +66,7 @@ export type CatalogCategoryDefinition = {
 };
 
 export type CatalogSubcategoryDefinition = {
+  filterKeys?: string[];
   key: string;
   label: string;
   itemCount: number;

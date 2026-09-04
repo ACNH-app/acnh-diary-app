@@ -1,8 +1,8 @@
 # 모동숲 다이어리 모바일 앱 상세 설계서
 
-문서 상태: Draft v3.2
-최종 수정일: 2026-08-30
-기준 문서: 모바일 SRS v2.4 · 모바일 SAD v2.3
+문서 상태: Draft v3.3
+최종 수정일: 2026-09-04
+기준 문서: 모바일 SRS v2.5 · 모바일 SAD v2.4
 
 ## 1. 구현 기준
 
@@ -403,7 +403,7 @@ function validateRoutineProgress(
 - 체크형 루틴은 `currentCount === 1`, 횟수형 루틴은 `currentCount === targetCount`일 때 완료다.
 - 완료 상태의 `isImageGrayscale`는 `false`, 미완료 상태는 `true`다. 색상 외에 체크 아이콘과 접근성 레이블도 함께 바꾼다.
 - 입력이 범위를 벗어나면 저장하지 않고 `VALIDATION_ERROR`를 반환한다.
-- 첫 구현의 기본 루틴은 체크형으로 둘지 횟수형으로 둘지 제품 결정이 필요하다. 현재 화면 placeholder에는 `토마토 심기`, `집 정리`가 있으나 이는 최종 기본 루틴 목록으로 확정된 값이 아니다.
+- 기본 루틴은 `src/data/routines.ts`의 `DEFAULT_ROUTINE_OPTIONS`에서 관리하며, 현재 구현에서는 체크·횟수형 루틴을 함께 제공한다. 이전 화면 placeholder였던 `토마토 심기`와 `집 정리`, 집계형 루틴인 `나무 흔들기`는 기본 목록에서 제외하고, 기존 저장소를 열 때도 제거한다. 나무 흔들기 작업은 가구·벌·동전 세부 루틴으로 기록한다.
 
 ## 3. 기준 데이터 타입
 
@@ -517,7 +517,7 @@ interface Artwork {
 `src/data/catalog.ts`는 번들 JSON을 카테고리별로 그룹화하고 화면이 사용할 조회 계약을 제공한다.
 
 - `getCatalogItems(category)`는 기본 아이템 목록을 반환한다.
-- `getCatalogSubcategories(category)`는 `classification` 값에서 `전체`와 중복 없는 소분류 목록·항목 수를 반환한다.
+- `getCatalogSubcategories(category)`는 일반 대분류와 레시피의 `classification`, 시즌·이벤트 레시피의 `details.recipeFilters`에서 `전체`와 고정 순서의 소분류 목록·항목 수를 반환한다.
 - `getCatalogFilterOptions(items)`는 현재 목록에서 값이 있는 스타일·테마·색상·시즌·시리즈·분류 태그·크기·기능·리폼 가능 여부·행운 아이템 여부·주문 가능 여부·입수처 옵션과 항목 수를 반환한다.
 - `matchesCatalogFilter(item, facet, selectedValues)`는 같은 필터 그룹의 OR 조건을 평가한다.
 - `getCatalogItem(category, itemId)`는 고정 ID로 단일 항목을 반환한다.
@@ -900,7 +900,7 @@ UPSERT 실패 시 기존 로그를 유지하고 `STORAGE_WRITE_FAILED`를 반환
 ### UC-MOB-010 · 카탈로그 목록·상세 조회
 
 1. `getCatalogItems(category)`로 선택한 분류의 기본 아이템을 읽는다.
-2. `classification` 값에서 `전체`와 소분류 탭을 만들고, 선택한 소분류로 기본 아이템을 제한한다.
+2. 일반 대분류와 레시피는 `classification`, 시즌·이벤트 레시피는 `details.recipeFilters`의 시즌·이벤트 키에서 `전체`와 소분류 탭을 만들고, 선택한 소분류로 기본 아이템을 제한한다.
 3. 한국어·영어 이름, 분류, 획득 방법, 번호에 검색어를 적용한다.
 4. 보유·미보유 필터와 번호·이름·획득 방법 정렬을 적용한다.
 5. `getCollectionStatesForIsland(islandId)` 결과를 `catalogType/itemId`에 결합하고, 가구 변형은 `getCollectionQuantitiesForIsland` 결과도 결합한다.
@@ -1492,3 +1492,4 @@ Phase 1부터 `package.json`에 `test`와 `typecheck` script를 추가한다. �
 - v3.0 · 2026-08-30 · 도감·카탈로그 홈을 `CollectionHomeShell`·공통 요약 카드·공통 대분류 카드로 통합하고 배경·탭 바 색상을 정리
 - v3.1 · 2026-08-30 · AppBottomNav 공통 구현, 탭 숨김·복원 처리와 기록형·수집형 파스텔 팔레트 반영
 - v3.2 · 2026-08-30 · 탭 그룹별 활성색을 제거하고 전 탭 공통 파우더 블루 팔레트로 통일
+- v3.3 · 2026-09-04 · 일반 레시피의 `classification` 탭과 시즌·이벤트 레시피의 `recipeFilters` 탭 분리 및 공통 언더라인탭 구현 반영

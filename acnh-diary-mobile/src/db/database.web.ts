@@ -1,5 +1,9 @@
 import type { CatalogCategory } from '@/types/catalog';
-import { DEFAULT_ROUTINE_OPTIONS } from '@/data/routines';
+import {
+  DEFAULT_ROUTINE_OPTIONS,
+  LEGACY_ROUTINE_TITLES,
+  ROUTINE_TITLE_MIGRATIONS,
+} from '@/data/routines';
 import type {
   EncyclopediaCategory,
   EncyclopediaState,
@@ -100,7 +104,17 @@ function getActiveIslandId() {
 }
 
 function seedDefaultRoutinesForIsland(islandId: string) {
-  if (seededRoutineIslandIds.has(islandId) || getRoutinesForIsland(islandId).length > 0) return;
+  const existingRoutines = getRoutinesForIsland(islandId);
+  const migratedRoutines = existingRoutines.map((routine) => {
+    const migratedTitle = ROUTINE_TITLE_MIGRATIONS[routine.title];
+    return migratedTitle ? { ...routine, title: migratedTitle } : routine;
+  });
+  const activeRoutines = migratedRoutines.filter((routine) => !LEGACY_ROUTINE_TITLES.has(routine.title));
+  const hasTitleMigration = migratedRoutines.some((routine, index) => routine.title !== existingRoutines[index]?.title);
+  if (hasTitleMigration || activeRoutines.length !== migratedRoutines.length) {
+    routines.set(islandId, activeRoutines);
+  }
+  if (seededRoutineIslandIds.has(islandId) || activeRoutines.length > 0) return;
   routines.set(
     islandId,
     DEFAULT_ROUTINE_OPTIONS.map((routine, index) => ({
@@ -117,6 +131,7 @@ function seedDefaultRoutinesForIsland(islandId: string) {
 
 export function initializeDatabase() {
   seedInitialIslandIfNeeded();
+  for (const island of islands) seedDefaultRoutinesForIsland(island.id);
   const activeIsland = getActiveIsland();
   if (activeIsland) seedDefaultRoutinesForIsland(activeIsland.id);
 }

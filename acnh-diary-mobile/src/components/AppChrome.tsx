@@ -3,7 +3,7 @@ import { Animated, Modal, NativeScrollEvent, NativeSyntheticEvent, Pressable, St
 import { useNavigation, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { AppTopBar } from '@/components/AppTopBar';
+import { AppTopBar, type AppIslandPicker } from '@/components/AppTopBar';
 import { AppColors, AppTabBarStyle } from '@/constants/theme';
 import { getActiveIsland } from '@/db/database';
 import type { Island } from '@/types/island';
@@ -55,6 +55,7 @@ type AppChromeProps = {
   title: string;
   breadcrumbs?: string[];
   contextLabel?: string;
+  islandPicker?: AppIslandPicker;
   showBack?: boolean;
   showMenu?: boolean;
   onBack?: () => void;
@@ -64,6 +65,7 @@ export function AppChrome({
   title,
   breadcrumbs,
   contextLabel,
+  islandPicker,
   showBack,
   showMenu = true,
   onBack,
@@ -112,6 +114,7 @@ export function AppChrome({
         breadcrumbs={breadcrumbs}
         contextLabel={contextLabel}
         eyebrow={getTopBarEyebrow(title)}
+        islandPicker={islandPicker}
         onBack={onBack ?? (() => router.back())}
         onMenuPress={openDrawer}
         showBack={showBack}

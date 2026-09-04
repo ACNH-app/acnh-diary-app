@@ -12,7 +12,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
-import { AppColors, AppControlSizes, AppRadii, AppShadows, AppStatusColors } from '@/constants/theme';
+import { AppColors, AppControlSizes, AppRadii, AppShadows } from '@/constants/theme';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import {
@@ -709,14 +709,6 @@ function EncyclopediaCard({
   const locationColors = getLocationChipColors(item.location);
   const renderStatusButton = (status: EncyclopediaStatus, placementStyle?: object) => {
     const active = status === 'owned' ? state.owned : state[status];
-    const tone =
-      status === 'donated'
-        ? AppStatusColors.museum
-        : status === 'owned' || status === 'genuineOwned'
-          ? AppStatusColors.catalog
-          : status === 'fakeOwned'
-            ? AppStatusColors.danger
-            : AppStatusColors.leaf;
     return (
       <Pressable
         accessibilityLabel={`${item.nameKo} ${statusLabel(status)} ${active ? '해제' : '설정'}`}
@@ -727,8 +719,6 @@ function EncyclopediaCard({
           styles.statusButton,
           placementStyle,
           creature && styles.statusButtonOverlay,
-          { borderColor: active ? tone.border : AppColors.line },
-          active && { backgroundColor: tone.background },
         ]}>
         <CollectionStatusIcon active={active} status={status} />
       </Pressable>
@@ -860,9 +850,8 @@ const styles = StyleSheet.create({
   locationTagChip: { backgroundColor: '#F4E8FF', borderColor: '#BE9AE8', borderRadius: 999, borderWidth: 1, maxWidth: '100%', paddingHorizontal: 6, paddingVertical: 2 },
   locationTagChipText: { color: '#684397', fontSize: 9, fontWeight: '900' },
   cardStatusRow: { alignItems: 'center', flexDirection: 'row', gap: 4, justifyContent: 'center', marginTop: 7 },
-  statusButton: { alignItems: 'center', backgroundColor: AppColors.card, borderRadius: AppRadii.pill, borderWidth: 1, height: AppControlSizes.compactStatus, justifyContent: 'center', width: AppControlSizes.compactStatus },
-  statusButtonOverlay: { backgroundColor: 'rgba(255, 255, 255, 0.92)', borderColor: 'rgba(69, 83, 68, 0.12)', borderWidth: 1 },
-  statusButtonActive: { backgroundColor: AppColors.primarySurface },
+  statusButton: { alignItems: 'center', backgroundColor: 'transparent', borderColor: 'transparent', borderWidth: 0, height: AppControlSizes.compactStatus, justifyContent: 'center', width: AppControlSizes.compactStatus },
+  statusButtonOverlay: { backgroundColor: 'transparent', borderColor: 'transparent', borderWidth: 0 },
   statusOverlayLeft: { left: 4, position: 'absolute', top: 4 },
   statusOverlayRight: { position: 'absolute', right: 4, top: 4 },
   emptyState: { alignItems: 'center', paddingHorizontal: 20, paddingTop: 80 },
