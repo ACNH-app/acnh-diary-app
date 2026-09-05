@@ -1,4 +1,6 @@
 import type { BottomTabBarProps } from 'expo-router/build/react-navigation/bottom-tabs';
+import { useRouter, type Href } from 'expo-router';
+import { useRef } from 'react';
 import { Image, Pressable, StyleSheet, Text, View, type ImageSourcePropType } from 'react-native';
 
 import { AppColors, AppControlSizes, AppRadii, AppTabBarStyle } from '@/constants/theme';
@@ -12,6 +14,15 @@ const NAV_ICON_ASSETS: Record<string, ImageSourcePropType> = {
   villagers: require('../data/assets/icons/villagers.png'),
 };
 
+const NAV_HOME_PATHS: Record<string, Href> = {
+  catalog: '/catalog',
+  encyclopedia: '/encyclopedia',
+  guides: '/guides',
+  today: '/today',
+  villagers: '/villagers',
+};
+const DOUBLE_PRESS_WINDOW_MS = 350;
+
 function getRouteLabel(routeName: string, options: BottomTabBarProps['descriptors'][string]['options']) {
   return typeof options.tabBarLabel === 'string' ? options.tabBarLabel : options.title ?? routeName;
 }
@@ -21,6 +32,8 @@ function getRouteIcon(routeName: string) {
 }
 
 export function AppBottomNav({ state, descriptors, navigation, insets }: BottomTabBarProps) {
+  const router = useRouter();
+  const lastPress = useRef<{ routeKey: string; timestamp: number } | null>(null);
   const focusedRoute = state.routes[state.index];
   const focusedOptions = focusedRoute ? descriptors[focusedRoute.key]?.options : undefined;
   const flattenedTabBarStyle = StyleSheet.flatten(focusedOptions?.tabBarStyle) as { display?: string } | undefined;
@@ -37,11 +50,21 @@ export function AppBottomNav({ state, descriptors, navigation, insets }: BottomT
         const label = getRouteLabel(route.name, options);
 
         const onPress = () => {
+          const now = Date.now();
+          const isDoublePress = lastPress.current?.routeKey === route.key && now - lastPress.current.timestamp <= DOUBLE_PRESS_WINDOW_MS;
+          lastPress.current = isDoublePress ? null : { routeKey: route.key, timestamp: now };
+
           const event = navigation.emit({
             canPreventDefault: true,
             target: route.key,
             type: 'tabPress',
           });
+
+          if (isDoublePress && !event.defaultPrevented) {
+            const homePath = NAV_HOME_PATHS[route.name];
+            if (homePath) router.replace(homePath);
+            return;
+          }
 
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate(route.name, route.params);
