@@ -4,8 +4,10 @@ import {
   FlatList,
   Image,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
@@ -320,6 +322,8 @@ function getLocationTagChipColors(tag: string) {
 export function EncyclopediaListScreen({ category, initialSearch = '' }: { category: EncyclopediaCategory; initialSearch?: string }) {
   const router = useRouter();
   const listRef = useRef<FlatList<EncyclopediaItem>>(null);
+  const horizontalListRef = useRef<ScrollView>(null);
+  const { width: windowWidth } = useWindowDimensions();
   const { handleScroll, navigationVisible } = useScrollNavigationVisibility();
   useTabBarVisibility(navigationVisible);
   const [search, setSearch] = useState(initialSearch);
@@ -467,7 +471,15 @@ export function EncyclopediaListScreen({ category, initialSearch = '' }: { categ
     setFishFacetFilters(EMPTY_FISH_FACET_FILTERS);
   };
 
-  const columns = isCreature(category) ? 4 : 2;
+  const columns = 2;
+  const creatureColumns = useMemo(() => {
+    const result: EncyclopediaItem[][] = [];
+    for (let index = 0; index < visibleItems.length; index += 5) {
+      result.push(visibleItems.slice(index, index + 5));
+    }
+    return result;
+  }, [visibleItems]);
+  const creatureColumnWidth = Math.max(76, Math.min(150, (windowWidth - 36 - 24) / 4));
   const fishFilterOptions = useMemo(
     () =>
       Object.fromEntries(
@@ -496,6 +508,161 @@ export function EncyclopediaListScreen({ category, initialSearch = '' }: { categ
     (category === 'fish' ? (activeFishLocationTab !== 'all' ? 1 : 0) + fishFilterFacets.reduce((count, facet) => count + fishFacetFilters[facet].length, 0) : 0);
   const isFiltered = Boolean(search || activeFilterCount || sortMode !== 'number' || sortDescending);
 
+  const renderCard = (item: EncyclopediaItem, columnLayout = false) => (
+    <EncyclopediaCard
+      columnLayout={columnLayout}
+      item={item}
+      state={getState(states, item)}
+      onOpen={() =>
+        router.push({
+          // Expo Router's generated route types are refreshed when the dev server starts.
+          pathname: '/encyclopedia/[category]/[itemId]' as never,
+          params: { category, itemId: item.id },
+        })
+      }
+      onToggle={(status) => toggleStatus(item, status)}
+    />
+  );
+
+  const listHeader = (
+    <View>
+      {category === 'art' ? (
+        <UnderlineTabs
+          accessibilityLabel={(tab) => `${tab.label} 미술품 보기`}
+          fitToWidth
+          onChange={setArtAuthenticityTab}
+          tabs={artAuthenticityTabs}
+          value={artAuthenticityTab}
+        />
+      ) : null}
+
+      {category === 'fish' ? (
+        <UnderlineTabs
+          accessibilityLabel={(tab) => `${tab.label} 출현 장소 물고기 보기`}
+          onChange={setActiveFishLocationTab}
+          tabs={fishLocationTabs}
+          value={activeFishLocationTab}
+        />
+      ) : null}
+
+      <ListResultToolbar
+        actions={(() => {
+          const primaryStatus = primaryBulkStatus(category);
+          const primaryActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item)[primaryStatus]);
+          const donatedActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item).donated);
+          return [
+            {
+              key: primaryStatus,
+              label: bulkActionLabel(primaryStatus, primaryActive),
+                    icon: (
+                      <View style={styles.bulkStatusIcon}>
+                        <CollectionStatusIcon active={primaryActive} status={primaryStatus} />
+                      </View>
+                    ),
+              disabled: visibleItems.length === 0,
+              onPress: () => applyBulkStatus(primaryStatus, !primaryActive),
+            },
+            {
+              key: 'donated',
+              label: bulkActionLabel('donated', donatedActive),
+                    icon: (
+                      <View style={styles.bulkStatusIcon}>
+                        <CollectionStatusIcon active={donatedActive} status="donated" />
+                      </View>
+                    ),
+              disabled: visibleItems.length === 0,
+              onPress: () => applyBulkStatus('donated', !donatedActive),
+            },
+          ];
+        })()}
+        descending={sortDescending}
+        filterControl={
+          <ListFilterToggle
+            activeCount={activeFilterCount}
+            expanded={filterExpanded}
+            onPress={() => setFilterExpanded((value) => !value)}
+          />
+        }
+        isFiltered={isFiltered}
+        onReset={clearFilters}
+        onSortChange={setSortMode}
+        onToggleDirection={() => setSortDescending((value) => !value)}
+        resultCount={visibleItems.length}
+        showReset={false}
+        sortOptions={sortOptions}
+        sortValue={sortMode}
+        totalCount={items.length}
+      />
+
+      {filterExpanded ? (
+        <ListFilterPanel>
+          {isFiltered ? (
+            <View style={styles.filterPanelHeader}>
+              <Text style={styles.filterPanelHint}>현재 조건을 적용 중이에요</Text>
+              <Pressable accessibilityRole="button" onPress={clearFilters} style={styles.filterResetButton}>
+                <Text style={styles.filterResetText}>초기화</Text>
+              </Pressable>
+            </View>
+          ) : null}
+
+          <ListFilterGroup title="수집 상태">
+            {filterOptions[category].map((filter) => (
+              <ListFilterChip
+                key={filter}
+                label={filterLabels[filter]}
+                onPress={() => toggleFilter(filter)}
+                selected={activeFilters.includes(filter)}
+              />
+            ))}
+          </ListFilterGroup>
+
+          {category === 'fish' ? (
+            <>
+              {fishFilterFacets.map((facet) => {
+                const options = fishFilterOptions[facet];
+                if (options.length === 0) return null;
+                return (
+                  <ListFilterGroup key={facet} title={fishFilterFacetLabels[facet]}>
+                    {options.map((option) => {
+                      const selected = fishFacetFilters[facet].includes(option.key);
+                      return (
+                        <ListFilterChip
+                          accessibilityLabel={`${option.label} ${fishFilterFacetLabels[facet]} 필터`}
+                          key={option.key}
+                          label={`${option.label} ${option.itemCount}`}
+                          onPress={() => toggleFishFacetFilter(facet, option.key)}
+                          selected={selected}
+                        />
+                      );
+                    })}
+                  </ListFilterGroup>
+                );
+              })}
+            </>
+          ) : null}
+
+          {category === 'art' ? (
+            <ListFilterGroup title="작품 분류">
+              {([
+                ['all', '전체'],
+                ['painting', '그림'],
+                ['statue', '조각'],
+              ] as Array<[ArtTypeTab, string]>).map(([value, label]) => (
+                <ListFilterChip
+                  key={value}
+                  label={label}
+                  onPress={() => setArtTypeTab(value)}
+                  role="radio"
+                  selected={artTypeTab === value}
+                />
+              ))}
+            </ListFilterGroup>
+          ) : null}
+        </ListFilterPanel>
+      ) : null}
+    </View>
+  );
+
   return (
     <View style={styles.screenRoot}>
       <AppChrome
@@ -511,179 +678,72 @@ export function EncyclopediaListScreen({ category, initialSearch = '' }: { categ
         title={getEncyclopediaLabel(category)}
       />
       <SafeAreaView edges={[]} style={styles.safeArea}>
-        <FlatList
-        columnWrapperStyle={styles.columnWrapper}
-        contentContainerStyle={styles.listContent}
-        data={visibleItems}
-        key={`${category}-${columns}`}
-        keyExtractor={(item) => item.id}
-        keyboardDismissMode="on-drag"
-        keyboardShouldPersistTaps="handled"
-        ListEmptyComponent={
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyIcon}>⌕</Text>
-            <Text style={styles.emptyTitle}>조건에 맞는 항목이 없어요</Text>
-            <Text style={styles.emptyDescription}>검색어나 필터를 바꿔 다시 확인해 보세요.</Text>
-          </View>
-        }
-        ListHeaderComponent={
-          <View>
-            {category === 'art' ? (
-              <UnderlineTabs
-                accessibilityLabel={(tab) => `${tab.label} 미술품 보기`}
-                fitToWidth
-                onChange={setArtAuthenticityTab}
-                tabs={artAuthenticityTabs}
-                value={artAuthenticityTab}
-              />
-            ) : null}
-
-            {category === 'fish' ? (
-              <UnderlineTabs
-                accessibilityLabel={(tab) => `${tab.label} 출현 장소 물고기 보기`}
-                onChange={setActiveFishLocationTab}
-                tabs={fishLocationTabs}
-                value={activeFishLocationTab}
-              />
-            ) : null}
-
-            <ListResultToolbar
-              actions={(() => {
-                const primaryStatus = primaryBulkStatus(category);
-                const primaryActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item)[primaryStatus]);
-                const donatedActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item).donated);
-                return [
-                  {
-                    key: primaryStatus,
-                    label: bulkActionLabel(primaryStatus, primaryActive),
-                    icon: <CollectionStatusIcon active={primaryActive} status={primaryStatus} />,
-                    disabled: visibleItems.length === 0,
-                    onPress: () => applyBulkStatus(primaryStatus, !primaryActive),
-                  },
-                  {
-                    key: 'donated',
-                    label: bulkActionLabel('donated', donatedActive),
-                    icon: <CollectionStatusIcon active={donatedActive} status="donated" />,
-                    disabled: visibleItems.length === 0,
-                    onPress: () => applyBulkStatus('donated', !donatedActive),
-                  },
-                ];
-              })()}
-              descending={sortDescending}
-              filterControl={
-                <ListFilterToggle
-                  activeCount={activeFilterCount}
-                  expanded={filterExpanded}
-                  onPress={() => setFilterExpanded((value) => !value)}
-                />
-              }
-              isFiltered={isFiltered}
-              onReset={clearFilters}
-              onSortChange={setSortMode}
-              onToggleDirection={() => setSortDescending((value) => !value)}
-              resultCount={visibleItems.length}
-              showReset={false}
-              sortOptions={sortOptions}
-              sortValue={sortMode}
-              totalCount={items.length}
-            />
-
-            {filterExpanded ? (
-              <ListFilterPanel>
-                {isFiltered ? (
-                  <View style={styles.filterPanelHeader}>
-                    <Text style={styles.filterPanelHint}>현재 조건을 적용 중이에요</Text>
-                    <Pressable accessibilityRole="button" onPress={clearFilters} style={styles.filterResetButton}>
-                      <Text style={styles.filterResetText}>초기화</Text>
-                    </Pressable>
-                  </View>
-                ) : null}
-
-                <ListFilterGroup title="수집 상태">
-                  {filterOptions[category].map((filter) => (
-                    <ListFilterChip
-                      key={filter}
-                      label={filterLabels[filter]}
-                      onPress={() => toggleFilter(filter)}
-                      selected={activeFilters.includes(filter)}
-                    />
+        {isCreature(category) ? (
+          <View style={styles.creatureScreen}>
+            <View style={styles.listHeaderContent}>{listHeader}</View>
+            <ScrollView
+              contentContainerStyle={styles.creatureGridContent}
+              horizontal
+              keyboardDismissMode="on-drag"
+              keyboardShouldPersistTaps="handled"
+              onScroll={handleScroll}
+              ref={horizontalListRef}
+              scrollEventThrottle={16}
+              showsHorizontalScrollIndicator={false}
+            >
+              {creatureColumns.length > 0 ? creatureColumns.map((column, columnIndex) => (
+                <View key={`creature-column-${columnIndex}`} style={[styles.creatureColumn, { width: creatureColumnWidth }]}>
+                  {column.map((item) => (
+                    <View key={item.id} style={styles.creatureColumnItem}>
+                      {renderCard(item, true)}
+                    </View>
                   ))}
-                </ListFilterGroup>
-
-                {category === 'fish' ? (
-                  <>
-                    {fishFilterFacets.map((facet) => {
-                      const options = fishFilterOptions[facet];
-                      if (options.length === 0) return null;
-                      return (
-                        <ListFilterGroup key={facet} title={fishFilterFacetLabels[facet]}>
-                          {options.map((option) => {
-                            const selected = fishFacetFilters[facet].includes(option.key);
-                            return (
-                              <ListFilterChip
-                                accessibilityLabel={`${option.label} ${fishFilterFacetLabels[facet]} 필터`}
-                                key={option.key}
-                                label={`${option.label} ${option.itemCount}`}
-                                onPress={() => toggleFishFacetFilter(facet, option.key)}
-                                selected={selected}
-                              />
-                            );
-                          })}
-                        </ListFilterGroup>
-                      );
-                    })}
-                  </>
-                ) : null}
-
-                {category === 'art' ? (
-                  <>
-                    <ListFilterGroup title="작품 분류">
-                      {([
-                        ['all', '전체'],
-                        ['painting', '그림'],
-                        ['statue', '조각'],
-                      ] as Array<[ArtTypeTab, string]>).map(([value, label]) => (
-                        <ListFilterChip
-                          key={value}
-                          label={label}
-                          onPress={() => setArtTypeTab(value)}
-                          role="radio"
-                          selected={artTypeTab === value}
-                        />
-                      ))}
-                    </ListFilterGroup>
-                  </>
-                ) : null}
-              </ListFilterPanel>
-            ) : null}
-
+                </View>
+              )) : (
+                <View style={styles.emptyState}>
+                  <Text style={styles.emptyIcon}>⌕</Text>
+                  <Text style={styles.emptyTitle}>조건에 맞는 항목이 없어요</Text>
+                  <Text style={styles.emptyDescription}>검색어나 필터를 바꿔 다시 확인해 보세요.</Text>
+                </View>
+              )}
+            </ScrollView>
           </View>
-        }
-        numColumns={columns}
-        onRefresh={refresh}
-        refreshing={false}
-        ref={listRef}
-        renderItem={({ item }) => (
-          <EncyclopediaCard
-            item={item}
-            state={getState(states, item)}
-            onOpen={() =>
-              router.push({
-                // Expo Router's generated route types are refreshed when the dev server starts.
-                pathname: '/encyclopedia/[category]/[itemId]' as never,
-                params: { category, itemId: item.id },
-              })
+        ) : (
+          <FlatList
+            columnWrapperStyle={styles.columnWrapper}
+            contentContainerStyle={styles.listContent}
+            data={visibleItems}
+            key={`${category}-${columns}`}
+            keyExtractor={(item) => item.id}
+            keyboardDismissMode="on-drag"
+            keyboardShouldPersistTaps="handled"
+            ListEmptyComponent={
+              <View style={styles.emptyState}>
+                <Text style={styles.emptyIcon}>⌕</Text>
+                <Text style={styles.emptyTitle}>조건에 맞는 항목이 없어요</Text>
+                <Text style={styles.emptyDescription}>검색어나 필터를 바꿔 다시 확인해 보세요.</Text>
+              </View>
             }
-            onToggle={(status) => toggleStatus(item, status)}
+            ListHeaderComponent={listHeader}
+            numColumns={columns}
+            onRefresh={refresh}
+            refreshing={false}
+            ref={listRef}
+            renderItem={({ item }) => renderCard(item)}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            showsVerticalScrollIndicator={false}
           />
         )}
-          onScroll={handleScroll}
-          scrollEventThrottle={16}
-          showsVerticalScrollIndicator={false}
-        />
         <FloatingTopButton
           accessibilityLabel="도감 목록 맨 위로 이동"
-          onPress={() => listRef.current?.scrollToOffset({ animated: true, offset: 0 })}
+          onPress={() => {
+            if (isCreature(category)) {
+              horizontalListRef.current?.scrollTo({ animated: true, x: 0 });
+            } else {
+              listRef.current?.scrollToOffset({ animated: true, offset: 0 });
+            }
+          }}
         />
       </SafeAreaView>
     </View>
@@ -691,11 +751,13 @@ export function EncyclopediaListScreen({ category, initialSearch = '' }: { categ
 }
 
 function EncyclopediaCard({
+  columnLayout = false,
   item,
   state,
   onOpen,
   onToggle,
 }: {
+  columnLayout?: boolean;
   item: EncyclopediaItem;
   state: EncyclopediaState;
   onOpen: () => void;
@@ -720,6 +782,7 @@ function EncyclopediaCard({
         style={[
           styles.statusButton,
           placementStyle,
+          columnLayout && styles.creatureColumnStatusButton,
           creature && styles.statusButtonOverlay,
         ]}>
         <CollectionStatusIcon active={active} status={status} />
@@ -728,9 +791,9 @@ function EncyclopediaCard({
   };
 
   return (
-    <View style={[styles.itemCard, creature ? styles.creatureCard : styles.artCard]}>
+    <View style={[styles.itemCard, creature ? styles.creatureCard : styles.artCard, columnLayout && styles.creatureColumnCard]}>
       <View style={styles.cardOpenArea}>
-        <View style={[styles.imageFrame, creature && styles.creatureImageFrame]}>
+        <View style={[styles.imageFrame, creature && styles.creatureImageFrame, columnLayout && styles.creatureColumnImageFrame]}>
           <Pressable
             accessibilityLabel={`${item.nameKo} 상세 보기`}
             accessibilityRole="button"
@@ -740,35 +803,35 @@ function EncyclopediaCard({
               <Image
                 resizeMode="contain"
                 source={image}
-                style={[styles.cardImage, creature && styles.creatureImage]}
+                style={[
+                  styles.cardImage,
+                  creature && styles.creatureImage,
+                  creature && !state.caught && styles.creatureImageUncaught,
+                  columnLayout && styles.creatureColumnImage,
+                ]}
               />
             ) : (
               <Text style={styles.imageFallback}>?</Text>
             )}
           </Pressable>
-          {creature ? (
-            <>
-              {renderStatusButton('donated', styles.statusOverlayLeft)}
-              {renderStatusButton('caught', styles.statusOverlayRight)}
-            </>
-          ) : null}
         </View>
         <Pressable
           accessibilityLabel={`${item.nameKo} 상세 보기`}
           accessibilityRole="button"
           onPress={onOpen}
           style={styles.cardTextArea}>
-          <Text numberOfLines={1} style={styles.itemName}>{item.nameKo}</Text>
+          <Text numberOfLines={1} style={[styles.itemName, columnLayout && styles.creatureColumnItemName]}>{item.nameKo}</Text>
           {creature ? (
-            item.location || item.locationTags?.length ? (
-              <View style={styles.locationChipRow}>
+            item.category !== 'bugs' && (item.location || item.locationTags?.length) ? (
+              <View style={[styles.locationChipRow, columnLayout && styles.creatureColumnLocationRow]}>
                 {item.location ? (
                   <View
                     style={[
                       styles.locationChip,
+                      columnLayout && styles.creatureColumnLocationChip,
                       { backgroundColor: locationColors.backgroundColor, borderColor: locationColors.borderColor },
                     ]}>
-                    <Text numberOfLines={1} style={[styles.locationChipText, { color: locationColors.color }]}>
+                    <Text numberOfLines={1} style={[styles.locationChipText, columnLayout && styles.creatureColumnLocationChipText, { color: locationColors.color }]}>
                       {localizeLocation(item.location) ?? item.location}
                     </Text>
                   </View>
@@ -780,9 +843,10 @@ function EncyclopediaCard({
                       key={tag}
                       style={[
                         styles.locationTagChip,
+                        columnLayout && styles.creatureColumnLocationChip,
                         { backgroundColor: tagColors.backgroundColor, borderColor: tagColors.borderColor },
                       ]}>
-                      <Text numberOfLines={1} style={[styles.locationTagChipText, { color: tagColors.color }]}>
+                      <Text numberOfLines={1} style={[styles.locationTagChipText, columnLayout && styles.creatureColumnLocationChipText, { color: tagColors.color }]}>
                         {localizeLocationTag(tag) ?? tag}
                       </Text>
                     </View>
@@ -797,11 +861,9 @@ function EncyclopediaCard({
           )}
         </Pressable>
       </View>
-      {creature ? null : (
-        <View style={styles.cardStatusRow}>
-          {statuses.map((status) => renderStatusButton(status))}
-        </View>
-      )}
+      <View style={[styles.cardStatusRow, creature && styles.creatureCardStatusRow, columnLayout && styles.creatureColumnStatusRow]}>
+        {statuses.map((status) => renderStatusButton(status))}
+      </View>
     </View>
   );
 }
@@ -811,6 +873,11 @@ const styles = StyleSheet.create({
   safeArea: { backgroundColor: AppColors.background, flex: 1 },
   listContent: { paddingBottom: 32, paddingHorizontal: 18 },
   columnWrapper: { gap: 8 },
+  creatureScreen: { flex: 1 },
+  listHeaderContent: { paddingHorizontal: 18 },
+  creatureGridContent: { gap: 8, paddingBottom: 32, paddingHorizontal: 18 },
+  creatureColumn: { gap: 5 },
+  creatureColumnItem: {},
   headerRow: { alignItems: 'center', flexDirection: 'row', marginBottom: 20 },
   backButton: {
     alignItems: 'center',
@@ -832,26 +899,38 @@ const styles = StyleSheet.create({
   filterPanelHint: { color: AppColors.inkMuted, flex: 1, fontSize: 11, fontWeight: '700' },
   filterResetButton: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 6 },
   filterResetText: { color: AppColors.leaf, fontSize: 11, fontWeight: '900' },
+  bulkStatusIcon: { alignItems: 'center', height: 22, justifyContent: 'center', transform: [{ scale: 0.65 }], width: 22 },
   itemCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, marginBottom: 8, minWidth: 0, overflow: 'hidden', ...AppShadows.card },
   creatureCard: { flex: 1, padding: 6 },
+  creatureColumnCard: { flex: 0, marginBottom: 0, padding: 4, width: '100%' },
   artCard: { flex: 1, padding: 9 },
   cardOpenArea: { alignItems: 'center' },
   cardTextArea: { alignItems: 'center', maxWidth: '100%' },
   imageFrame: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.control, height: 116, justifyContent: 'center', overflow: 'hidden', position: 'relative', width: '100%' },
   imageTapArea: { alignItems: 'center', height: '100%', justifyContent: 'center', width: '100%' },
   creatureImageFrame: { height: 74 },
+  creatureColumnImageFrame: { height: 48 },
   cardImage: { height: 106, width: '92%' },
   creatureImage: { height: 70, width: '94%' },
+  creatureColumnImage: { height: 45, width: '94%' },
+  creatureImageUncaught: { opacity: 0.4 },
   imageFallback: { color: '#A0AAA0', fontSize: 22, fontWeight: '800' },
   itemName: { color: AppColors.ink, fontSize: 13, fontWeight: '800', marginTop: 8, maxWidth: '100%' },
+  creatureColumnItemName: { fontSize: 11, lineHeight: 14, marginTop: 3 },
   itemMeta: { color: AppColors.inkMuted, fontSize: 9, marginTop: 3, maxWidth: '100%' },
   locationChipRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'nowrap', gap: 4, justifyContent: 'center', marginTop: 5, maxWidth: '100%' },
+  creatureColumnLocationRow: { gap: 2, marginTop: 2 },
   locationChip: { borderRadius: 999, borderWidth: 1, maxWidth: '100%', paddingHorizontal: 6, paddingVertical: 2 },
+  creatureColumnLocationChip: { paddingHorizontal: 4, paddingVertical: 1 },
   locationChipText: { fontSize: 9, fontWeight: '900' },
+  creatureColumnLocationChipText: { fontSize: 8 },
   locationTagChip: { backgroundColor: '#F4E8FF', borderColor: '#BE9AE8', borderRadius: 999, borderWidth: 1, maxWidth: '100%', paddingHorizontal: 6, paddingVertical: 2 },
   locationTagChipText: { color: '#684397', fontSize: 9, fontWeight: '900' },
   cardStatusRow: { alignItems: 'center', flexDirection: 'row', gap: 4, justifyContent: 'center', marginTop: 7 },
+  creatureCardStatusRow: { marginTop: 5 },
+  creatureColumnStatusRow: { gap: 2, marginTop: 2 },
   statusButton: { alignItems: 'center', backgroundColor: 'transparent', borderColor: 'transparent', borderWidth: 0, height: AppControlSizes.compactStatus, justifyContent: 'center', width: AppControlSizes.compactStatus },
+  creatureColumnStatusButton: { height: 22, transform: [{ scale: 0.75 }], width: 22 },
   statusButtonOverlay: { backgroundColor: 'transparent', borderColor: 'transparent', borderWidth: 0 },
   statusOverlayLeft: { left: 4, position: 'absolute', top: 4 },
   statusOverlayRight: { position: 'absolute', right: 4, top: 4 },

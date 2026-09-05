@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   tabBar: {
     borderBottomColor: AppColors.line,
     borderBottomWidth: 1,
-    marginBottom: 10,
+    marginBottom: 0,
   },
   tabs: {
     alignItems: 'stretch',

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { AppColors, AppControlSizes, AppRadii, AppShadows } from '@/constants/theme';
+import { AppColors, AppRadii, AppShadows } from '@/constants/theme';
 
 export type ListSortOption<T extends string> = {
   key: T;
@@ -214,20 +214,20 @@ const styles = StyleSheet.create({
   },
   filterToggle: {
     alignItems: 'center',
-    backgroundColor: AppColors.paperRaised,
-    borderColor: AppColors.line,
-    borderRadius: AppRadii.control,
-    borderWidth: 1,
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+    borderRadius: 0,
+    borderWidth: 0,
     flexDirection: 'row',
-    height: AppControlSizes.fieldHeight,
+    height: 28,
     justifyContent: 'center',
-    minWidth: 58,
-    paddingHorizontal: 9,
+    minWidth: 0,
+    paddingHorizontal: 0,
   },
   filterToggleIcon: {
     color: AppColors.ink,
     fontSize: 18,
-    marginRight: 5,
+    marginRight: 3,
   },
   filterToggleText: {
     color: AppColors.ink,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     gap: 8,
     justifyContent: 'space-between',
     marginBottom: 14,
-    marginTop: 18,
+    marginTop: 5,
   },
   resultCountGroup: {
     alignItems: 'center',
@@ -327,18 +327,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 5,
+    gap: 0,
   },
   toolbarAction: {
     alignItems: 'center',
-    backgroundColor: AppColors.paperRaised,
-    borderColor: AppColors.line,
-    borderRadius: 11,
-    borderWidth: 1,
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+    borderRadius: 0,
+    borderWidth: 0,
+    height: 24,
     justifyContent: 'center',
-    minHeight: 28,
-    paddingHorizontal: 8,
-    paddingVertical: 6,
+    minHeight: 0,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
   },
   toolbarActionDisabled: {
     opacity: 0.45,
@@ -356,7 +357,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   filterControl: {
-    marginRight: 4,
+    marginRight: 10,
   },
   sortSelect: {
     alignItems: 'center',
