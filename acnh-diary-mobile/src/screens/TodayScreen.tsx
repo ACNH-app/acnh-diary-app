@@ -73,6 +73,7 @@ type TodayActionIcon = 'edit' | 'reset' | 'open';
 
 const EMPTY_STATE: EncyclopediaState = { caught: false, owned: false, donated: false, genuineOwned: false, fakeOwned: false };
 const CRITTERPEDIA_ICON = require('../data/assets/icons/critterpedia.png');
+const BIRTHDAY_CAKE_ICON = require('../data/assets/catalog/furniture/items/528bcd2f00332aea.png');
 const ZODIAC_ICON_ASSETS: Record<string, ImageSourcePropType> = {
   aquarius: require('../data/assets/icons/zodiac/aquarius.png'),
   aries: require('../data/assets/icons/zodiac/aries.png'),
@@ -1880,80 +1881,115 @@ function TodayCritterBrowserCard({
 }
 
 const calendarStyles = StyleSheet.create({
-  calendarSheet: { height: '82%', overflow: 'hidden', paddingBottom: 16 },
+  calendarSheet: { backgroundColor: '#FFFEFB', borderTopLeftRadius: 30, borderTopRightRadius: 30, height: '88%', maxHeight: '88%', overflow: 'hidden', paddingBottom: 72 },
   calendarCardCompact: { backgroundColor: 'transparent', borderRadius: 0, elevation: 0, paddingBottom: 0, paddingHorizontal: 0, shadowOpacity: 0 },
-  calendarDayCellCompact: { minHeight: 48, padding: 2 },
+  calendarDayCellCompact: { backgroundColor: 'transparent', borderBottomColor: '#E7EFEB', borderRightColor: '#E7EFEB', minHeight: 42, padding: 2 },
+  calendarDayCellEmptyCompact: { backgroundColor: 'transparent' },
+  calendarBoardFrame: { backgroundColor: '#FAFBFA', borderColor: '#EEF1EF', borderRadius: 18, borderWidth: 1, overflow: 'hidden' },
   calendarDayCellSelected: { backgroundColor: AppColors.calendarSelected, borderColor: AppColors.calendarSelectedBorder, borderWidth: 1 },
+  calendarDayCellSelectedCompact: { backgroundColor: 'transparent', borderColor: 'transparent', borderWidth: 0 },
   calendarDayCellToday: { backgroundColor: AppColors.calendarToday },
-  calendarDayNumberCompact: { fontSize: 10, marginBottom: 2 },
+  calendarDayNumberCompact: { fontSize: 10, marginBottom: 0 },
   calendarDayNumberSelected: { color: AppColors.calendarSelectedText, fontWeight: '900' },
+  calendarDayNumberSelectedCompact: { color: AppColors.calendarSelectedText },
   calendarDayNumberToday: { color: AppColors.calendarTodayText, fontWeight: '900' },
   calendarDayNumberRow: { alignItems: 'center', flexDirection: 'row', gap: 3, justifyContent: 'center' },
+  calendarDayNumberBadge: { borderRadius: AppRadii.pill, height: 26, width: 26 },
+  calendarDayNumberBadgeToday: { backgroundColor: '#E4F2EC' },
+  calendarDayNumberBadgeSelected: { backgroundColor: '#BDE7D6', borderColor: '#65B59A', borderWidth: 2 },
   calendarTodayMarker: { backgroundColor: AppColors.calendarTodayText, borderRadius: 3, height: 5, width: 5 },
   calendarTodayMarkerSelected: { backgroundColor: AppColors.calendarTodayText },
   calendarItemStackCompact: { gap: 1, minHeight: 20 },
   calendarBadgeCompact: { borderRadius: 3, minHeight: 11, paddingHorizontal: 1, paddingVertical: 1 },
-  calendarBadgeTextCompact: { fontSize: 8, lineHeight: 10 },
+  calendarBadgeTextCompact: { fontSize: 7, lineHeight: 9 },
   calendarBirthdayBadge: { backgroundColor: AppColors.calendarBirthday },
+  calendarBirthdayContent: { alignItems: 'center', flexDirection: 'row', gap: 2, minWidth: 0, width: '100%' },
+  calendarBirthdayImage: { height: 13, resizeMode: 'contain', width: 13 },
   calendarEventBadge: { backgroundColor: AppColors.calendarEvent },
   calendarBirthdayText: { color: AppColors.calendarBirthdayText },
   calendarEventText: { color: AppColors.calendarEventText },
   calendarMoreTextCompact: { fontSize: 8 },
-  calendarPeriodButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
+  calendarPeriodButton: { alignItems: 'center', backgroundColor: '#F1F5F3', borderRadius: AppRadii.pill, height: 34, justifyContent: 'center', width: 34 },
   calendarPeriodNavigation: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
-  calendarPeriodNavigationCompact: { marginBottom: 5 },
+  calendarPeriodNavigationCompact: { marginBottom: 7 },
   calendarPeriodTitleCompact: { marginBottom: 0 },
-  calendarMonthHeader: { alignItems: 'center', flexDirection: 'row', gap: 4, justifyContent: 'center' },
-  calendarMonthPickerButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 3, height: 30, justifyContent: 'center', paddingHorizontal: 5, width: 78 },
-  calendarMonthPickerText: { color: AppColors.ink, fontSize: 12, fontWeight: '900' },
+  calendarMonthHeader: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 7, justifyContent: 'center' },
+  calendarMonthPickerButton: { alignItems: 'center', backgroundColor: '#FFFFFF', borderColor: '#DDEAE5', borderRadius: 12, borderWidth: 1, flexDirection: 'row', gap: 3, height: 40, justifyContent: 'space-between', paddingHorizontal: 10 },
+  calendarYearPickerButton: { width: 112 },
+  calendarMonthPickerButtonNarrow: { width: 84 },
+  calendarMonthPickerText: { color: AppColors.ink, fontSize: 13, fontWeight: '900' },
   calendarMonthPickerIcon: { color: AppColors.inkMuted },
   calendarPickerPanel: { backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, marginBottom: 6, padding: 7 },
   calendarPickerPanelTitle: { color: AppColors.inkMuted, fontSize: 9, fontWeight: '900', marginBottom: 5 },
   calendarPickerGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 4 },
   calendarPickerOption: { alignItems: 'center', borderColor: 'transparent', borderRadius: 8, borderWidth: 1, justifyContent: 'center', minHeight: 26, width: '23%' },
   calendarPickerOptionSelected: { backgroundColor: AppColors.calendarSelected, borderColor: AppColors.calendarSelectedBorder },
-  calendarPickerOptionText: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800' },
+  calendarPickerOptionText: { color: AppColors.inkMuted, fontSize: 9, fontWeight: '800' },
   calendarPickerOptionTextSelected: { color: AppColors.calendarSelectedText, fontWeight: '900' },
-  calendarCloseButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: 32, justifyContent: 'center', marginLeft: 6, width: 32 },
-  calendarToggleCompact: { marginVertical: 6 },
+  calendarCloseButton: { alignItems: 'center', backgroundColor: '#F0F3F1', borderRadius: AppRadii.pill, height: 34, justifyContent: 'center', marginLeft: 6, width: 34 },
+  calendarToggleCompact: { alignSelf: 'center', backgroundColor: '#EEF1EF', borderRadius: 15, marginBottom: 8, marginTop: 5, width: 176 },
+  calendarToggleActiveCompact: { backgroundColor: '#FFFFFF', elevation: 1 },
+  calendarToggleTextActiveCompact: { color: '#2D7B65' },
   calendarWeekCellCompact: { minHeight: 60 },
-  calendarWeekdayRowCompact: { paddingBottom: 4 },
+  calendarWeekdayRowCompact: { borderBottomWidth: 0, paddingBottom: 5 },
   calendarWeekdayTextCompact: { fontSize: 9 },
-  calendarWeekList: { borderColor: AppColors.line, borderTopWidth: 1 },
-  calendarWeekRow: { alignItems: 'center', borderBottomColor: AppColors.line, borderBottomWidth: 1, flexDirection: 'row', minHeight: 38, paddingHorizontal: 6, paddingVertical: 3 },
+  calendarWeekList: { gap: 7 },
+  calendarWeekRow: { alignItems: 'center', borderColor: '#E4ECE8', borderRadius: 16, borderWidth: 1, flexDirection: 'row', minHeight: 44, paddingHorizontal: 9, paddingVertical: 4 },
+  calendarWeekRowEmpty: { backgroundColor: '#F8FAF9' },
+  calendarWeekRowBirthday: { backgroundColor: '#F7F0FF' },
+  calendarWeekRowEvent: { backgroundColor: '#FFF0E6' },
   calendarWeekRowToday: { backgroundColor: AppColors.calendarToday },
-  calendarWeekRowSelected: { backgroundColor: AppColors.calendarSelected, borderColor: AppColors.calendarSelectedBorder, borderWidth: 1 },
-  calendarWeekDateColumn: { alignItems: 'center', borderRightColor: AppColors.line, borderRightWidth: 1, justifyContent: 'center', width: 54 },
-  calendarWeekdayLabel: { color: AppColors.inkMuted, fontSize: 9, fontWeight: '800' },
-  calendarWeekDateText: { color: AppColors.ink, fontSize: 12, fontWeight: '900', marginTop: 1 },
+  calendarWeekRowSelected: { borderColor: '#9CCCB8', borderWidth: 2 },
+  calendarWeekRowBirthdaySelected: { borderColor: '#B69BD9', borderWidth: 2 },
+  calendarWeekRowEventSelected: { borderColor: '#E9AD87', borderWidth: 2 },
+  calendarWeekDateColumn: { alignItems: 'center', borderRadius: 12, height: 50, justifyContent: 'center', width: 58 },
+  calendarWeekDateColumnEmpty: { backgroundColor: '#EFF3F1' },
+  calendarWeekDateColumnBirthday: { backgroundColor: '#E5D8FF' },
+  calendarWeekDateColumnEvent: { backgroundColor: '#FFDCC5' },
+  calendarWeekDateColumnToday: { backgroundColor: '#D9F0E2' },
+  calendarWeekdayLabel: { color: AppColors.inkMuted, fontSize: 10, fontWeight: '800' },
+  calendarWeekSundayLabel: { color: '#D97979' },
+  calendarWeekDateText: { color: AppColors.ink, fontSize: 13, fontWeight: '700', marginTop: 1 },
   calendarWeekDateTextToday: { color: AppColors.calendarTodayText },
   calendarWeekDateTextSelected: { color: AppColors.calendarSelectedText },
-  calendarWeekItemStack: { alignItems: 'center', flex: 1, flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginLeft: 8, minWidth: 0 },
-  calendarWeekItemBadge: { borderRadius: 3, maxWidth: '46%', minHeight: 14, paddingHorizontal: 4, paddingVertical: 1 },
-  calendarWeekItemText: { fontSize: 8, fontWeight: '800', lineHeight: 11 },
-  calendarWeekEmptyText: { color: AppColors.inkMuted, fontSize: 9 },
-  calendarWeekArrow: { color: AppColors.inkMuted, marginLeft: 4 },
-  calendarSelectedDateCard: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, marginTop: 8, paddingHorizontal: 10, paddingVertical: 7 },
-  calendarSelectedDateHeader: { alignItems: 'center', flexDirection: 'row', gap: 6, marginBottom: 4 },
-  calendarSelectedDateIcon: { color: AppColors.calendarSelectedText },
-  calendarSelectedDateTitle: { color: AppColors.ink, flex: 1, fontSize: 13, fontWeight: '900' },
-  calendarDetailRow: { alignItems: 'center', flexDirection: 'row', gap: 6, minHeight: 15 },
-  calendarDetailDot: { borderRadius: 4, height: 8, width: 8 },
-  calendarDetailBirthdayDot: { backgroundColor: AppColors.calendarBirthdayText },
-  calendarDetailEventDot: { backgroundColor: AppColors.calendarEventText },
-  calendarDetailText: { color: AppColors.inkMuted, flex: 1, fontSize: 12, fontWeight: '700' },
+  calendarWeekItemStack: { flex: 1, gap: 1, marginLeft: 12, minWidth: 0 },
+  calendarWeekItemBadge: { alignItems: 'center', flexDirection: 'row', gap: 9, minHeight: 30, paddingHorizontal: 0, paddingVertical: 1 },
+  calendarWeekItemIcon: { alignItems: 'center', backgroundColor: 'transparent', borderRadius: 0, height: 28, justifyContent: 'center', width: 28 },
+  calendarWeekItemImage: { height: 24, resizeMode: 'contain', width: 24 },
+  calendarWeekItemCopy: { flex: 1, minWidth: 0 },
+  calendarWeekItemText: { fontSize: 11, fontWeight: '900', lineHeight: 14 },
+  calendarWeekBirthdayText: { color: AppColors.calendarBirthdayText },
+  calendarWeekEventText: { color: AppColors.calendarEventText },
+  calendarWeekItemMeta: { color: AppColors.calendarEventText, fontSize: 8, fontWeight: '700', lineHeight: 10, marginTop: 1 },
+  calendarWeekEmptyText: { color: '#87938E', fontSize: 11, fontWeight: '800' },
+  calendarAgenda: { marginTop: 6 },
+  calendarAgendaTitle: { color: AppColors.ink, fontSize: 13, fontWeight: '900', marginBottom: 5 },
+  calendarAgendaCard: { alignItems: 'center', borderRadius: 15, borderWidth: 1, flexDirection: 'row', gap: 7, minHeight: 46, marginBottom: 5, paddingHorizontal: 8, paddingVertical: 5 },
+  calendarAgendaBirthdayCard: { backgroundColor: '#F5F0FF', borderColor: '#E5D9FF' },
+  calendarAgendaEventCard: { backgroundColor: '#FFF0E5', borderColor: '#F3D4BE' },
+  calendarAgendaIconFrame: { alignItems: 'center', borderRadius: 10, height: 32, justifyContent: 'center', width: 32 },
+  calendarAgendaBirthdayIconFrame: { backgroundColor: '#E5D9FF' },
+  calendarAgendaEventIconFrame: { backgroundColor: '#FFD9BE' },
+  calendarAgendaImage: { height: 28, resizeMode: 'contain', width: 28 },
+  calendarAgendaCopy: { flex: 1, minWidth: 0 },
+  calendarAgendaName: { fontSize: 11, fontWeight: '900', lineHeight: 14 },
+  calendarAgendaBirthdayName: { color: '#594773' },
+  calendarAgendaEventName: { color: '#754326' },
+  calendarAgendaMeta: { fontSize: 8, fontWeight: '700', lineHeight: 10, marginTop: 1 },
+  calendarAgendaEventMeta: { color: '#9C725B' },
+  calendarAgendaEmptyCard: { alignItems: 'center', backgroundColor: '#F8FAF9', borderColor: '#EBEFED', borderRadius: 15, borderWidth: 1, flexDirection: 'row', gap: 8, minHeight: 48, paddingHorizontal: 12 },
   calendarNoDetail: { color: AppColors.inkMuted, fontSize: 11 },
-  calendarLegend: { alignItems: 'center', flexDirection: 'row', gap: 14, justifyContent: 'flex-start', marginBottom: 4 },
-  calendarLegendItem: { alignItems: 'center', flexDirection: 'row', gap: 4 },
-  calendarLegendText: { color: AppColors.inkMuted, fontSize: 9, fontWeight: '700' },
-  calendarLegendTodayDot: { backgroundColor: AppColors.calendarTodayText, borderRadius: 4, height: 8, width: 8 },
-  calendarLegendSelectedDot: { backgroundColor: AppColors.calendarSelected, borderColor: AppColors.calendarSelectedBorder, borderRadius: 4, borderWidth: 1, height: 8, width: 8 },
-  calendarLegendBirthdayDot: { backgroundColor: AppColors.calendarBirthdayText, borderRadius: 4, height: 8, width: 8 },
-  calendarLegendEventDot: { backgroundColor: AppColors.calendarEventText, borderRadius: 4, height: 8, width: 8 },
+  sheetHandle: { alignSelf: 'center', backgroundColor: '#D5DAD7', borderRadius: AppRadii.pill, height: 5, marginBottom: 10, width: 64 },
   sheetHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
-  sheetTitleCompact: { flex: 1, marginBottom: 0, marginRight: 10 },
-  todayPickerButton: { alignItems: 'center', backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder, borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 6, justifyContent: 'center', minHeight: 40, paddingHorizontal: 10, paddingVertical: 8 },
-  todayPickerButtonText: { color: AppColors.leaf, fontSize: 11, fontWeight: '900' },
+  sheetTitleCompact: { flex: 1, fontSize: 20, marginBottom: 0, marginRight: 10 },
+  calendarActionRow: { bottom: 26, flexDirection: 'row', gap: 10, left: 21, position: 'absolute', right: 21 },
+  calendarActionButton: { alignItems: 'center', borderRadius: 16, justifyContent: 'center', minHeight: 44 },
+  calendarCancelAction: { backgroundColor: '#F1F3F2', flex: 1 },
+  calendarTodayAction: { backgroundColor: '#EAF7F1', borderColor: '#B9DED1', borderWidth: 1, flex: 1 },
+  calendarApplyAction: { backgroundColor: '#4BAF98', flex: 2 },
+  calendarCancelActionText: { color: '#66746F', fontSize: 13, fontWeight: '900' },
+  calendarTodayActionText: { color: '#2F7E67', fontSize: 13, fontWeight: '900' },
+  calendarApplyActionText: { color: '#FFFFFF', fontSize: 13, fontWeight: '900' },
 });
 
 function CalendarSection({
@@ -2003,8 +2039,8 @@ function CalendarSection({
             accessibilityState={{ selected: mode === value }}
             key={value}
             onPress={() => onChangeMode(value)}
-            style={[styles.calendarToggleButton, mode === value && styles.calendarToggleActive]}>
-            <Text style={[styles.calendarToggleText, mode === value && styles.calendarToggleTextActive]}>{value === 'week' ? '주간' : '월간'}</Text>
+            style={[styles.calendarToggleButton, mode === value && styles.calendarToggleActive, compact && mode === value && calendarStyles.calendarToggleActiveCompact]}>
+            <Text style={[styles.calendarToggleText, mode === value && styles.calendarToggleTextActive, compact && mode === value && calendarStyles.calendarToggleTextActiveCompact]}>{value === 'week' ? '주간' : '월간'}</Text>
           </Pressable>
         ))}
       </View>
@@ -2039,23 +2075,25 @@ function CalendarSection({
           <View style={weekdayStyle}>
             {weekdayLabels.map((label, index) => <Text key={`${label}-${index}`} style={weekdayTextStyle}>{label}</Text>)}
           </View>
-          <View style={styles.calendarBoard}>
-            {cells.map((date, index) => (
-              date ? (
-                <CalendarDayCell
-                  date={date}
-                  isCurrentDate={date === currentDate}
-                  items={itemsByDate[date] ?? []}
-                  key={date}
-                  mode={mode}
-                  onSelectDate={onSelectDate}
-                  selected={date === selectedDate}
-                  compact={compact}
-                />
-              ) : (
-                <View key={`calendar-empty-${index}`} style={[styles.calendarDayCell, compact && calendarStyles.calendarDayCellCompact, styles.calendarDayCellEmpty]} />
-              )
-            ))}
+          <View style={calendarStyles.calendarBoardFrame}>
+            <View style={styles.calendarBoard}>
+              {cells.map((date, index) => (
+                date ? (
+                  <CalendarDayCell
+                    date={date}
+                    isCurrentDate={date === currentDate}
+                    items={itemsByDate[date] ?? []}
+                    key={date}
+                    mode={mode}
+                    onSelectDate={onSelectDate}
+                    selected={date === selectedDate}
+                    compact={compact}
+                  />
+                ) : (
+                  <View key={`calendar-empty-${index}`} style={[styles.calendarDayCell, compact && calendarStyles.calendarDayCellCompact, styles.calendarDayCellEmpty, compact && calendarStyles.calendarDayCellEmptyCompact]} />
+                )
+              ))}
+            </View>
           </View>
         </>
       ))}
@@ -2129,7 +2167,10 @@ function CalendarDateHeader({
             accessibilityState={{ expanded: isOpen }}
             key={kind}
             onPress={() => onTogglePicker(kind)}
-            style={calendarStyles.calendarMonthPickerButton}>
+            style={[
+              calendarStyles.calendarMonthPickerButton,
+              isYear ? calendarStyles.calendarYearPickerButton : calendarStyles.calendarMonthPickerButtonNarrow,
+            ]}>
             <Text style={calendarStyles.calendarMonthPickerText}>{isYear ? `${year}년` : `${month}월`}</Text>
             <MaterialCommunityIcons color={AppColors.inkMuted} name={isOpen ? 'chevron-up' : 'chevron-down'} size={15} style={calendarStyles.calendarMonthPickerIcon} />
           </Pressable>
@@ -2210,21 +2251,28 @@ function CalendarDayCell({
     compact && mode === 'week' && calendarStyles.calendarWeekCellCompact,
     isCurrentDate && calendarStyles.calendarDayCellToday,
     selected && calendarStyles.calendarDayCellSelected,
+    compact && selected && calendarStyles.calendarDayCellSelectedCompact,
   ];
   const dayNumberStyle = [
     styles.calendarDayNumber,
     compact && calendarStyles.calendarDayNumberCompact,
     isCurrentDate && calendarStyles.calendarDayNumberToday,
     selected && calendarStyles.calendarDayNumberSelected,
+    compact && selected && calendarStyles.calendarDayNumberSelectedCompact,
   ];
   const itemStackStyle = [styles.calendarItemStack, compact && calendarStyles.calendarItemStackCompact];
   const badgeStyle = [styles.calendarBadge, compact && calendarStyles.calendarBadgeCompact];
   const badgeTextStyle = [styles.calendarBadgeText, compact && calendarStyles.calendarBadgeTextCompact];
   const content = (
     <>
-      <View style={calendarStyles.calendarDayNumberRow}>
+      <View style={[
+        calendarStyles.calendarDayNumberRow,
+        compact && calendarStyles.calendarDayNumberBadge,
+        compact && isCurrentDate && calendarStyles.calendarDayNumberBadgeToday,
+        compact && selected && calendarStyles.calendarDayNumberBadgeSelected,
+      ]}>
         <Text style={dayNumberStyle}>{dateObject.getUTCDate()}</Text>
-        {isCurrentDate ? <View style={calendarStyles.calendarTodayMarker} /> : null}
+        {isCurrentDate && !compact ? <View style={calendarStyles.calendarTodayMarker} /> : null}
       </View>
       <View style={itemStackStyle}>
         {visibleItems.map((item) => (
@@ -2234,14 +2282,16 @@ function CalendarDayCell({
               badgeStyle,
               item.kind === 'birthday' ? calendarStyles.calendarBirthdayBadge : calendarStyles.calendarEventBadge,
             ]}>
-            <Text
-              numberOfLines={1}
-              style={[
-                badgeTextStyle,
-                item.kind === 'birthday' ? calendarStyles.calendarBirthdayText : calendarStyles.calendarEventText,
-              ]}>
-              {item.kind === 'birthday' ? `생일 ${item.label.replace(' 생일', '')}` : item.label}
-            </Text>
+            {item.kind === 'birthday' ? (
+              <View style={calendarStyles.calendarBirthdayContent}>
+                <Image accessibilityLabel={`${item.label} 케이크`} source={BIRTHDAY_CAKE_ICON} style={calendarStyles.calendarBirthdayImage} />
+                <Text numberOfLines={1} style={[badgeTextStyle, calendarStyles.calendarBirthdayText, { flexShrink: 1 }]}>{item.label.replace(' 생일', '')}</Text>
+              </View>
+            ) : (
+              <Text numberOfLines={1} style={[badgeTextStyle, calendarStyles.calendarEventText]}>
+                {item.label}
+              </Text>
+            )}
           </View>
         ))}
         {hiddenCount > 0 ? (
@@ -2281,43 +2331,68 @@ function CalendarWeekRow({
   selected?: boolean;
 }) {
   const dateObject = parseIsoDate(date) ?? new Date();
-  const visibleItems = items.slice(0, 2);
-  const hiddenCount = Math.max(0, items.length - visibleItems.length);
+  const birthdayItems = items.filter((item) => item.kind === 'birthday');
+  const eventItems = items.filter((item) => item.kind === 'event');
+  const weekItems: CalendarItem[] = [
+    ...(birthdayItems.length ? [{
+      id: `birthday-${date}`,
+      kind: 'birthday' as const,
+      label: `${birthdayItems.map((item) => item.label.replace(/\s*생일$/, '')).join(', ')} 생일`,
+    }] : []),
+    ...eventItems,
+  ];
+  const visibleItems = weekItems.slice(0, 2);
+  const hiddenCount = Math.max(0, weekItems.length - visibleItems.length);
+  const hasEvent = items.some((item) => item.kind === 'event');
+  const hasBirthday = items.some((item) => item.kind === 'birthday');
+  const rowTone = hasEvent ? calendarStyles.calendarWeekRowEvent : hasBirthday ? calendarStyles.calendarWeekRowBirthday : calendarStyles.calendarWeekRowEmpty;
+  const dateTone = hasEvent ? calendarStyles.calendarWeekDateColumnEvent : hasBirthday ? calendarStyles.calendarWeekDateColumnBirthday : calendarStyles.calendarWeekDateColumnEmpty;
+  const selectedTone = hasEvent ? calendarStyles.calendarWeekRowEventSelected : hasBirthday ? calendarStyles.calendarWeekRowBirthdaySelected : calendarStyles.calendarWeekRowSelected;
   const rowStyle = [
     calendarStyles.calendarWeekRow,
+    rowTone,
     isCurrentDate && calendarStyles.calendarWeekRowToday,
-    selected && calendarStyles.calendarWeekRowSelected,
+    selected && selectedTone,
   ];
   const content = (
     <>
-      <View style={calendarStyles.calendarWeekDateColumn}>
-        <Text style={calendarStyles.calendarWeekdayLabel}>{DAY_LABELS[dateObject.getUTCDay()]}</Text>
+      <View style={[calendarStyles.calendarWeekDateColumn, dateTone, isCurrentDate && calendarStyles.calendarWeekDateColumnToday]}>
+        <Text style={[calendarStyles.calendarWeekdayLabel, dateObject.getUTCDay() === 0 && calendarStyles.calendarWeekSundayLabel]}>{DAY_LABELS[dateObject.getUTCDay()]}</Text>
         <Text style={[
           calendarStyles.calendarWeekDateText,
           isCurrentDate && calendarStyles.calendarWeekDateTextToday,
           selected && calendarStyles.calendarWeekDateTextSelected,
-        ]}>{dateObject.getUTCMonth() + 1}/{dateObject.getUTCDate()}</Text>
+        ]}>{dateObject.getUTCDate()}</Text>
       </View>
       <View style={calendarStyles.calendarWeekItemStack}>
         {visibleItems.map((item) => (
           <View
             key={item.id}
-            style={[
-              calendarStyles.calendarWeekItemBadge,
-              item.kind === 'birthday' ? { backgroundColor: AppColors.calendarBirthday } : { backgroundColor: AppColors.calendarEvent },
-            ]}>
-            <Text numberOfLines={1} style={[
-              calendarStyles.calendarWeekItemText,
-              item.kind === 'birthday' ? { color: AppColors.calendarBirthdayText } : { color: AppColors.calendarEventText },
-            ]}>
-              {item.kind === 'birthday' ? `생일 ${item.label.replace(' 생일', '')}` : item.label}
-            </Text>
+            style={calendarStyles.calendarWeekItemBadge}>
+            <View style={calendarStyles.calendarWeekItemIcon}>
+              {item.kind === 'birthday' ? (
+                <Image accessibilityLabel="생일 케이크 아이콘" source={BIRTHDAY_CAKE_ICON} style={calendarStyles.calendarWeekItemImage} />
+              ) : getEventNpcImage(item.label) ? (
+                <Image accessibilityLabel={`${item.label} 아이콘`} source={getEventNpcImage(item.label)} style={calendarStyles.calendarWeekItemImage} />
+              ) : (
+                <MaterialCommunityIcons color={AppColors.calendarEventText} name="calendar-star" size={20} />
+              )}
+            </View>
+            <View style={calendarStyles.calendarWeekItemCopy}>
+              <Text numberOfLines={1} style={[calendarStyles.calendarWeekItemText, item.kind === 'birthday' ? calendarStyles.calendarWeekBirthdayText : calendarStyles.calendarWeekEventText]}>
+                {item.label}
+              </Text>
+              {item.kind === 'event' ? (
+                <Text numberOfLines={1} style={calendarStyles.calendarWeekItemMeta}>
+                  {`${getEventSchedule(item.label).time} · ${getEventSchedule(item.label).location}`}
+                </Text>
+              ) : null}
+            </View>
           </View>
         ))}
         {!items.length ? <Text style={calendarStyles.calendarWeekEmptyText}>일정 없음</Text> : null}
         {hiddenCount > 0 ? <Text style={calendarStyles.calendarWeekEmptyText}>+{hiddenCount}</Text> : null}
       </View>
-      {onSelectDate ? <MaterialCommunityIcons color={AppColors.inkMuted} name="chevron-right" size={16} style={calendarStyles.calendarWeekArrow} /> : null}
     </>
   );
 
@@ -2458,21 +2533,17 @@ function DateTimeModal({
   const closeAndApply = () => onApply(draftDate);
 
   return (
-    <Modal animationType="slide" onRequestClose={closeAndApply} transparent visible={visible}>
+    <Modal animationType="slide" onRequestClose={onClose} transparent visible={visible}>
       <View style={styles.modalBackdrop}>
         <Pressable onPress={onClose} style={StyleSheet.absoluteFill} />
         <View style={[styles.bottomSheet, calendarStyles.calendarSheet]}>
+          <View style={calendarStyles.sheetHandle} />
           <View style={calendarStyles.sheetHeader}>
             <Text style={[styles.sheetTitle, calendarStyles.sheetTitleCompact]}>캘린더</Text>
-            <Pressable accessibilityLabel="오늘 날짜로 이동" onPress={selectToday} style={calendarStyles.todayPickerButton}>
-              <MaterialCommunityIcons color={AppColors.leaf} name="calendar-today" size={16} />
-              <Text style={calendarStyles.todayPickerButtonText}>오늘</Text>
-            </Pressable>
-            <Pressable accessibilityLabel="캘린더 닫기" onPress={closeAndApply} style={calendarStyles.calendarCloseButton}>
+            <Pressable accessibilityLabel="캘린더 닫기" onPress={onClose} style={calendarStyles.calendarCloseButton}>
               <MaterialCommunityIcons color={AppColors.inkMuted} name="close" size={17} />
             </Pressable>
           </View>
-          <CalendarLegend />
           <CalendarSection
             cells={calendarCells}
             compact
@@ -2486,7 +2557,18 @@ function DateTimeModal({
             periodPicker={periodPicker}
             selectedDate={draftDate}
           />
-          <SelectedCalendarDateSummary date={draftDate} items={selectedDateItems} />
+          {calendarMode === 'month' ? <SelectedCalendarDateSummary date={draftDate} items={selectedDateItems} /> : null}
+          <View style={calendarStyles.calendarActionRow}>
+            <Pressable accessibilityRole="button" onPress={onClose} style={[calendarStyles.calendarActionButton, calendarStyles.calendarCancelAction]}>
+              <Text style={calendarStyles.calendarCancelActionText}>취소</Text>
+            </Pressable>
+            <Pressable accessibilityLabel="오늘 날짜 선택" accessibilityRole="button" onPress={selectToday} style={[calendarStyles.calendarActionButton, calendarStyles.calendarTodayAction]}>
+              <Text style={calendarStyles.calendarTodayActionText}>오늘</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" onPress={closeAndApply} style={[calendarStyles.calendarActionButton, calendarStyles.calendarApplyAction]}>
+              <Text style={calendarStyles.calendarApplyActionText}>이 날짜로 변경</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </Modal>
@@ -2494,45 +2576,40 @@ function DateTimeModal({
 }
 
 function SelectedCalendarDateSummary({ date, items }: { date: string; items: CalendarItem[] }) {
-  const birthdays = items.filter((item) => item.kind === 'birthday').map((item) => item.label.replace(' 생일', ''));
-  const events = items.filter((item) => item.kind === 'event').map((item) => item.label);
-  const details = [
-    birthdays.length ? { kind: 'birthday' as const, text: `생일 · ${summarizeNames(birthdays, '')}` } : null,
-    events.length ? { kind: 'event' as const, text: `이벤트 · ${summarizeNames(events, '')}` } : null,
-  ].filter((detail): detail is { kind: CalendarItemKind; text: string } => Boolean(detail));
-
   return (
-    <View style={calendarStyles.calendarSelectedDateCard}>
-      <View style={calendarStyles.calendarSelectedDateHeader}>
-        <MaterialCommunityIcons color={AppColors.calendarSelectedText} name="calendar-check" size={15} style={calendarStyles.calendarSelectedDateIcon} />
-        <Text style={calendarStyles.calendarSelectedDateTitle}>{formatMonthDayShort(date)} ({formatWeekdayInitial(date)}) 상세</Text>
-      </View>
-      {details.length ? details.map((detail) => (
-        <View key={detail.kind} style={calendarStyles.calendarDetailRow}>
-          <View style={[calendarStyles.calendarDetailDot, detail.kind === 'birthday' ? calendarStyles.calendarDetailBirthdayDot : calendarStyles.calendarDetailEventDot]} />
-          <Text numberOfLines={1} style={calendarStyles.calendarDetailText}>{detail.text}</Text>
+    <View style={calendarStyles.calendarAgenda}>
+      <Text style={calendarStyles.calendarAgendaTitle}>{formatMonthDayShort(date)} ({formatWeekdayInitial(date)}) 일정</Text>
+      {items.length ? items.map((item) => {
+        const isBirthday = item.kind === 'birthday';
+        const eventImage = isBirthday ? null : getEventNpcImage(item.label);
+        const eventSchedule = isBirthday ? null : getEventSchedule(item.label);
+        return (
+          <View key={item.id} style={[calendarStyles.calendarAgendaCard, isBirthday ? calendarStyles.calendarAgendaBirthdayCard : calendarStyles.calendarAgendaEventCard]}>
+            <View style={[calendarStyles.calendarAgendaIconFrame, isBirthday ? calendarStyles.calendarAgendaBirthdayIconFrame : calendarStyles.calendarAgendaEventIconFrame]}>
+              {isBirthday ? (
+                <Image accessibilityLabel="생일 케이크 아이콘" source={BIRTHDAY_CAKE_ICON} style={calendarStyles.calendarAgendaImage} />
+              ) : eventImage ? (
+                <Image accessibilityLabel={`${item.label} 아이콘`} source={eventImage} style={calendarStyles.calendarAgendaImage} />
+              ) : (
+                <MaterialCommunityIcons color={AppColors.calendarEventText} name="calendar-star" size={21} />
+              )}
+            </View>
+            <View style={calendarStyles.calendarAgendaCopy}>
+              <Text numberOfLines={1} style={[calendarStyles.calendarAgendaName, isBirthday ? calendarStyles.calendarAgendaBirthdayName : calendarStyles.calendarAgendaEventName]}>{item.label}</Text>
+              {!isBirthday ? (
+                <Text numberOfLines={1} style={[calendarStyles.calendarAgendaMeta, calendarStyles.calendarAgendaEventMeta]}>
+                  {`${eventSchedule?.time} · ${eventSchedule?.location}`}
+                </Text>
+              ) : null}
+            </View>
+          </View>
+        );
+      }) : (
+        <View style={calendarStyles.calendarAgendaEmptyCard}>
+          <MaterialCommunityIcons color={AppColors.inkMuted} name="calendar-blank-outline" size={20} />
+          <Text style={calendarStyles.calendarNoDetail}>등록된 생일이나 이벤트가 없어요.</Text>
         </View>
-      )) : <Text style={calendarStyles.calendarNoDetail}>등록된 생일이나 이벤트가 없어요.</Text>}
-    </View>
-  );
-}
-
-function CalendarLegend() {
-  const items = [
-    { label: '오늘', style: calendarStyles.calendarLegendTodayDot },
-    { label: '선택', style: calendarStyles.calendarLegendSelectedDot },
-    { label: '생일', style: calendarStyles.calendarLegendBirthdayDot },
-    { label: '이벤트', style: calendarStyles.calendarLegendEventDot },
-  ];
-
-  return (
-    <View accessibilityLabel="캘린더 범례" style={calendarStyles.calendarLegend}>
-      {items.map((item) => (
-        <View key={item.label} style={calendarStyles.calendarLegendItem}>
-          <View style={item.style} />
-          <Text style={calendarStyles.calendarLegendText}>{item.label}</Text>
-        </View>
-      ))}
+      )}
     </View>
   );
 }
