@@ -2847,7 +2847,7 @@ const todayStyles = StyleSheet.create({
   recipeMaterialImage: { height: 54, resizeMode: 'contain', width: 54 },
   recipeMaterialImageOverlap: { marginLeft: -14 },
   recipeGroupCopy: { flex: 1, minWidth: 0, paddingTop: 2 },
-  recipeGroupName: { fontFamily: Fonts.rounded, fontSize: 16, fontWeight: '900' },
+  recipeGroupName: { fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900' },
   recipeGroupInfoRow: { alignItems: 'flex-start', flexDirection: 'row', marginTop: 9, minWidth: 0 },
   recipeGroupInfoLabel: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900', width: 31 },
   recipeGroupInfoValue: { flex: 1, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', lineHeight: 15 },
