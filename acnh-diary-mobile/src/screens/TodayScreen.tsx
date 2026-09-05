@@ -687,6 +687,8 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const [clockNow, setClockNow] = useState(() => new Date());
   const [critterBrowserOpen, setCritterBrowserOpen] = useState(false);
   const [critterBrowserTab, setCritterBrowserTab] = useState<CritterTab>('bugs');
+  const [critterBrowserOnlyIncomplete, setCritterBrowserOnlyIncomplete] = useState(false);
+  const [critterPreviewCategory, setCritterPreviewCategory] = useState<CritterCategory | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => setClockNow(new Date()), 60 * 1000);
@@ -817,11 +819,14 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
     const state = collectionStates[`${item.category}/${item.id}`] ?? EMPTY_STATE;
     return getCritterStateRank(state) < 2;
   });
-  const critterPreviewItems = (progressNeededCritters.length ? progressNeededCritters : prioritizedCritters).slice(0, 4);
+  const critterPreviewSource = critterPreviewCategory
+    ? progressNeededCritters.filter((item) => item.category === critterPreviewCategory)
+    : (progressNeededCritters.length ? progressNeededCritters : prioritizedCritters);
+  const critterPreviewItems = critterPreviewSource.slice(0, 4);
   const progressCountsByCategory = CRITTER_CATEGORIES.map((category) => ({
     category,
     count: progressNeededCritters.filter((item) => item.category === category).length,
-  })).filter((item) => item.count > 0);
+  }));
 
   const toggleRoutine = (routine: Routine) => {
     if (!island || !gameDate) return;
@@ -1013,8 +1018,12 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
             month={month}
             hemisphere={island.hemisphere === 'south' ? 'south' : 'north'}
             states={collectionStates}
+            selectedCategory={critterPreviewCategory}
+            onSelectCategory={(category) => setCritterPreviewCategory((current) => current === category ? null : category)}
             onOpenFull={() => {
+              setCritterPreviewCategory(null);
               setCritterBrowserTab('bugs');
+              setCritterBrowserOnlyIncomplete(false);
               setCritterBrowserOpen(true);
             }}
             onToggle={updateCritterStatus}
@@ -1041,7 +1050,16 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
           month={month}
           onChangeTab={setCritterBrowserTab}
           onClose={() => setCritterBrowserOpen(false)}
+          onOpenItem={(item) => {
+            setCritterBrowserOpen(false);
+            router.push({
+              pathname: '/encyclopedia/[category]/[itemId]' as never,
+              params: { category: item.category, itemId: item.id },
+            });
+          }}
           onToggle={updateCritterStatus}
+          onlyIncomplete={critterBrowserOnlyIncomplete}
+          onToggleIncomplete={() => setCritterBrowserOnlyIncomplete((value) => !value)}
           states={collectionStates}
           tab={critterBrowserTab}
           visible={critterBrowserOpen}
@@ -1556,7 +1574,9 @@ function CritterPreview({
   items,
   month,
   progressNeededCount,
+  selectedCategory,
   states,
+  onSelectCategory,
   onOpenFull,
   onToggle,
 }: {
@@ -1566,7 +1586,9 @@ function CritterPreview({
   items: EncyclopediaItem[];
   month: number;
   progressNeededCount: number;
+  selectedCategory: CritterCategory | null;
   states: Record<string, EncyclopediaState>;
+  onSelectCategory: (category: CritterCategory) => void;
   onOpenFull: () => void;
   onToggle: (item: EncyclopediaItem, status: EncyclopediaStatus) => void;
 }) {
@@ -1587,13 +1609,23 @@ function CritterPreview({
             <Text style={todayStyles.critterStatValue}>{progressNeededCount}</Text>
           </View>
           <View style={todayStyles.critterCategoryRow}>
-            {categoryCounts.length ? categoryCounts.map((item) => (
-              <View key={item.category} style={todayStyles.critterCategoryChip}>
-                <Text style={todayStyles.critterCategoryText}>{getCategoryLabel(item.category)} {item.count}</Text>
-              </View>
-            )) : (
-              <Text style={todayStyles.critterHelperText}>진척 필요한 생물이 없어요. 전체보기에서 완료 생물까지 확인할 수 있어요.</Text>
-            )}
+            {categoryCounts.map((item) => (
+              <Pressable
+                accessibilityLabel={`${getCategoryLabel(item.category)} 미채집 또는 미기증 생물 보기`}
+                accessibilityRole="button"
+                accessibilityState={{ selected: selectedCategory === item.category }}
+                key={item.category}
+                onPress={() => onSelectCategory(item.category)}
+                style={[
+                  todayStyles.critterCategoryChip,
+                  selectedCategory === item.category && todayStyles.critterCategoryChipSelected,
+                ]}>
+                <Text style={[
+                  todayStyles.critterCategoryText,
+                  selectedCategory === item.category && todayStyles.critterCategoryTextSelected,
+                ]}>{getCategoryLabel(item.category)} {item.count}</Text>
+              </Pressable>
+            ))}
           </View>
         </View>
         <ScrollView contentContainerStyle={todayStyles.critterPreviewList} horizontal showsHorizontalScrollIndicator={false}>
@@ -1611,7 +1643,11 @@ function CritterPreview({
               />
             );
           }) : (
-            <Text style={todayStyles.noData}>선택한 게임 시간에 출현하는 생물이 없어요.</Text>
+            <Text style={todayStyles.noData}>
+              {selectedCategory
+                ? `${getCategoryLabel(selectedCategory)} 중 미채집·미기증 생물이 없어요.`
+                : '선택한 게임 시간에 출현하는 생물이 없어요.'}
+            </Text>
           )}
         </ScrollView>
         </View>
@@ -1626,7 +1662,10 @@ function TodayCritterBrowserSheet({
   month,
   onChangeTab,
   onClose,
+  onOpenItem,
   onToggle,
+  onlyIncomplete,
+  onToggleIncomplete,
   states,
   tab,
   visible,
@@ -1636,12 +1675,14 @@ function TodayCritterBrowserSheet({
   month: number;
   onChangeTab: (tab: CritterTab) => void;
   onClose: () => void;
+  onOpenItem: (item: EncyclopediaItem) => void;
   onToggle: (item: EncyclopediaItem, status: EncyclopediaStatus) => void;
+  onlyIncomplete: boolean;
+  onToggleIncomplete: () => void;
   states: Record<string, EncyclopediaState>;
   tab: CritterTab;
   visible: boolean;
 }) {
-  const [onlyIncomplete, setOnlyIncomplete] = useState(false);
   const filteredItems = items
     .filter((item) => {
       if (tab === 'newThisMonth') return getMonthlyAvailabilityFlags(item, hemisphere, month).isNewThisMonth;
@@ -1691,7 +1732,7 @@ function TodayCritterBrowserSheet({
                 accessibilityLabel="미채집 또는 미기증 생물만 표시"
                 accessibilityRole="switch"
                 accessibilityState={{ checked: onlyIncomplete }}
-                onPress={() => setOnlyIncomplete((value) => !value)}
+                onPress={onToggleIncomplete}
                 style={[todayStyles.critterBrowserFilterButton, onlyIncomplete && todayStyles.critterBrowserFilterButtonActive]}>
                 <MaterialCommunityIcons color={onlyIncomplete ? AppColors.leaf : AppColors.inkMuted} name="filter-variant" size={14} />
                 <Text style={[todayStyles.critterBrowserFilterText, onlyIncomplete && todayStyles.critterBrowserFilterTextActive]}>미채집·미기증만</Text>
@@ -1707,6 +1748,7 @@ function TodayCritterBrowserSheet({
                     item={item}
                     key={key}
                     month={month}
+                    onOpen={() => onOpenItem(item)}
                     onToggle={(status) => onToggle(item, status)}
                     state={states[key] ?? EMPTY_STATE}
                   />
@@ -1729,12 +1771,14 @@ function TodayCritterBrowserCard({
   hemisphere,
   item,
   month,
+  onOpen,
   onToggle,
   state,
 }: {
   hemisphere: 'north' | 'south';
   item: EncyclopediaItem;
   month: number;
+  onOpen: () => void;
   onToggle: (status: EncyclopediaStatus) => void;
   state: EncyclopediaState;
 }) {
@@ -1746,7 +1790,7 @@ function TodayCritterBrowserCard({
   const price = getCritterPriceText(item);
 
   return (
-    <View style={todayStyles.critterBrowserCard}>
+    <Pressable accessibilityLabel={`${item.nameKo} 상세 정보 보기`} accessibilityRole="button" onPress={onOpen} style={todayStyles.critterBrowserCard}>
       <View style={todayStyles.critterBrowserImageFrame}>
         {image ? (
           <Image source={image} resizeMode="contain" style={[todayStyles.critterBrowserImage, !state.caught && todayStyles.critterBrowserImageUncaught]} />
@@ -1794,7 +1838,7 @@ function TodayCritterBrowserCard({
         <Text numberOfLines={1} style={todayStyles.critterBrowserMeta}>{availabilityLabel ?? '출현 정보 확인 중'} · {availabilityTime ?? '시간 정보 없음'}</Text>
         {price ? <Text style={todayStyles.critterBrowserPrice}>판매가 {price}</Text> : null}
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -2910,7 +2954,9 @@ const todayStyles = StyleSheet.create({
   critterStatValue: { color: AppColors.museum, fontSize: 28, fontWeight: '900', lineHeight: 31 },
   critterCategoryRow: { flex: 1, flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
   critterCategoryChip: { backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, paddingHorizontal: 8, paddingVertical: 5 },
+  critterCategoryChipSelected: { backgroundColor: AppColors.museumSoft, borderColor: AppColors.museum, borderWidth: 1 },
   critterCategoryText: { color: AppColors.ink, fontSize: 10, fontWeight: '900' },
+  critterCategoryTextSelected: { color: AppColors.museum },
   critterHelperText: { color: AppColors.inkMuted, flex: 1, fontSize: 11, fontWeight: '800', lineHeight: 15 },
   critterPreviewList: { gap: 9 },
   critterPreviewItem: { backgroundColor: AppColors.museumSoft, borderRadius: AppRadii.control, padding: 8, width: 112 },
