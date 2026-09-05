@@ -6,7 +6,7 @@ import type { EncyclopediaCategory } from '@/types/encyclopedia';
 const categories: EncyclopediaCategory[] = ['bugs', 'fish', 'sea', 'fossils', 'art'];
 
 export default function EncyclopediaCategoryRoute() {
-  const { category } = useLocalSearchParams<{ category: string }>();
+  const { category, search } = useLocalSearchParams<{ category: string; search?: string }>();
   if (!categories.includes(category as EncyclopediaCategory)) return null;
-  return <EncyclopediaListScreen category={category as EncyclopediaCategory} />;
+  return <EncyclopediaListScreen category={category as EncyclopediaCategory} initialSearch={search ?? ''} />;
 }

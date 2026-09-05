@@ -1,9 +1,11 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import type { ImageSourcePropType } from 'react-native';
 
 import { AppColors } from '@/constants/theme';
 
 export type UnderlineTab<T extends string> = {
   icon?: string;
+  iconSource?: ImageSourcePropType;
   key: T;
   label: string;
 };
@@ -38,7 +40,13 @@ export function UnderlineTabs<T extends string>({
               onPress={() => onChange(tab.key)}
               style={[styles.tab, fitToWidth && styles.tabFitToWidth, selected && styles.tabActive]}>
               <View style={[styles.tabLabelRow, fitToWidth && styles.tabLabelRowCompact]}>
-                {tab.icon ? (
+                {tab.iconSource ? (
+                  <Image
+                    resizeMode="contain"
+                    source={tab.iconSource}
+                    style={[styles.tabIconImage, selected && styles.tabIconImageSelected]}
+                  />
+                ) : tab.icon ? (
                   <Text style={[styles.tabIcon, fitToWidth && styles.tabIconCompact, selected && styles.tabTextActive]}>
                     {tab.icon}
                   </Text>
@@ -107,6 +115,14 @@ const styles = StyleSheet.create({
   },
   tabIconCompact: {
     fontSize: 13,
+  },
+  tabIconImage: {
+    height: 18,
+    opacity: 0.48,
+    width: 18,
+  },
+  tabIconImageSelected: {
+    opacity: 1,
   },
   tabTextActive: {
     color: AppColors.leaf,

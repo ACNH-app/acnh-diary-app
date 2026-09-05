@@ -12,6 +12,7 @@ export type ListSortOption<T extends string> = {
 export type ListToolbarAction = {
   accessibilityLabel?: string;
   disabled?: boolean;
+  icon?: ReactNode;
   key: string;
   label: string;
   onPress: () => void;
@@ -91,6 +92,7 @@ export function ListFilterChip({
 export function ListResultToolbar<T extends string>({
   actions = [],
   descending,
+  filterControl,
   isFiltered,
   onReset,
   onSortChange,
@@ -103,6 +105,7 @@ export function ListResultToolbar<T extends string>({
 }: {
   actions?: readonly ListToolbarAction[];
   descending: boolean;
+  filterControl?: ReactNode;
   isFiltered: boolean;
   onReset: () => void;
   onSortChange: (value: T) => void;
@@ -144,15 +147,18 @@ export function ListResultToolbar<T extends string>({
                     action.disabled && styles.toolbarActionDisabled,
                     pressed && styles.pressed,
                   ]}>
-                  <Text style={[styles.toolbarActionText, action.disabled && styles.toolbarActionTextDisabled]}>
-                    {action.label}
-                  </Text>
+                  {action.icon ?? (
+                    <Text style={[styles.toolbarActionText, action.disabled && styles.toolbarActionTextDisabled]}>
+                      {action.label}
+                    </Text>
+                  )}
                 </Pressable>
               ))}
             </View>
           ) : null}
         </View>
         <View style={styles.sortControls}>
+          {filterControl ? <View style={styles.filterControl}>{filterControl}</View> : null}
           <Pressable
             accessibilityLabel={`정렬 조건 ${selectedSort?.label ?? ''}`}
             accessibilityRole="button"
@@ -348,6 +354,9 @@ const styles = StyleSheet.create({
   sortControls: {
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  filterControl: {
+    marginRight: 4,
   },
   sortSelect: {
     alignItems: 'center',

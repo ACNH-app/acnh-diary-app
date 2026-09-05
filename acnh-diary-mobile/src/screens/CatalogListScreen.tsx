@@ -349,12 +349,37 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
                 style={styles.searchBar}
                 value={search}
               />
-              <ListFilterToggle
-                activeCount={activeFilterCount}
-                expanded={filterExpanded}
-                onPress={() => setFilterExpanded((value) => !value)}
-              />
             </ListSearchRow>
+
+            <ListResultToolbar
+              actions={(() => {
+                const ownedActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item).owned);
+                return [
+                  {
+                    key: 'owned',
+                    label: ownedActive ? '보유 해제' : '전체 보유',
+                    disabled: visibleItems.length === 0,
+                    onPress: () => applyBulkOwned(!ownedActive),
+                  },
+                ];
+              })()}
+              descending={sortDescending}
+              isFiltered={isFiltered}
+              onReset={clearFilters}
+              onSortChange={setSortMode}
+              onToggleDirection={() => setSortDescending((value) => !value)}
+              resultCount={visibleItems.length}
+              filterControl={
+                <ListFilterToggle
+                  activeCount={activeFilterCount}
+                  expanded={filterExpanded}
+                  onPress={() => setFilterExpanded((value) => !value)}
+                />
+              }
+              sortOptions={(Object.entries(sortLabels) as Array<[SortMode, string]>).map(([key, label]) => ({ key, label }))}
+              sortValue={sortMode}
+              totalCount={subcategoryItems.length}
+            />
 
             {filterExpanded ? (
               <ListFilterPanel>
@@ -410,29 +435,6 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
                 })}
               </ListFilterPanel>
             ) : null}
-
-            <ListResultToolbar
-              actions={(() => {
-                const ownedActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item).owned);
-                return [
-                  {
-                    key: 'owned',
-                    label: ownedActive ? '보유 해제' : '전체 보유',
-                    disabled: visibleItems.length === 0,
-                    onPress: () => applyBulkOwned(!ownedActive),
-                  },
-                ];
-              })()}
-              descending={sortDescending}
-              isFiltered={isFiltered}
-              onReset={clearFilters}
-              onSortChange={setSortMode}
-              onToggleDirection={() => setSortDescending((value) => !value)}
-              resultCount={visibleItems.length}
-              sortOptions={(Object.entries(sortLabels) as Array<[SortMode, string]>).map(([key, label]) => ({ key, label }))}
-              sortValue={sortMode}
-              totalCount={subcategoryItems.length}
-            />
           </View>
         }
         onRefresh={refresh}

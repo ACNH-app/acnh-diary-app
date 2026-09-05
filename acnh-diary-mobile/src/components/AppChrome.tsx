@@ -3,7 +3,7 @@ import { Animated, Modal, NativeScrollEvent, NativeSyntheticEvent, Pressable, St
 import { useNavigation, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { AppTopBar, type AppIslandPicker } from '@/components/AppTopBar';
+import { AppTopBar, type AppIslandPicker, type AppTopBarSearch, type AppTopBarSectionTab } from '@/components/AppTopBar';
 import { AppColors, AppTabBarStyle } from '@/constants/theme';
 import { getActiveIsland } from '@/db/database';
 import type { Island } from '@/types/island';
@@ -56,9 +56,13 @@ type AppChromeProps = {
   breadcrumbs?: string[];
   contextLabel?: string;
   islandPicker?: AppIslandPicker;
+  search?: AppTopBarSearch;
+  sectionTabValue?: string;
+  sectionTabs?: readonly AppTopBarSectionTab[];
   showBack?: boolean;
   showMenu?: boolean;
   onBack?: () => void;
+  onSectionTabChange?: (key: string) => void;
 };
 
 export function AppChrome({
@@ -66,9 +70,13 @@ export function AppChrome({
   breadcrumbs,
   contextLabel,
   islandPicker,
+  search,
+  sectionTabValue,
+  sectionTabs,
   showBack,
   showMenu = true,
   onBack,
+  onSectionTabChange,
 }: AppChromeProps) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
@@ -117,6 +125,10 @@ export function AppChrome({
         islandPicker={islandPicker}
         onBack={onBack ?? (() => router.back())}
         onMenuPress={openDrawer}
+        onSectionTabChange={onSectionTabChange}
+        search={search}
+        sectionTabValue={sectionTabValue}
+        sectionTabs={sectionTabs}
         showBack={showBack}
         showMenu={showMenu}
         title={title}

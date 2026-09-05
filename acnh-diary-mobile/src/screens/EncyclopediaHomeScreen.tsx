@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -46,6 +46,7 @@ const CATEGORY_TONES: Record<EncyclopediaCategory, { accent: string; card: strin
 
 export function EncyclopediaHomeScreen() {
   const router = useRouter();
+  const [search, setSearch] = useState('');
   const [states, setStates] = useState<Record<string, EncyclopediaState>>({});
 
   const refresh = useCallback(() => {
@@ -102,10 +103,33 @@ export function EncyclopediaHomeScreen() {
   const totalItems = encyclopediaCategories.reduce((sum, item) => sum + progressFor(item.category).total, 0);
 
   const donatedPercent = totalItems ? Math.round((totalDonated / totalItems) * 100) : 0;
+  const normalizedSearch = search.trim().toLocaleLowerCase('ko-KR');
+  const visibleCategories = useMemo(
+    () => encyclopediaCategories.filter((category) => {
+      if (!normalizedSearch) return true;
+      const matchesCategory = category.label.toLocaleLowerCase('ko-KR').includes(normalizedSearch);
+      const matchesItem = getEncyclopediaItems(category.category).some((item) =>
+        item.nameKo.toLocaleLowerCase('ko-KR').includes(normalizedSearch) ||
+        item.nameEn.toLocaleLowerCase('ko-KR').includes(normalizedSearch) ||
+        String(item.number ?? '').includes(normalizedSearch),
+      );
+      return matchesCategory || matchesItem;
+    }),
+    [normalizedSearch],
+  );
 
   return (
     <CollectionHomeShell>
-      <AppChrome title="도감" />
+      <AppChrome
+        search={{
+          accessibilityLabel: '도감 검색',
+          onChangeText: setSearch,
+          onClear: () => setSearch(''),
+          placeholder: '도감 이름 또는 번호 검색',
+          value: search,
+        }}
+        title="도감"
+      />
       <SafeAreaView edges={[]} style={styles.safeArea}>
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           <CollectionHomeSummaryCard
@@ -119,7 +143,7 @@ export function EncyclopediaHomeScreen() {
           <CollectionHomeSectionHeading countLabel={`${encyclopediaCategories.length}개 분류`} title="도감" />
 
           <CollectionHomeCategoryGrid>
-            {encyclopediaCategories.map((category) => {
+            {visibleCategories.map((category) => {
               const progress = progressFor(category.category);
               return (
                 <CollectionHomeCategoryCard
@@ -136,13 +160,14 @@ export function EncyclopediaHomeScreen() {
                     router.push({
                       // Expo Router's generated route types are refreshed when the dev server starts.
                       pathname: '/encyclopedia/[category]' as never,
-                      params: { category: category.category },
+                      params: { category: category.category, search },
                     })
                   }
                   tone={CATEGORY_TONES[category.category]}
                 />
               );
             })}
+            {visibleCategories.length === 0 ? <Text style={styles.emptySearch}>검색 결과가 없어요.</Text> : null}
           </CollectionHomeCategoryGrid>
         </ScrollView>
       </SafeAreaView>
@@ -153,4 +178,5 @@ export function EncyclopediaHomeScreen() {
 const styles = StyleSheet.create({
   safeArea: { backgroundColor: AppColors.background, flex: 1 },
   content: { padding: 14, paddingBottom: 28 },
+  emptySearch: { color: AppColors.inkMuted, padding: 18, textAlign: 'center', width: '100%' },
 });

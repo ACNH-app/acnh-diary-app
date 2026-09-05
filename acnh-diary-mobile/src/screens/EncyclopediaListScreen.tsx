@@ -21,10 +21,8 @@ import {
   ListFilterPanel,
   ListFilterToggle,
   ListResultToolbar,
-  ListSearchRow,
   type ListSortOption,
 } from '@/components/ListControls';
-import { SearchBar } from '@/components/SearchBar';
 import { UnderlineTabs } from '@/components/UnderlineTabs';
 import { encyclopediaCategories, getEncyclopediaItems, getEncyclopediaLabel } from '@/data/encyclopedia';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
@@ -319,12 +317,12 @@ function getLocationTagChipColors(tag: string) {
   return locationTagChipColors[tag] ?? locationChipPalette[1];
 }
 
-export function EncyclopediaListScreen({ category }: { category: EncyclopediaCategory }) {
+export function EncyclopediaListScreen({ category, initialSearch = '' }: { category: EncyclopediaCategory; initialSearch?: string }) {
   const router = useRouter();
   const listRef = useRef<FlatList<EncyclopediaItem>>(null);
   const { handleScroll, navigationVisible } = useScrollNavigationVisibility();
   useTabBarVisibility(navigationVisible);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(initialSearch);
   const [activeFilters, setActiveFilters] = useState<FilterKey[]>([]);
   const [sortMode, setSortMode] = useState<SortMode>('number');
   const [sortDescending, setSortDescending] = useState(false);
@@ -500,7 +498,18 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
 
   return (
     <View style={styles.screenRoot}>
-      <AppChrome breadcrumbs={['도감']} showBack title={getEncyclopediaLabel(category)} />
+      <AppChrome
+        breadcrumbs={['도감']}
+        search={{
+          accessibilityLabel: `${getEncyclopediaLabel(category)} 검색`,
+          onChangeText: setSearch,
+          onClear: () => setSearch(''),
+          placeholder: '이름 또는 번호로 검색',
+          value: search,
+        }}
+        showBack
+        title={getEncyclopediaLabel(category)}
+      />
       <SafeAreaView edges={[]} style={styles.safeArea}>
         <FlatList
         columnWrapperStyle={styles.columnWrapper}
@@ -538,21 +547,46 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
               />
             ) : null}
 
-            <ListSearchRow>
-              <SearchBar
-                accessibilityLabel={`${getEncyclopediaLabel(category)} 검색`}
-                onChangeText={setSearch}
-                onClear={() => setSearch('')}
-                placeholder="이름 또는 번호로 검색"
-                style={styles.searchBar}
-                value={search}
-              />
-              <ListFilterToggle
-                activeCount={activeFilterCount}
-                expanded={filterExpanded}
-                onPress={() => setFilterExpanded((value) => !value)}
-              />
-            </ListSearchRow>
+            <ListResultToolbar
+              actions={(() => {
+                const primaryStatus = primaryBulkStatus(category);
+                const primaryActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item)[primaryStatus]);
+                const donatedActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item).donated);
+                return [
+                  {
+                    key: primaryStatus,
+                    label: bulkActionLabel(primaryStatus, primaryActive),
+                    icon: <CollectionStatusIcon active={primaryActive} status={primaryStatus} />,
+                    disabled: visibleItems.length === 0,
+                    onPress: () => applyBulkStatus(primaryStatus, !primaryActive),
+                  },
+                  {
+                    key: 'donated',
+                    label: bulkActionLabel('donated', donatedActive),
+                    icon: <CollectionStatusIcon active={donatedActive} status="donated" />,
+                    disabled: visibleItems.length === 0,
+                    onPress: () => applyBulkStatus('donated', !donatedActive),
+                  },
+                ];
+              })()}
+              descending={sortDescending}
+              filterControl={
+                <ListFilterToggle
+                  activeCount={activeFilterCount}
+                  expanded={filterExpanded}
+                  onPress={() => setFilterExpanded((value) => !value)}
+                />
+              }
+              isFiltered={isFiltered}
+              onReset={clearFilters}
+              onSortChange={setSortMode}
+              onToggleDirection={() => setSortDescending((value) => !value)}
+              resultCount={visibleItems.length}
+              showReset={false}
+              sortOptions={sortOptions}
+              sortValue={sortMode}
+              totalCount={items.length}
+            />
 
             {filterExpanded ? (
               <ListFilterPanel>
@@ -622,38 +656,6 @@ export function EncyclopediaListScreen({ category }: { category: EncyclopediaCat
                 ) : null}
               </ListFilterPanel>
             ) : null}
-
-            <ListResultToolbar
-              actions={(() => {
-                const primaryStatus = primaryBulkStatus(category);
-                const primaryActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item)[primaryStatus]);
-                const donatedActive = visibleItems.length > 0 && visibleItems.every((item) => getState(states, item).donated);
-                return [
-                  {
-                    key: primaryStatus,
-                    label: bulkActionLabel(primaryStatus, primaryActive),
-                    disabled: visibleItems.length === 0,
-                    onPress: () => applyBulkStatus(primaryStatus, !primaryActive),
-                  },
-                  {
-                    key: 'donated',
-                    label: bulkActionLabel('donated', donatedActive),
-                    disabled: visibleItems.length === 0,
-                    onPress: () => applyBulkStatus('donated', !donatedActive),
-                  },
-                ];
-              })()}
-              descending={sortDescending}
-              isFiltered={isFiltered}
-              onReset={clearFilters}
-              onSortChange={setSortMode}
-              onToggleDirection={() => setSortDescending((value) => !value)}
-              resultCount={visibleItems.length}
-              showReset={false}
-              sortOptions={sortOptions}
-              sortValue={sortMode}
-              totalCount={items.length}
-            />
 
           </View>
         }
@@ -826,7 +828,6 @@ const styles = StyleSheet.create({
   subtitle: { color: '#7A857B', fontSize: 13, marginTop: 4 },
   countBadge: { alignItems: 'center', backgroundColor: AppColors.primaryAction, borderRadius: 24, height: 48, justifyContent: 'center', width: 48 },
   countBadgeText: { color: AppColors.primaryText, fontSize: 17, fontWeight: '800' },
-  searchBar: { flex: 1, minWidth: 0 },
   filterPanelHeader: { alignItems: 'center', borderBottomColor: '#DDE8D7', borderBottomWidth: 1, flexDirection: 'row', gap: 8, marginBottom: 2, paddingBottom: 10 },
   filterPanelHint: { color: AppColors.inkMuted, flex: 1, fontSize: 11, fontWeight: '700' },
   filterResetButton: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 6 },

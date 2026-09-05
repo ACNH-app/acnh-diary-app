@@ -24,10 +24,8 @@ import {
   ListFilterPanel,
   ListFilterToggle,
   ListResultToolbar,
-  ListSearchRow,
   type ListSortOption,
 } from '@/components/ListControls';
-import { SearchBar } from '@/components/SearchBar';
 import { UnderlineTabs } from '@/components/UnderlineTabs';
 import {
   addCampsiteVisit,
@@ -58,6 +56,7 @@ type Category =
   | 'photoReceived';
 type SortMode = 'number' | 'name' | 'personality' | 'birthday' | 'species';
 type SortDirection = 'asc' | 'desc';
+type ResidentView = 'status' | 'personality' | 'species';
 
 const imageOptions: Array<{ type: VillagerImageType; label: string }> = [
   { type: 'icon', label: '아이콘' },
@@ -77,23 +76,70 @@ const hobbyOptions = Array.from(new Set(villagers.map((villager) => villager.hob
 );
 
 const subtypeOptions = Array.from(new Set(villagers.map((villager) => villager.subtype))).sort();
+const campsiteIcon = require('../data/assets/icons/campsite.png') as ImageSourcePropType;
+const framedPhotoIcon = require('../data/assets/villagers/framed_photo/cat10.png') as ImageSourcePropType;
+const islandResidentIcon = require('../data/assets/icons/map.png') as ImageSourcePropType;
+const movedOutIcon = require('../data/assets/catalog/furniture/items/5357ad43f5357c5e.png') as ImageSourcePropType;
+const dalModelPlaneIcon = require('../data/assets/catalog/furniture/items/a30ce38e57127940.png') as ImageSourcePropType;
+const wishIcon = require('../data/assets/icons/wish.png') as ImageSourcePropType;
 
-const categoryOptions: Array<{ category: Category; icon?: string; label: string }> = [
+type PersonalityTagStyle = {
+  backgroundColor: string;
+  borderColor: string;
+  color: string;
+};
+
+const personalityTagStyles: Record<string, PersonalityTagStyle> = {
+  '단순활발': { backgroundColor: '#FFE2E4', borderColor: '#F1B4B8', color: '#A54855' },
+  '느끼함': { backgroundColor: '#DFF0FA', borderColor: '#A9D3E7', color: '#37769A' },
+  '먹보': { backgroundColor: '#E4F4E0', borderColor: '#B6D9AA', color: '#4E8A45' },
+  '무뚝뚝': { backgroundColor: '#EDE5F8', borderColor: '#CBB9E6', color: '#725797' },
+  '성숙함': { backgroundColor: '#FFF0D9', borderColor: '#EBCB91', color: '#976A2F' },
+  '아이돌': { backgroundColor: '#FFE5F1', borderColor: '#F2B4D0', color: '#A84470' },
+  '운동광': { backgroundColor: '#DDF3F3', borderColor: '#A7D6D5', color: '#367E80' },
+  '친절함': { backgroundColor: '#EAF3D9', borderColor: '#C2D79D', color: '#5D8039' },
+};
+
+function getPersonalityTagStyle(personality: string): PersonalityTagStyle {
+  return personalityTagStyles[personality] ?? {
+    backgroundColor: AppColors.paperRaised,
+    borderColor: AppColors.line,
+    color: AppColors.ink,
+  };
+}
+
+const categoryOptions: Array<{ category: Category; icon?: string; iconSource?: ImageSourcePropType; label: string }> = [
   { category: 'all', icon: '▦', label: '전체' },
-  { category: 'wishlist', icon: '♡', label: '위시' },
-  { category: 'islandResident', icon: '⌂', label: '우리 섬' },
-  { category: 'movedOut', icon: '↗', label: '이사' },
-  { category: 'campsiteVisited', icon: '?', label: '캠핑장' },
-  { category: 'outside', label: '섬 외' },
-  { category: 'photoReceived', icon: '▣', label: '액자' },
+  { category: 'wishlist', iconSource: wishIcon, label: '위시' },
+  { category: 'islandResident', iconSource: islandResidentIcon, label: '우리 섬' },
+  { category: 'movedOut', iconSource: movedOutIcon, label: '이사' },
+  { category: 'campsiteVisited', iconSource: campsiteIcon, label: '캠핑장' },
+  { category: 'outside', iconSource: dalModelPlaneIcon, label: '섬 외' },
+  { category: 'photoReceived', iconSource: framedPhotoIcon, label: '액자' },
 ];
 
-const statusOptions: Array<{ status: VillagerStatus; icon: string; label: string }> = [
-  { status: 'wishlist', icon: '♡', label: '위시' },
-  { status: 'islandResident', icon: '⌂', label: '우리 섬' },
-  { status: 'movedOut', icon: '↗', label: '이사' },
-  { status: 'campsiteVisited', icon: '?', label: '캠핑' },
-  { status: 'photoReceived', icon: '▣', label: '액자' },
+const residentViewOptions: Array<{ key: ResidentView; label: string }> = [
+  { key: 'status', label: '상태' },
+  { key: 'personality', label: '성격' },
+  { key: 'species', label: '종류' },
+];
+
+const personalityTabOptions = [
+  { key: 'all', label: '전체' },
+  ...personalityOptions.map((label) => ({ key: label, label })),
+];
+
+const speciesTabOptions = [
+  { key: 'all', label: '전체' },
+  ...speciesOptions.map((label) => ({ key: label, label })),
+];
+
+const statusOptions: Array<{ icon?: string; iconSource?: ImageSourcePropType; label: string; status: VillagerStatus }> = [
+  { status: 'wishlist', iconSource: wishIcon, label: '위시' },
+  { status: 'islandResident', iconSource: islandResidentIcon, label: '우리 섬' },
+  { status: 'movedOut', iconSource: movedOutIcon, label: '이사' },
+  { status: 'campsiteVisited', iconSource: campsiteIcon, label: '캠핑' },
+  { status: 'photoReceived', iconSource: framedPhotoIcon, label: '액자' },
 ];
 
 function getVillagerStatusTone(status: VillagerStatus) {
@@ -255,9 +301,12 @@ export function VillagersScreen() {
   const router = useRouter();
   const listRef = useRef<FlatList<Villager>>(null);
   const [search, setSearch] = useState('');
+  const [residentView, setResidentView] = useState<ResidentView>('status');
   const [category, setCategory] = useState<Category>('all');
   const [sortMode, setSortMode] = useState<SortMode>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [activePersonalityTab, setActivePersonalityTab] = useState('all');
+  const [activeSpeciesTab, setActiveSpeciesTab] = useState('all');
   const [selectedSpecies, setSelectedSpecies] = useState<string | null>(null);
   const [selectedPersonality, setSelectedPersonality] = useState<string | null>(null);
   const [selectedHobby, setSelectedHobby] = useState<string | null>(null);
@@ -313,6 +362,14 @@ export function VillagersScreen() {
 
   const normalizedSearch = search.trim().toLocaleLowerCase('ko-KR');
   const categoryVillagers = villagers.filter((villager) => {
+    if (residentView === 'personality') {
+      return activePersonalityTab === 'all' || villager.personality_ko === activePersonalityTab;
+    }
+
+    if (residentView === 'species') {
+      return activeSpeciesTab === 'all' || villager.species_ko === activeSpeciesTab;
+    }
+
     const state = getVillagerState(villager.id);
     return category === 'all' ? true : category === 'outside' ? isOutside(state) : state[category];
   });
@@ -325,7 +382,6 @@ export function VillagersScreen() {
       !selectedPersonality || villager.personality_ko === selectedPersonality;
     const matchesHobby = !selectedHobby || villager.hobby === selectedHobby;
     const matchesSubtype = !selectedSubtype || villager.subtype === selectedSubtype;
-    const state = getVillagerState(villager.id);
     return matchesSearch && matchesSpecies && matchesPersonality && matchesHobby && matchesSubtype;
   });
   const visibleVillagers = [...filteredVillagers].sort((left, right) =>
@@ -337,6 +393,7 @@ export function VillagersScreen() {
   const isFiltered = Boolean(search || activeFilterCount || sortMode !== 'name' || sortDirection !== 'asc');
 
   const clearFilters = () => {
+    setSearch('');
     setSelectedSpecies(null);
     setSelectedPersonality(null);
     setSelectedHobby(null);
@@ -351,7 +408,21 @@ export function VillagersScreen() {
 
   return (
     <View style={styles.screenRoot}>
-      <AppChrome title="주민" />
+      <AppChrome
+        onSectionTabChange={(key) => {
+          if (key === 'status' || key === 'personality' || key === 'species') setResidentView(key);
+        }}
+        search={{
+          accessibilityLabel: '주민 검색',
+          onChangeText: setSearch,
+          onClear: () => setSearch(''),
+          placeholder: '이름, 종족, 성격, 번호로 검색',
+          value: search,
+        }}
+        sectionTabValue={residentView}
+        sectionTabs={residentViewOptions}
+        title="주민"
+      />
       <SafeAreaView edges={[]} style={styles.safeArea}>
       <FlatList
         columnWrapperStyle={styles.columnWrapper}
@@ -364,29 +435,58 @@ export function VillagersScreen() {
         ListEmptyComponent={<EmptyState search={search} />}
         ListHeaderComponent={
           <View>
-            <UnderlineTabs
-              accessibilityLabel={(tab) => `${tab.label} 주민 보기`}
-              fitToWidth
-              onChange={setCategory}
-              tabs={categoryOptions.map(({ category, icon, label }) => ({ key: category, icon, label }))}
-              value={category}
-            />
+            {residentView === 'status' ? (
+              <UnderlineTabs
+                accessibilityLabel={(tab) => `${tab.label} 주민 보기`}
+                fitToWidth
+                onChange={setCategory}
+              tabs={categoryOptions.map(({ category, icon, iconSource, label }) => ({ key: category, icon, iconSource, label }))}
+                value={category}
+              />
+            ) : null}
 
-            <ListSearchRow>
-              <SearchBar
-                accessibilityLabel="주민 검색"
-                onChangeText={setSearch}
-                onClear={() => setSearch('')}
-                placeholder="이름, 종족, 성격, 번호로 검색"
-                style={styles.searchBar}
-                value={search}
+            {residentView === 'personality' ? (
+              <UnderlineTabs
+                accessibilityLabel={(tab) => `${tab.label} 성격 주민 보기`}
+                onChange={setActivePersonalityTab}
+                tabs={personalityTabOptions}
+                value={activePersonalityTab}
               />
-              <ListFilterToggle
-                activeCount={activeFilterCount}
-                expanded={filterExpanded}
-                onPress={() => setFilterExpanded((value) => !value)}
+            ) : null}
+
+            {residentView === 'species' ? (
+              <UnderlineTabs
+                accessibilityLabel={(tab) => `${tab.label} 종류 주민 보기`}
+                onChange={setActiveSpeciesTab}
+                tabs={speciesTabOptions}
+                value={activeSpeciesTab}
               />
-            </ListSearchRow>
+            ) : null}
+
+            <ListResultToolbar
+              descending={sortDirection === 'desc'}
+              filterControl={
+                <ListFilterToggle
+                  activeCount={activeFilterCount}
+                  expanded={filterExpanded}
+                  onPress={() => setFilterExpanded((value) => !value)}
+                />
+              }
+              isFiltered={isFiltered}
+              onReset={clearFilters}
+              onSortChange={setSortMode}
+              onToggleDirection={() => setSortDirection((value) => value === 'asc' ? 'desc' : 'asc')}
+              resultCount={visibleVillagers.length}
+              sortOptions={[
+                { key: 'number', label: '번호순' },
+                { key: 'name', label: '이름순' },
+                { key: 'personality', label: '성격순' },
+                { key: 'birthday', label: '생일순' },
+                { key: 'species', label: '종족순' },
+              ] as Array<ListSortOption<SortMode>>}
+              sortValue={sortMode}
+              totalCount={categoryVillagers.length}
+            />
 
             {filterExpanded ? (
               <ListFilterPanel>
@@ -417,24 +517,6 @@ export function VillagersScreen() {
                 />
               </ListFilterPanel>
             ) : null}
-
-            <ListResultToolbar
-              descending={sortDirection === 'desc'}
-              isFiltered={isFiltered}
-              onReset={clearFilters}
-              onSortChange={setSortMode}
-              onToggleDirection={() => setSortDirection((value) => value === 'asc' ? 'desc' : 'asc')}
-              resultCount={visibleVillagers.length}
-              sortOptions={[
-                { key: 'number', label: '번호순' },
-                { key: 'name', label: '이름순' },
-                { key: 'personality', label: '성격순' },
-                { key: 'birthday', label: '생일순' },
-                { key: 'species', label: '종족순' },
-              ] as Array<ListSortOption<SortMode>>}
-              sortValue={sortMode}
-              totalCount={categoryVillagers.length}
-            />
 
           </View>
         }
@@ -577,6 +659,8 @@ function VillagerCard({
   onPress: (villager: Villager) => void;
   onToggleStatus: (villagerId: string, status: VillagerStatus) => void;
 }) {
+  const personalityTagStyle = getPersonalityTagStyle(villager.personality_ko);
+
   return (
     <View style={styles.villagerCard}>
       <Pressable
@@ -587,14 +671,16 @@ function VillagerCard({
         <View style={styles.cardImageWrap}>
           <Image resizeMode="contain" source={getImageSource(villager, 'icon')} style={styles.cardImage} />
         </View>
-        <Text numberOfLines={1} style={styles.cardNameKo}>
-          {villager.name_ko}
-        </Text>
-        <Text numberOfLines={1} style={styles.cardNameEn}>
-          {villager.name_en}
-        </Text>
-        <View style={styles.cardMetaRow}>
-          <Text style={styles.cardMeta}>{villager.personality_ko}</Text>
+        <View style={styles.cardNameRow}>
+          <Text numberOfLines={1} style={styles.cardNameKo}>
+            {villager.name_ko}
+          </Text>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.cardNameEn}>
+            {villager.name_en}
+          </Text>
+          <View style={[styles.cardMetaRow, styles.cardMetaRowInline, { backgroundColor: personalityTagStyle.backgroundColor, borderColor: personalityTagStyle.borderColor }]}>
+            <Text style={[styles.cardMeta, { color: personalityTagStyle.color }]}>{villager.personality_ko}</Text>
+          </View>
         </View>
       </Pressable>
       <VillagerStateToggleGroup
@@ -636,9 +722,18 @@ function VillagerStateToggleGroup({
               showLabels && styles.detailStatusToggle,
               selected && { backgroundColor: tone.background },
             ]}>
-            <Text style={[styles.statusToggleIcon, selected && styles.statusToggleIconSelected]}>
-              {option.icon}
-            </Text>
+            {option.iconSource ? (
+              <Image
+                accessibilityLabel={`${option.label} 아이콘`}
+                resizeMode="contain"
+                source={option.iconSource}
+                style={[styles.statusToggleIconImage, !selected && styles.statusToggleIconImageDimmed]}
+              />
+            ) : (
+              <Text style={[styles.statusToggleIcon, selected && styles.statusToggleIconSelected]}>
+                {option.icon}
+              </Text>
+            )}
             {selected ? <View style={[styles.statusCheckDot, { backgroundColor: tone.foreground }]} /> : null}
             {showLabels ? <Text style={styles.detailStatusLabel}>{option.label}</Text> : null}
           </Pressable>
@@ -1006,10 +1101,6 @@ const styles = StyleSheet.create({
     paddingBottom: 38,
     paddingHorizontal: 14,
   },
-  searchBar: {
-    flex: 1,
-    minWidth: 0,
-  },
   columnWrapper: {
     justifyContent: 'space-between',
   },
@@ -1115,16 +1206,24 @@ const styles = StyleSheet.create({
     height: 128,
     width: '94%',
   },
+  cardNameRow: {
+    alignItems: 'baseline',
+    flexDirection: 'row',
+    gap: 5,
+    marginTop: 10,
+    minWidth: 0,
+  },
   cardNameKo: {
     color: AppColors.ink,
     fontSize: 16,
     fontWeight: '800',
-    marginTop: 10,
+    flexShrink: 0,
   },
   cardNameEn: {
     color: AppColors.inkMuted,
+    flex: 1,
     fontSize: 11,
-    marginTop: 2,
+    minWidth: 0,
   },
   cardMetaRow: {
     alignItems: 'center',
@@ -1137,6 +1236,12 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingHorizontal: 7,
     paddingVertical: 3,
+  },
+  cardMetaRowInline: {
+    flexShrink: 0,
+    marginLeft: 4,
+    marginTop: 0,
+    paddingHorizontal: 6,
   },
   cardMeta: {
     color: AppColors.ink,
@@ -1175,6 +1280,8 @@ const styles = StyleSheet.create({
   statusToggleIconSelected: {
     color: AppColors.ink,
   },
+  statusToggleIconImage: { height: 20, width: 20 },
+  statusToggleIconImageDimmed: { opacity: 0.42 },
   statusCheckDot: {
     alignItems: 'center',
     borderColor: AppColors.card,
