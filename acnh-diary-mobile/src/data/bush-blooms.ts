@@ -41,8 +41,8 @@ export const bushBlooms: readonly BushBloom[] = [
     source: 'Nookipedia Bush',
     sourceUrl: SOURCE_URL,
     variants: [
-      { id: 'red-camellia', nameKo: '빨간 동백 묘목', nameEn: 'red-camellia start', catalogItemId: '693df8a8a5f75aac', assetKey: 'bush-start/red-camellia' },
-      { id: 'pink-camellia', nameKo: '핑크색 동백 묘목', nameEn: 'pink-camellia start', catalogItemId: 'cef913414ed21129', assetKey: 'bush-start/pink-camellia' },
+      { id: 'red-camellia', nameKo: '빨간 동백나무', nameEn: 'red camellia bush', catalogItemId: 'dbd041fbae7a1048', assetKey: 'bush/red-camellia' },
+      { id: 'pink-camellia', nameKo: '핑크색 동백나무', nameEn: 'pink camellia bush', catalogItemId: 'fc9eaad5f42c94ec', assetKey: 'bush/pink-camellia' },
     ],
   },
   {
@@ -54,8 +54,8 @@ export const bushBlooms: readonly BushBloom[] = [
     source: 'Nookipedia Bush',
     sourceUrl: SOURCE_URL,
     variants: [
-      { id: 'pink-azalea', nameKo: '핑크색 진달래 묘목', nameEn: 'pink-azalea start', catalogItemId: '04a58853f4bc17d9', assetKey: 'bush-start/pink-azalea' },
-      { id: 'white-azalea', nameKo: '하얀 진달래 묘목', nameEn: 'white-azalea start', catalogItemId: '4a9a553f06ff28c8', assetKey: 'bush-start/white-azalea' },
+      { id: 'pink-azalea', nameKo: '핑크색 진달래나무', nameEn: 'pink azalea bush', catalogItemId: 'cba75d2212d50e19', assetKey: 'bush/pink-azalea' },
+      { id: 'white-azalea', nameKo: '하얀 진달래나무', nameEn: 'white azalea bush', catalogItemId: '3aa84e643508de73', assetKey: 'bush/white-azalea' },
     ],
   },
   {
@@ -67,8 +67,8 @@ export const bushBlooms: readonly BushBloom[] = [
     source: 'Nookipedia Bush',
     sourceUrl: SOURCE_URL,
     variants: [
-      { id: 'blue-hydrangea', nameKo: '파란 수국 묘목', nameEn: 'blue-hydrangea start', catalogItemId: '37ec7718ad45eaab', assetKey: 'bush-start/blue-hydrangea' },
-      { id: 'pink-hydrangea', nameKo: '핑크색 수국 묘목', nameEn: 'pink-hydrangea start', catalogItemId: 'c3dbc8a96268bb90', assetKey: 'bush-start/pink-hydrangea' },
+      { id: 'blue-hydrangea', nameKo: '파란 수국나무', nameEn: 'blue hydrangea bush', catalogItemId: 'de7537179a5ff721', assetKey: 'bush/blue-hydrangea' },
+      { id: 'pink-hydrangea', nameKo: '핑크색 수국나무', nameEn: 'pink hydrangea bush', catalogItemId: '82b419180cee3778', assetKey: 'bush/pink-hydrangea' },
     ],
   },
   {
@@ -80,8 +80,8 @@ export const bushBlooms: readonly BushBloom[] = [
     source: 'Nookipedia Bush',
     sourceUrl: SOURCE_URL,
     variants: [
-      { id: 'pink-plumeria', nameKo: '핑크색 플루메리아 묘목', nameEn: 'pink-plumeria start', catalogItemId: '5f0d14d868d0404d', assetKey: 'bush-start/pink-plumeria' },
-      { id: 'white-plumeria', nameKo: '하얀 플루메리아 묘목', nameEn: 'white-plumeria start', catalogItemId: '2624ee149b04811d', assetKey: 'bush-start/white-plumeria' },
+      { id: 'pink-plumeria', nameKo: '핑크색 플루메리아나무', nameEn: 'pink plumeria bush', catalogItemId: '60bd77f9a362ecf5', assetKey: 'bush/pink-plumeria' },
+      { id: 'white-plumeria', nameKo: '하얀 플루메리아나무', nameEn: 'white plumeria bush', catalogItemId: 'f439d195ecb105ca', assetKey: 'bush/white-plumeria' },
     ],
   },
   {
@@ -93,8 +93,8 @@ export const bushBlooms: readonly BushBloom[] = [
     source: 'Nookipedia Bush',
     sourceUrl: SOURCE_URL,
     variants: [
-      { id: 'red-hibiscus', nameKo: '빨간 히비스커스 묘목', nameEn: 'red-hibiscus start', catalogItemId: 'd0bb45df9e94958b', assetKey: 'bush-start/red-hibiscus' },
-      { id: 'yellow-hibiscus', nameKo: '노란 히비스커스 묘목', nameEn: 'yellow-hibiscus start', catalogItemId: '11d3141ed7f7b02d', assetKey: 'bush-start/yellow-hibiscus' },
+      { id: 'red-hibiscus', nameKo: '빨간 히비스커스나무', nameEn: 'red hibiscus bush', catalogItemId: 'd930ce8c10b5e406', assetKey: 'bush/red-hibiscus' },
+      { id: 'yellow-hibiscus', nameKo: '노란 히비스커스나무', nameEn: 'yellow hibiscus bush', catalogItemId: '2f60cef80a713562', assetKey: 'bush/yellow-hibiscus' },
     ],
   },
   {
@@ -106,8 +106,8 @@ export const bushBlooms: readonly BushBloom[] = [
     source: 'Nookipedia Bush',
     sourceUrl: SOURCE_URL,
     variants: [
-      { id: 'orange-tea-olive', nameKo: '오렌지색 금목서 묘목', nameEn: 'orange-tea-olive start', catalogItemId: '60cd48a71fe8d864', assetKey: 'bush-start/orange-tea-olive' },
-      { id: 'yellow-tea-olive', nameKo: '노란 금목서 묘목', nameEn: 'yellow-tea-olive start', catalogItemId: '29601c609aab2a19', assetKey: 'bush-start/yellow-tea-olive' },
+      { id: 'orange-tea-olive', nameKo: '오렌지색 금목서나무', nameEn: 'orange tea olive bush', catalogItemId: 'a29900794a428322', assetKey: 'bush/orange-tea-olive' },
+      { id: 'yellow-tea-olive', nameKo: '노란 금목서나무', nameEn: 'yellow tea olive bush', catalogItemId: '3f81ac87aec33a91', assetKey: 'bush/yellow-tea-olive' },
     ],
   },
   {
@@ -119,7 +119,7 @@ export const bushBlooms: readonly BushBloom[] = [
     source: 'Nookipedia Bush',
     sourceUrl: SOURCE_URL,
     variants: [
-      { id: 'holly', nameKo: '호랑가시나무 묘목', nameEn: 'holly start', catalogItemId: '47f553be35d2a20c', assetKey: 'bush-start/holly' },
+      { id: 'holly', nameKo: '호랑가시나무', nameEn: 'holly bush', catalogItemId: '839132089b3d8f52', assetKey: 'bush/holly' },
     ],
   },
 ];

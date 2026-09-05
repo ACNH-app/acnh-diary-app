@@ -283,6 +283,21 @@ const ZODIAC_SIGNS = [
   { key: 'sagittarius', name: '사수자리', start: [11, 22], end: [12, 21] },
 ] as const;
 
+const ZODIAC_FURNITURE_NAMES: Record<(typeof ZODIAC_SIGNS)[number]['key'], string> = {
+  aquarius: '물병자리 항아리',
+  aries: '양자리 목마',
+  cancer: '게자리 테이블',
+  capricorn: '염소자리 모형',
+  gemini: '쌍둥이자리 옷장',
+  leo: '사자자리 벽걸이 장식',
+  libra: '천칭자리 저울',
+  pisces: '물고기자리 램프',
+  sagittarius: '사수자리 활',
+  scorpio: '전갈자리 램프',
+  taurus: '황소자리 욕조',
+  virgo: '처녀자리 하프',
+};
+
 function getZodiacDefinition(month: number, day: number) {
   const key = month * 100 + day;
   return ZODIAC_SIGNS.find(({ start, end }) => {
@@ -294,6 +309,11 @@ function getZodiacDefinition(month: number, day: number) {
 
 function formatZodiacPeriod(zodiac: (typeof ZODIAC_SIGNS)[number]) {
   return `${zodiac.start[0]}.${String(zodiac.start[1]).padStart(2, '0')} — ${zodiac.end[0]}.${String(zodiac.end[1]).padStart(2, '0')}`;
+}
+
+function getZodiacFurniture(zodiac: (typeof ZODIAC_SIGNS)[number]) {
+  const nameKo = ZODIAC_FURNITURE_NAMES[zodiac.key];
+  return catalogItems.find((item) => item.catalogType === 'furniture' && item.nameKo === nameKo);
 }
 
 function formatMonthDayCode(value: number) {
@@ -806,6 +826,7 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
     };
   }).filter((group) => group.recipeCount > 0);
   const zodiacFragmentItem = catalogItems.find((item) => item.nameKo === `${zodiacDefinition.name} 조각`);
+  const zodiacFurnitureItem = getZodiacFurniture(zodiacDefinition);
   const todayEventNames = getTodayEventNames(dateObject, hemisphere);
   const bloomingBushes = getBloomingBushes(month, day, hemisphere);
   const prioritizedCritters = [...availableCritters].sort((a, b) => {
@@ -983,7 +1004,7 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
           />
           <View style={todayStyles.dashboardTwoColumn}>
             <BloomingBushCard bushes={bloomingBushes} hemisphere={hemisphere} />
-            <ZodiacCard definition={zodiacDefinition} fragmentItem={zodiacFragmentItem} />
+            <ZodiacCard definition={zodiacDefinition} fragmentItem={zodiacFragmentItem} furnitureItem={zodiacFurnitureItem} />
           </View>
           <TodayEventCard events={todayEventNames} />
 
@@ -1273,7 +1294,18 @@ function SeasonalRecipeCard({ groups, onOpenSeries }: {
                   )) : <MaterialCommunityIcons color={variant.accent} name="leaf" size={42} />}
                 </View>
                 <View style={todayStyles.recipeGroupCopy}>
-                  <Text numberOfLines={1} style={[todayStyles.recipeGroupName, { color: variant.ink }]}>{group.materialName} 레시피</Text>
+                  <View style={todayStyles.recipeGroupTitleRow}>
+                    <Text numberOfLines={1} style={[todayStyles.recipeGroupName, { color: variant.ink }]}>{group.materialName} 레시피</Text>
+                    <Pressable
+                      accessibilityLabel={`${group.materialName} 레시피 전체보기`}
+                      accessibilityRole="button"
+                      hitSlop={8}
+                      onPress={() => onOpenSeries(group.key)}
+                      style={todayStyles.recipeViewAllButton}>
+                      <Text style={[todayStyles.recipeViewAllText, { color: variant.accent }]}>전체보기</Text>
+                      <MaterialCommunityIcons color={variant.accent} name="chevron-right" size={17} />
+                    </Pressable>
+                  </View>
                   <View style={todayStyles.recipeGroupInfoRow}>
                     <Text style={[todayStyles.recipeGroupInfoLabel, { color: variant.accent }]}>기간</Text>
                     <Text numberOfLines={1} style={[todayStyles.recipeGroupInfoValue, { color: variant.muted }]}>{group.periodKo}</Text>
@@ -1282,25 +1314,15 @@ function SeasonalRecipeCard({ groups, onOpenSeries }: {
                     <Text style={[todayStyles.recipeGroupInfoLabel, { color: variant.accent }]}>재료</Text>
                     <Text numberOfLines={2} style={[todayStyles.recipeGroupInfoValue, { color: variant.muted }]}>{group.materialLabel}</Text>
                   </View>
+                  <View style={todayStyles.recipeProgressSection}>
+                    <View style={todayStyles.recipeProgressBottomRow}>
+                      <View style={[todayStyles.recipeProgressRail, { backgroundColor: variant.rail }]}>
+                        <View style={[todayStyles.recipeProgressFill, { backgroundColor: variant.accent, width: `${progress}%` }]} />
+                      </View>
+                      <Text style={[todayStyles.recipeGroupCount, { color: variant.ink }]}>{group.collectedCount} / {group.recipeCount}</Text>
+                    </View>
+                  </View>
                 </View>
-                <View style={todayStyles.recipeGroupAside}>
-                  <Pressable
-                    accessibilityLabel={`${group.materialName} 레시피 전체보기`}
-                    accessibilityRole="button"
-                    hitSlop={8}
-                    onPress={() => onOpenSeries(group.key)}
-                    style={todayStyles.recipeViewAllButton}>
-                    <Text style={[todayStyles.recipeViewAllText, { color: variant.accent }]}>전체보기</Text>
-                    <MaterialCommunityIcons color={variant.accent} name="chevron-right" size={17} />
-                  </Pressable>
-                </View>
-              </View>
-              <View style={todayStyles.recipeProgressHeader}>
-                <Text style={[todayStyles.recipeProgressLabel, { color: variant.muted }]}>레시피 수집률</Text>
-                <Text style={[todayStyles.recipeGroupCount, { color: variant.ink }]}>{group.collectedCount} / {group.recipeCount}</Text>
-              </View>
-              <View style={[todayStyles.recipeProgressRail, { backgroundColor: variant.rail }]}>
-                <View style={[todayStyles.recipeProgressFill, { backgroundColor: variant.accent, width: `${progress}%` }]} />
               </View>
             </View>
           );
@@ -1358,8 +1380,13 @@ function BloomingBushCard({ bushes, hemisphere }: { bushes: BloomingBush[]; hemi
         <View style={todayStyles.bushList}>
           {bushes.map((bush) => (
             <View key={bush.id} style={[todayStyles.bushItem, bushes.length === 1 && todayStyles.bushItemSingle]}>
-              <View style={todayStyles.bushImageFrame}>
-                <Image accessibilityLabel={bush.nameKo} resizeMode="contain" source={bush.icon} style={todayStyles.bushImage} />
+              <View style={[todayStyles.bushImageFrame, bushes.length === 1 && todayStyles.bushImageFrameSingle]}>
+                <Image
+                  accessibilityLabel={bush.nameKo}
+                  resizeMode="contain"
+                  source={bush.icon}
+                  style={[todayStyles.bushImage, bushes.length === 1 && todayStyles.bushImageSingle]}
+                />
               </View>
               <View style={todayStyles.bushCopy}>
                 <Text numberOfLines={1} style={todayStyles.bushName}>{bush.nameKo}</Text>
@@ -1373,9 +1400,10 @@ function BloomingBushCard({ bushes, hemisphere }: { bushes: BloomingBush[]; hemi
   );
 }
 
-function ZodiacCard({ definition, fragmentItem }: { definition: (typeof ZODIAC_SIGNS)[number]; fragmentItem?: ReturnType<typeof getCatalogItems>[number] }) {
+function ZodiacCard({ definition, fragmentItem, furnitureItem }: { definition: (typeof ZODIAC_SIGNS)[number]; fragmentItem?: ReturnType<typeof getCatalogItems>[number]; furnitureItem?: ReturnType<typeof getCatalogItems>[number] }) {
   const zodiacIcon = ZODIAC_ICON_ASSETS[definition.key];
   const fragmentAsset = fragmentItem ? getCatalogAssetForItem(fragmentItem) : undefined;
+  const furnitureAsset = furnitureItem ? getCatalogAssetForItem(furnitureItem) : undefined;
   return (
     <DashboardGradientCard colors={['#ECE5FF', '#D8CCFA']} style={[todayStyles.dashboardHalfCard, todayStyles.zodiacCard]}>
       <View style={todayStyles.dashboardCardHeader}>
@@ -1384,10 +1412,19 @@ function ZodiacCard({ definition, fragmentItem }: { definition: (typeof ZODIAC_S
         </View>
       </View>
       <View style={todayStyles.zodiacBody}>
-        <Image accessibilityLabel={definition.name} source={zodiacIcon} style={todayStyles.zodiacImage} />
+        <View style={todayStyles.zodiacImageCard}>
+          <Image accessibilityLabel={definition.name} source={zodiacIcon} style={todayStyles.zodiacImage} />
+        </View>
         <View style={todayStyles.zodiacCopy}>
           <Text style={todayStyles.zodiacName}>{definition.name}</Text>
           <Text style={todayStyles.zodiacPeriod}>{formatZodiacPeriod(definition)}</Text>
+        </View>
+      </View>
+      <View style={todayStyles.zodiacFurnitureRow}>
+        {furnitureAsset ? <Image accessibilityLabel={`${definition.name} 가구`} source={furnitureAsset} style={todayStyles.zodiacFurnitureImage} /> : null}
+        <View style={todayStyles.zodiacFurnitureCopy}>
+          <Text style={todayStyles.zodiacFurnitureLabel}>별자리 가구</Text>
+          <Text numberOfLines={1} style={todayStyles.zodiacFurnitureName}>{furnitureItem?.nameKo ?? '가구 정보 없음'}</Text>
         </View>
       </View>
       <View style={todayStyles.fragmentRow}>
@@ -1401,7 +1438,7 @@ function ZodiacCard({ definition, fragmentItem }: { definition: (typeof ZODIAC_S
 
 function TodayEventCard({ events }: { events: string[] }) {
   return (
-    <DashboardGradientCard colors={['#FFE4CF', '#FFCFAF']} style={todayStyles.eventCard}>
+    <DashboardGradientCard colors={['#FFE4CF', '#FFCFAF']} style={[todayStyles.eventCard, !events.length && todayStyles.eventCardEmpty]}>
       <View style={todayStyles.dashboardCardHeader}>
         <View style={todayStyles.dashboardCardTitleRow}>
           <Text style={todayStyles.dashboardCardTitle}>오늘의 이벤트</Text>
@@ -2816,11 +2853,12 @@ const todayStyles = StyleSheet.create({
   bushCard: { minHeight: 190 },
   zodiacCard: { minHeight: 190 },
   eventCard: { minHeight: 126 },
+  eventCardEmpty: { minHeight: 82 },
   dashboardCardHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
   dashboardCardTitleRow: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 6, minWidth: 0 },
   dashboardCardTitle: { color: AppColors.ink, flexShrink: 1, fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900' },
   dashboardCardCountChip: { backgroundColor: 'rgba(255,255,255,0.62)', borderRadius: AppRadii.pill, color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 7, paddingVertical: 4 },
-  recipeDashboardHeader: { alignItems: 'center', flexDirection: 'row', height: 52, justifyContent: 'space-between', marginBottom: 2 },
+  recipeDashboardHeader: { alignItems: 'center', flexDirection: 'row', height: 44, justifyContent: 'space-between', marginBottom: 2 },
   recipeDashboardHeaderCopy: { flex: 1, minWidth: 0 },
   recipeDashboardTitleRow: { alignItems: 'center', flexDirection: 'row', gap: 8, minWidth: 0 },
   recipeDashboardTitleCopy: { flex: 1, minWidth: 0 },
@@ -2830,8 +2868,8 @@ const todayStyles = StyleSheet.create({
   recipeDashboardPeriodLabel: { fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '800' },
   recipeDashboardPeriodValue: { fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900', marginTop: 5 },
   seasonChip: { borderRadius: AppRadii.pill, color: '#FFFFFF', fontFamily: Fonts.rounded, fontSize: 13, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 11, paddingVertical: 6 },
-  recipeHeaderBand: { borderBottomLeftRadius: 24, borderBottomRightRadius: 24, height: 74, left: 0, position: 'absolute', right: 0, top: 0 },
-  recipeDecorLayer: { height: 90, left: 0, overflow: 'hidden', position: 'absolute', right: 0, top: 0 },
+  recipeHeaderBand: { borderBottomLeftRadius: 24, borderBottomRightRadius: 24, height: 64, left: 0, position: 'absolute', right: 0, top: 0 },
+  recipeDecorLayer: { height: 80, left: 0, overflow: 'hidden', position: 'absolute', right: 0, top: 0 },
   recipeDecorCircle: { borderRadius: 100, position: 'absolute' },
   recipeDecorSpringLarge: { backgroundColor: '#FFD3DF', height: 88, opacity: 0.62, right: 20, top: -35, width: 88 },
   recipeDecorSpringSmall: { backgroundColor: '#F7B7CA', height: 48, opacity: 0.45, right: 2, top: 8, width: 48 },
@@ -2841,38 +2879,46 @@ const todayStyles = StyleSheet.create({
   recipeDecorAutumnGold: { backgroundColor: '#EFA95A', opacity: 0.62, right: 74 },
   recipeDecorAutumnRust: { backgroundColor: '#C97842', opacity: 0.48, right: 32, top: 12, transform: [{ rotate: '55deg' }] },
   recipeDecorSnow: { backgroundColor: '#FFFFFF', borderRadius: AppRadii.pill, height: 6, position: 'absolute', width: 6 },
-  recipeGroupRow: { borderRadius: 18, borderWidth: 1, height: 144, marginTop: 8, padding: 12 },
-  recipeGroupTop: { flexDirection: 'row', gap: 8, justifyContent: 'space-between', minHeight: 0 },
-  recipeMaterialIcons: { alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: 64 },
-  recipeMaterialImage: { height: 54, resizeMode: 'contain', width: 54 },
-  recipeMaterialImageOverlap: { marginLeft: -14 },
-  recipeGroupCopy: { flex: 1, minWidth: 0, paddingTop: 2 },
-  recipeGroupName: { fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900' },
-  recipeGroupInfoRow: { alignItems: 'flex-start', flexDirection: 'row', marginTop: 9, minWidth: 0 },
+  recipeGroupRow: { borderRadius: 18, borderWidth: 1, height: 120, marginTop: 8, padding: 10 },
+  recipeGroupTop: { flex: 1, flexDirection: 'row', gap: 8, minHeight: 0 },
+  recipeMaterialIcons: { alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: 70 },
+  recipeMaterialImage: { height: 62, resizeMode: 'contain', width: 62 },
+  recipeMaterialImageOverlap: { marginLeft: -18 },
+  recipeGroupCopy: { flex: 1, justifyContent: 'center', minWidth: 0, paddingTop: 2 },
+  recipeGroupTitleRow: { alignItems: 'center', flexDirection: 'row', gap: 3, minWidth: 0 },
+  recipeGroupName: { flex: 1, fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900', minWidth: 0 },
+  recipeGroupInfoRow: { alignItems: 'flex-start', flexDirection: 'row', marginTop: 7, minWidth: 0 },
   recipeGroupInfoLabel: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900', width: 31 },
   recipeGroupInfoValue: { flex: 1, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', lineHeight: 15 },
-  recipeGroupAside: { alignItems: 'flex-end', marginLeft: 3, width: 76 },
   recipeViewAllButton: { alignItems: 'center', flexDirection: 'row', gap: 1, justifyContent: 'flex-end' },
   recipeViewAllText: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900' },
-  recipeProgressHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 7, marginTop: 8 },
-  recipeProgressLabel: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800' },
-  recipeGroupCount: { fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900', lineHeight: 18 },
-  recipeProgressRail: { borderRadius: AppRadii.pill, height: 7, overflow: 'hidden' },
+  recipeProgressSection: { marginTop: 7 },
+  recipeProgressBottomRow: { alignItems: 'center', flexDirection: 'row', gap: 8 },
+  recipeGroupCount: { fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900', lineHeight: 14 },
+  recipeProgressRail: { borderRadius: AppRadii.pill, flex: 1, height: 5, overflow: 'hidden' },
   recipeProgressFill: { borderRadius: AppRadii.pill, height: '100%' },
   dashboardEmptyText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', lineHeight: 15 },
   bushList: { alignItems: 'stretch', flexDirection: 'row', flexWrap: 'wrap', gap: 7, justifyContent: 'center' },
-  bushItem: { alignItems: 'center', backgroundColor: '#F3FFF6', borderRadius: 15, flexBasis: '47%', flexGrow: 1, minHeight: 108, paddingHorizontal: 5, paddingVertical: 7 },
-  bushItemSingle: { flexBasis: '62%', flexGrow: 0 },
-  bushImageFrame: { alignItems: 'center', backgroundColor: '#E6F8EA', borderRadius: 12, height: 50, justifyContent: 'center', width: '100%' },
-  bushImage: { height: 46, width: 46 },
+  bushItem: { alignItems: 'center', backgroundColor: '#F3FFF6', borderRadius: 15, flexBasis: '47%', flexGrow: 1, minHeight: 128, paddingHorizontal: 3, paddingVertical: 4 },
+  bushItemSingle: { flexBasis: '100%', flexGrow: 0, minHeight: 150 },
+  bushImageFrame: { alignItems: 'center', backgroundColor: 'transparent', height: 76, justifyContent: 'center', width: '100%' },
+  bushImageFrameSingle: { height: 102 },
+  bushImage: { height: 72, width: 72 },
+  bushImageSingle: { height: 98, width: 98 },
   bushCopy: { alignItems: 'center', minWidth: 0, width: '100%' },
-  bushName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', marginTop: 4 },
+  bushName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900', marginTop: 4 },
   bushPeriod: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 7, fontWeight: '800', lineHeight: 10, marginTop: 2 },
   zodiacBody: { alignItems: 'center', flexDirection: 'row', gap: 7, minHeight: 61 },
+  zodiacImageCard: { alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 14, height: 68, justifyContent: 'center', width: 68 },
   zodiacImage: { height: 59, resizeMode: 'contain', width: 59 },
   zodiacCopy: { flex: 1, minWidth: 0 },
   zodiacName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
   zodiacPeriod: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '800', lineHeight: 12, marginTop: 3 },
+  zodiacFurnitureRow: { alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.72)', borderRadius: 12, flexDirection: 'row', gap: 6, marginTop: 7, paddingHorizontal: 7, paddingVertical: 5 },
+  zodiacFurnitureImage: { height: 30, resizeMode: 'contain', width: 30 },
+  zodiacFurnitureCopy: { flex: 1, minWidth: 0 },
+  zodiacFurnitureLabel: { color: '#8D78B8', fontFamily: Fonts.rounded, fontSize: 7, fontWeight: '900' },
+  zodiacFurnitureName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '900', marginTop: 2 },
   fragmentRow: { alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.72)', borderRadius: 12, flexDirection: 'row', gap: 6, marginTop: 9, paddingHorizontal: 8, paddingVertical: 7 },
   fragmentImage: { height: 24, resizeMode: 'contain', width: 24 },
   fragmentText: { color: '#725B9F', flex: 1, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900' },
