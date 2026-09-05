@@ -2,6 +2,9 @@ import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } fro
 import {
   Alert,
   type ColorValue,
+  type ImageSourcePropType,
+  type StyleProp,
+  type ViewStyle,
   Image,
   Modal,
   Pressable,
@@ -12,6 +15,7 @@ import {
   View,
 } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -21,7 +25,7 @@ import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import { getMonthlyAvailabilityFlags, isAvailableAtMinute } from '@/data/availability';
 import { getBloomingBushes, type BloomingBush } from '@/data/bush-blooms';
-import { getCatalogItems } from '@/data/catalog';
+import { catalogItems, getCatalogAssetForItem, getCatalogItems } from '@/data/catalog';
 import { getEncyclopediaItems } from '@/data/encyclopedia';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
 import { localizeAvailabilityLabel, localizeAvailabilityTime, localizeLocation } from '@/data/encyclopedia-labels';
@@ -68,6 +72,20 @@ type TodayActionIcon = 'edit' | 'reset' | 'open';
 
 const EMPTY_STATE: EncyclopediaState = { caught: false, owned: false, donated: false, genuineOwned: false, fakeOwned: false };
 const CRITTERPEDIA_ICON = require('../data/assets/icons/critterpedia.png');
+const ZODIAC_ICON_ASSETS: Record<string, ImageSourcePropType> = {
+  aquarius: require('../data/assets/icons/zodiac/aquarius.png'),
+  aries: require('../data/assets/icons/zodiac/aries.png'),
+  cancer: require('../data/assets/icons/zodiac/cancer.png'),
+  capricorn: require('../data/assets/icons/zodiac/capricorn.png'),
+  gemini: require('../data/assets/icons/zodiac/gemini.png'),
+  leo: require('../data/assets/icons/zodiac/leo.png'),
+  libra: require('../data/assets/icons/zodiac/libra.png'),
+  pisces: require('../data/assets/icons/zodiac/pisces.png'),
+  sagittarius: require('../data/assets/icons/zodiac/sagittarius.png'),
+  scorpio: require('../data/assets/icons/zodiac/scorpio.png'),
+  taurus: require('../data/assets/icons/zodiac/taurus.png'),
+  virgo: require('../data/assets/icons/zodiac/virgo.png'),
+};
 const DEFAULT_ROUTINE_TITLES = new Set(DEFAULT_ROUTINE_OPTIONS.map((routine) => routine.title));
 const CRITTER_CATEGORIES: CritterCategory[] = ['bugs', 'fish', 'sea'];
 const DAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
@@ -75,6 +93,19 @@ const DAY_NPC_OPTIONS = ['레온', '저스틴', '고숙이', '사하라', '패�
 const WEEKEND_NPC_OPTIONS = ['K.K.', '무파니'];
 const NIGHT_NPC_OPTIONS = ['부옥', '깨빈'];
 const NPC_OPTIONS = [...DAY_NPC_OPTIONS, ...WEEKEND_NPC_OPTIONS, ...NIGHT_NPC_OPTIONS];
+const EVENT_NPC_KEYS: Record<string, string> = {
+  곤충채집대회: 'flick',
+  국제박물관데이: 'blathers',
+  근로자의날투어: 'rover',
+  낚시대회: 'c-j',
+  불꽃놀이: 'isabelle',
+  웨딩시즌: 'reese',
+  이스터: 'zipper-t-bunny',
+  카운트다운: 'isabelle',
+  크리스마스이브: 'jingle',
+  추수감사절: 'franklin',
+  할로윈: 'jack',
+};
 const NPC_ASSET_KEYS: Record<string, string> = {
   레온: 'flick',
   저스틴: 'c-j',
@@ -223,16 +254,79 @@ function formatWeekdayInitial(value: string) {
   return date ? DAY_LABELS[date.getUTCDay()] ?? '' : '';
 }
 
-function seasonFor(month: number, hemisphere: Island['hemisphere']) {
-  const north = month <= 2 || month === 12 ? '겨울' : month <= 5 ? '봄' : month <= 8 ? '여름' : '가을';
-  if (hemisphere !== 'south') return north;
-  return north === '겨울' ? '여름' : north === '여름' ? '겨울' : north === '봄' ? '가을' : '봄';
+function formatDashboardDate(value: string) {
+  const date = parseIsoDate(value);
+  if (!date) return value;
+  return `${date.getUTCFullYear()}. ${String(date.getUTCMonth() + 1).padStart(2, '0')}. ${String(date.getUTCDate()).padStart(2, '0')} ${formatWeekdayInitial(value)}`;
 }
 
-function zodiacFor(month: number, day: number) {
-  const signs: Array<[string, number, number]> = [['염소자리', 122, 219], ['물병자리', 220, 320], ['물고기자리', 321, 419], ['양자리', 420, 520], ['황소자리', 521, 621], ['쌍둥이자리', 622, 722], ['게자리', 723, 822], ['사자자리', 823, 922], ['처녀자리', 923, 1023], ['천칭자리', 1024, 1122], ['전갈자리', 1123, 1221], ['사수자리', 1222, 121]];
+const ZODIAC_SIGNS = [
+  { key: 'capricorn', name: '염소자리', start: [12, 22], end: [1, 19] },
+  { key: 'aquarius', name: '물병자리', start: [1, 20], end: [2, 18] },
+  { key: 'pisces', name: '물고기자리', start: [2, 19], end: [3, 20] },
+  { key: 'aries', name: '양자리', start: [3, 21], end: [4, 19] },
+  { key: 'taurus', name: '황소자리', start: [4, 20], end: [5, 20] },
+  { key: 'gemini', name: '쌍둥이자리', start: [5, 21], end: [6, 21] },
+  { key: 'cancer', name: '게자리', start: [6, 22], end: [7, 22] },
+  { key: 'leo', name: '사자자리', start: [7, 23], end: [8, 22] },
+  { key: 'virgo', name: '처녀자리', start: [8, 23], end: [9, 22] },
+  { key: 'libra', name: '천칭자리', start: [9, 23], end: [10, 22] },
+  { key: 'scorpio', name: '전갈자리', start: [10, 23], end: [11, 21] },
+  { key: 'sagittarius', name: '사수자리', start: [11, 22], end: [12, 21] },
+] as const;
+
+function getZodiacDefinition(month: number, day: number) {
   const key = month * 100 + day;
-  return signs.find(([, start, end]) => start <= end ? key >= start && key <= end : key >= start || key <= end)?.[0] ?? '염소자리';
+  return ZODIAC_SIGNS.find(({ start, end }) => {
+    const startKey = start[0] * 100 + start[1];
+    const endKey = end[0] * 100 + end[1];
+    return startKey <= endKey ? key >= startKey && key <= endKey : key >= startKey || key <= endKey;
+  }) ?? ZODIAC_SIGNS[0];
+}
+
+function formatZodiacPeriod(zodiac: (typeof ZODIAC_SIGNS)[number]) {
+  return `${zodiac.start[0]}.${String(zodiac.start[1]).padStart(2, '0')} — ${zodiac.end[0]}.${String(zodiac.end[1]).padStart(2, '0')}`;
+}
+
+function formatMonthDayCode(value: number) {
+  return `${Math.floor(value / 100)}.${String(value % 100).padStart(2, '0')}`;
+}
+
+function formatBloomWindow(bush: BloomingBush, hemisphere: Island['hemisphere']) {
+  const side = hemisphere === 'south' ? 'south' : 'north';
+  return bush.bloomWindows[side].map(([start, end]) => `${formatMonthDayCode(start)} — ${formatMonthDayCode(end)}`).join(' · ');
+}
+
+function getMaterialParts(material: string) {
+  const match = /^(.*?)\s*×\s*(\d+)$/.exec(material.trim());
+  return { amount: match ? Number(match[2]) : null, name: (match?.[1] ?? material).trim() };
+}
+
+function getMaterialAsset(material: string) {
+  const { name } = getMaterialParts(material);
+  const item = catalogItems.find((candidate) => candidate.nameKo === name);
+  return item ? getCatalogAssetForItem(item) : undefined;
+}
+
+function getEventNpcImage(eventName: string) {
+  const key = Object.entries(EVENT_NPC_KEYS).find(([label]) => eventName.replaceAll(' ', '').startsWith(label))?.[1] ?? 'isabelle';
+  return npcAssets[key]?.image;
+}
+
+function getEventSchedule(eventName: string) {
+  const normalized = eventName.replaceAll(' ', '');
+  if (normalized === '곤충채집대회') return { host: '레온', location: '광장', time: '09:00 — 18:00' };
+  if (normalized === '낚시대회') return { host: '저스틴', location: '광장', time: '09:00 — 18:00' };
+  if (normalized === '불꽃놀이') return { host: '여울', location: '광장', time: '19:00 — 24:00' };
+  if (normalized === '근로자의날투어') return { host: '로버', location: '섬 외', time: '00:00 — 24:00' };
+  if (normalized === '국제박물관데이') return { host: '부엉', location: '박물관', time: '00:00 — 24:00' };
+  if (normalized === '웨딩시즌') return { host: '리사 & 리포', location: '파니의 섬', time: '00:00 — 24:00' };
+  if (normalized === '이스터') return { host: '토빗', location: '섬 전체', time: '00:00 — 24:00' };
+  if (normalized === '카운트다운') return { host: '여울', location: '광장', time: '23:00 — 00:00' };
+  if (normalized === '크리스마스이브') return { host: '루돌', location: '광장', time: '18:00 — 24:00' };
+  if (normalized === '추수감사절') return { host: '프랭클린', location: '광장', time: '09:00 — 24:00' };
+  if (normalized === '할로윈') return { host: '잭', location: '광장', time: '17:00 — 24:00' };
+  return { host: '', location: '섬 전체', time: '종일' };
 }
 
 function monthDayKey(month: number, day: number) {
@@ -255,23 +349,95 @@ const RECIPE_SEASONS = [
   { key: 'christmas_ornament', label: '크리스마스 오너먼트', north: [[1215, 106]], south: [[615, 706]] },
 ] as const;
 
-const NOOK_SHOPPING_WINDOWS: Record<string, Array<[number, number]>> = {
-  '포도 수확 바구니': [[901, 930]],
-  '포도알 12개': [[901, 930]],
-  '달맞이떡': [[912, 921]],
-  '송편': [[912, 921]],
-  '월병': [[912, 921]],
-  '보름달 러그': [[912, 921]],
-};
-
-function normalizeSeason(value: unknown) {
-  if (value === 'Fall' || value === 'Autumn') return '가을';
-  return typeof value === 'string' ? value : '';
-}
-
 function getRecipeFilters(item: ReturnType<typeof getCatalogItems>[number]) {
   const filters = item.details.recipeFilters;
   return Array.isArray(filters) ? filters.map(String) : [];
+}
+
+function getRecipeSeasonMaterialName(key: string) {
+  if (key === 'young_spring_bamboo') return '봄의 대나무';
+  if (key === 'cherry_blossom') return '벚꽃잎';
+  if (key === 'summer_shell') return '여름 조개껍데기';
+  if (key === 'tree_bounty') return '도토리';
+  if (key === 'maple_leaf') return '단풍잎';
+  if (key === 'mushroom') return '버섯';
+  if (key === 'winter_snowflake') return '눈의 결정';
+  if (key === 'christmas_ornament') return '오너먼트';
+  return '';
+}
+
+function getRecipeSeasonLabel(key: string) {
+  if (key === 'young_spring_bamboo' || key === 'cherry_blossom') return '봄';
+  if (key === 'summer_shell') return '여름';
+  if (key === 'tree_bounty' || key === 'maple_leaf' || key === 'mushroom') return '가을';
+  if (key === 'winter_snowflake' || key === 'christmas_ornament') return '겨울';
+  return '';
+}
+
+function getRecipeSeasonVariant(key: string) {
+  const season = getRecipeSeasonLabel(key);
+  if (season === '봄') {
+    return {
+      accent: '#E96F96',
+      cardColors: ['#FFF4F7', '#FFEAF0'] as [ColorValue, ColorValue],
+      cardBorder: '#F6CAD7',
+      decor: 'spring' as const,
+      header: '#FFE1E9',
+      iconBackground: '#FFE8EF',
+      ink: '#5A4450',
+      layout: 'compact' as const,
+      muted: '#8D6D79',
+      rail: '#F5D9E1',
+      surface: '#FFF9FA',
+      surfaceBorder: '#F7D5DE',
+    };
+  }
+  if (season === '가을') {
+    return {
+      accent: '#D8872F',
+      cardColors: ['#FFF7E7', '#FFF0D0'] as [ColorValue, ColorValue],
+      cardBorder: '#F2D49A',
+      decor: 'autumn' as const,
+      header: '#FFE6B1',
+      iconBackground: '#FAE8C5',
+      ink: '#5E4934',
+      layout: 'compact' as const,
+      muted: '#8C714F',
+      rail: '#F0DFC2',
+      surface: '#FFFCF5',
+      surfaceBorder: '#F0D9AE',
+    };
+  }
+  if (season === '겨울') {
+    return {
+      accent: '#52B8CB',
+      cardColors: ['#F1FAFD', '#E3F5F8'] as [ColorValue, ColorValue],
+      cardBorder: '#C8E5ED',
+      decor: 'winter' as const,
+      header: '#DDF4F7',
+      iconBackground: '#E2F7FA',
+      ink: '#385B69',
+      layout: 'feature' as const,
+      muted: '#66828B',
+      rail: '#D4EAEE',
+      surface: '#FBFDFF',
+      surfaceBorder: '#D2E9EE',
+    };
+  }
+  return {
+    accent: '#379FD7',
+    cardColors: ['#EFF9FF', '#E2F4FF'] as [ColorValue, ColorValue],
+    cardBorder: '#BFDFF2',
+    decor: 'summer' as const,
+    header: '#D9F1FC',
+    iconBackground: '#E0F4FD',
+    ink: '#35566A',
+    layout: 'feature' as const,
+    muted: '#6D8190',
+    rail: '#D7EAF4',
+    surface: '#FAFDFF',
+    surfaceBorder: '#CDE5F2',
+  };
 }
 
 function getActiveRecipeSeasons(month: number, day: number, hemisphere: Island['hemisphere']) {
@@ -283,17 +449,6 @@ function summarizeNames(names: string[], emptyLabel: string) {
   if (!names.length) return emptyLabel;
   const visible = names.slice(0, 3).join(', ');
   return names.length > 3 ? `${visible} 외 ${names.length - 3}개` : visible;
-}
-
-function getNookShoppingItems(month: number, day: number, season: string) {
-  return getCatalogItems('seasonal_recipes')
-    .concat(getCatalogItems('furniture'), getCatalogItems('interior'), getCatalogItems('clothing'), getCatalogItems('items'), getCatalogItems('special_items'))
-    .filter((item) => `${item.source ?? ''} ${item.sourceNotes ?? ''}`.includes('너굴 쇼핑'))
-    .filter((item) => {
-      const windows = NOOK_SHOPPING_WINDOWS[item.nameKo];
-      if (windows?.some(([start, end]) => isMonthDayInRange(month, day, start, end))) return true;
-      return String(item.sourceNotes ?? '').includes('계절 한정') && normalizeSeason(item.details.seasonality) === season;
-    });
 }
 
 function isNthWeekday(date: Date, nth: number, weekday: number) {
@@ -517,8 +672,7 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const dateObject = parseIsoDate(gameDate) ?? new Date();
   const month = dateObject.getUTCMonth() + 1;
   const day = dateObject.getUTCDate();
-  const season = seasonFor(month, island?.hemisphere ?? 'north');
-  const zodiac = zodiacFor(month, day);
+  const zodiacDefinition = getZodiacDefinition(month, day);
   const timezone = island?.timezone ?? 'Asia/Seoul';
   const hemisphere = island?.hemisphere ?? 'north';
   const gameTime = manualTime ?? getCurrentGameTime(clockNow, timezone);
@@ -543,23 +697,23 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
     [routines],
   );
   const activeRecipeSeasons = getActiveRecipeSeasons(month, day, hemisphere);
-  const seasonalRecipeSummary = activeRecipeSeasons.length
-    ? activeRecipeSeasons.map((recipeSeason) => {
-      const count = getCatalogItems('seasonal_recipes').filter((item) => getRecipeFilters(item).includes(`season:${recipeSeason.key}`)).length;
-      return `${recipeSeason.label} ${count}개`;
-    }).join(', ')
-    : '진행 중인 시즌 없음';
-  const nookShoppingItems = getNookShoppingItems(month, day, season);
-  const nookShoppingSummary = summarizeNames(nookShoppingItems.map((item) => item.nameKo), '오늘 판매 시즌 아이템 없음');
-  const todayBirthdays = villagers
-    .filter((villager) => villager.birth_month === month && villager.birth_day === day)
-    .filter((villager) => residentVillagerIds.has(villager.id))
-    .map((villager) => `${villager.name_ko} 생일`);
-  const todayEventSummary = summarizeNames(getTodayEventNames(dateObject, hemisphere), '이벤트 없음');
+  const allSeasonalRecipeItems = getCatalogItems('seasonal_recipes').sort((left, right) => left.nameKo.localeCompare(right.nameKo, 'ko-KR'));
+  const activeRecipeGroups = activeRecipeSeasons.map((recipeSeason) => {
+    const recipeItems = allSeasonalRecipeItems.filter((item) => getRecipeFilters(item).includes(`season:${recipeSeason.key}`));
+    const materialName = getRecipeSeasonMaterialName(recipeSeason.key);
+    const materialItem = catalogItems.find((item) => item.catalogType === 'items' && item.nameKo === materialName);
+    return {
+      collectedCount: recipeItems.filter((item) => collectionStates[`${item.catalogType}/${item.id}`]?.owned).length,
+      key: recipeSeason.key,
+      materialAsset: materialItem ? getCatalogAssetForItem(materialItem) : undefined,
+      materialName,
+      recipeCount: recipeItems.length,
+      seasonLabel: getRecipeSeasonLabel(recipeSeason.key),
+    };
+  }).filter((group) => group.recipeCount > 0);
+  const zodiacFragmentItem = catalogItems.find((item) => item.nameKo === `${zodiacDefinition.name} 조각`);
+  const todayEventNames = getTodayEventNames(dateObject, hemisphere);
   const bloomingBushes = getBloomingBushes(month, day, hemisphere);
-  const allMonthlyCritters = CRITTER_CATEGORIES.flatMap((category) => getEncyclopediaItems(category));
-  const leavingThisMonthCount = allMonthlyCritters.filter((item) => getMonthlyAvailabilityFlags(item, hemisphere, month).isLeavingThisMonth).length;
-  const newThisMonthCount = allMonthlyCritters.filter((item) => getMonthlyAvailabilityFlags(item, hemisphere, month).isNewThisMonth).length;
   const prioritizedCritters = [...availableCritters].sort((a, b) => {
     const aState = collectionStates[`${a.category}/${a.id}`] ?? EMPTY_STATE;
     const bState = collectionStates[`${b.category}/${b.id}`] ?? EMPTY_STATE;
@@ -714,61 +868,23 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
         />
       <SafeAreaView edges={[]} style={[styles.safeArea, { backgroundColor: AppColors.background }]}>
         <ScrollView contentContainerStyle={todayStyles.content} ref={scrollRef} showsVerticalScrollIndicator={false}>
-          <View style={todayStyles.summaryCard}>
-            <View style={todayStyles.summaryHeader}>
-              <View style={todayStyles.summaryDateTimeRow}>
-                <Pressable
-                  accessibilityLabel="캘린더 열기"
-                  accessibilityRole="button"
-                  onPress={() => { setTimePickerKind(null); setDateTimeModalOpen(true); }}
-                  style={({ pressed }) => [todayStyles.summaryDateButton, pressed && todayStyles.summaryDateTimeButtonPressed]}>
-                  <MaterialCommunityIcons color={AppColors.leaf} name="calendar-month" size={16} />
-                  <Text numberOfLines={1} style={todayStyles.summaryDateTimeText}>
-                    {formatMonthDayShort(gameDate)} ({formatWeekdayInitial(gameDate)})
-                  </Text>
-                  <MaterialCommunityIcons color={AppColors.inkMuted} name="chevron-down" size={14} />
-                </Pressable>
-                <View style={todayStyles.summaryTimeGroup}>
-                  <Pressable
-                    accessibilityLabel={`${gameHour}시 선택`}
-                    accessibilityRole="button"
-                    onPress={() => setTimePickerKind((current) => current === 'hour' ? null : 'hour')}
-                    style={({ pressed }) => [todayStyles.summaryTimeButton, pressed && todayStyles.summaryDateTimeButtonPressed]}>
-                    <Text style={todayStyles.summaryDateTimeText}>{String(gameHour).padStart(2, '0')}시</Text>
-                    <MaterialCommunityIcons color={AppColors.inkMuted} name={timePickerKind === 'hour' ? 'chevron-up' : 'chevron-down'} size={14} />
-                  </Pressable>
-                  <Text style={todayStyles.summaryTimeDivider}>:</Text>
-                  <Pressable
-                    accessibilityLabel={`${gameMinute}분 선택`}
-                    accessibilityRole="button"
-                    onPress={() => setTimePickerKind((current) => current === 'minute' ? null : 'minute')}
-                    style={({ pressed }) => [todayStyles.summaryTimeButton, pressed && todayStyles.summaryDateTimeButtonPressed]}>
-                    <Text style={todayStyles.summaryDateTimeText}>{String(gameMinute).padStart(2, '0')}분</Text>
-                    <MaterialCommunityIcons color={AppColors.inkMuted} name={timePickerKind === 'minute' ? 'chevron-up' : 'chevron-down'} size={14} />
-                  </Pressable>
-                </View>
-              </View>
-            </View>
-            {timePickerKind ? (
-              <TimePickerMenu
-                kind={timePickerKind}
-                onClose={() => setTimePickerKind(null)}
-                onSelect={(value) => applyGameTime(`${String(timePickerKind === 'hour' ? value : gameHour).padStart(2, '0')}:${String(timePickerKind === 'minute' ? value : gameMinute).padStart(2, '0')}`)}
-                value={timePickerKind === 'hour' ? gameHour : gameMinute}
-              />
-            ) : null}
-            <View style={todayStyles.summaryGrid}>
-              <SummaryItem label="시즌" value={season} mark="SE" tone="leaf" />
-              <SummaryItem label="시즌 레시피" value={seasonalRecipeSummary} mark="DIY" tone="catalog" />
-              <SummaryItem label="별자리" value={zodiac} mark="ST" tone="museum" />
-              <SummaryItem label="개화 낮은나무" value={bloomingBushes.length ? bloomingBushes.map((bush) => bush.nameKo).join(', ') : '개화 중인 낮은나무 없음'} mark="FL" tone="leaf">
-                <BloomingBushIcons bushes={bloomingBushes} />
-              </SummaryItem>
-              <SummaryItem label="이벤트" value={todayEventSummary} mark="EV" tone="camp" />
-              <SummaryItem label="월말 생물" value={`종료 ${leavingThisMonthCount} · 신규 ${newThisMonthCount}`} mark="CR" tone="museum" />
-              {todayBirthdays.length ? <SummaryItem label="우리 섬 생일" value={todayBirthdays.join(', ')} mark="BD" tone="resident" /> : null}
-            </View>
+          <TodayDateTimeCard
+            gameHour={gameHour}
+            gameMinute={gameMinute}
+            gameDate={gameDate}
+            onOpenCalendar={() => { setTimePickerKind(null); setDateTimeModalOpen(true); }}
+            onSelectTime={(value) => applyGameTime(`${String(timePickerKind === 'hour' ? value : gameHour).padStart(2, '0')}:${String(timePickerKind === 'minute' ? value : gameMinute).padStart(2, '0')}`)}
+            onToggleTime={(kind) => setTimePickerKind((current) => current === kind ? null : kind)}
+            timePickerKind={timePickerKind}
+          />
+          <SeasonalRecipeCard
+            groups={activeRecipeGroups}
+          />
+          <View style={todayStyles.dashboardTwoColumn}>
+            <BloomingBushCard bushes={bloomingBushes} hemisphere={hemisphere} />
+            <ZodiacCard definition={zodiacDefinition} fragmentItem={zodiacFragmentItem} />
           </View>
+          <TodayEventCard events={todayEventNames} />
 
           <View style={todayStyles.sectionBlock}>
             <SectionHeader
@@ -904,55 +1020,246 @@ function SectionGlyph({ kind, tone }: { kind: TodaySectionIcon; tone: TileTone }
   );
 }
 
+function TodayDateTimeCard({
+  gameDate,
+  gameHour,
+  gameMinute,
+  onOpenCalendar,
+  onSelectTime,
+  onToggleTime,
+  timePickerKind,
+}: {
+  gameDate: string;
+  gameHour: number;
+  gameMinute: number;
+  onOpenCalendar: () => void;
+  onSelectTime: (value: number) => void;
+  onToggleTime: (kind: TimePickerKind) => void;
+  timePickerKind: TimePickerKind | null;
+}) {
+  return (
+    <View style={todayStyles.dateTimeCard}>
+      <View style={todayStyles.dateTimeRow}>
+        <Pressable accessibilityLabel="게임 날짜 캘린더 열기" accessibilityRole="button" onPress={onOpenCalendar} style={todayStyles.dateControl}>
+          <View style={todayStyles.dateTimeValueRow}>
+            <MaterialCommunityIcons color={AppColors.leaf} name="calendar-month-outline" size={17} />
+            <Text numberOfLines={1} style={todayStyles.dateTimeValue}>{formatDashboardDate(gameDate)}</Text>
+            <MaterialCommunityIcons color={AppColors.inkMuted} name="chevron-down" size={16} />
+          </View>
+        </Pressable>
+
+        <View style={todayStyles.timeControl}>
+          <View style={todayStyles.timeControlRow}>
+            <MaterialCommunityIcons color={AppColors.catalog} name="clock-outline" size={16} />
+            <Pressable
+              accessibilityLabel={`${gameHour}시 선택`}
+              accessibilityRole="button"
+              accessibilityState={{ expanded: timePickerKind === 'hour' }}
+              onPress={() => onToggleTime('hour')}
+              style={[todayStyles.timePickerButton, timePickerKind === 'hour' && todayStyles.timePickerButtonSelected]}>
+              <Text style={todayStyles.timePickerValue}>{String(gameHour).padStart(2, '0')}</Text>
+            </Pressable>
+            <Text style={todayStyles.timePickerDivider}>:</Text>
+            <Pressable
+              accessibilityLabel={`${gameMinute}분 선택`}
+              accessibilityRole="button"
+              accessibilityState={{ expanded: timePickerKind === 'minute' }}
+              onPress={() => onToggleTime('minute')}
+              style={[todayStyles.timePickerButton, timePickerKind === 'minute' && todayStyles.timePickerButtonSelected]}>
+              <Text style={todayStyles.timePickerValue}>{String(gameMinute).padStart(2, '0')}</Text>
+            </Pressable>
+            <MaterialCommunityIcons color={AppColors.catalog} name="chevron-down" size={14} />
+          </View>
+        </View>
+      </View>
+      {timePickerKind ? (
+        <TimePickerMenu kind={timePickerKind} onClose={() => onToggleTime(timePickerKind)} onSelect={onSelectTime} value={timePickerKind === 'hour' ? gameHour : gameMinute} />
+      ) : null}
+    </View>
+  );
+}
+
+function DashboardGradientCard({ children, colors, style }: { children: ReactNode; colors: [ColorValue, ColorValue]; style?: StyleProp<ViewStyle> }) {
+  return (
+    <LinearGradient colors={colors} end={{ x: 1, y: 1 }} start={{ x: 0, y: 0 }} style={[todayStyles.dashboardCard, style]}>
+      <View style={todayStyles.dashboardCardContent}>{children}</View>
+    </LinearGradient>
+  );
+}
+
+function SeasonalRecipeCard({ groups }: {
+  groups: Array<{
+    collectedCount: number;
+    key: string;
+    materialAsset?: ImageSourcePropType;
+    materialName: string;
+    recipeCount: number;
+    seasonLabel: string;
+  }>;
+}) {
+  const seasonLabels = [...new Set(groups.map((group) => group.seasonLabel).filter(Boolean))];
+  const variant = getRecipeSeasonVariant(groups[0]?.key ?? 'summer_shell');
+
+  return (
+    <LinearGradient colors={variant.cardColors} end={{ x: 1, y: 1 }} start={{ x: 0, y: 0 }} style={[todayStyles.dashboardCard, todayStyles.recipeCard, { borderColor: variant.cardBorder }]}>
+      <View pointerEvents="none" style={[todayStyles.recipeHeaderBand, { backgroundColor: variant.header }]} />
+      <SeasonRecipeDecor decor={variant.decor} />
+      <View style={todayStyles.dashboardCardContent}>
+        <View style={todayStyles.dashboardCardHeader}>
+          <View style={todayStyles.dashboardCardTitleRow}>
+            {seasonLabels.length ? <Text style={[todayStyles.seasonChip, { backgroundColor: variant.accent }]}>{seasonLabels.join(' · ')}</Text> : null}
+            <Text numberOfLines={1} style={[todayStyles.dashboardCardTitle, todayStyles.recipeCardTitle, { color: variant.ink }]}>시즌 레시피</Text>
+          </View>
+        </View>
+        {groups.length ? groups.map((group) => {
+          const progress = group.recipeCount ? Math.round((group.collectedCount / group.recipeCount) * 100) : 0;
+          const isFeature = variant.layout === 'feature';
+          return (
+            <View key={group.key} style={[todayStyles.recipeGroupRow, isFeature ? todayStyles.recipeGroupFeature : todayStyles.recipeGroupCompact, { backgroundColor: variant.surface, borderColor: variant.surfaceBorder }] }>
+                <View style={[todayStyles.recipeGroupMain, isFeature && todayStyles.recipeGroupMainFeature]}>
+                <View style={[todayStyles.recipeGroupImageWell, isFeature ? todayStyles.recipeGroupImageWellFeature : todayStyles.recipeGroupImageWellCompact, { backgroundColor: variant.iconBackground }] }>
+                  {group.materialAsset ? <Image accessibilityLabel={group.materialName} source={group.materialAsset} style={isFeature ? todayStyles.recipeGroupImageFeature : todayStyles.recipeGroupImageCompact} /> : <MaterialCommunityIcons color={variant.accent} name="leaf" size={isFeature ? 48 : 27} />}
+                </View>
+                <View style={[todayStyles.recipeGroupCopy, isFeature && todayStyles.recipeGroupCopyFeature]}>
+                  <View style={todayStyles.recipeGroupTitleLine}>
+                    <Text numberOfLines={1} style={[todayStyles.recipeGroupName, { color: variant.ink }]}>{group.materialName} 레시피</Text>
+                    <Text style={[todayStyles.recipeGroupCount, { color: variant.ink }]}>{group.collectedCount} / {group.recipeCount}</Text>
+                  </View>
+                  <View style={[todayStyles.recipeProgressRail, isFeature && todayStyles.recipeProgressRailFeature, { backgroundColor: variant.rail }]}>
+                    <View style={[todayStyles.recipeProgressFill, { backgroundColor: variant.accent, width: `${progress}%` }]} />
+                  </View>
+                </View>
+              </View>
+            </View>
+          );
+        }) : <Text style={[todayStyles.dashboardEmptyText, { color: variant.muted }]}>현재 진행 중인 시즌 레시피가 없어요.</Text>}
+      </View>
+    </LinearGradient>
+  );
+}
+
+function SeasonRecipeDecor({ decor }: { decor: 'autumn' | 'spring' | 'summer' | 'winter' }) {
+  if (decor === 'spring') {
+    return (
+      <View pointerEvents="none" style={todayStyles.recipeDecorLayer}>
+        <View style={[todayStyles.recipeDecorCircle, todayStyles.recipeDecorSpringLarge]} />
+        <View style={[todayStyles.recipeDecorCircle, todayStyles.recipeDecorSpringSmall]} />
+      </View>
+    );
+  }
+  if (decor === 'summer') {
+    return (
+      <View pointerEvents="none" style={todayStyles.recipeDecorLayer}>
+        <View style={todayStyles.recipeDecorWave} />
+        <View style={todayStyles.recipeDecorWaveSmall} />
+      </View>
+    );
+  }
+  if (decor === 'autumn') {
+    return (
+      <View pointerEvents="none" style={todayStyles.recipeDecorLayer}>
+        <View style={[todayStyles.recipeDecorLeaf, todayStyles.recipeDecorAutumnGold]} />
+        <View style={[todayStyles.recipeDecorLeaf, todayStyles.recipeDecorAutumnRust]} />
+      </View>
+    );
+  }
+  return (
+    <View pointerEvents="none" style={todayStyles.recipeDecorLayer}>
+      <View style={[todayStyles.recipeDecorSnow, { right: 82, top: 20 }]} />
+      <View style={[todayStyles.recipeDecorSnow, { right: 60, top: 42, transform: [{ scale: 0.65 }] }]} />
+      <View style={[todayStyles.recipeDecorSnow, { right: 36, top: 18, transform: [{ scale: 0.8 }] }]} />
+      <View style={[todayStyles.recipeDecorSnow, { right: 10, top: 38, transform: [{ scale: 1.1 }] }]} />
+    </View>
+  );
+}
+
+function BloomingBushCard({ bushes, hemisphere }: { bushes: BloomingBush[]; hemisphere: Island['hemisphere'] }) {
+  return (
+    <DashboardGradientCard colors={['#DCF4E2', '#C9EDDA']} style={[todayStyles.dashboardHalfCard, todayStyles.bushCard]}>
+      <View style={todayStyles.dashboardCardHeader}>
+        <View style={todayStyles.dashboardCardTitleRow}>
+          <Text numberOfLines={2} style={todayStyles.dashboardCardTitle}>개화한 낮은나무</Text>
+        </View>
+        <Text style={todayStyles.dashboardCardCountChip}>{bushes.length}종</Text>
+      </View>
+      {bushes.length ? (
+        <View style={todayStyles.bushList}>
+          {bushes.map((bush) => (
+            <View key={bush.id} style={[todayStyles.bushItem, bushes.length === 1 && todayStyles.bushItemSingle]}>
+              <View style={todayStyles.bushImageFrame}>
+                <Image accessibilityLabel={bush.nameKo} resizeMode="contain" source={bush.icon} style={todayStyles.bushImage} />
+              </View>
+              <View style={todayStyles.bushCopy}>
+                <Text numberOfLines={1} style={todayStyles.bushName}>{bush.nameKo}</Text>
+                <Text numberOfLines={1} style={todayStyles.bushPeriod}>{formatBloomWindow(bush, hemisphere)}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+      ) : <Text style={todayStyles.dashboardEmptyText}>지금 개화한 낮은나무가 없어요.</Text>}
+    </DashboardGradientCard>
+  );
+}
+
+function ZodiacCard({ definition, fragmentItem }: { definition: (typeof ZODIAC_SIGNS)[number]; fragmentItem?: ReturnType<typeof getCatalogItems>[number] }) {
+  const zodiacIcon = ZODIAC_ICON_ASSETS[definition.key];
+  const fragmentAsset = fragmentItem ? getCatalogAssetForItem(fragmentItem) : undefined;
+  return (
+    <DashboardGradientCard colors={['#ECE5FF', '#D8CCFA']} style={[todayStyles.dashboardHalfCard, todayStyles.zodiacCard]}>
+      <View style={todayStyles.dashboardCardHeader}>
+        <View style={todayStyles.dashboardCardTitleRow}>
+          <Text style={todayStyles.dashboardCardTitle}>별자리</Text>
+        </View>
+      </View>
+      <View style={todayStyles.zodiacBody}>
+        <Image accessibilityLabel={definition.name} source={zodiacIcon} style={todayStyles.zodiacImage} />
+        <View style={todayStyles.zodiacCopy}>
+          <Text style={todayStyles.zodiacName}>{definition.name}</Text>
+          <Text style={todayStyles.zodiacPeriod}>{formatZodiacPeriod(definition)}</Text>
+        </View>
+      </View>
+      <View style={todayStyles.fragmentRow}>
+        {fragmentAsset ? <Image accessibilityLabel={`${definition.name} 조각`} source={fragmentAsset} style={todayStyles.fragmentImage} /> : <MaterialCommunityIcons color="#8D78B8" name="star-outline" size={19} />}
+        <Text numberOfLines={1} style={todayStyles.fragmentText}>{definition.name} 조각</Text>
+      </View>
+      <Text style={todayStyles.zodiacFooter}>해변에서 획득</Text>
+    </DashboardGradientCard>
+  );
+}
+
+function TodayEventCard({ events }: { events: string[] }) {
+  return (
+    <DashboardGradientCard colors={['#FFE4CF', '#FFCFAF']} style={todayStyles.eventCard}>
+      <View style={todayStyles.dashboardCardHeader}>
+        <View style={todayStyles.dashboardCardTitleRow}>
+          <Text style={todayStyles.dashboardCardTitle}>오늘의 이벤트</Text>
+        </View>
+        <Text style={todayStyles.dashboardCardCountChip}>{events.length}개</Text>
+      </View>
+      {events.length ? events.map((eventName) => {
+        const asset = getEventNpcImage(eventName);
+        const schedule = getEventSchedule(eventName);
+        return (
+          <View key={eventName} style={todayStyles.eventRow}>
+            {asset ? <Image accessibilityLabel={`${eventName} 캐릭터`} source={asset} style={todayStyles.eventImage} /> : <MaterialCommunityIcons color={AppColors.resident} name="account-star-outline" size={34} />}
+            <View style={todayStyles.eventCopy}>
+              <Text numberOfLines={1} style={todayStyles.eventName}>{eventName}</Text>
+              <Text style={todayStyles.eventMeta}>{schedule.time} · {schedule.location}</Text>
+            </View>
+            {schedule.host ? <Text style={todayStyles.eventHost}>{schedule.host}</Text> : null}
+          </View>
+        );
+      }) : <Text style={todayStyles.dashboardEmptyText}>오늘 예정된 이벤트가 없어요.</Text>}
+    </DashboardGradientCard>
+  );
+}
+
 function ActionGlyph({ kind, tone }: { kind: TodayActionIcon; tone: TileTone }) {
   const colors = getTone(tone);
   const iconName = kind === 'edit' ? 'pencil-outline' : kind === 'reset' ? 'restart' : 'chevron-right';
   return (
     <View style={todayStyles.actionGlyph}>
       <MaterialCommunityIcons color={colors.color as ColorValue} name={iconName} size={kind === 'open' ? 20 : 19} />
-    </View>
-  );
-}
-
-function SummaryItem({
-  children,
-  label,
-  value,
-  mark,
-  tone,
-}: {
-  children?: ReactNode;
-  label: string;
-  value: string;
-  mark: string;
-  tone: TileTone;
-}) {
-  const colors = getTone(tone);
-  return (
-    <View style={[todayStyles.summaryItem, { backgroundColor: colors.backgroundColor, borderColor: colors.borderColor }]}>
-      <View style={[todayStyles.summaryMark, { backgroundColor: AppColors.card }]}>
-        <Text numberOfLines={1} adjustsFontSizeToFit style={[todayStyles.summaryMarkText, { color: colors.color }]}>{mark}</Text>
-      </View>
-      <View style={todayStyles.summaryItemCopy}>
-        <Text style={todayStyles.summaryItemLabel}>{label}</Text>
-        {children ?? <Text numberOfLines={2} style={todayStyles.summaryItemValue}>{value}</Text>}
-      </View>
-    </View>
-  );
-}
-
-function BloomingBushIcons({ bushes }: { bushes: BloomingBush[] }) {
-  if (!bushes.length) {
-    return <Text numberOfLines={2} style={todayStyles.summaryItemValue}>개화 중인 낮은나무 없음</Text>;
-  }
-
-  return (
-    <View accessibilityLabel={`개화 중인 낮은나무 ${bushes.map((bush) => bush.nameKo).join(', ')}`} style={todayStyles.bushIconRow}>
-      {bushes.map((bush) => (
-        <View key={bush.id} style={todayStyles.bushIconChip}>
-          <Image accessibilityLabel={bush.nameKo} resizeMode="contain" source={bush.icon} style={todayStyles.bushIconImage} />
-        </View>
-      ))}
     </View>
   );
 }
@@ -2113,17 +2420,85 @@ function RoutineModal({
 }
 
 const todayStyles = StyleSheet.create({
-  content: { gap: 18, padding: 18, paddingBottom: 112 },
-  summaryCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.panel, padding: 14, ...AppShadows.card },
-  summaryHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'flex-end' },
-  summaryMeta: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '800', marginTop: 3 },
-  summaryDateTimeRow: { alignItems: 'center', flexDirection: 'row', flexShrink: 0, gap: 3, width: 188 },
-  summaryDateButton: { alignItems: 'center', backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder, borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 3, height: 38, justifyContent: 'center', overflow: 'hidden', paddingHorizontal: 4, width: 96 },
-  summaryTimeGroup: { alignItems: 'center', flexDirection: 'row', gap: 2, height: 38, width: 89 },
-  summaryTimeButton: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, flex: 1, flexDirection: 'row', gap: 1, height: 38, justifyContent: 'center', minWidth: 0, overflow: 'hidden', paddingHorizontal: 2 },
-  summaryDateTimeText: { color: AppColors.ink, flexShrink: 1, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900' },
-  summaryDateTimeButtonPressed: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder },
-  summaryTimeDivider: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900' },
+  content: { gap: 14, padding: 14, paddingBottom: 112 },
+  dateTimeCard: { backgroundColor: AppColors.card, borderRadius: 19, padding: 8, ...AppShadows.card },
+  dateTimeRow: { flexDirection: 'row', gap: 8 },
+  dateControl: { alignItems: 'center', backgroundColor: '#EEF6F2', borderRadius: 13, flex: 1.8, flexDirection: 'row', gap: 5, justifyContent: 'center', minHeight: 40, minWidth: 0, paddingHorizontal: 9 },
+  timeControl: { backgroundColor: '#FFF2D8', borderRadius: 13, flex: 0.85, justifyContent: 'center', minHeight: 40, minWidth: 0, paddingHorizontal: 7 },
+  dateTimeValueRow: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 5, minWidth: 0 },
+  dateTimeValue: { color: '#24483F', flex: 1, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900' },
+  timeControlRow: { alignItems: 'center', flexDirection: 'row', gap: 2 },
+  timePickerButton: { alignItems: 'center', backgroundColor: 'transparent', borderColor: 'transparent', borderRadius: 7, borderWidth: 0, flex: 1, height: 32, justifyContent: 'center', minWidth: 0, paddingHorizontal: 0 },
+  timePickerButtonSelected: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder },
+  timePickerValue: { color: '#6E542B', fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
+  timePickerDivider: { color: '#6E542B', fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
+  dashboardCard: { borderRadius: 24, overflow: 'hidden', ...AppShadows.card },
+  dashboardCardContent: { padding: 14 },
+  dashboardTwoColumn: { flexDirection: 'row', gap: 10 },
+  dashboardHalfCard: { flex: 1, minWidth: 0 },
+  recipeCard: {},
+  bushCard: { minHeight: 190 },
+  zodiacCard: { minHeight: 190 },
+  eventCard: { minHeight: 126 },
+  dashboardCardHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
+  dashboardCardTitleRow: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 6, minWidth: 0 },
+  dashboardCardTitle: { color: AppColors.ink, flexShrink: 1, fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900' },
+  dashboardCardCountChip: { backgroundColor: 'rgba(255,255,255,0.62)', borderRadius: AppRadii.pill, color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 7, paddingVertical: 4 },
+  seasonChip: { borderRadius: AppRadii.pill, color: '#FFFFFF', fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 10, paddingVertical: 5 },
+  recipeHeaderBand: { borderBottomLeftRadius: 24, borderBottomRightRadius: 24, height: 84, left: 0, position: 'absolute', right: 0, top: 0 },
+  recipeDecorLayer: { height: 90, left: 0, overflow: 'hidden', position: 'absolute', right: 0, top: 0 },
+  recipeDecorCircle: { borderRadius: 100, position: 'absolute' },
+  recipeDecorSpringLarge: { backgroundColor: '#FFD3DF', height: 88, opacity: 0.62, right: 20, top: -35, width: 88 },
+  recipeDecorSpringSmall: { backgroundColor: '#F7B7CA', height: 48, opacity: 0.45, right: 2, top: 8, width: 48 },
+  recipeDecorWave: { backgroundColor: '#A9DFF2', borderRadius: 40, height: 22, opacity: 0.55, position: 'absolute', right: 18, top: 18, transform: [{ rotate: '-4deg' }], width: 132 },
+  recipeDecorWaveSmall: { backgroundColor: '#BEE9F7', borderRadius: 30, height: 18, opacity: 0.7, position: 'absolute', right: 42, top: 38, transform: [{ rotate: '4deg' }], width: 98 },
+  recipeDecorLeaf: { borderRadius: 15, height: 38, position: 'absolute', top: 6, transform: [{ rotate: '35deg' }], width: 18 },
+  recipeDecorAutumnGold: { backgroundColor: '#EFA95A', opacity: 0.62, right: 74 },
+  recipeDecorAutumnRust: { backgroundColor: '#C97842', opacity: 0.48, right: 32, top: 12, transform: [{ rotate: '55deg' }] },
+  recipeDecorSnow: { backgroundColor: '#FFFFFF', borderRadius: AppRadii.pill, height: 6, position: 'absolute', width: 6 },
+  recipeGroupRow: { borderRadius: 18, borderWidth: 1, gap: 10, marginTop: 7 },
+  recipeGroupFeature: { justifyContent: 'center', minHeight: 108, paddingHorizontal: 10, paddingVertical: 15 },
+  recipeGroupCompact: { minHeight: 58, paddingHorizontal: 9, paddingVertical: 8 },
+  recipeGroupMain: { alignItems: 'center', flexDirection: 'row', gap: 9 },
+  recipeGroupMainFeature: { minHeight: 76 },
+  recipeGroupImageWell: { alignItems: 'center', justifyContent: 'center' },
+  recipeGroupImageWellFeature: { borderRadius: 48, height: 76, width: 76 },
+  recipeGroupImageWellCompact: { borderRadius: 20, height: 40, width: 40 },
+  recipeGroupImageFeature: { height: 70, resizeMode: 'contain', width: 70 },
+  recipeGroupImageCompact: { height: 36, resizeMode: 'contain', width: 36 },
+  recipeCardTitle: { fontSize: 17 },
+  recipeGroupCopy: { flex: 1, minWidth: 0 },
+  recipeGroupCopyFeature: { alignSelf: 'stretch', justifyContent: 'flex-start', paddingTop: 5 },
+  recipeGroupTitleLine: { alignItems: 'flex-start', flexDirection: 'row', gap: 16, justifyContent: 'space-between' },
+  recipeGroupName: { flex: 1, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900' },
+  recipeGroupCount: { fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900', lineHeight: 18 },
+  recipeProgressRail: { borderRadius: AppRadii.pill, height: 8, marginTop: 13, overflow: 'hidden' },
+  recipeProgressRailFeature: { marginTop: 18 },
+  recipeProgressFill: { borderRadius: AppRadii.pill, height: '100%' },
+  dashboardEmptyText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', lineHeight: 15 },
+  bushList: { alignItems: 'stretch', flexDirection: 'row', flexWrap: 'wrap', gap: 7, justifyContent: 'center' },
+  bushItem: { alignItems: 'center', backgroundColor: '#F3FFF6', borderRadius: 15, flexBasis: '47%', flexGrow: 1, minHeight: 108, paddingHorizontal: 5, paddingVertical: 7 },
+  bushItemSingle: { flexBasis: '62%', flexGrow: 0 },
+  bushImageFrame: { alignItems: 'center', backgroundColor: '#E6F8EA', borderRadius: 12, height: 50, justifyContent: 'center', width: '100%' },
+  bushImage: { height: 46, width: 46 },
+  bushCopy: { alignItems: 'center', minWidth: 0, width: '100%' },
+  bushName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', marginTop: 4 },
+  bushPeriod: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 7, fontWeight: '800', lineHeight: 10, marginTop: 2 },
+  zodiacBody: { alignItems: 'center', flexDirection: 'row', gap: 7, minHeight: 61 },
+  zodiacImage: { height: 59, resizeMode: 'contain', width: 59 },
+  zodiacCopy: { flex: 1, minWidth: 0 },
+  zodiacName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
+  zodiacPeriod: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '800', lineHeight: 12, marginTop: 3 },
+  fragmentRow: { alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.72)', borderRadius: 12, flexDirection: 'row', gap: 6, marginTop: 9, paddingHorizontal: 8, paddingVertical: 7 },
+  fragmentImage: { height: 24, resizeMode: 'contain', width: 24 },
+  fragmentText: { color: '#725B9F', flex: 1, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900' },
+  zodiacFooter: { color: '#725B9F', fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '800', marginTop: 8, textAlign: 'right' },
+  eventRow: { alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: 14, flexDirection: 'row', gap: 9, minHeight: 55, paddingHorizontal: 9, paddingVertical: 6 },
+  eventImage: { height: 50, resizeMode: 'contain', width: 50 },
+  eventCopy: { flex: 1, minWidth: 0 },
+  eventName: { color: '#7A3F20', fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
+  eventMeta: { color: '#9B6040', fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '800', marginTop: 3 },
+  eventHost: { backgroundColor: 'rgba(255,255,255,0.82)', borderRadius: AppRadii.pill, color: '#9B6040', fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 9, paddingVertical: 5 },
   timeDropdown: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, marginTop: 8, padding: 10 },
   timeDropdownHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
   timeDropdownTitle: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
@@ -2133,16 +2508,6 @@ const todayStyles = StyleSheet.create({
   timeDropdownOptionSelected: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder },
   timeDropdownOptionText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800' },
   timeDropdownOptionTextSelected: { color: AppColors.leaf, fontWeight: '900' },
-  summaryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  summaryItem: { borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', gap: 8, minHeight: 62, padding: 9, width: '48.6%' },
-  summaryMark: { alignItems: 'center', borderRadius: 10, height: 34, justifyContent: 'center', width: 34 },
-  summaryMarkText: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900', maxWidth: 28 },
-  summaryItemCopy: { flex: 1, minWidth: 0 },
-  summaryItemLabel: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900' },
-  summaryItemValue: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900', lineHeight: 16, marginTop: 4 },
-  bushIconRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 5, marginTop: 5, minHeight: 32 },
-  bushIconChip: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: 30, justifyContent: 'center', width: 30 },
-  bushIconImage: { height: 25, width: 25 },
   sectionBlock: { gap: 8 },
   sectionCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, gap: 10, padding: 12, ...AppShadows.card },
   sectionHeader: { alignItems: 'center', flexDirection: 'row', gap: 10, justifyContent: 'space-between' },

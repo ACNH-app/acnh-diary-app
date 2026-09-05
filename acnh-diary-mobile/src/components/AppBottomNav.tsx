@@ -1,18 +1,23 @@
 import type { BottomTabBarProps } from 'expo-router/build/react-navigation/bottom-tabs';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View, type ImageSourcePropType } from 'react-native';
 
 import { AppColors, AppControlSizes, AppRadii, AppTabBarStyle } from '@/constants/theme';
+
+const NAV_ICON_ASSETS: Record<string, ImageSourcePropType> = {
+  catalog: require('../data/assets/icons/catalog.png'),
+  encyclopedia: require('../data/assets/icons/critterpedia.png'),
+  guides: require('../data/assets/icons/island-life.png'),
+  guide: require('../data/assets/icons/island-life.png'),
+  today: require('../data/assets/icons/map.png'),
+  villagers: require('../data/assets/icons/villagers.png'),
+};
 
 function getRouteLabel(routeName: string, options: BottomTabBarProps['descriptors'][string]['options']) {
   return typeof options.tabBarLabel === 'string' ? options.tabBarLabel : options.title ?? routeName;
 }
 
 function getRouteIcon(routeName: string) {
-  if (routeName === 'today') return '◎';
-  if (routeName === 'villagers') return '⌂';
-  if (routeName === 'encyclopedia') return '▣';
-  if (routeName === 'catalog') return '◫';
-  return '☰';
+  return NAV_ICON_ASSETS[routeName] ?? NAV_ICON_ASSETS.guides;
 }
 
 export function AppBottomNav({ state, descriptors, navigation, insets }: BottomTabBarProps) {
@@ -62,9 +67,11 @@ export function AppBottomNav({ state, descriptors, navigation, insets }: BottomT
             ]}
             testID={options.tabBarButtonTestID}>
             <View style={[styles.iconDisc, isFocused && styles.iconDiscActive]}>
-              <Text style={[styles.icon, { color: isFocused ? AppColors.leaf : AppColors.tabBarInactive }]}>
-                {getRouteIcon(route.name)}
-              </Text>
+              <Image
+                accessibilityLabel={`${label} 아이콘`}
+                source={getRouteIcon(route.name)}
+                style={[styles.icon, { opacity: isFocused ? 1 : 0.58 }]}
+              />
             </View>
             <Text numberOfLines={1} style={[styles.label, { color: isFocused ? AppColors.tabBarActiveText : AppColors.tabBarInactive }, isFocused && styles.labelActive]}>
               {label}
@@ -99,21 +106,21 @@ const styles = StyleSheet.create({
   iconDisc: {
     alignItems: 'center',
     borderColor: 'transparent',
-    borderRadius: 15,
+    borderRadius: 17,
     borderWidth: 1,
-    height: 30,
+    height: 34,
     justifyContent: 'center',
     marginBottom: 2,
-    width: 30,
+    width: 34,
   },
   iconDiscActive: {
     backgroundColor: AppColors.card,
     borderColor: AppColors.primaryBorder,
   },
   icon: {
-    fontSize: 19,
-    fontWeight: '900',
-    lineHeight: 22,
+    height: 27,
+    resizeMode: 'contain',
+    width: 27,
   },
   label: {
     fontSize: 10,
