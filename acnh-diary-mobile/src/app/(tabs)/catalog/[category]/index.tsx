@@ -19,7 +19,12 @@ const categories: CatalogCategory[] = [
 ];
 
 export default function CatalogCategoryRoute() {
-  const { category } = useLocalSearchParams<{ category: string }>();
+  const { category, subcategory } = useLocalSearchParams<{ category: string; subcategory?: string }>();
   if (!categories.includes(category as CatalogCategory)) return null;
-  return <CatalogListScreen initialCategory={category as CatalogCategory} />;
+  return (
+    <CatalogListScreen
+      initialCategory={category as CatalogCategory}
+      initialSubcategory={typeof subcategory === 'string' ? subcategory : undefined}
+    />
+  );
 }

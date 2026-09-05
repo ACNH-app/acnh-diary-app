@@ -156,7 +156,7 @@ function getLinkedVillagerForCatalogItem(item: CatalogItem) {
   } as const;
 }
 
-export function CatalogListScreen({ initialCategory }: { initialCategory: CatalogCategory }) {
+export function CatalogListScreen({ initialCategory, initialSubcategory }: { initialCategory: CatalogCategory; initialSubcategory?: string }) {
   const router = useRouter();
   const listRef = useRef<FlatList<CatalogItem>>(null);
   const { width } = useWindowDimensions();
@@ -166,7 +166,7 @@ export function CatalogListScreen({ initialCategory }: { initialCategory: Catalo
   const activeCategory = initialCategory;
   const subcategories = getCatalogSubcategories(activeCategory);
   const hasSubcategories = subcategories.length > 1;
-  const [activeSubcategory, setActiveSubcategory] = useState('all');
+  const [activeSubcategory, setActiveSubcategory] = useState(initialSubcategory ?? 'all');
   const [search, setSearch] = useState('');
   const [ownershipFilter, setOwnershipFilter] = useState<OwnershipFilter | null>(null);
   const [availabilityFilter, setAvailabilityFilter] = useState<AvailabilityFilter | null>(null);

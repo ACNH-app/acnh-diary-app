@@ -23,6 +23,7 @@ import { AppChrome } from '@/components/AppChrome';
 import { AppColors, AppControlSizes, AppRadii, AppShadows, Fonts } from '@/constants/theme';
 import { CollectionStatusIcon } from '@/components/CollectionStatusIcon';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
+import { UnderlineTabs } from '@/components/UnderlineTabs';
 import { getMonthlyAvailabilityFlags, isAvailableAtMinute } from '@/data/availability';
 import { getBloomingBushes, type BloomingBush } from '@/data/bush-blooms';
 import { catalogItems, getCatalogAssetForItem, getCatalogItems } from '@/data/catalog';
@@ -88,6 +89,13 @@ const ZODIAC_ICON_ASSETS: Record<string, ImageSourcePropType> = {
 };
 const DEFAULT_ROUTINE_TITLES = new Set(DEFAULT_ROUTINE_OPTIONS.map((routine) => routine.title));
 const CRITTER_CATEGORIES: CritterCategory[] = ['bugs', 'fish', 'sea'];
+const CRITTER_BROWSER_TABS: Array<{ key: CritterTab; label: string }> = [
+  { key: 'bugs', label: '곤충' },
+  { key: 'fish', label: '물고기' },
+  { key: 'sea', label: '해산물' },
+  { key: 'newThisMonth', label: '이번 달 신규' },
+  { key: 'leavingThisMonth', label: '이번 달 종료' },
+];
 const DAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
 const DAY_NPC_OPTIONS = ['레온', '저스틴', '고숙이', '사하라', '패트릭', '여욱', '늘봉'];
 const WEEKEND_NPC_OPTIONS = ['K.K.', '무파니'];
@@ -366,6 +374,56 @@ function getRecipeSeasonMaterialName(key: string) {
   return '';
 }
 
+function getRecipeSeriesTitle(key: string) {
+  if (key === 'tree_bounty') return '도토리·솔방울';
+  if (key === 'mushroom') return '버섯';
+  if (key === 'christmas_ornament') return '오너먼트';
+  return getRecipeSeasonMaterialName(key);
+}
+
+function getRecipeMaterialNames(key: string) {
+  if (key === 'tree_bounty') return ['도토리', '솔방울'];
+  if (key === 'mushroom') return ['가는 버섯', '둥근 버섯', '넓은 버섯', '멋진 버섯', '희귀 버섯'];
+  if (key === 'christmas_ornament') return ['빨간 오너먼트', '파란 오너먼트', '금 오너먼트'];
+  return [getRecipeSeasonMaterialName(key)].filter(Boolean);
+}
+
+function getRecipeMaterialLabel(key: string) {
+  if (key === 'tree_bounty') return '도토리 · 솔방울';
+  if (key === 'mushroom') return '둥근 · 홀쭉 · 납작 · 멋진 · 희귀 버섯';
+  if (key === 'christmas_ornament') return '빨간 · 파란 · 금 오너먼트';
+  return getRecipeSeasonMaterialName(key);
+}
+
+function formatRecipeMonthDay(value: number) {
+  const month = Math.floor(value / 100);
+  const day = value % 100;
+  return `${month}.${day}`;
+}
+
+function formatRecipePeriod(recipeSeason: (typeof RECIPE_SEASONS)[number], hemisphere: Island['hemisphere']) {
+  const side = hemisphere === 'south' ? 'south' : 'north';
+  const [start, end] = recipeSeason[side][0] ?? [];
+  if (!start || !end) return '기간 정보 없음';
+  return `${formatRecipeMonthDay(start)} – ${formatRecipeMonthDay(end)}`;
+}
+
+function formatRecipePeriodKo(recipeSeason: (typeof RECIPE_SEASONS)[number], hemisphere: Island['hemisphere']) {
+  const side = hemisphere === 'south' ? 'south' : 'north';
+  const [start, end] = recipeSeason[side][0] ?? [];
+  if (!start || !end) return '기간 정보 없음';
+  const format = (value: number) => `${Math.floor(value / 100)}월 ${value % 100}일`;
+  return `${format(start)} – ${format(end)}`;
+}
+
+function getRecipeMaterialAssets(key: string) {
+  return getRecipeMaterialNames(key)
+    .map((name) => catalogItems.find((item) => item.catalogType === 'items' && item.nameKo === name))
+    .filter((item): item is (typeof catalogItems)[number] => Boolean(item))
+    .map((item) => getCatalogAssetForItem(item))
+    .filter((asset): asset is ImageSourcePropType => Boolean(asset));
+}
+
 function getRecipeSeasonLabel(key: string) {
   if (key === 'young_spring_bamboo' || key === 'cherry_blossom') return '봄';
   if (key === 'summer_shell') return '여름';
@@ -375,6 +433,22 @@ function getRecipeSeasonLabel(key: string) {
 }
 
 function getRecipeSeasonVariant(key: string) {
+  if (key === 'young_spring_bamboo') {
+    return {
+      accent: '#70AA65',
+      cardColors: ['#F1FAED', '#DDF3D9'] as [ColorValue, ColorValue],
+      cardBorder: '#C8E4BE',
+      decor: 'spring' as const,
+      header: '#DDF1D8',
+      iconBackground: '#E6F5E1',
+      ink: '#465C4A',
+      layout: 'feature' as const,
+      muted: '#718574',
+      rail: '#D5E8D0',
+      surface: '#FCFFFB',
+      surfaceBorder: '#D9EBD4',
+    };
+  }
   const season = getRecipeSeasonLabel(key);
   if (season === '봄') {
     return {
@@ -561,10 +635,25 @@ function getCritterStateRank(state: EncyclopediaState) {
   return 2;
 }
 
-function getCategoryLabel(category: CritterCategory) {
+function getCategoryLabel(category: EncyclopediaItem['category']) {
   if (category === 'fish') return '물고기';
   if (category === 'bugs') return '곤충';
-  return '해산물';
+  if (category === 'sea') return '해산물';
+  if (category === 'fossils') return '화석';
+  return '미술품';
+}
+
+function getCritterLocationText(item: EncyclopediaItem) {
+  const locations = [
+    localizeLocation(item.location),
+    ...(item.locationTags ?? []).map((tag) => localizeLocation(tag) ?? tag),
+  ].filter((value): value is string => Boolean(value));
+
+  return [...new Set(locations)].join(' · ') || '출현 장소 정보 없음';
+}
+
+function getCritterPriceText(item: EncyclopediaItem) {
+  return item.prices.primary == null ? null : `${item.prices.primary.toLocaleString('ko-KR')}벨`;
 }
 
 function isAvailableNow(item: EncyclopediaItem, island: Island, gameDate: string, gameTime: string) {
@@ -596,6 +685,8 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const [routineTitle, setRoutineTitle] = useState('');
   const [routineGoal, setRoutineGoal] = useState('1');
   const [clockNow, setClockNow] = useState(() => new Date());
+  const [critterBrowserOpen, setCritterBrowserOpen] = useState(false);
+  const [critterBrowserTab, setCritterBrowserTab] = useState<CritterTab>('bugs');
 
   useEffect(() => {
     const timer = setInterval(() => setClockNow(new Date()), 60 * 1000);
@@ -697,16 +788,17 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
     [routines],
   );
   const activeRecipeSeasons = getActiveRecipeSeasons(month, day, hemisphere);
-  const allSeasonalRecipeItems = getCatalogItems('seasonal_recipes').sort((left, right) => left.nameKo.localeCompare(right.nameKo, 'ko-KR'));
+  const allSeasonalRecipeItems = [...getCatalogItems('seasonal_recipes')].sort((left, right) => left.nameKo.localeCompare(right.nameKo, 'ko-KR'));
   const activeRecipeGroups = activeRecipeSeasons.map((recipeSeason) => {
     const recipeItems = allSeasonalRecipeItems.filter((item) => getRecipeFilters(item).includes(`season:${recipeSeason.key}`));
-    const materialName = getRecipeSeasonMaterialName(recipeSeason.key);
-    const materialItem = catalogItems.find((item) => item.catalogType === 'items' && item.nameKo === materialName);
     return {
       collectedCount: recipeItems.filter((item) => collectionStates[`${item.catalogType}/${item.id}`]?.owned).length,
       key: recipeSeason.key,
-      materialAsset: materialItem ? getCatalogAssetForItem(materialItem) : undefined,
-      materialName,
+      materialAssets: getRecipeMaterialAssets(recipeSeason.key),
+      materialLabel: getRecipeMaterialLabel(recipeSeason.key),
+      materialName: getRecipeSeriesTitle(recipeSeason.key),
+      period: formatRecipePeriod(recipeSeason, hemisphere),
+      periodKo: formatRecipePeriodKo(recipeSeason, hemisphere),
       recipeCount: recipeItems.length,
       seasonLabel: getRecipeSeasonLabel(recipeSeason.key),
     };
@@ -879,6 +971,10 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
           />
           <SeasonalRecipeCard
             groups={activeRecipeGroups}
+            onOpenSeries={(key) => router.push({
+              pathname: '/catalog/[category]' as never,
+              params: { category: 'seasonal_recipes', subcategory: `season:${key}` },
+            })}
           />
           <View style={todayStyles.dashboardTwoColumn}>
             <BloomingBushCard bushes={bloomingBushes} hemisphere={hemisphere} />
@@ -917,7 +1013,10 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
             month={month}
             hemisphere={island.hemisphere === 'south' ? 'south' : 'north'}
             states={collectionStates}
-            onOpenFull={() => router.push('/encyclopedia')}
+            onOpenFull={() => {
+              setCritterBrowserTab('bugs');
+              setCritterBrowserOpen(true);
+            }}
             onToggle={updateCritterStatus}
           />
 
@@ -936,6 +1035,17 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
         />
         <NpcModal date={npcDate} selectedNames={npcDate ? getResolvedNpcNames(npcDate, npcVisits) : []} visible={Boolean(npcDate)} onClose={() => setNpcDate(null)} onSave={saveNpc} />
         <RoutineModal visible={routineModalOpen} editingRoutine={editingRoutine} title={routineTitle} goal={routineGoal} selectedDefaultTitles={selectedDefaultRoutineTitles} onChangeTitle={setRoutineTitle} onChangeGoal={setRoutineGoal} onClose={() => setRoutineModalOpen(false)} onSaveEdit={saveRoutineEdit} onSaveSelection={saveRoutineSelection} onDelete={editingRoutine ? () => { setRoutineModalOpen(false); removeRoutine(editingRoutine); } : undefined} />
+        <TodayCritterBrowserSheet
+          hemisphere={island.hemisphere === 'south' ? 'south' : 'north'}
+          items={availableCritters}
+          month={month}
+          onChangeTab={setCritterBrowserTab}
+          onClose={() => setCritterBrowserOpen(false)}
+          onToggle={updateCritterStatus}
+          states={collectionStates}
+          tab={critterBrowserTab}
+          visible={critterBrowserOpen}
+        />
       </SafeAreaView>
     </View>
   );
@@ -1087,48 +1197,92 @@ function DashboardGradientCard({ children, colors, style }: { children: ReactNod
   );
 }
 
-function SeasonalRecipeCard({ groups }: {
+function SeasonalRecipeCard({ groups, onOpenSeries }: {
   groups: Array<{
     collectedCount: number;
     key: string;
-    materialAsset?: ImageSourcePropType;
+    materialAssets: ImageSourcePropType[];
+    materialLabel: string;
     materialName: string;
+    period: string;
+    periodKo: string;
     recipeCount: number;
     seasonLabel: string;
   }>;
+  onOpenSeries: (key: string) => void;
 }) {
   const seasonLabels = [...new Set(groups.map((group) => group.seasonLabel).filter(Boolean))];
-  const variant = getRecipeSeasonVariant(groups[0]?.key ?? 'summer_shell');
+  const variantKey = groups.some((group) => group.key === 'cherry_blossom')
+    ? 'cherry_blossom'
+    : groups[0]?.key ?? 'summer_shell';
+  const variant = getRecipeSeasonVariant(variantKey);
+  const headerPeriod = groups[0]?.period ?? '기간 정보 없음';
 
   return (
     <LinearGradient colors={variant.cardColors} end={{ x: 1, y: 1 }} start={{ x: 0, y: 0 }} style={[todayStyles.dashboardCard, todayStyles.recipeCard, { borderColor: variant.cardBorder }]}>
       <View pointerEvents="none" style={[todayStyles.recipeHeaderBand, { backgroundColor: variant.header }]} />
       <SeasonRecipeDecor decor={variant.decor} />
       <View style={todayStyles.dashboardCardContent}>
-        <View style={todayStyles.dashboardCardHeader}>
-          <View style={todayStyles.dashboardCardTitleRow}>
-            {seasonLabels.length ? <Text style={[todayStyles.seasonChip, { backgroundColor: variant.accent }]}>{seasonLabels.join(' · ')}</Text> : null}
-            <Text numberOfLines={1} style={[todayStyles.dashboardCardTitle, todayStyles.recipeCardTitle, { color: variant.ink }]}>시즌 레시피</Text>
+        <View style={todayStyles.recipeDashboardHeader}>
+          <View style={todayStyles.recipeDashboardHeaderCopy}>
+            <View style={todayStyles.recipeDashboardTitleRow}>
+              {seasonLabels.length ? <Text style={[todayStyles.seasonChip, { backgroundColor: variant.accent }]}>{seasonLabels.join(' · ')}</Text> : null}
+              <View style={todayStyles.recipeDashboardTitleCopy}>
+                <Text numberOfLines={1} style={[todayStyles.recipeDashboardTitle, { color: variant.ink }]}>시즌 레시피</Text>
+                <Text style={[todayStyles.recipeDashboardSubtitle, { color: variant.muted }]}>{groups.length}개 시리즈 진행 중</Text>
+              </View>
+            </View>
+          </View>
+          <View style={todayStyles.recipeDashboardPeriod}>
+            <Text style={[todayStyles.recipeDashboardPeriodLabel, { color: variant.muted }]}>시즌 기간</Text>
+            <Text numberOfLines={1} style={[todayStyles.recipeDashboardPeriodValue, { color: variant.accent }]}>{headerPeriod}</Text>
           </View>
         </View>
         {groups.length ? groups.map((group) => {
           const progress = group.recipeCount ? Math.round((group.collectedCount / group.recipeCount) * 100) : 0;
-          const isFeature = variant.layout === 'feature';
           return (
-            <View key={group.key} style={[todayStyles.recipeGroupRow, isFeature ? todayStyles.recipeGroupFeature : todayStyles.recipeGroupCompact, { backgroundColor: variant.surface, borderColor: variant.surfaceBorder }] }>
-                <View style={[todayStyles.recipeGroupMain, isFeature && todayStyles.recipeGroupMainFeature]}>
-                <View style={[todayStyles.recipeGroupImageWell, isFeature ? todayStyles.recipeGroupImageWellFeature : todayStyles.recipeGroupImageWellCompact, { backgroundColor: variant.iconBackground }] }>
-                  {group.materialAsset ? <Image accessibilityLabel={group.materialName} source={group.materialAsset} style={isFeature ? todayStyles.recipeGroupImageFeature : todayStyles.recipeGroupImageCompact} /> : <MaterialCommunityIcons color={variant.accent} name="leaf" size={isFeature ? 48 : 27} />}
+            <View key={group.key} style={[todayStyles.recipeGroupRow, { backgroundColor: variant.surface, borderColor: variant.surfaceBorder }] }>
+              <View style={todayStyles.recipeGroupTop}>
+                <View style={todayStyles.recipeMaterialIcons}>
+                  {group.materialAssets.length ? group.materialAssets.slice(0, 3).map((asset, index) => (
+                    <Image
+                      accessibilityLabel={`${group.materialName} 재료 ${index + 1}`}
+                      key={`${group.key}-material-${index}`}
+                      resizeMode="contain"
+                      source={asset}
+                      style={[todayStyles.recipeMaterialImage, index > 0 && todayStyles.recipeMaterialImageOverlap]}
+                    />
+                  )) : <MaterialCommunityIcons color={variant.accent} name="leaf" size={42} />}
                 </View>
-                <View style={[todayStyles.recipeGroupCopy, isFeature && todayStyles.recipeGroupCopyFeature]}>
-                  <View style={todayStyles.recipeGroupTitleLine}>
-                    <Text numberOfLines={1} style={[todayStyles.recipeGroupName, { color: variant.ink }]}>{group.materialName} 레시피</Text>
-                    <Text style={[todayStyles.recipeGroupCount, { color: variant.ink }]}>{group.collectedCount} / {group.recipeCount}</Text>
+                <View style={todayStyles.recipeGroupCopy}>
+                  <Text numberOfLines={1} style={[todayStyles.recipeGroupName, { color: variant.ink }]}>{group.materialName} 레시피</Text>
+                  <View style={todayStyles.recipeGroupInfoRow}>
+                    <Text style={[todayStyles.recipeGroupInfoLabel, { color: variant.accent }]}>기간</Text>
+                    <Text numberOfLines={1} style={[todayStyles.recipeGroupInfoValue, { color: variant.muted }]}>{group.periodKo}</Text>
                   </View>
-                  <View style={[todayStyles.recipeProgressRail, isFeature && todayStyles.recipeProgressRailFeature, { backgroundColor: variant.rail }]}>
-                    <View style={[todayStyles.recipeProgressFill, { backgroundColor: variant.accent, width: `${progress}%` }]} />
+                  <View style={todayStyles.recipeGroupInfoRow}>
+                    <Text style={[todayStyles.recipeGroupInfoLabel, { color: variant.accent }]}>재료</Text>
+                    <Text numberOfLines={2} style={[todayStyles.recipeGroupInfoValue, { color: variant.muted }]}>{group.materialLabel}</Text>
                   </View>
                 </View>
+                <View style={todayStyles.recipeGroupAside}>
+                  <Pressable
+                    accessibilityLabel={`${group.materialName} 레시피 전체보기`}
+                    accessibilityRole="button"
+                    hitSlop={8}
+                    onPress={() => onOpenSeries(group.key)}
+                    style={todayStyles.recipeViewAllButton}>
+                    <Text style={[todayStyles.recipeViewAllText, { color: variant.accent }]}>전체보기</Text>
+                    <MaterialCommunityIcons color={variant.accent} name="chevron-right" size={17} />
+                  </Pressable>
+                </View>
+              </View>
+              <View style={todayStyles.recipeProgressHeader}>
+                <Text style={[todayStyles.recipeProgressLabel, { color: variant.muted }]}>레시피 수집률</Text>
+                <Text style={[todayStyles.recipeGroupCount, { color: variant.ink }]}>{group.collectedCount} / {group.recipeCount}</Text>
+              </View>
+              <View style={[todayStyles.recipeProgressRail, { backgroundColor: variant.rail }]}>
+                <View style={[todayStyles.recipeProgressFill, { backgroundColor: variant.accent, width: `${progress}%` }]} />
               </View>
             </View>
           );
@@ -1461,6 +1615,184 @@ function CritterPreview({
           )}
         </ScrollView>
         </View>
+      </View>
+    </View>
+  );
+}
+
+function TodayCritterBrowserSheet({
+  hemisphere,
+  items,
+  month,
+  onChangeTab,
+  onClose,
+  onToggle,
+  states,
+  tab,
+  visible,
+}: {
+  hemisphere: 'north' | 'south';
+  items: EncyclopediaItem[];
+  month: number;
+  onChangeTab: (tab: CritterTab) => void;
+  onClose: () => void;
+  onToggle: (item: EncyclopediaItem, status: EncyclopediaStatus) => void;
+  states: Record<string, EncyclopediaState>;
+  tab: CritterTab;
+  visible: boolean;
+}) {
+  const [onlyIncomplete, setOnlyIncomplete] = useState(false);
+  const filteredItems = items
+    .filter((item) => {
+      if (tab === 'newThisMonth') return getMonthlyAvailabilityFlags(item, hemisphere, month).isNewThisMonth;
+      if (tab === 'leavingThisMonth') return getMonthlyAvailabilityFlags(item, hemisphere, month).isLeavingThisMonth;
+      return item.category === tab;
+    })
+    .filter((item) => {
+      if (!onlyIncomplete) return true;
+      const state = states[`${item.category}/${item.id}`] ?? EMPTY_STATE;
+      return !state.caught || !state.donated;
+    })
+    .sort((left, right) => {
+      const numberDifference = (left.number ?? Number.MAX_SAFE_INTEGER) - (right.number ?? Number.MAX_SAFE_INTEGER);
+      return numberDifference || left.nameKo.localeCompare(right.nameKo, 'ko-KR');
+    });
+
+  return (
+    <Modal animationType="slide" onRequestClose={onClose} transparent visible={visible}>
+      <View style={todayStyles.critterBrowserBackdrop}>
+        <Pressable accessibilityLabel="현재 출현 생물 닫기" onPress={onClose} style={StyleSheet.absoluteFill} />
+        <View style={todayStyles.critterBrowserSheet}>
+          <SafeAreaView edges={['bottom']} style={todayStyles.critterBrowserSafeArea}>
+            <View style={todayStyles.critterBrowserHeader}>
+              <View style={todayStyles.critterBrowserTitleWrap}>
+                <Text style={todayStyles.critterBrowserTitle}>현재 출현 생물</Text>
+                <Text style={todayStyles.critterBrowserSubtitle}>지금 잡을 수 있는 생물 전체</Text>
+              </View>
+              <Pressable
+                accessibilityLabel="현재 출현 생물 닫기"
+                accessibilityRole="button"
+                hitSlop={10}
+                onPress={onClose}
+                style={todayStyles.critterBrowserClose}>
+                <MaterialCommunityIcons color={AppColors.ink} name="close" size={22} />
+              </Pressable>
+            </View>
+            <UnderlineTabs
+              accessibilityLabel={(item) => `${item.label} 현재 출현 생물 보기`}
+              fitToWidth
+              onChange={onChangeTab}
+              tabs={CRITTER_BROWSER_TABS}
+              value={tab}
+            />
+            <View style={todayStyles.critterBrowserCountRow}>
+              <Text style={todayStyles.critterBrowserCount}>{filteredItems.length}종 출현 중</Text>
+              <Pressable
+                accessibilityLabel="미채집 또는 미기증 생물만 표시"
+                accessibilityRole="switch"
+                accessibilityState={{ checked: onlyIncomplete }}
+                onPress={() => setOnlyIncomplete((value) => !value)}
+                style={[todayStyles.critterBrowserFilterButton, onlyIncomplete && todayStyles.critterBrowserFilterButtonActive]}>
+                <MaterialCommunityIcons color={onlyIncomplete ? AppColors.leaf : AppColors.inkMuted} name="filter-variant" size={14} />
+                <Text style={[todayStyles.critterBrowserFilterText, onlyIncomplete && todayStyles.critterBrowserFilterTextActive]}>미채집·미기증만</Text>
+              </Pressable>
+              <Text style={todayStyles.critterBrowserHint}>채집·기증 아이콘을 눌러 기록하세요</Text>
+            </View>
+            <ScrollView contentContainerStyle={todayStyles.critterBrowserList} showsVerticalScrollIndicator={false}>
+              {filteredItems.length ? filteredItems.map((item) => {
+                const key = `${item.category}/${item.id}`;
+                return (
+                  <TodayCritterBrowserCard
+                    hemisphere={hemisphere}
+                    item={item}
+                    key={key}
+                    month={month}
+                    onToggle={(status) => onToggle(item, status)}
+                    state={states[key] ?? EMPTY_STATE}
+                  />
+                );
+              }) : (
+                <View style={todayStyles.critterBrowserEmpty}>
+                  <Text style={todayStyles.critterBrowserEmptyTitle}>해당 생물이 없어요</Text>
+                  <Text style={todayStyles.critterBrowserEmptyText}>{onlyIncomplete ? '현재 출현 생물이 모두 채집·기증 완료되었어요.' : '현재 날짜와 시간 기준으로 출현하는 생물만 표시됩니다.'}</Text>
+                </View>
+              )}
+            </ScrollView>
+          </SafeAreaView>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
+function TodayCritterBrowserCard({
+  hemisphere,
+  item,
+  month,
+  onToggle,
+  state,
+}: {
+  hemisphere: 'north' | 'south';
+  item: EncyclopediaItem;
+  month: number;
+  onToggle: (status: EncyclopediaStatus) => void;
+  state: EncyclopediaState;
+}) {
+  const image = getEncyclopediaAsset(item.category, item.id);
+  const availability = item.availability[hemisphere];
+  const monthlyFlags = getMonthlyAvailabilityFlags(item, hemisphere, month);
+  const availabilityLabel = localizeAvailabilityLabel(availability.label);
+  const availabilityTime = localizeAvailabilityTime(availability.timesByMonth[String(month)] ?? null);
+  const price = getCritterPriceText(item);
+
+  return (
+    <View style={todayStyles.critterBrowserCard}>
+      <View style={todayStyles.critterBrowserImageFrame}>
+        {image ? (
+          <Image source={image} resizeMode="contain" style={[todayStyles.critterBrowserImage, !state.caught && todayStyles.critterBrowserImageUncaught]} />
+        ) : (
+          <Text style={todayStyles.critterFallback}>?</Text>
+        )}
+      </View>
+      <View style={todayStyles.critterBrowserCopy}>
+        <View style={todayStyles.critterBrowserNameRow}>
+          <View style={todayStyles.critterBrowserNameWrap}>
+            <Text style={todayStyles.critterBrowserNumber}>{item.number ? `No.${String(item.number).padStart(3, '0')}` : getCategoryLabel(item.category)}</Text>
+            <Text numberOfLines={1} style={todayStyles.critterBrowserName}>{item.nameKo}</Text>
+            <Text numberOfLines={1} style={todayStyles.critterBrowserNameEn}>{item.nameEn}</Text>
+          </View>
+          <View style={todayStyles.critterBrowserStatus}>
+            {(['caught', 'donated'] as EncyclopediaStatus[]).map((status) => (
+              <Pressable
+                accessibilityLabel={`${item.nameKo} ${status === 'caught' ? '채집' : '기증'} ${state[status] ? '해제' : '설정'}`}
+                accessibilityRole="button"
+                accessibilityState={{ checked: state[status] }}
+                hitSlop={5}
+                key={status}
+                onPress={() => onToggle(status)}
+                style={todayStyles.critterBrowserStatusButton}>
+                <CollectionStatusIcon active={state[status]} status={status} />
+              </Pressable>
+            ))}
+          </View>
+        </View>
+        {monthlyFlags.isNewThisMonth || monthlyFlags.isLeavingThisMonth ? (
+          <View style={critterBadgeStyles.badgeRow}>
+            {monthlyFlags.isNewThisMonth ? (
+              <View style={[critterBadgeStyles.badge, critterBadgeStyles.newBadge]}>
+                <Text style={[critterBadgeStyles.badgeText, critterBadgeStyles.newBadgeText]}>이번 달 신규</Text>
+              </View>
+            ) : null}
+            {monthlyFlags.isLeavingThisMonth ? (
+              <View style={[critterBadgeStyles.badge, critterBadgeStyles.leavingBadge]}>
+                <Text style={[critterBadgeStyles.badgeText, critterBadgeStyles.leavingBadgeText]}>이번 달 종료</Text>
+              </View>
+            ) : null}
+          </View>
+        ) : null}
+        <Text numberOfLines={1} style={todayStyles.critterBrowserMeta}>{getCritterLocationText(item)}</Text>
+        <Text numberOfLines={1} style={todayStyles.critterBrowserMeta}>{availabilityLabel ?? '출현 정보 확인 중'} · {availabilityTime ?? '시간 정보 없음'}</Text>
+        {price ? <Text style={todayStyles.critterBrowserPrice}>판매가 {price}</Text> : null}
       </View>
     </View>
   );
@@ -2436,7 +2768,7 @@ const todayStyles = StyleSheet.create({
   dashboardCardContent: { padding: 14 },
   dashboardTwoColumn: { flexDirection: 'row', gap: 10 },
   dashboardHalfCard: { flex: 1, minWidth: 0 },
-  recipeCard: {},
+  recipeCard: { borderWidth: 1 },
   bushCard: { minHeight: 190 },
   zodiacCard: { minHeight: 190 },
   eventCard: { minHeight: 126 },
@@ -2444,8 +2776,17 @@ const todayStyles = StyleSheet.create({
   dashboardCardTitleRow: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 6, minWidth: 0 },
   dashboardCardTitle: { color: AppColors.ink, flexShrink: 1, fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900' },
   dashboardCardCountChip: { backgroundColor: 'rgba(255,255,255,0.62)', borderRadius: AppRadii.pill, color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 7, paddingVertical: 4 },
-  seasonChip: { borderRadius: AppRadii.pill, color: '#FFFFFF', fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 10, paddingVertical: 5 },
-  recipeHeaderBand: { borderBottomLeftRadius: 24, borderBottomRightRadius: 24, height: 84, left: 0, position: 'absolute', right: 0, top: 0 },
+  recipeDashboardHeader: { alignItems: 'center', flexDirection: 'row', height: 52, justifyContent: 'space-between', marginBottom: 2 },
+  recipeDashboardHeaderCopy: { flex: 1, minWidth: 0 },
+  recipeDashboardTitleRow: { alignItems: 'center', flexDirection: 'row', gap: 8, minWidth: 0 },
+  recipeDashboardTitleCopy: { flex: 1, minWidth: 0 },
+  recipeDashboardTitle: { flexShrink: 1, fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900' },
+  recipeDashboardSubtitle: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', marginTop: 3 },
+  recipeDashboardPeriod: { alignItems: 'flex-end', marginLeft: 8, width: 78 },
+  recipeDashboardPeriodLabel: { fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '800' },
+  recipeDashboardPeriodValue: { fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900', marginTop: 5 },
+  seasonChip: { borderRadius: AppRadii.pill, color: '#FFFFFF', fontFamily: Fonts.rounded, fontSize: 13, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 11, paddingVertical: 6 },
+  recipeHeaderBand: { borderBottomLeftRadius: 24, borderBottomRightRadius: 24, height: 74, left: 0, position: 'absolute', right: 0, top: 0 },
   recipeDecorLayer: { height: 90, left: 0, overflow: 'hidden', position: 'absolute', right: 0, top: 0 },
   recipeDecorCircle: { borderRadius: 100, position: 'absolute' },
   recipeDecorSpringLarge: { backgroundColor: '#FFD3DF', height: 88, opacity: 0.62, right: 20, top: -35, width: 88 },
@@ -2456,24 +2797,23 @@ const todayStyles = StyleSheet.create({
   recipeDecorAutumnGold: { backgroundColor: '#EFA95A', opacity: 0.62, right: 74 },
   recipeDecorAutumnRust: { backgroundColor: '#C97842', opacity: 0.48, right: 32, top: 12, transform: [{ rotate: '55deg' }] },
   recipeDecorSnow: { backgroundColor: '#FFFFFF', borderRadius: AppRadii.pill, height: 6, position: 'absolute', width: 6 },
-  recipeGroupRow: { borderRadius: 18, borderWidth: 1, gap: 10, marginTop: 7 },
-  recipeGroupFeature: { justifyContent: 'center', minHeight: 108, paddingHorizontal: 10, paddingVertical: 15 },
-  recipeGroupCompact: { minHeight: 58, paddingHorizontal: 9, paddingVertical: 8 },
-  recipeGroupMain: { alignItems: 'center', flexDirection: 'row', gap: 9 },
-  recipeGroupMainFeature: { minHeight: 76 },
-  recipeGroupImageWell: { alignItems: 'center', justifyContent: 'center' },
-  recipeGroupImageWellFeature: { borderRadius: 48, height: 76, width: 76 },
-  recipeGroupImageWellCompact: { borderRadius: 20, height: 40, width: 40 },
-  recipeGroupImageFeature: { height: 70, resizeMode: 'contain', width: 70 },
-  recipeGroupImageCompact: { height: 36, resizeMode: 'contain', width: 36 },
-  recipeCardTitle: { fontSize: 17 },
-  recipeGroupCopy: { flex: 1, minWidth: 0 },
-  recipeGroupCopyFeature: { alignSelf: 'stretch', justifyContent: 'flex-start', paddingTop: 5 },
-  recipeGroupTitleLine: { alignItems: 'flex-start', flexDirection: 'row', gap: 16, justifyContent: 'space-between' },
-  recipeGroupName: { flex: 1, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900' },
-  recipeGroupCount: { fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900', lineHeight: 18 },
-  recipeProgressRail: { borderRadius: AppRadii.pill, height: 8, marginTop: 13, overflow: 'hidden' },
-  recipeProgressRailFeature: { marginTop: 18 },
+  recipeGroupRow: { borderRadius: 18, borderWidth: 1, height: 144, marginTop: 8, padding: 12 },
+  recipeGroupTop: { flexDirection: 'row', gap: 8, justifyContent: 'space-between', minHeight: 0 },
+  recipeMaterialIcons: { alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: 64 },
+  recipeMaterialImage: { height: 54, resizeMode: 'contain', width: 54 },
+  recipeMaterialImageOverlap: { marginLeft: -14 },
+  recipeGroupCopy: { flex: 1, minWidth: 0, paddingTop: 2 },
+  recipeGroupName: { fontFamily: Fonts.rounded, fontSize: 16, fontWeight: '900' },
+  recipeGroupInfoRow: { alignItems: 'flex-start', flexDirection: 'row', marginTop: 9, minWidth: 0 },
+  recipeGroupInfoLabel: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900', width: 31 },
+  recipeGroupInfoValue: { flex: 1, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', lineHeight: 15 },
+  recipeGroupAside: { alignItems: 'flex-end', marginLeft: 3, width: 76 },
+  recipeViewAllButton: { alignItems: 'center', flexDirection: 'row', gap: 1, justifyContent: 'flex-end' },
+  recipeViewAllText: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900' },
+  recipeProgressHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 7, marginTop: 8 },
+  recipeProgressLabel: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800' },
+  recipeGroupCount: { fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900', lineHeight: 18 },
+  recipeProgressRail: { borderRadius: AppRadii.pill, height: 7, overflow: 'hidden' },
   recipeProgressFill: { borderRadius: AppRadii.pill, height: '100%' },
   dashboardEmptyText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', lineHeight: 15 },
   bushList: { alignItems: 'stretch', flexDirection: 'row', flexWrap: 'wrap', gap: 7, justifyContent: 'center' },
@@ -2587,6 +2927,39 @@ const todayStyles = StyleSheet.create({
   critterStatusButton: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, height: AppControlSizes.compactStatus, justifyContent: 'center', width: AppControlSizes.compactStatus },
   statusIconOnly: { backgroundColor: 'transparent', borderColor: 'transparent', borderWidth: 0 },
   noData: { color: AppColors.inkMuted, padding: 18, textAlign: 'center' },
+  critterBrowserBackdrop: { backgroundColor: 'rgba(63, 42, 20, 0.28)', flex: 1, justifyContent: 'flex-end' },
+  critterBrowserSheet: { backgroundColor: AppColors.background, borderTopLeftRadius: 26, borderTopRightRadius: 26, height: '91%', overflow: 'hidden' },
+  critterBrowserSafeArea: { flex: 1, paddingHorizontal: 14 },
+  critterBrowserHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10, paddingTop: 9 },
+  critterBrowserTitleWrap: { flex: 1, minWidth: 0 },
+  critterBrowserTitle: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 20, fontWeight: '900' },
+  critterBrowserSubtitle: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', marginTop: 3 },
+  critterBrowserClose: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, height: 36, justifyContent: 'center', marginLeft: 10, width: 36 },
+  critterBrowserCountRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 },
+  critterBrowserCount: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 13, fontWeight: '900' },
+  critterBrowserFilterButton: { alignItems: 'center', borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, flexDirection: 'row', gap: 3, paddingHorizontal: 8, paddingVertical: 5 },
+  critterBrowserFilterButtonActive: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.leaf },
+  critterBrowserFilterText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '800' },
+  critterBrowserFilterTextActive: { color: AppColors.leaf, fontWeight: '900' },
+  critterBrowserHint: { color: AppColors.inkMuted, flexShrink: 1, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '700', marginLeft: 6, textAlign: 'right' },
+  critterBrowserList: { gap: 9, paddingBottom: 28, paddingTop: 2 },
+  critterBrowserCard: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.card, borderWidth: 1, flexDirection: 'row', gap: 10, minHeight: 104, padding: 10, ...AppShadows.card },
+  critterBrowserImageFrame: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.control, height: 78, justifyContent: 'center', width: 78 },
+  critterBrowserImage: { height: 70, width: 70 },
+  critterBrowserImageUncaught: { opacity: 0.4 },
+  critterBrowserCopy: { flex: 1, minWidth: 0 },
+  critterBrowserNameRow: { alignItems: 'flex-start', flexDirection: 'row', justifyContent: 'space-between', minWidth: 0 },
+  critterBrowserNameWrap: { flex: 1, minWidth: 0 },
+  critterBrowserNumber: { color: AppColors.museum, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900' },
+  critterBrowserName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900', marginTop: 2 },
+  critterBrowserNameEn: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '700', marginTop: 1 },
+  critterBrowserStatus: { flexDirection: 'row', gap: 2, marginLeft: 4 },
+  critterBrowserStatusButton: { alignItems: 'center', height: 36, justifyContent: 'center', width: 36 },
+  critterBrowserMeta: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '800', marginTop: 4 },
+  critterBrowserPrice: { color: AppColors.catalog, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', marginTop: 4 },
+  critterBrowserEmpty: { alignItems: 'center', backgroundColor: AppColors.card, borderRadius: AppRadii.card, paddingHorizontal: 22, paddingVertical: 34 },
+  critterBrowserEmptyTitle: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900' },
+  critterBrowserEmptyText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '700', marginTop: 7, textAlign: 'center' },
 });
 
 const styles = StyleSheet.create({
