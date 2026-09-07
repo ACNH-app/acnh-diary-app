@@ -1,0 +1,34 @@
+diff --git a/node_modules/expo-sqlite/ios/ExpoSQLite.podspec b/node_modules/expo-sqlite/ios/ExpoSQLite.podspec
+index 4633866..83142ee 100644
+--- a/node_modules/expo-sqlite/ios/ExpoSQLite.podspec
++++ b/node_modules/expo-sqlite/ios/ExpoSQLite.podspec
+@@ -57,6 +57,7 @@ Pod::Spec.new do |s|
+ 
+   # Consistent SQLite build flags for Swift module exposing from the umbrella header
+   swift_flags = sqlite_cflags.split(' ').map { |flag| "-Xcc #{flag}" }.join(' ')
++  swift_flags += " -Xcc -fmodule-map-file=#{File.join(__dir__, 'ExpoSQLiteSQLite.modulemap')}"
+ 
+   if podfile_properties['expo.sqlite.withSQLiteVecExtension'] == 'true'
+     swift_flags += ' -DWITH_SQLITE_VEC'
+diff --git a/node_modules/expo-sqlite/ios/ExpoSQLiteSQLite.modulemap b/node_modules/expo-sqlite/ios/ExpoSQLiteSQLite.modulemap
+new file mode 100644
+index 0000000..fab8aad
+--- /dev/null
++++ b/node_modules/expo-sqlite/ios/ExpoSQLiteSQLite.modulemap
+@@ -0,0 +1,4 @@
++module ExpoSQLiteSQLite {
++  header "sqlite3.h"
++  export *
++}
+diff --git a/node_modules/expo-sqlite/ios/SQLiteModule.swift b/node_modules/expo-sqlite/ios/SQLiteModule.swift
+index 368bb7a..c20cb78 100644
+--- a/node_modules/expo-sqlite/ios/SQLiteModule.swift
++++ b/node_modules/expo-sqlite/ios/SQLiteModule.swift
+@@ -1,6 +1,7 @@
+ // Copyright 2015-present 650 Industries. All rights reserved.
+ 
+ import ExpoModulesCore
++@_implementationOnly import ExpoSQLiteSQLite
+ 
+ private typealias SQLiteColumnNames = [String]
+ private typealias SQLiteColumnValues = [Any]

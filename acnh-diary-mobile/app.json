@@ -27,7 +27,8 @@
     "plugins": [
       "expo-router",
       "expo-sqlite",
-      "expo-font"
+      "expo-font",
+      "./plugins/withIosSourceModules"
     ],
     "experiments": {
       "typedRoutes": true

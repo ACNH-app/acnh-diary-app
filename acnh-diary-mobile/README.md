@@ -30,7 +30,7 @@ acnh-diary-mobile/
 
 ```bash
 cd acnh-diary-mobile
-npm ci --legacy-peer-deps
+npm ci --include=dev
 npx expo config --json
 npx tsc --noEmit
 ```
@@ -43,13 +43,13 @@ npx tsc --noEmit
 npx expo start --offline
 ```
 
-현재 개발·검증 대상은 iOS다. React Native 0.86.3 네이티브 빌드에는 Xcode 16.1 이상이 필요하며, 현재 저장소는 Xcode 26.3에서도 빌드를 확인했다. 기본 `xcode-select` 경로의 Xcode를 사용한다.
+현재 개발·검증 대상은 iOS다. React Native 0.86.3 네이티브 빌드에는 Xcode 16.1 이상이 필요하며, 현재 저장소는 Xcode 26.3에서도 빌드를 확인했다. 기본 `xcode-select` 경로의 Xcode를 사용한다. iOS prebuild 시 Expo 네이티브 모듈은 소스 모드로 고정되며, Xcode 26.3에서 필요한 호환성 패치는 `npm ci` 후 자동 적용된다.
 
 ```bash
 npx expo run:ios
 ```
 
-Xcode 26 계열을 사용하는 경우 `patches/expo-modules-jsi+57.0.6.patch`가 `npm install` 후 자동 적용된다. 실제 기기 또는 시뮬레이터가 필요하며, 시뮬레이터 없이 컴파일만 확인하려면 다음 명령을 사용한다.
+Xcode 26 계열을 사용하는 경우 `patches/expo-modules-jsi+57.0.6.patch`, `patches/expo++expo-modules-core+57.0.15.patch`, `patches/expo-sqlite+57.0.2.patch`가 `npm ci` 후 자동 적용된다. 실제 기기 또는 시뮬레이터가 필요하며, 시뮬레이터 없이 컴파일만 확인하려면 다음 명령을 사용한다.
 
 ```bash
 npx expo run:ios --no-install --no-bundler --device generic
