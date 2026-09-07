@@ -18,6 +18,7 @@ This directory contains the files bundled into the mobile app.
 - Static encyclopedia asset map: `encyclopedia-assets.ts`
 - Static encyclopedia detail asset map: `encyclopedia-detail-assets.ts`
 - Encyclopedia Korean detail labels: `encyclopedia-labels.ts`
+- Bug monthly relative spawn weights: `bug-spawn-rates.ts` (data-mined source; weights are not percentages)
 - Static catalog asset map: `catalog-assets.ts`
 - Static Metro asset maps: `villager-assets.ts`, `music-assets.ts`
 - User-owned state belongs in SQLite, not in these files.

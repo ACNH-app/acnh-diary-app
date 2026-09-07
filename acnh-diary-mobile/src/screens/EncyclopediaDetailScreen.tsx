@@ -21,6 +21,7 @@ import { FloatingTopButton } from '@/components/FloatingTopButton';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
 import { getEncyclopediaDetailAsset } from '@/data/encyclopedia-detail-assets';
 import { getEncyclopediaItem, getEncyclopediaLabel } from '@/data/encyclopedia';
+import { getBugAppearanceFrequency } from '@/data/bug-spawn-rates';
 import {
   localizeArtAvailability,
   localizeArtName,
@@ -215,6 +216,10 @@ export function EncyclopediaDetailScreen({
   const isAvailableThisMonth = availability.months.includes(currentMonth);
   const isAvailableNow = isAvailableAtMinute(availability, currentMonth, currentMinute);
   const monthlyFlags = getMonthlyAvailabilityFlags(item, hemisphere, currentMonth);
+  const appearanceFrequency =
+    category === 'bugs'
+      ? getBugAppearanceFrequency(item, currentMonth) ?? localizeRarity(item.rarity)
+      : localizeRarity(item.rarity);
 
   const updateStatus = (status: EncyclopediaStatus) => {
     if (!islandId) {
@@ -312,7 +317,7 @@ export function EncyclopediaDetailScreen({
                 hemisphere={hemisphere}
               />
               {showsCreatureLocationDetails ? <LocationInfoRow item={item} /> : null}
-              {showsCreatureLocationDetails ? <InfoRow label="출현 빈도" value={localizeRarity(item.rarity) || '정보 없음'} /> : null}
+              {showsCreatureLocationDetails ? <InfoRow label="출현 빈도" value={appearanceFrequency || '정보 없음'} /> : null}
               {showsShadowInAvailability ? <InfoRow label="그림자 크기" value={localizeShadow(item.shadow) ?? '해당 없음'} /> : null}
               {showsMovementInAvailability ? <InfoRow label="이동 속도" value={localizeMovementSpeed(item.movementSpeed) ?? item.movementSpeed ?? '정보 없음'} /> : null}
             </Section>

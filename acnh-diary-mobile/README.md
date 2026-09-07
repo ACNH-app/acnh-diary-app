@@ -39,14 +39,46 @@ npx tsc --noEmit
 
 ## 실행
 
+맥북과 윈도우를 번갈아 사용할 때는 공통 소스만 Git으로 공유하고, 각 운영체제의 생성 파일은 해당 환경에서 다시 만든다.
+
+### 공통 준비
+
 ```bash
-npx expo start --offline
+git pull
+cd acnh-diary-mobile
+npm ci --include=dev
 ```
+
+처음 설치하거나 `package.json` 또는 `package-lock.json`이 변경된 경우에만 `npm ci`를 실행한다. `patches/`의 네이티브 호환성 패치는 설치 후 자동 적용된다.
+
+### 윈도우 웹 실행
+
+윈도우에서는 iOS 네이티브 빌드를 실행하지 않고 웹으로 화면을 확인한다.
+
+```bash
+npm run web
+```
+
+또는 다음 명령을 사용한다.
+
+```bash
+npx expo start --web
+```
+
+웹 서버 실행으로 생성되는 `node_modules/`, `.expo/`, `dist/`는 로컬 생성물이며 커밋하지 않는다. 캐시를 초기화해야 할 때는 `npx expo start --web -c`를 사용한다.
+
+### 맥북 iOS 실행
 
 현재 개발·검증 대상은 iOS다. React Native 0.86.3 네이티브 빌드에는 Xcode 16.1 이상이 필요하며, 현재 저장소는 Xcode 26.3에서도 빌드를 확인했다. 기본 `xcode-select` 경로의 Xcode를 사용한다. iOS prebuild 시 Expo 네이티브 모듈은 소스 모드로 고정되며, Xcode 26.3에서 필요한 호환성 패치는 `npm ci` 후 자동 적용된다.
 
 ```bash
 npx expo run:ios
+```
+
+아이폰 또는 아이패드 시뮬레이터를 직접 선택하려면 다음 명령을 사용한다.
+
+```bash
+npx expo run:ios --device
 ```
 
 Xcode 26 계열을 사용하는 경우 `patches/expo-modules-jsi+57.0.6.patch`, `patches/expo++expo-modules-core+57.0.15.patch`, `patches/expo-sqlite+57.0.2.patch`가 `npm ci` 후 자동 적용된다. 실제 기기 또는 시뮬레이터가 필요하며, 시뮬레이터 없이 컴파일만 확인하려면 다음 명령을 사용한다.
@@ -56,6 +88,8 @@ npx expo run:ios --no-install --no-bundler --device generic
 ```
 
 여러 Xcode가 설치되어 있어 특정 버전을 선택해야 할 때만 `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`처럼 기본 경로를 변경한다.
+
+`ios/`와 `android/`는 Expo가 생성하는 네이티브 폴더이므로 Git에 올리거나 컴퓨터 간에 복사하지 않는다. 윈도우에서 수정한 코드·데이터·설정은 커밋하고 맥북에서 `git pull`한 뒤 iOS 명령을 다시 실행한다.
 
 Android는 현재 수용 기준에서 제외하고 후속 단계에서 별도로 활성화한다.
 

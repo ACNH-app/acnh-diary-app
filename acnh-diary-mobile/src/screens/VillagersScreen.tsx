@@ -54,6 +54,7 @@ type Category =
   | 'campsiteVisited'
   | 'outside'
   | 'photoReceived';
+type StatusFilter = Exclude<Category, 'all'>;
 type SortMode = 'number' | 'name' | 'personality' | 'birthday' | 'species';
 type SortDirection = 'asc' | 'desc';
 type ResidentView = 'status' | 'personality' | 'species';
@@ -79,8 +80,8 @@ const subtypeOptions = Array.from(new Set(villagers.map((villager) => villager.s
 const campsiteIcon = require('../data/assets/icons/campsite.png') as ImageSourcePropType;
 const framedPhotoIcon = require('../data/assets/villagers/framed_photo/cat10.png') as ImageSourcePropType;
 const islandResidentIcon = require('../data/assets/icons/map.png') as ImageSourcePropType;
-const movedOutIcon = require('../data/assets/icons/passport-island.png') as ImageSourcePropType;
-const outsideIslandIcon = require('../data/assets/icons/passport.png') as ImageSourcePropType;
+const movedOutIcon = require('../data/assets/catalog/furniture/items/5357ad43f5357c5e.png') as ImageSourcePropType;
+const outsideIslandIcon = require('../data/assets/catalog/furniture/items/a30ce38e57127940.png') as ImageSourcePropType;
 const wishIcon = require('../data/assets/icons/wish.png') as ImageSourcePropType;
 
 type PersonalityTagStyle = {
@@ -140,6 +141,11 @@ const statusOptions: Array<{ icon?: string; iconSource?: ImageSourcePropType; la
   { status: 'movedOut', iconSource: movedOutIcon, label: '이사' },
   { status: 'campsiteVisited', iconSource: campsiteIcon, label: '캠핑' },
   { status: 'photoReceived', iconSource: framedPhotoIcon, label: '액자' },
+];
+
+const statusFilterOptions: Array<{ key: StatusFilter; label: string }> = [
+  ...statusOptions.map(({ label, status }) => ({ key: status as StatusFilter, label })),
+  { key: 'outside', label: '섬 외' },
 ];
 
 function getVillagerStatusTone(status: VillagerStatus) {
@@ -311,6 +317,7 @@ export function VillagersScreen() {
   const [selectedPersonality, setSelectedPersonality] = useState<string | null>(null);
   const [selectedHobby, setSelectedHobby] = useState<string | null>(null);
   const [selectedSubtype, setSelectedSubtype] = useState<string | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState<StatusFilter | null>(null);
   const [filterExpanded, setFilterExpanded] = useState(false);
   const [islandId, setIslandId] = useState<string | null>(null);
   const [villagerStates, setVillagerStates] = useState<Record<string, VillagerState>>({});
@@ -362,16 +369,17 @@ export function VillagersScreen() {
 
   const normalizedSearch = search.trim().toLocaleLowerCase('ko-KR');
   const categoryVillagers = villagers.filter((villager) => {
-    if (residentView === 'personality') {
-      return activePersonalityTab === 'all' || villager.personality_ko === activePersonalityTab;
-    }
-
-    if (residentView === 'species') {
-      return activeSpeciesTab === 'all' || villager.species_ko === activeSpeciesTab;
-    }
-
     const state = getVillagerState(villager.id);
-    return category === 'all' ? true : category === 'outside' ? isOutside(state) : state[category];
+    const matchesView =
+      residentView === 'personality'
+        ? activePersonalityTab === 'all' || villager.personality_ko === activePersonalityTab
+        : residentView === 'species'
+          ? activeSpeciesTab === 'all' || villager.species_ko === activeSpeciesTab
+          : category === 'all' || (category === 'outside' ? isOutside(state) : state[category]);
+    const matchesStatus =
+      !selectedStatus || (selectedStatus === 'outside' ? isOutside(state) : state[selectedStatus]);
+
+    return matchesView && matchesStatus;
   });
   const filteredVillagers = categoryVillagers.filter((villager) => {
     const matchesSearch =
@@ -387,9 +395,13 @@ export function VillagersScreen() {
   const visibleVillagers = [...filteredVillagers].sort((left, right) =>
     compareVillagers(left, right, sortMode) * (sortDirection === 'asc' ? 1 : -1),
   );
-  const activeFilterCount = [selectedSpecies, selectedPersonality, selectedHobby, selectedSubtype].filter(
-    Boolean,
-  ).length;
+  const activeFilterCount = [
+    selectedSpecies,
+    selectedPersonality,
+    selectedHobby,
+    selectedSubtype,
+    selectedStatus,
+  ].filter(Boolean).length;
   const isFiltered = Boolean(search || activeFilterCount || sortMode !== 'name' || sortDirection !== 'asc');
 
   const clearFilters = () => {
@@ -398,6 +410,7 @@ export function VillagersScreen() {
     setSelectedPersonality(null);
     setSelectedHobby(null);
     setSelectedSubtype(null);
+    setSelectedStatus(null);
     setSortMode('name');
     setSortDirection('asc');
   };
@@ -490,6 +503,15 @@ export function VillagersScreen() {
 
             {filterExpanded ? (
               <ListFilterPanel>
+                <FilterOptionGroup
+                  options={statusFilterOptions.map(({ key }) => key)}
+                  renderOptionLabel={(option) =>
+                    statusFilterOptions.find(({ key }) => key === option)?.label ?? option
+                  }
+                  title="상태"
+                  value={selectedStatus}
+                  onChange={setSelectedStatus}
+                />
                 <FilterOptionGroup
                   options={speciesOptions}
                   title="종족"
@@ -873,7 +895,7 @@ function EmptyState({ search }: { search: string }) {
   );
 }
 
-function FilterOptionGroup({
+function FilterOptionGroup<T extends string>({
   title,
   options,
   value,
@@ -881,10 +903,10 @@ function FilterOptionGroup({
   renderOptionLabel,
 }: {
   title: string;
-  options: string[];
-  value: string | null;
-  onChange: (value: string | null) => void;
-  renderOptionLabel?: (value: string) => string;
+  options: T[];
+  value: T | null;
+  onChange: (value: T | null) => void;
+  renderOptionLabel?: (value: T) => string;
 }) {
   return (
     <ListFilterGroup title={title}>
