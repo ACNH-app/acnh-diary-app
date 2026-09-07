@@ -41,6 +41,7 @@ export type CatalogItem = {
   variationCount: number;
   assetType: string | null;
   assetId: string | null;
+  cardColor?: string | null;
   details: Record<string, CatalogDetailValue>;
 };
 

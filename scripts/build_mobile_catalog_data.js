@@ -4,6 +4,10 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const seedRoot = path.join(root, 'dataset/app-ready/seed/supabase_seed');
 const outputRoot = path.join(root, 'acnh-diary-mobile/src/data/content/catalog');
+const recipeCardColors = new Map(
+  readJson(path.join(root, 'dataset/app-ready/content/catalog/recipes/recipes.norviah.json'))
+    .map((recipe) => [recipe.name.toLowerCase(), recipe.cardColor ?? null]),
+);
 const assetManifestPath = path.join(
   root,
   'dataset/app-ready/manifests/offline_asset_manifests/catalog_asset_paths.json',
@@ -106,6 +110,27 @@ const detailValueLabels = {
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function getRecipeCardColor(name) {
+  const key = name.toLowerCase();
+  if (!recipeCardColors.has(key)) throw new Error(`Missing recipe card metadata: ${name}`);
+  return recipeCardColors.get(key);
+}
+
+// Update only this field without rebuilding the curated catalog snapshot.
+if (process.argv.includes('--recipe-card-colors-only')) {
+  const catalogPath = path.join(outputRoot, 'catalog.json');
+  const catalog = readJson(catalogPath);
+  let updated = 0;
+  for (const item of catalog.items) {
+    if (item.catalogType !== 'recipes') continue;
+    item.cardColor = getRecipeCardColor(item.nameEn);
+    updated += 1;
+  }
+  fs.writeFileSync(catalogPath, `${JSON.stringify(catalog, null, 2)}\n`);
+  console.log(`Synced card colors for ${updated} recipes.`);
+  process.exit(0);
 }
 
 function parseJson(value) {
@@ -266,6 +291,7 @@ function normalizeItem(item, categoryMap, furnitureNameMap, assetResolver, itemN
     variationCount: Number(item.variation_total) || 0,
     assetType: asset?.assetType || null,
     assetId: asset?.assetId || null,
+    ...(item.catalog_type === 'recipes' ? { cardColor: getRecipeCardColor(item.name_en || item.name) } : {}),
     details: buildDetails(item, raw, itemJson, itemNameMap),
   };
 }

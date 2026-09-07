@@ -300,8 +300,13 @@ export function setManualGameTime(value: string | null) {
   manualGameTime = value;
 }
 
-export function getVillagerStatesForIsland() {
-  return Object.fromEntries(villagerStates.entries());
+export function getVillagerStatesForIsland(islandId: string): Record<string, VillagerState> {
+  const prefix = `${islandId}/`;
+  return Object.fromEntries(
+    [...villagerStates.entries()]
+      .filter(([key]) => key.startsWith(prefix))
+      .map(([key, state]) => [key.slice(prefix.length), state]),
+  );
 }
 
 export function setVillagerStatus(

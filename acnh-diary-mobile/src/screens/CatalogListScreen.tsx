@@ -10,10 +10,12 @@ import {
   View,
 } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppChrome, useScrollNavigationVisibility, useTabBarVisibility } from '@/components/AppChrome';
 import { AppColors, AppControlSizes, AppRadii, AppShadows } from '@/constants/theme';
+import { getRecipeCardPalette } from '@/constants/recipe-card-colors';
 import { FloatingTopButton } from '@/components/FloatingTopButton';
 import {
   ListFilterChip,
@@ -27,6 +29,7 @@ import { SearchBar } from '@/components/SearchBar';
 import { UnderlineTabs } from '@/components/UnderlineTabs';
 import {
   getCatalogAssetForItem,
+  catalogItems,
   catalogFilterFacets,
   catalogFilterFacetLabels,
   getCatalogFilterOptions,
@@ -46,6 +49,21 @@ import type { CatalogCategory, CatalogFilterFacet, CatalogItem } from '@/types/c
 import type { EncyclopediaState } from '@/types/encyclopedia';
 
 type SortMode = 'number' | 'name' | 'source';
+type RecipeViewMode = 'list' | 'images';
+
+const CUSTOMIZABLE_RECIPE_NAMES = new Set(
+  catalogItems.filter((item) => item.catalogType !== 'recipes' && item.details.customizable === true).map((item) => item.nameEn),
+);
+const RECIPE_PATTERN_LEAF = require('../data/assets/icons/leaf.png');
+const RECIPE_PATTERN_POSITIONS = [
+  { left: '4%', top: '5%', rotate: '-25deg' },
+  { left: '53%', top: '0%', rotate: '25deg' },
+  { left: '27%', top: '29%', rotate: '-10deg' },
+  { left: '75%', top: '35%', rotate: '30deg' },
+  { left: '-9%', top: '53%', rotate: '20deg' },
+  { left: '46%', top: '63%', rotate: '-30deg' },
+  { left: '12%', top: '86%', rotate: '15deg' },
+] as const;
 type OwnershipFilter = 'owned' | 'unowned';
 type AvailabilityFilter = 'forSale' | 'notForSale';
 type CatalogFacetFilters = Record<CatalogFilterFacet, string[]>;
@@ -160,7 +178,10 @@ export function CatalogListScreen({ initialCategory, initialSubcategory }: { ini
   const router = useRouter();
   const listRef = useRef<FlatList<CatalogItem>>(null);
   const { width } = useWindowDimensions();
-  const columns = width >= 768 ? 2 : 1;
+  const isRecipeCategory = initialCategory === 'recipes' || initialCategory === 'seasonal_recipes';
+  const [recipeViewMode, setRecipeViewMode] = useState<RecipeViewMode>('list');
+  const imageView = isRecipeCategory && recipeViewMode === 'images';
+  const columns = imageView ? 5 : isRecipeCategory ? 1 : width >= 768 ? 2 : 1;
   const { handleScroll, navigationVisible } = useScrollNavigationVisibility();
   useTabBarVisibility(navigationVisible);
   const activeCategory = initialCategory;
@@ -316,8 +337,9 @@ export function CatalogListScreen({ initialCategory, initialSubcategory }: { ini
       <AppChrome breadcrumbs={['카탈로그']} showBack title={catalogCategoryLabels[activeCategory]} />
       <SafeAreaView edges={[]} style={styles.safeArea}>
         <FlatList
+        key={`${activeCategory}-${columns}`}
         contentContainerStyle={styles.listContent}
-        columnWrapperStyle={columns === 2 ? styles.columnWrapper : undefined}
+        columnWrapperStyle={columns > 1 ? (imageView ? styles.recipeImageRow : styles.columnWrapper) : undefined}
         data={visibleItems}
         keyExtractor={(item) => `${item.catalogType}/${item.id}`}
         keyboardDismissMode="on-drag"
@@ -349,6 +371,12 @@ export function CatalogListScreen({ initialCategory, initialSubcategory }: { ini
                 style={styles.searchBar}
                 value={search}
               />
+              {isRecipeCategory ? (
+                <View accessibilityLabel="레시피 보기 방식" style={styles.viewModeControl}>
+                  <RecipeViewButton mode="list" selected={recipeViewMode === 'list'} onPress={() => setRecipeViewMode('list')} />
+                  <RecipeViewButton mode="images" selected={recipeViewMode === 'images'} onPress={() => setRecipeViewMode('images')} />
+                </View>
+              ) : null}
             </ListSearchRow>
 
             <ListResultToolbar
@@ -441,7 +469,17 @@ export function CatalogListScreen({ initialCategory, initialSubcategory }: { ini
         refreshing={false}
         ref={listRef}
         numColumns={columns}
-        renderItem={({ item }) => (
+        renderItem={({ item }) => imageView ? (
+          <RecipeImageTile
+            item={item}
+            owned={getState(states, item).owned}
+            onToggle={() => updateOwned(item, !getState(states, item).owned)}
+            onOpen={() => router.push({
+              pathname: '/catalog/[category]/[itemId]' as never,
+              params: { category: item.catalogType, itemId: item.id },
+            })}
+          />
+        ) : (
           <CatalogCard
             item={item}
             state={getState(states, item)}
@@ -478,6 +516,80 @@ export function CatalogListScreen({ initialCategory, initialSubcategory }: { ini
           onPress={() => listRef.current?.scrollToOffset({ animated: true, offset: 0 })}
         />
       </SafeAreaView>
+    </View>
+  );
+}
+
+function RecipeViewButton({ mode, selected, onPress }: { mode: RecipeViewMode; selected: boolean; onPress: () => void }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const label = mode === 'list' ? '목록 보기' : '이미지 5열 보기';
+  return (
+    <View>
+      <Pressable
+        accessibilityLabel={label}
+        accessibilityRole="button"
+        accessibilityState={{ selected }}
+        onPress={onPress}
+        onHoverIn={() => setShowTooltip(true)}
+        onHoverOut={() => setShowTooltip(false)}
+        onFocus={() => setShowTooltip(true)}
+        onBlur={() => setShowTooltip(false)}
+        style={({ pressed }) => [styles.viewModeButton, selected && styles.viewModeButtonSelected, pressed && styles.pressed]}>
+        <MaterialCommunityIcons name={mode === 'list' ? 'format-list-bulleted' : 'view-grid-outline'} size={22} color={selected ? AppColors.leaf : AppColors.inkMuted} />
+      </Pressable>
+      {showTooltip ? <View pointerEvents="none" style={styles.viewModeTooltip}><Text style={styles.viewModeTooltipText}>{label}</Text></View> : null}
+    </View>
+  );
+}
+
+function RecipeImageTile({ item, owned, onOpen, onToggle }: {
+  item: CatalogItem;
+  owned: boolean;
+  onOpen: () => void;
+  onToggle: () => void;
+}) {
+  const image = getCatalogAssetForItem(item);
+  const [hovered, setHovered] = useState(false);
+  const customizable = item.details.customizable === true || CUSTOMIZABLE_RECIPE_NAMES.has(item.nameEn);
+  const palette = getRecipeCardPalette(item.cardColor);
+  return (
+    <View style={styles.recipeImageCell}>
+      <View style={[styles.recipeImageTile, { backgroundColor: palette.background, borderColor: owned ? palette.accent : palette.border }]}>
+        <View pointerEvents="none" aria-hidden style={styles.recipePattern}>
+          {RECIPE_PATTERN_POSITIONS.map((position, index) => (
+            <Image key={index} source={RECIPE_PATTERN_LEAF} resizeMode="contain" style={[styles.recipePatternLeaf, { tintColor: palette.pattern, left: position.left, top: position.top, transform: [{ rotate: position.rotate }] }]} />
+          ))}
+        </View>
+        <Pressable
+          accessibilityLabel={`${item.nameKo} 상세 보기${customizable ? ', 리폼 가능' : ''}`}
+          accessibilityRole="button"
+          onPress={onOpen}
+          onHoverIn={() => setHovered(true)}
+          onHoverOut={() => setHovered(false)}
+          style={({ pressed }) => [styles.recipeImageButton, hovered && styles.recipeImageTileHovered, pressed && styles.recipeImageTilePressed]}>
+          {image ? (
+            <Image source={image} resizeMode="contain" style={styles.recipeImage} />
+          ) : (
+            <MaterialCommunityIcons name="image-off-outline" size={24} color={AppColors.inkMuted} />
+          )}
+        </Pressable>
+        {customizable ? (
+          <View pointerEvents="none" accessibilityLabel="리폼 가능" accessibilityRole="image" style={styles.recipeCustomizableBadge}>
+            <MaterialCommunityIcons name="brush" size={18} color={palette.accent} />
+          </View>
+        ) : null}
+        <Pressable
+          accessibilityLabel={`${item.nameKo} 보유 ${owned ? '해제' : '설정'}`}
+          accessibilityRole="checkbox"
+          accessibilityState={{ checked: owned }}
+          aria-checked={owned}
+          onPress={onToggle}
+          style={({ pressed }) => [styles.recipeOwnedButton, pressed && styles.pressed]}>
+          <View style={styles.recipeOwnedBadge}>
+            <MaterialCommunityIcons name={owned ? 'check-bold' : 'checkbox-blank-circle-outline'} size={22} color={palette.accent} />
+          </View>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -537,6 +649,7 @@ function CatalogCard({
         accessibilityLabel={`${item.nameKo} ${ownedLabel} ${state.owned ? '해제' : '설정'}`}
         accessibilityRole="checkbox"
         accessibilityState={{ checked: state.owned }}
+        aria-checked={state.owned}
         onPress={onToggle}
         style={styles.statusButton}>
         <Text style={[styles.statusText, state.owned && styles.statusTextActive]}>{state.owned ? ownedLabel : `미${ownedLabel}`}</Text>
@@ -554,6 +667,24 @@ const styles = StyleSheet.create({
   listContent: { paddingBottom: 8, paddingHorizontal: 18 },
   columnWrapper: { gap: 10 },
   searchBar: { flex: 1, minWidth: 0 },
+  viewModeControl: { flexDirection: 'row', borderWidth: 1, borderColor: AppColors.line, borderRadius: 8, padding: 2, gap: 2, zIndex: 1 },
+  viewModeButton: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center', borderRadius: 6 },
+  viewModeButtonSelected: { backgroundColor: AppColors.catalogSoft },
+  viewModeTooltip: { position: 'absolute', right: 0, bottom: 46, width: 112, padding: 8, backgroundColor: AppColors.ink, borderRadius: 6, zIndex: 2 },
+  viewModeTooltipText: { color: AppColors.card, fontSize: 12, textAlign: 'center' },
+  pressed: { opacity: 0.7 },
+  recipeImageRow: { alignItems: 'flex-start' },
+  recipeImageCell: { width: '20%', padding: 4 },
+  recipeImageTile: { width: '100%', aspectRatio: 3 / 4, borderWidth: 2, borderRadius: 5, overflow: 'hidden' },
+  recipePattern: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, overflow: 'hidden' },
+  recipePatternLeaf: { position: 'absolute', width: '34%', height: '26%', opacity: 0.45 },
+  recipeImageButton: { width: '100%', height: '100%', paddingHorizontal: 5, paddingTop: 18, paddingBottom: 22, alignItems: 'center', justifyContent: 'center' },
+  recipeCustomizableBadge: { position: 'absolute', top: 3, left: 3, width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
+  recipeOwnedButton: { position: 'absolute', bottom: 0, right: 0, width: 32, height: 32, padding: 3, alignItems: 'flex-end', justifyContent: 'flex-end' },
+  recipeOwnedBadge: { width: 24, height: 24, alignItems: 'center', justifyContent: 'center' },
+  recipeImageTileHovered: { backgroundColor: 'rgba(255, 255, 255, 0.14)' },
+  recipeImageTilePressed: { backgroundColor: 'rgba(175, 153, 95, 0.12)' },
+  recipeImage: { width: '100%', height: '100%' },
   itemCard: { alignItems: 'flex-start', backgroundColor: AppColors.card, borderRadius: AppRadii.panel, flex: 1, flexDirection: 'row', marginBottom: 14, minHeight: 178, minWidth: 0, overflow: 'hidden', padding: 14, ...AppShadows.card },
   cardMain: { alignItems: 'flex-start', flex: 1, flexDirection: 'row', minWidth: 0 },
   imageFrame: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.card, height: 126, justifyContent: 'center', marginRight: 14, width: 126 },

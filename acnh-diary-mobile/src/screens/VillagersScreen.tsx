@@ -79,8 +79,8 @@ const subtypeOptions = Array.from(new Set(villagers.map((villager) => villager.s
 const campsiteIcon = require('../data/assets/icons/campsite.png') as ImageSourcePropType;
 const framedPhotoIcon = require('../data/assets/villagers/framed_photo/cat10.png') as ImageSourcePropType;
 const islandResidentIcon = require('../data/assets/icons/map.png') as ImageSourcePropType;
-const movedOutIcon = require('../data/assets/catalog/furniture/items/5357ad43f5357c5e.png') as ImageSourcePropType;
-const dalModelPlaneIcon = require('../data/assets/catalog/furniture/items/a30ce38e57127940.png') as ImageSourcePropType;
+const movedOutIcon = require('../data/assets/icons/passport-island.png') as ImageSourcePropType;
+const outsideIslandIcon = require('../data/assets/icons/passport.png') as ImageSourcePropType;
 const wishIcon = require('../data/assets/icons/wish.png') as ImageSourcePropType;
 
 type PersonalityTagStyle = {
@@ -114,7 +114,7 @@ const categoryOptions: Array<{ category: Category; icon?: string; iconSource?: I
   { category: 'islandResident', iconSource: islandResidentIcon, label: '우리 섬' },
   { category: 'movedOut', iconSource: movedOutIcon, label: '이사' },
   { category: 'campsiteVisited', iconSource: campsiteIcon, label: '캠핑장' },
-  { category: 'outside', iconSource: dalModelPlaneIcon, label: '섬 외' },
+  { category: 'outside', iconSource: outsideIslandIcon, label: '섬 외' },
   { category: 'photoReceived', iconSource: framedPhotoIcon, label: '액자' },
 ];
 

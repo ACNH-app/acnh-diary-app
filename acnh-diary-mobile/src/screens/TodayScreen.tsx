@@ -31,9 +31,12 @@ import { getEncyclopediaItems } from '@/data/encyclopedia';
 import { getEncyclopediaAsset } from '@/data/encyclopedia-assets';
 import { localizeAvailabilityLabel, localizeAvailabilityTime, localizeLocation } from '@/data/encyclopedia-labels';
 import { npcAssets } from '@/data/npc-assets';
+import { getNookShoppingEvents, type NookShoppingEvent } from '@/data/nook-shopping';
 import { DEFAULT_ROUTINE_OPTIONS } from '@/data/routines';
 import { getRoutineIconSource } from '@/data/routine-assets';
 import { villagers } from '@/data/villagers';
+import { villagerImageAssets } from '@/data/villager-assets';
+import type { Villager } from '@/data/villager-types';
 import {
   addRoutine,
   clearNpcVisitsForWeek,
@@ -57,6 +60,7 @@ import {
   updateRoutine,
 } from '@/db/database';
 import type { EncyclopediaItem, EncyclopediaState, EncyclopediaStatus } from '@/types/encyclopedia';
+import type { CatalogItem } from '@/types/catalog';
 import type { Island, NpcVisit, Routine, RoutineProgress } from '@/types/island';
 import type { VillagerState } from '@/types/villager-state';
 
@@ -270,19 +274,36 @@ function formatDashboardDate(value: string) {
 }
 
 const ZODIAC_SIGNS = [
-  { key: 'capricorn', name: '염소자리', start: [12, 22], end: [1, 19] },
-  { key: 'aquarius', name: '물병자리', start: [1, 20], end: [2, 18] },
-  { key: 'pisces', name: '물고기자리', start: [2, 19], end: [3, 20] },
-  { key: 'aries', name: '양자리', start: [3, 21], end: [4, 19] },
-  { key: 'taurus', name: '황소자리', start: [4, 20], end: [5, 20] },
-  { key: 'gemini', name: '쌍둥이자리', start: [5, 21], end: [6, 21] },
-  { key: 'cancer', name: '게자리', start: [6, 22], end: [7, 22] },
-  { key: 'leo', name: '사자자리', start: [7, 23], end: [8, 22] },
-  { key: 'virgo', name: '처녀자리', start: [8, 23], end: [9, 22] },
-  { key: 'libra', name: '천칭자리', start: [9, 23], end: [10, 22] },
-  { key: 'scorpio', name: '전갈자리', start: [10, 23], end: [11, 21] },
-  { key: 'sagittarius', name: '사수자리', start: [11, 22], end: [12, 21] },
+  { key: 'capricorn', name: '염소자리', nameEn: 'Capricorn', start: [12, 22], end: [1, 19] },
+  { key: 'aquarius', name: '물병자리', nameEn: 'Aquarius', start: [1, 20], end: [2, 18] },
+  { key: 'pisces', name: '물고기자리', nameEn: 'Pisces', start: [2, 19], end: [3, 20] },
+  { key: 'aries', name: '양자리', nameEn: 'Aries', start: [3, 21], end: [4, 19] },
+  { key: 'taurus', name: '황소자리', nameEn: 'Taurus', start: [4, 20], end: [5, 20] },
+  { key: 'gemini', name: '쌍둥이자리', nameEn: 'Gemini', start: [5, 21], end: [6, 21] },
+  { key: 'cancer', name: '게자리', nameEn: 'Cancer', start: [6, 22], end: [7, 22] },
+  { key: 'leo', name: '사자자리', nameEn: 'Leo', start: [7, 23], end: [8, 22] },
+  { key: 'virgo', name: '처녀자리', nameEn: 'Virgo', start: [8, 23], end: [9, 22] },
+  { key: 'libra', name: '천칭자리', nameEn: 'Libra', start: [9, 23], end: [10, 22] },
+  { key: 'scorpio', name: '전갈자리', nameEn: 'Scorpio', start: [10, 23], end: [11, 21] },
+  { key: 'sagittarius', name: '사수자리', nameEn: 'Sagittarius', start: [11, 22], end: [12, 21] },
 ] as const;
+
+const ZODIAC_CARD_COLORS: Record<(typeof ZODIAC_SIGNS)[number]['key'], {
+  background: string; border: string; accent: string; pressed: string;
+}> = {
+  aries: { background: '#F3F1EB', border: '#D7D0BE', accent: '#625A46', pressed: '#E8E3D6' },
+  taurus: { background: '#EFF8EF', border: '#B5DDB8', accent: '#347341', pressed: '#DDEEDD' },
+  gemini: { background: '#F0F3FE', border: '#BFCAF5', accent: '#44599F', pressed: '#DFE5FA' },
+  cancer: { background: '#FFF2F0', border: '#F2BBB5', accent: '#A04642', pressed: '#FBE0DC' },
+  leo: { background: '#F7FAE9', border: '#D4E28D', accent: '#566800', pressed: '#EAF0CC' },
+  virgo: { background: '#F5F2FF', border: '#D2C7F6', accent: '#7057AD', pressed: '#E8E0FA' },
+  libra: { background: '#EDF8F3', border: '#ABDFCA', accent: '#216B50', pressed: '#D8EEE4' },
+  scorpio: { background: '#FFF8E8', border: '#ECCA79', accent: '#7C5900', pressed: '#F8EBC5' },
+  sagittarius: { background: '#EDF9FC', border: '#A7DFEB', accent: '#206A7D', pressed: '#D8EFF5' },
+  capricorn: { background: '#FFF1ED', border: '#F1B7A9', accent: '#9D4533', pressed: '#FADFD6' },
+  aquarius: { background: '#FBF0FC', border: '#E3B9ED', accent: '#853D94', pressed: '#F1DDF5' },
+  pisces: { background: '#EFF8FC', border: '#ACD6E5', accent: '#2A6A7D', pressed: '#DBEDF4' },
+};
 
 const ZODIAC_FURNITURE_NAMES: Record<(typeof ZODIAC_SIGNS)[number]['key'], string> = {
   aquarius: '물병자리 항아리',
@@ -826,9 +847,12 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
       seasonLabel: getRecipeSeasonLabel(recipeSeason.key),
     };
   }).filter((group) => group.recipeCount > 0);
-  const zodiacFragmentItem = catalogItems.find((item) => item.nameKo === `${zodiacDefinition.name} 조각`);
+  const zodiacFragmentItem = catalogItems.find((item) => item.catalogType === 'items' && item.nameKo === `${zodiacDefinition.name} 조각`);
   const zodiacFurnitureItem = getZodiacFurniture(zodiacDefinition);
   const todayEventNames = getTodayEventNames(dateObject, hemisphere);
+  const birthdayResidents = villagers.filter(villager => residentVillagerIds.has(villager.id)
+    && villager.birth_month === month && villager.birth_day === day);
+  const shoppingEvents = getNookShoppingEvents(dateObject, hemisphere, catalogItems);
   const bloomingBushes = getBloomingBushes(month, day, hemisphere);
   const prioritizedCritters = [...availableCritters].sort((a, b) => {
     const aState = collectionStates[`${a.category}/${a.id}`] ?? EMPTY_STATE;
@@ -1005,9 +1029,32 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
           />
           <View style={todayStyles.dashboardTwoColumn}>
             <BloomingBushCard bushes={bloomingBushes} hemisphere={hemisphere} />
-            <ZodiacCard definition={zodiacDefinition} fragmentItem={zodiacFragmentItem} furnitureItem={zodiacFurnitureItem} />
+            <ZodiacCard
+              definition={zodiacDefinition}
+              fragmentItem={zodiacFragmentItem}
+              furnitureItem={zodiacFurnitureItem}
+              onOpenFurniture={() => {
+                if (!zodiacFurnitureItem) return;
+                router.push({
+                  pathname: '/catalog/[category]/[itemId]' as never,
+                  params: { category: zodiacFurnitureItem.catalogType, itemId: zodiacFurnitureItem.id },
+                });
+              }}
+            />
           </View>
-          <TodayEventCard events={todayEventNames} />
+          <TodayEventCard
+            birthdayResidents={birthdayResidents}
+            events={todayEventNames}
+            shoppingEvents={shoppingEvents}
+            onOpenResident={(villager) => router.push({
+              pathname: '/villagers/[villagerId]',
+              params: { villagerId: villager.id },
+            })}
+            onOpenItem={(item) => router.push({
+              pathname: '/catalog/[category]/[itemId]' as never,
+              params: { category: item.catalogType, itemId: item.id },
+            })}
+          />
 
           <View style={todayStyles.sectionBlock}>
             <SectionHeader
@@ -1401,52 +1448,131 @@ function BloomingBushCard({ bushes, hemisphere }: { bushes: BloomingBush[]; hemi
   );
 }
 
-function ZodiacCard({ definition, fragmentItem, furnitureItem }: { definition: (typeof ZODIAC_SIGNS)[number]; fragmentItem?: ReturnType<typeof getCatalogItems>[number]; furnitureItem?: ReturnType<typeof getCatalogItems>[number] }) {
+function ZodiacCard({
+  definition,
+  fragmentItem,
+  furnitureItem,
+  onOpenFurniture,
+}: {
+  definition: (typeof ZODIAC_SIGNS)[number];
+  fragmentItem?: ReturnType<typeof getCatalogItems>[number];
+  furnitureItem?: ReturnType<typeof getCatalogItems>[number];
+  onOpenFurniture: () => void;
+}) {
   const zodiacIcon = ZODIAC_ICON_ASSETS[definition.key];
+  const colors = ZODIAC_CARD_COLORS[definition.key];
   const fragmentAsset = fragmentItem ? getCatalogAssetForItem(fragmentItem) : undefined;
   const furnitureAsset = furnitureItem ? getCatalogAssetForItem(furnitureItem) : undefined;
   return (
-    <DashboardGradientCard colors={['#ECE5FF', '#D8CCFA']} style={[todayStyles.dashboardHalfCard, todayStyles.zodiacCard]}>
+    <DashboardGradientCard
+      colors={[colors.background, colors.background]}
+      style={[todayStyles.dashboardHalfCard, todayStyles.zodiacCard, { borderColor: colors.border }]}>
       <View style={todayStyles.dashboardCardHeader}>
-        <View style={todayStyles.dashboardCardTitleRow}>
-          <Text style={todayStyles.dashboardCardTitle}>별자리</Text>
-        </View>
+        <Text adjustsFontSizeToFit minimumFontScale={0.78} numberOfLines={1} style={todayStyles.zodiacTitle}>
+          {definition.name}<Text style={[todayStyles.zodiacTitleEn, { color: colors.accent }]}> {definition.nameEn}</Text>
+        </Text>
       </View>
-      <View style={todayStyles.zodiacBody}>
-        <View style={todayStyles.zodiacImageCard}>
-          <Image accessibilityLabel={definition.name} source={zodiacIcon} style={todayStyles.zodiacImage} />
+      <View style={todayStyles.zodiacContent}>
+        <View style={todayStyles.zodiacBody}>
+          <View style={todayStyles.zodiacIconFrame}>
+            <Image accessibilityLabel={definition.name} source={zodiacIcon} style={todayStyles.zodiacImage} />
+          </View>
+          <View style={todayStyles.zodiacInfoPanel}>
+            <View accessibilityLabel={`별자리 기간 ${formatZodiacPeriod(definition)}`} style={todayStyles.zodiacPeriod}>
+              <MaterialCommunityIcons accessible={false} color={colors.accent} name="calendar-blank-outline" size={12} />
+              <Text style={todayStyles.zodiacInfoValue}>{formatZodiacPeriod(definition)}</Text>
+            </View>
+            <View style={todayStyles.zodiacFragmentRow}>
+              {fragmentAsset ? (
+                <Image accessibilityLabel={`${definition.name} 조각`} source={fragmentAsset} style={todayStyles.zodiacInfoIcon} />
+              ) : (
+                <MaterialCommunityIcons color={colors.accent} name="star-outline" size={18} />
+              )}
+              <Text style={[todayStyles.zodiacFragmentName, { color: colors.accent }]}>{fragmentItem?.nameKo ?? `${definition.name} 조각`}</Text>
+            </View>
+          </View>
         </View>
-        <View style={todayStyles.zodiacCopy}>
-          <Text style={todayStyles.zodiacName}>{definition.name}</Text>
-          <Text style={todayStyles.zodiacPeriod}>{formatZodiacPeriod(definition)}</Text>
-        </View>
+          <Pressable
+            accessibilityLabel={`${furnitureItem?.nameKo ?? definition.name + ' 가구'} 상세 보기`}
+            accessibilityRole="button"
+            disabled={!furnitureItem}
+            onPress={onOpenFurniture}
+            style={({ pressed }) => [
+              todayStyles.zodiacItemRow,
+              todayStyles.zodiacFurnitureButton,
+              { borderTopColor: colors.border },
+              pressed && { backgroundColor: colors.pressed },
+              !furnitureItem && todayStyles.zodiacFurnitureButtonDisabled,
+            ]}>
+            <View style={todayStyles.zodiacFurnitureImages}>
+              {furnitureAsset ? (
+                <Image accessibilityLabel={`${definition.name} 가구`} source={furnitureAsset} style={todayStyles.zodiacFurnitureIcon} />
+              ) : (
+                <MaterialCommunityIcons color={colors.accent} name="sofa-single-outline" size={22} />
+              )}
+            </View>
+            <Text style={[todayStyles.zodiacItemName, { color: colors.accent }]}>{furnitureItem?.nameKo ?? '가구 정보 없음'}</Text>
+            {furnitureItem ? <MaterialCommunityIcons color={colors.accent} name="chevron-right" size={18} /> : null}
+          </Pressable>
       </View>
-      <View style={todayStyles.zodiacFurnitureRow}>
-        {furnitureAsset ? <Image accessibilityLabel={`${definition.name} 가구`} source={furnitureAsset} style={todayStyles.zodiacFurnitureImage} /> : null}
-        <View style={todayStyles.zodiacFurnitureCopy}>
-          <Text style={todayStyles.zodiacFurnitureLabel}>별자리 가구</Text>
-          <Text numberOfLines={1} style={todayStyles.zodiacFurnitureName}>{furnitureItem?.nameKo ?? '가구 정보 없음'}</Text>
-        </View>
-      </View>
-      <View style={todayStyles.fragmentRow}>
-        {fragmentAsset ? <Image accessibilityLabel={`${definition.name} 조각`} source={fragmentAsset} style={todayStyles.fragmentImage} /> : <MaterialCommunityIcons color="#8D78B8" name="star-outline" size={19} />}
-        <Text numberOfLines={1} style={todayStyles.fragmentText}>{definition.name} 조각</Text>
-      </View>
-      <Text style={todayStyles.zodiacFooter}>해변에서 획득</Text>
     </DashboardGradientCard>
   );
 }
 
-function TodayEventCard({ events }: { events: string[] }) {
+function TodayEventCard({ birthdayResidents, events, shoppingEvents, onOpenItem, onOpenResident }: {
+  birthdayResidents: Villager[];
+  events: string[];
+  shoppingEvents: NookShoppingEvent[];
+  onOpenItem: (item: CatalogItem) => void;
+  onOpenResident: (villager: Villager) => void;
+}) {
+  const eventCount = birthdayResidents.length + events.length + shoppingEvents.length;
   return (
-    <DashboardGradientCard colors={['#FFE4CF', '#FFCFAF']} style={[todayStyles.eventCard, !events.length && todayStyles.eventCardEmpty]}>
-      <View style={todayStyles.dashboardCardHeader}>
+    <View style={[todayStyles.dashboardCard, todayStyles.eventCard, !eventCount && todayStyles.eventCardEmpty]}>
+      <View style={[todayStyles.dashboardCardHeader, todayStyles.eventCardHeader]}>
         <View style={todayStyles.dashboardCardTitleRow}>
           <Text style={todayStyles.dashboardCardTitle}>오늘의 이벤트</Text>
         </View>
-        <Text style={todayStyles.dashboardCardCountChip}>{events.length}개</Text>
+        <Text style={[todayStyles.dashboardCardCountChip, todayStyles.eventCount]}>{eventCount}개</Text>
       </View>
-      {events.length ? events.map((eventName) => {
+      {birthdayResidents.length ? (
+        <View style={[todayStyles.eventSection, todayStyles.birthdaySection]}>
+          <View style={todayStyles.eventSectionHeading}>
+            <View style={[todayStyles.eventHeadingIconFrame, todayStyles.birthdayHeadingIconFrame]}>
+              <Image accessibilityLabel="생일 케이크 아이콘" source={BIRTHDAY_CAKE_ICON} style={todayStyles.eventSectionIcon} />
+            </View>
+            <Text accessibilityRole="header" style={[todayStyles.eventSectionTitle, todayStyles.birthdaySectionTitle]}>주민 생일</Text>
+          </View>
+          {birthdayResidents.map(villager => {
+        const asset = villagerImageAssets[villager.id]?.icon;
+        return (
+          <Pressable
+            key={villager.id}
+            accessibilityRole="button"
+            accessibilityLabel={`${villager.name_ko} 생일, 주민 상세 보기`}
+            onPress={() => onOpenResident(villager)}
+            style={({ pressed }) => [todayStyles.birthdayEventRow, pressed && todayStyles.birthdayEventPressed]}>
+            {asset ? <Image accessibilityLabel={villager.name_ko} source={asset} style={todayStyles.shoppingImage} />
+              : <MaterialCommunityIcons accessible={false} name="account-outline" color="#8D4261" size={44} />}
+            <View style={todayStyles.shoppingCopy}>
+              <Text style={todayStyles.birthdayEventName}>{villager.name_ko} 생일</Text>
+              <Text style={todayStyles.birthdayEventMeta}>내 섬 주민</Text>
+            </View>
+            <MaterialCommunityIcons accessible={false} name="chevron-right" color="#8D4261" size={18} />
+          </Pressable>
+        );
+          })}
+        </View>
+      ) : null}
+      {events.length ? (
+        <View style={[todayStyles.eventSection, todayStyles.islandEventSection]}>
+          <View style={todayStyles.eventSectionHeading}>
+            <View style={[todayStyles.eventHeadingIconFrame, todayStyles.islandEventHeadingIconFrame]}>
+              <MaterialCommunityIcons accessible={false} name="calendar-star" color="#826019" size={19} />
+            </View>
+            <Text accessibilityRole="header" style={[todayStyles.eventSectionTitle, todayStyles.islandEventSectionTitle]}>섬 이벤트</Text>
+          </View>
+          {events.map((eventName) => {
         const asset = getEventNpcImage(eventName);
         const schedule = getEventSchedule(eventName);
         return (
@@ -1459,8 +1585,50 @@ function TodayEventCard({ events }: { events: string[] }) {
             {schedule.host ? <Text style={todayStyles.eventHost}>{schedule.host}</Text> : null}
           </View>
         );
-      }) : <Text style={todayStyles.dashboardEmptyText}>오늘 예정된 이벤트가 없어요.</Text>}
-    </DashboardGradientCard>
+          })}
+        </View>
+      ) : null}
+      {!eventCount ? <Text style={[todayStyles.dashboardEmptyText, todayStyles.eventEmptyText]}>오늘 예정된 이벤트가 없어요.</Text> : null}
+      {shoppingEvents.length ? (
+        <View style={[todayStyles.eventSection, todayStyles.shoppingSection]}>
+          <View style={todayStyles.eventSectionHeading}>
+            <View style={[todayStyles.eventHeadingIconFrame, todayStyles.shoppingHeadingIconFrame]}>
+              <MaterialCommunityIcons accessible={false} name="shopping-outline" color="#2D674E" size={19} />
+            </View>
+            <Text accessibilityRole="header" style={[todayStyles.eventSectionTitle, todayStyles.shoppingTitle]}>너굴 쇼핑</Text>
+            <Text style={todayStyles.shoppingHeadingNote}>기간 한정</Text>
+          </View>
+          {shoppingEvents.map(event => (
+            <View key={event.id} style={todayStyles.shoppingGroup}>
+              <View style={todayStyles.shoppingGroupHeading}>
+                <Text style={todayStyles.shoppingEventName}>{event.nameKo}</Text>
+                <Text style={todayStyles.shoppingPeriod}>{event.period}</Text>
+              </View>
+              {event.rotating ? <Text style={todayStyles.shoppingRotation}>일별 교체 상품 포함</Text> : null}
+              {event.items.map(item => {
+                const asset = getCatalogAssetForItem(item);
+                return (
+                  <Pressable
+                    key={`${item.catalogType}/${item.id}`}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${item.nameKo} 상세 보기`}
+                    onPress={() => onOpenItem(item)}
+                    style={({ pressed }) => [todayStyles.shoppingItem, pressed && todayStyles.shoppingItemPressed]}>
+                    {asset ? <Image accessibilityLabel={item.nameKo} source={asset} style={todayStyles.shoppingImage} />
+                      : <MaterialCommunityIcons name="shopping-outline" color="#2D674E" size={44} />}
+                    <View style={todayStyles.shoppingCopy}>
+                      <Text style={todayStyles.shoppingItemName}>{item.nameKo}</Text>
+                      <Text style={todayStyles.shoppingPrice}>{item.buyPrice === null ? '가격 정보 없음' : `${item.buyPrice.toLocaleString('ko-KR')}벨`}</Text>
+                    </View>
+                    <MaterialCommunityIcons accessible={false} name="chevron-right" color="#2D674E" size={18} />
+                  </Pressable>
+                );
+              })}
+            </View>
+          ))}
+        </View>
+      ) : null}
+    </View>
   );
 }
 
@@ -2916,25 +3084,25 @@ const todayStyles = StyleSheet.create({
   dateControl: { alignItems: 'center', backgroundColor: '#EEF6F2', borderRadius: 13, flex: 1.8, flexDirection: 'row', gap: 5, justifyContent: 'center', minHeight: 40, minWidth: 0, paddingHorizontal: 9 },
   timeControl: { backgroundColor: '#FFF2D8', borderRadius: 13, flex: 0.85, justifyContent: 'center', minHeight: 40, minWidth: 0, paddingHorizontal: 7 },
   dateTimeValueRow: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 5, minWidth: 0 },
-  dateTimeValue: { color: '#24483F', flex: 1, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900' },
+  dateTimeValue: { color: '#24483F', flex: 1, fontFamily: Fonts.sans, fontSize: 11, fontVariant: ['tabular-nums'], fontWeight: '700' },
   timeControlRow: { alignItems: 'center', flexDirection: 'row', gap: 2 },
   timePickerButton: { alignItems: 'center', backgroundColor: 'transparent', borderColor: 'transparent', borderRadius: 7, borderWidth: 0, flex: 1, height: 32, justifyContent: 'center', minWidth: 0, paddingHorizontal: 0 },
   timePickerButtonSelected: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder },
-  timePickerValue: { color: '#6E542B', fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
-  timePickerDivider: { color: '#6E542B', fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
+  timePickerValue: { color: '#6E542B', fontFamily: Fonts.sans, fontSize: 12, fontVariant: ['tabular-nums'], fontWeight: '700' },
+  timePickerDivider: { color: '#6E542B', fontFamily: Fonts.sans, fontSize: 12, fontWeight: '700' },
   dashboardCard: { borderRadius: 24, overflow: 'hidden', ...AppShadows.card },
   dashboardCardContent: { padding: 14 },
   dashboardTwoColumn: { flexDirection: 'row', gap: 10 },
   dashboardHalfCard: { flex: 1, minWidth: 0 },
   recipeCard: { borderWidth: 1 },
   bushCard: { minHeight: 190 },
-  zodiacCard: { minHeight: 190 },
-  eventCard: { minHeight: 126 },
+  zodiacCard: { borderWidth: 1, minHeight: 190 },
+  eventCard: { backgroundColor: '#FFF3E8', borderColor: '#E8D3BB', borderWidth: 1, minHeight: 126, padding: 14 },
   eventCardEmpty: { minHeight: 82 },
   dashboardCardHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
   dashboardCardTitleRow: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 6, minWidth: 0 },
   dashboardCardTitle: { color: AppColors.ink, flexShrink: 1, fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900' },
-  dashboardCardCountChip: { backgroundColor: 'rgba(255,255,255,0.62)', borderRadius: AppRadii.pill, color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 7, paddingVertical: 4 },
+  dashboardCardCountChip: { backgroundColor: 'rgba(255,255,255,0.62)', borderRadius: AppRadii.pill, color: AppColors.ink, fontFamily: Fonts.sans, fontSize: 9, fontVariant: ['tabular-nums'], fontWeight: '700', overflow: 'hidden', paddingHorizontal: 7, paddingVertical: 4 },
   recipeDashboardHeader: { alignItems: 'center', flexDirection: 'row', height: 44, justifyContent: 'space-between', marginBottom: 2 },
   recipeDashboardHeaderCopy: { flex: 1, minWidth: 0 },
   recipeDashboardTitleRow: { alignItems: 'center', flexDirection: 'row', gap: 8, minWidth: 0 },
@@ -2943,7 +3111,7 @@ const todayStyles = StyleSheet.create({
   recipeDashboardSubtitle: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', marginTop: 3 },
   recipeDashboardPeriod: { alignItems: 'flex-end', marginLeft: 8, width: 78 },
   recipeDashboardPeriodLabel: { fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '800' },
-  recipeDashboardPeriodValue: { fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900', marginTop: 5 },
+  recipeDashboardPeriodValue: { fontFamily: Fonts.sans, fontSize: 11, fontVariant: ['tabular-nums'], fontWeight: '700', marginTop: 5 },
   seasonChip: { borderRadius: AppRadii.pill, color: '#FFFFFF', fontFamily: Fonts.rounded, fontSize: 13, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 11, paddingVertical: 6 },
   recipeHeaderBand: { borderBottomLeftRadius: 24, borderBottomRightRadius: 24, height: 64, left: 0, position: 'absolute', right: 0, top: 0 },
   recipeDecorLayer: { height: 80, left: 0, overflow: 'hidden', position: 'absolute', right: 0, top: 0 },
@@ -2966,12 +3134,12 @@ const todayStyles = StyleSheet.create({
   recipeGroupName: { flex: 1, fontFamily: Fonts.rounded, fontSize: 14, fontWeight: '900', minWidth: 0 },
   recipeGroupInfoRow: { alignItems: 'flex-start', flexDirection: 'row', marginTop: 7, minWidth: 0 },
   recipeGroupInfoLabel: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900', width: 31 },
-  recipeGroupInfoValue: { flex: 1, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', lineHeight: 15 },
+  recipeGroupInfoValue: { flex: 1, fontFamily: Fonts.sans, fontSize: 10, fontVariant: ['tabular-nums'], fontWeight: '700', lineHeight: 15 },
   recipeViewAllButton: { alignItems: 'center', flexDirection: 'row', gap: 1, justifyContent: 'flex-end' },
   recipeViewAllText: { fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '900' },
   recipeProgressSection: { marginTop: 7 },
   recipeProgressBottomRow: { alignItems: 'center', flexDirection: 'row', gap: 8 },
-  recipeGroupCount: { fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900', lineHeight: 14 },
+  recipeGroupCount: { fontFamily: Fonts.sans, fontSize: 11, fontVariant: ['tabular-nums'], fontWeight: '700', lineHeight: 14 },
   recipeProgressRail: { borderRadius: AppRadii.pill, flex: 1, height: 5, overflow: 'hidden' },
   recipeProgressFill: { borderRadius: AppRadii.pill, height: '100%' },
   dashboardEmptyText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', lineHeight: 15 },
@@ -2984,28 +3152,64 @@ const todayStyles = StyleSheet.create({
   bushImageSingle: { height: 98, width: 98 },
   bushCopy: { alignItems: 'center', minWidth: 0, width: '100%' },
   bushName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 11, fontWeight: '900', marginTop: 4 },
-  bushPeriod: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 7, fontWeight: '800', lineHeight: 10, marginTop: 2 },
-  zodiacBody: { alignItems: 'center', flexDirection: 'row', gap: 7, minHeight: 61 },
-  zodiacImageCard: { alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 14, height: 68, justifyContent: 'center', width: 68 },
-  zodiacImage: { height: 59, resizeMode: 'contain', width: 59 },
-  zodiacCopy: { flex: 1, minWidth: 0 },
-  zodiacName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
-  zodiacPeriod: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '800', lineHeight: 12, marginTop: 3 },
-  zodiacFurnitureRow: { alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.72)', borderRadius: 12, flexDirection: 'row', gap: 6, marginTop: 7, paddingHorizontal: 7, paddingVertical: 5 },
-  zodiacFurnitureImage: { height: 30, resizeMode: 'contain', width: 30 },
-  zodiacFurnitureCopy: { flex: 1, minWidth: 0 },
-  zodiacFurnitureLabel: { color: '#8D78B8', fontFamily: Fonts.rounded, fontSize: 7, fontWeight: '900' },
-  zodiacFurnitureName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '900', marginTop: 2 },
-  fragmentRow: { alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.72)', borderRadius: 12, flexDirection: 'row', gap: 6, marginTop: 9, paddingHorizontal: 8, paddingVertical: 7 },
-  fragmentImage: { height: 24, resizeMode: 'contain', width: 24 },
-  fragmentText: { color: '#725B9F', flex: 1, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900' },
-  zodiacFooter: { color: '#725B9F', fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '800', marginTop: 8, textAlign: 'right' },
-  eventRow: { alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: 14, flexDirection: 'row', gap: 9, minHeight: 55, paddingHorizontal: 9, paddingVertical: 6 },
+  bushPeriod: { color: AppColors.inkMuted, fontFamily: Fonts.sans, fontSize: 7, fontVariant: ['tabular-nums'], fontWeight: '700', lineHeight: 10, marginTop: 2 },
+  zodiacTitle: { color: AppColors.ink, flex: 1, fontFamily: Fonts.rounded, fontSize: 13, fontWeight: '900', lineHeight: 17, minWidth: 0 },
+  zodiacTitleEn: { fontSize: 10, fontWeight: '900' },
+  zodiacContent: { paddingTop: 4 },
+  zodiacBody: { alignItems: 'center', flexDirection: 'row', gap: 6, marginBottom: 10, minHeight: 64 },
+  zodiacIconFrame: { alignItems: 'center', flexBasis: 52, flexShrink: 1, height: 56, justifyContent: 'center', minWidth: 32 },
+  zodiacImage: { height: 52, maxWidth: 52, resizeMode: 'contain', width: '100%' },
+  zodiacInfoPanel: { flex: 1, flexBasis: 80, gap: 6, minWidth: 0 },
+  zodiacPeriod: { alignItems: 'center', flexDirection: 'row', gap: 4, minHeight: 24, paddingVertical: 4 },
+  zodiacInfoValue: { color: AppColors.ink, flexShrink: 1, fontFamily: Fonts.sans, fontSize: 9, fontVariant: ['tabular-nums'], fontWeight: '700', lineHeight: 13 },
+  zodiacFragmentRow: { alignItems: 'center', flexDirection: 'row', gap: 4, minHeight: 24 },
+  zodiacFragmentName: { flex: 1, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', lineHeight: 13, minWidth: 0 },
+  zodiacItemRow: { alignItems: 'center', flexDirection: 'row', gap: 5, minHeight: 32, paddingHorizontal: 7, paddingVertical: 5 },
+  zodiacItemName: { color: AppColors.ink, flex: 1, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900', lineHeight: 17, minWidth: 0 },
+  zodiacInfoIcon: { height: 18, resizeMode: 'contain', width: 18 },
+  zodiacFurnitureButton: { borderTopWidth: 1, minHeight: 50, paddingHorizontal: 0, paddingTop: 9 },
+  zodiacFurnitureButtonDisabled: { opacity: 0.72 },
+  zodiacFurnitureImages: { alignItems: 'center', height: 38, justifyContent: 'center', width: 38 },
+  zodiacFurnitureIcon: { height: 38, resizeMode: 'contain', width: 38 },
+  eventCardHeader: { marginBottom: 10 },
+  eventCount: { backgroundColor: '#EEF1EF' },
+  eventSection: { borderTopWidth: 1, gap: 8, paddingVertical: 12 },
+  eventSectionIcon: { height: 22, width: 22, resizeMode: 'contain' },
+  eventEmptyText: { paddingBottom: 4 },
+  birthdaySection: { borderTopColor: '#E6C9D2' },
+  birthdaySectionTitle: { color: '#8D4261' },
+  islandEventSection: { borderTopColor: '#E6D5AC' },
+  islandEventSectionTitle: { color: '#826019' },
+  birthdayEventRow: { alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 8, flexDirection: 'row', gap: 10, minHeight: 60, paddingHorizontal: 10, paddingVertical: 8 },
+  birthdayEventPressed: { backgroundColor: '#F8DFE9' },
+  birthdayEventMeta: { color: '#8D4261', fontSize: 11, fontWeight: '600' },
+  birthdayEventName: { color: AppColors.ink, flexShrink: 1, fontSize: 13, fontWeight: '700', lineHeight: 18 },
+  shoppingSection: { borderTopColor: '#CAD9CA', gap: 10 },
+  eventSectionHeading: { alignItems: 'center', flexDirection: 'row', gap: 8, minHeight: 30, marginBottom: 2 },
+  eventHeadingIconFrame: { alignItems: 'center', borderRadius: 6, height: 30, justifyContent: 'center', width: 30 },
+  birthdayHeadingIconFrame: { backgroundColor: '#F8DDE7' },
+  islandEventHeadingIconFrame: { backgroundColor: '#F4E5B5' },
+  shoppingHeadingIconFrame: { backgroundColor: '#D8EBDE' },
+  eventSectionTitle: { flex: 1, fontSize: 14, fontWeight: '800', lineHeight: 20, minWidth: 0 },
+  shoppingTitle: { color: '#2D674E' },
+  shoppingHeadingNote: { color: '#2D674E', fontSize: 10, fontWeight: '600', flexShrink: 0 },
+  shoppingGroup: { gap: 8 },
+  shoppingGroupHeading: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', columnGap: 10, rowGap: 2 },
+  shoppingEventName: { color: '#2D674E', fontSize: 12, fontWeight: '700' },
+  shoppingPeriod: { color: '#2D674E', fontFamily: Fonts.sans, fontSize: 10, fontVariant: ['tabular-nums'], fontWeight: '600' },
+  shoppingRotation: { color: '#2D674E', fontSize: 10 },
+  shoppingItem: { alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 8, flexDirection: 'row', gap: 10, minHeight: 60, paddingHorizontal: 10, paddingVertical: 8 },
+  shoppingItemPressed: { backgroundColor: '#DDEFE3' },
+  shoppingImage: { height: 44, width: 44, resizeMode: 'contain' },
+  shoppingCopy: { flex: 1, minWidth: 0, gap: 4 },
+  shoppingItemName: { color: AppColors.ink, fontSize: 13, fontWeight: '700', lineHeight: 18 },
+  shoppingPrice: { color: '#2D674E', fontFamily: Fonts.sans, fontSize: 11, fontVariant: ['tabular-nums'], fontWeight: '600' },
+  eventRow: { alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 8, flexDirection: 'row', gap: 9, minHeight: 60, paddingHorizontal: 10, paddingVertical: 8 },
   eventImage: { height: 50, resizeMode: 'contain', width: 50 },
   eventCopy: { flex: 1, minWidth: 0 },
-  eventName: { color: '#7A3F20', fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
-  eventMeta: { color: '#9B6040', fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '800', marginTop: 3 },
-  eventHost: { backgroundColor: 'rgba(255,255,255,0.82)', borderRadius: AppRadii.pill, color: '#9B6040', fontFamily: Fonts.rounded, fontSize: 8, fontWeight: '900', overflow: 'hidden', paddingHorizontal: 9, paddingVertical: 5 },
+  eventName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 13, fontWeight: '700' },
+  eventMeta: { color: '#826019', fontFamily: Fonts.sans, fontSize: 10, fontVariant: ['tabular-nums'], fontWeight: '600', marginTop: 3 },
+  eventHost: { color: '#826019', fontSize: 10, fontWeight: '700' },
   timeDropdown: { backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, marginTop: 8, padding: 10 },
   timeDropdownHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
   timeDropdownTitle: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
@@ -3013,7 +3217,7 @@ const todayStyles = StyleSheet.create({
   timeDropdownGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 5 },
   timeDropdownOption: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: AppColors.line, borderRadius: 8, borderWidth: 1, height: 30, justifyContent: 'center', width: '23%' },
   timeDropdownOptionSelected: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.primaryBorder },
-  timeDropdownOptionText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800' },
+  timeDropdownOptionText: { color: AppColors.inkMuted, fontFamily: Fonts.sans, fontSize: 10, fontVariant: ['tabular-nums'], fontWeight: '700' },
   timeDropdownOptionTextSelected: { color: AppColors.leaf, fontWeight: '900' },
   sectionBlock: { gap: 8 },
   sectionCard: { backgroundColor: AppColors.card, borderRadius: AppRadii.card, gap: 10, padding: 12, ...AppShadows.card },
@@ -3105,7 +3309,7 @@ const todayStyles = StyleSheet.create({
   critterBrowserSubtitle: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '800', marginTop: 3 },
   critterBrowserClose: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, height: 36, justifyContent: 'center', marginLeft: 10, width: 36 },
   critterBrowserCountRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 },
-  critterBrowserCount: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 13, fontWeight: '900' },
+  critterBrowserCount: { color: AppColors.ink, fontFamily: Fonts.sans, fontSize: 13, fontVariant: ['tabular-nums'], fontWeight: '700' },
   critterBrowserFilterButton: { alignItems: 'center', borderColor: AppColors.line, borderRadius: AppRadii.pill, borderWidth: 1, flexDirection: 'row', gap: 3, paddingHorizontal: 8, paddingVertical: 5 },
   critterBrowserFilterButtonActive: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.leaf },
   critterBrowserFilterText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '800' },
@@ -3119,13 +3323,13 @@ const todayStyles = StyleSheet.create({
   critterBrowserCopy: { flex: 1, minWidth: 0 },
   critterBrowserNameRow: { alignItems: 'flex-start', flexDirection: 'row', justifyContent: 'space-between', minWidth: 0 },
   critterBrowserNameWrap: { flex: 1, minWidth: 0 },
-  critterBrowserNumber: { color: AppColors.museum, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900' },
+  critterBrowserNumber: { color: AppColors.museum, fontFamily: Fonts.sans, fontSize: 9, fontVariant: ['tabular-nums'], fontWeight: '700' },
   critterBrowserName: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900', marginTop: 2 },
   critterBrowserNameEn: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '700', marginTop: 1 },
   critterBrowserStatus: { flexDirection: 'row', gap: 2, marginLeft: 4 },
   critterBrowserStatusButton: { alignItems: 'center', height: 36, justifyContent: 'center', width: 36 },
   critterBrowserMeta: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '800', marginTop: 4 },
-  critterBrowserPrice: { color: AppColors.catalog, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '900', marginTop: 4 },
+  critterBrowserPrice: { color: AppColors.catalog, fontFamily: Fonts.sans, fontSize: 9, fontVariant: ['tabular-nums'], fontWeight: '700', marginTop: 4 },
   critterBrowserEmpty: { alignItems: 'center', backgroundColor: AppColors.card, borderRadius: AppRadii.card, paddingHorizontal: 22, paddingVertical: 34 },
   critterBrowserEmptyTitle: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900' },
   critterBrowserEmptyText: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '700', marginTop: 7, textAlign: 'center' },

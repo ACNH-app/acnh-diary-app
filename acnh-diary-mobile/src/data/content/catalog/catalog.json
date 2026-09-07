@@ -175162,7 +175162,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "0375354a5af328a3",
@@ -175188,7 +175189,8 @@
           "목재 × 12",
           "철광석 × 4"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "d70a2b5e40cde193",
@@ -175213,7 +175215,8 @@
         "materials": [
           "목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "9f44ee9a82cf413a",
@@ -175238,7 +175241,8 @@
         "materials": [
           "부드러운 목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "c044258be1970393",
@@ -175263,7 +175267,8 @@
         "materials": [
           "scallop × 2"
         ]
-      }
+      },
+      "cardColor": "color_69"
     },
     {
       "id": "f0ba721537695ac1",
@@ -175290,7 +175295,8 @@
           "목재 × 2",
           "campfire × 1"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "7a0b5075844d4d8f",
@@ -175316,7 +175322,8 @@
           "단단한 목재 × 4",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "3dd21cf85f5010bf",
@@ -175341,7 +175348,8 @@
         "materials": [
           "dab × 1"
         ]
-      }
+      },
+      "cardColor": "color_66"
     },
     {
       "id": "389f8e4065e41b16",
@@ -175366,7 +175374,8 @@
         "materials": [
           "부드러운 목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "ecb8bc0386fd8a3a",
@@ -175391,7 +175400,8 @@
         "materials": [
           "철광석 × 5"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "c7fc2b4700e60e9f",
@@ -175417,7 +175427,8 @@
           "밀가루 × 2",
           "감자 × 3"
         ]
-      }
+      },
+      "cardColor": "color_67"
     },
     {
       "id": "5d8f5d6eb1e901ac",
@@ -175443,7 +175454,8 @@
           "밀가루 × 2",
           "감자 × 3"
         ]
-      }
+      },
+      "cardColor": "color_73"
     },
     {
       "id": "e245822848bd5a86",
@@ -175469,7 +175481,8 @@
           "밀가루 × 3",
           "감자 × 3"
         ]
-      }
+      },
+      "cardColor": "color_77"
     },
     {
       "id": "3e89c221c3a4785f",
@@ -175495,7 +175508,8 @@
           "밀가루 × 1",
           "감자 × 2"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "a506617f2556ce42",
@@ -175520,7 +175534,8 @@
         "materials": [
           "감자 × 3"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "517ebec7204bed49",
@@ -175545,7 +175560,8 @@
         "materials": [
           "잡초 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "8d618aa57470f080",
@@ -175571,7 +175587,8 @@
           "목재 × 10",
           "단단한 목재 × 7"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "5356fb95f513f1eb",
@@ -175596,7 +175613,8 @@
         "materials": [
           "목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "99df0362451a7b22",
@@ -175621,7 +175639,8 @@
         "materials": [
           "잡초 × 20"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "a84a9589dd9d65ac",
@@ -175652,7 +175671,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "e1ae8e975088df54",
@@ -175677,7 +175697,8 @@
         "materials": [
           "부드러운 목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "da3e4b2f91826ede",
@@ -175702,7 +175723,8 @@
         "materials": [
           "부드러운 목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "939023483a014dd7",
@@ -175728,7 +175750,8 @@
           "목재 × 2",
           "부드러운 목재 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "547c98c275dc20df",
@@ -175756,7 +175779,8 @@
           "토마토 × 1",
           "감자 × 1"
         ]
-      }
+      },
+      "cardColor": "color_66"
     },
     {
       "id": "0b285c54605f385e",
@@ -175781,7 +175805,8 @@
         "materials": [
           "금광석 × 5"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "61b3abdc4ab7e04d",
@@ -175806,7 +175831,8 @@
         "materials": [
           "금광석 × 5"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "fae6d91f45141d3c",
@@ -175831,7 +175857,8 @@
         "materials": [
           "금장미 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2d0b2884bb839733",
@@ -175856,7 +175883,8 @@
         "materials": [
           "금광석 × 8"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "0577163784ab39a8",
@@ -175881,7 +175909,8 @@
         "materials": [
           "금광석 × 4"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "5326f26876123acd",
@@ -175907,7 +175936,8 @@
           "금광석 × 2",
           "plate armor × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "ee55d4e835d689f9",
@@ -175932,7 +175962,8 @@
         "materials": [
           "철광석 × 5"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "dd492b7a98b3dad3",
@@ -175964,7 +175995,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "d194fbc128025d2e",
@@ -175996,7 +176028,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "c7f695a958181703",
@@ -176029,7 +176062,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_70"
     },
     {
       "id": "e88efa93ed15deb7",
@@ -176060,7 +176094,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "071507faf5fc1adf",
@@ -176092,7 +176127,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_73"
     },
     {
       "id": "2c53f72d75a7ee3f",
@@ -176125,7 +176161,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_70"
     },
     {
       "id": "c0fb8d0c1c010244",
@@ -176158,7 +176195,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_70"
     },
     {
       "id": "c38eab721b4e23f9",
@@ -176191,7 +176229,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_70"
     },
     {
       "id": "311a6ce57ebacd11",
@@ -176224,7 +176263,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_72"
     },
     {
       "id": "9114788818841b4a",
@@ -176257,7 +176297,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "30b206083544f577",
@@ -176290,7 +176331,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "a50e0a8230e7926c",
@@ -176323,7 +176365,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_69"
     },
     {
       "id": "b69d89fdb1488d9b",
@@ -176349,7 +176392,8 @@
           "밀가루 × 3",
           "설탕 × 1"
         ]
-      }
+      },
+      "cardColor": "color_70"
     },
     {
       "id": "588b8427a7c1d772",
@@ -176376,7 +176420,8 @@
           "노란 국화 × 3",
           "빨간 국화 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "1da9a15efca6b9e5",
@@ -176402,7 +176447,8 @@
           "노란 국화 × 3",
           "잡초 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "227cdab2b18cb654",
@@ -176431,7 +176477,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "42700fea2881e6af",
@@ -176458,7 +176505,8 @@
           "노란 국화 × 2",
           "하얀 국화 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "0782e16778c2946a",
@@ -176489,7 +176537,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "8bd00e2419cdb9f4",
@@ -176518,7 +176567,8 @@
         "recipeFilters": [
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "9c363438951b2e83",
@@ -176546,7 +176596,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "49828df89f72deb8",
@@ -176575,7 +176626,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "color_71"
     },
     {
       "id": "7f91057f65b9cf48",
@@ -176600,7 +176652,8 @@
         "materials": [
           "철광석 × 5"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "189e6df8292d3afa",
@@ -176625,7 +176678,8 @@
         "materials": [
           "목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "4cddc166c5d3f7f4",
@@ -176650,7 +176704,8 @@
         "materials": [
           "잡초 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2c173af9fdeb5708",
@@ -176676,7 +176731,8 @@
           "금광석 × 2",
           "samurai suit × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "74bbb21d9e691dac",
@@ -176702,7 +176758,8 @@
           "금광석 × 2",
           "meter and pipes × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "9dcc2f8941e00664",
@@ -176727,7 +176784,8 @@
         "materials": [
           "금광석 × 4"
         ]
-      }
+      },
+      "cardColor": "color_54"
     },
     {
       "id": "a1f1c1a7dca40af0",
@@ -176753,7 +176811,8 @@
           "fishing rod × 1",
           "금광석 × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "563090901138e2ca",
@@ -176779,7 +176838,8 @@
           "금광석 × 1",
           "dharma × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "8b1a9e2c981fb242",
@@ -176805,7 +176865,8 @@
           "금광석 × 1",
           "piggy bank × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "0e62adbdc2cd4991",
@@ -176831,7 +176892,8 @@
           "금광석 × 1",
           "metal pot × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "5e784ac594c3a061",
@@ -176857,7 +176919,8 @@
           "watering can × 1",
           "금광석 × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "39f49b91e22aa5ab",
@@ -176883,7 +176946,8 @@
           "금광석 × 1",
           "mini dharma × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "b7490cc3035aac91",
@@ -176909,7 +176973,8 @@
           "shovel × 1",
           "금광석 × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "ac93b17ac273cc50",
@@ -176935,7 +177000,8 @@
           "slingshot × 1",
           "금광석 × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "a0fcfe5105762295",
@@ -176961,7 +177027,8 @@
           "금광석 × 1",
           "wristwatch × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "84ad5db251caa619",
@@ -176986,7 +177053,8 @@
         "materials": [
           "금광석 × 3"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "a152e31561a46040",
@@ -177011,7 +177079,8 @@
         "materials": [
           "금광석 × 3"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "cfac23afbf246bcd",
@@ -177037,7 +177106,8 @@
           "금광석 × 2",
           "square bathtub × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "b02988c4ca8bcb0e",
@@ -177063,7 +177133,8 @@
           "net × 1",
           "금광석 × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "d6cc02905db34218",
@@ -177088,7 +177159,8 @@
         "materials": [
           "금광석 × 8"
         ]
-      }
+      },
+      "cardColor": "color_54"
     },
     {
       "id": "2dfab5ea57220604",
@@ -177113,7 +177185,8 @@
         "materials": [
           "금광석 × 4"
         ]
-      }
+      },
+      "cardColor": "color_54"
     },
     {
       "id": "1f7dc42ea8c7ae31",
@@ -177139,7 +177212,8 @@
           "금광석 × 1",
           "bunny garden decoration × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "0a5f7e765b30fb1b",
@@ -177165,7 +177239,8 @@
           "금광석 × 2",
           "gear apparatus × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "21586c558f9d2382",
@@ -177191,7 +177266,8 @@
           "금광석 × 2",
           "gear tower × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "23178c9b0424b80c",
@@ -177216,7 +177292,8 @@
         "materials": [
           "금광석 × 3"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "c221cb6145042a5e",
@@ -177242,7 +177319,8 @@
           "금광석 × 3",
           "mining car × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "e3a85ab71ad2952a",
@@ -177267,7 +177345,8 @@
         "materials": [
           "돌 × 30"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "f43f7ac557787cb7",
@@ -177293,7 +177372,8 @@
           "axe × 1",
           "금광석 × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "b89fb7819fdd5fc9",
@@ -177319,7 +177399,8 @@
           "금광석 × 2",
           "lucky cat × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "7525bc73d9fcc83f",
@@ -177344,7 +177425,8 @@
         "materials": [
           "금장미 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "916e40936c35e423",
@@ -177370,7 +177452,8 @@
           "단단한 목재 × 2",
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "f3b387a212d43f23",
@@ -177397,7 +177480,8 @@
           "목재 × 1",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "4cfd614345149aa3",
@@ -177425,7 +177509,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "8967ce9635f95c82",
@@ -177453,7 +177538,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "248f8228fc176934",
@@ -177481,7 +177567,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "c06034c7984c9c2a",
@@ -177506,7 +177593,8 @@
         "materials": [
           "목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "6e51e3f681d89932",
@@ -177531,7 +177619,8 @@
         "materials": [
           "목재 × 4"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "15183e7ccd24c6f1",
@@ -177557,7 +177646,8 @@
           "목재 × 3",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "67009e5230f29269",
@@ -177586,7 +177676,8 @@
         "recipeFilters": [
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "80990818abee43f5",
@@ -177616,7 +177707,8 @@
         "recipeFilters": [
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "d9a8726a0a24ebe8",
@@ -177648,7 +177740,8 @@
           "season:maple_leaf",
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "c88575e5b1cb9c9f",
@@ -177676,7 +177769,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "a92b80c8646629e4",
@@ -177701,7 +177795,8 @@
         "materials": [
           "목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "79b112cb57bda57f",
@@ -177727,7 +177822,8 @@
           "wooden-block toy × 1",
           "부드러운 목재 × 4"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "fb78c92d75e12c32",
@@ -177754,7 +177850,8 @@
           "부드러운 목재 × 2",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "de6e1945645d9989",
@@ -177780,7 +177877,8 @@
           "wooden-block toy × 1",
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "2824ba6d215a0d2a",
@@ -177806,7 +177904,8 @@
           "wooden-block toy × 1",
           "부드러운 목재 × 12"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "2d1c90b0148753f3",
@@ -177832,7 +177931,8 @@
           "wooden-block toy × 1",
           "부드러운 목재 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "30263ad67b000336",
@@ -177859,7 +177959,8 @@
           "부드러운 목재 × 5",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "c1ae5fb97c317459",
@@ -177884,7 +177985,8 @@
         "materials": [
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "28ca45930831d93b",
@@ -177910,7 +178012,8 @@
           "wooden-block toy × 1",
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "41c0fd87f072373b",
@@ -177936,7 +178039,8 @@
           "wooden-block toy × 1",
           "부드러운 목재 × 17"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "46ac0da878113d33",
@@ -177962,7 +178066,8 @@
           "wooden-block toy × 1",
           "부드러운 목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "b28c6b9fe38a1fac",
@@ -177988,7 +178093,8 @@
           "목재 × 5",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "2484a1b2105ea2b2",
@@ -178013,7 +178119,8 @@
         "materials": [
           "나뭇가지 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "121e0c6504455e86",
@@ -178042,7 +178149,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "a707421eef82b54f",
@@ -178067,7 +178175,8 @@
         "materials": [
           "잡초 × 5"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "12d9517c033210d8",
@@ -178095,7 +178204,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "5785086416bc7bba",
@@ -178123,7 +178233,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "ad549b6a9bb03543",
@@ -178151,7 +178262,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "139bc8f7568f0523",
@@ -178177,7 +178289,8 @@
           "밀가루 × 3",
           "tomato puree × 1"
         ]
-      }
+      },
+      "cardColor": "color_69"
     },
     {
       "id": "1d0dbf342cb5fa02",
@@ -178206,7 +178319,8 @@
         "recipeFilters": [
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "c370c7361a201821",
@@ -178235,7 +178349,8 @@
         "recipeFilters": [
           "season:maple_leaf"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "24b38a7de7d8dffc",
@@ -178265,7 +178380,8 @@
         "recipeFilters": [
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "b0bfc09c7609f83c",
@@ -178294,7 +178410,8 @@
         "recipeFilters": [
           "season:maple_leaf"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "e09ecc308d982ef8",
@@ -178320,7 +178437,8 @@
           "flimsy fishing rod × 1",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "d215a6f78184b8a7",
@@ -178348,7 +178466,8 @@
         "recipeFilters": [
           "season:summer_shell"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "4ed3ecef094847e2",
@@ -178375,7 +178494,8 @@
           "나뭇가지 × 5",
           "돌 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "093a41755ccfb6ef",
@@ -178400,7 +178520,8 @@
         "materials": [
           "돌 × 20"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "6e860ae70942460c",
@@ -178425,7 +178546,8 @@
         "materials": [
           "단단한 목재 × 12"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "3eddb44c6c40e0dc",
@@ -178451,7 +178573,8 @@
           "단단한 목재 × 6",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "bf21a54fabc40e40",
@@ -178477,7 +178600,8 @@
           "단단한 목재 × 9",
           "철광석 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "e124cfd5c4a52fa5",
@@ -178502,7 +178626,8 @@
         "materials": [
           "초록색 국화 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "6baed5d7ccc33340",
@@ -178528,7 +178653,8 @@
           "단단한 목재 × 4",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "03716bb01813f79c",
@@ -178553,7 +178679,8 @@
         "materials": [
           "점토 × 6"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "ef796f9537e5dfa7",
@@ -178578,7 +178705,8 @@
         "materials": [
           "document stack × 1"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "2141710d990a6af0",
@@ -178607,7 +178735,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "color_75"
     },
     {
       "id": "7e02b89ce6be8156",
@@ -178633,7 +178762,8 @@
           "olive flounder × 1",
           "가는 버섯 × 1"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "cf2abeb17fdc0537",
@@ -178661,7 +178791,8 @@
           "점토 × 4",
           "단단한 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "3a64d4c8aaa142bb",
@@ -178690,7 +178821,8 @@
         "recipeFilters": [
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "af84b2956f5c163e",
@@ -178718,7 +178850,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "2dafce3de4a2b97e",
@@ -178746,7 +178879,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "1caf7d619002bfe9",
@@ -178771,7 +178905,8 @@
         "materials": [
           "목재 × 12"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "c81c0749060258df",
@@ -178797,7 +178932,8 @@
           "돌 × 20",
           "shovel × 1"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "8c965c9de807bed4",
@@ -178823,7 +178959,8 @@
           "sea bass × 1",
           "잡초 × 5"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "25df8c139e6f6cf4",
@@ -178849,7 +178986,8 @@
           "밀가루 × 3",
           "sea bass × 1"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "3d7f5ae8d5d53968",
@@ -178874,7 +179012,8 @@
         "materials": [
           "부드러운 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "34bbec71ad17fd66",
@@ -178903,7 +179042,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "cdb47b2c6cbee2e9",
@@ -178931,7 +179071,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "dbf058d152539e30",
@@ -178959,7 +179100,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "7f77bf21f77da44b",
@@ -178988,7 +179130,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "549d92f38fd9be36",
@@ -179017,7 +179160,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "081b36f1535c1a44",
@@ -179045,7 +179189,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "25eff46dff8aeefe",
@@ -179072,7 +179217,8 @@
           "점토 × 4",
           "돌 × 4"
         ]
-      }
+      },
+      "cardColor": null
     },
     {
       "id": "fedee3e748741f31",
@@ -179098,7 +179244,8 @@
           "잡초 × 10",
           "빈 통조림 캔 × 1"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "667bb6c9ff786f32",
@@ -179123,7 +179270,8 @@
         "materials": [
           "대나무 토막 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "045ad42e4285d13b",
@@ -179148,7 +179296,8 @@
         "materials": [
           "검정 백합 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "17ae02bf6883750e",
@@ -179173,7 +179322,8 @@
         "materials": [
           "검정 백합 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "c6baae3a8155bf42",
@@ -179199,7 +179349,8 @@
           "검정 장미 × 3",
           "보라색 장미 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2f23fa0a81702135",
@@ -179227,7 +179378,8 @@
         "recipeFilters": [
           "ingredient:flower"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "99b52ca9ec2954df",
@@ -179252,7 +179404,8 @@
         "materials": [
           "검정 튤립 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "303ac57fe2bcda91",
@@ -179277,7 +179430,8 @@
         "materials": [
           "검정 튤립 × 5"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "5cefee63623e302a",
@@ -179305,7 +179459,8 @@
         "recipeFilters": [
           "season:maple_leaf"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "eb13b6a7d6401aca",
@@ -179334,7 +179489,8 @@
         "recipeFilters": [
           "season:maple_leaf"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "72b388cdf873dd42",
@@ -179364,7 +179520,8 @@
         "recipeFilters": [
           "season:maple_leaf"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "cd33fbf9c3f92d95",
@@ -179392,7 +179549,8 @@
         "recipeFilters": [
           "season:maple_leaf"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "a229ec90ae66c669",
@@ -179420,7 +179578,8 @@
         "recipeFilters": [
           "season:maple_leaf"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "bf18af0ffe5d2bef",
@@ -179449,7 +179608,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "4b485dcb3230a9c3",
@@ -179482,7 +179642,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "6e96d46a5292ef6c",
@@ -179515,7 +179676,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "381c3b810635dc05",
@@ -179540,7 +179702,8 @@
         "materials": [
           "mini dharma × 3"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "7e06b36582057409",
@@ -179569,7 +179732,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "2d5122b311d00807",
@@ -179598,7 +179762,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "1eba7482d426f73e",
@@ -179624,7 +179789,8 @@
           "밀가루 × 2",
           "당근 × 3"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "c3ba38a0cf93c046",
@@ -179649,7 +179815,8 @@
         "materials": [
           "당근 × 3"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "9d8e89cba7e621c1",
@@ -179675,7 +179842,8 @@
           "통밀 가루 × 2",
           "당근 × 3"
         ]
-      }
+      },
+      "cardColor": "color_66"
     },
     {
       "id": "847682dd9b411030",
@@ -179702,7 +179870,8 @@
           "설탕 × 1",
           "당근 × 2"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "8cc0a2561e41250a",
@@ -179728,7 +179897,8 @@
           "밀가루 × 3",
           "당근 × 3"
         ]
-      }
+      },
+      "cardColor": "color_77"
     },
     {
       "id": "34d3e5e931b5bd6a",
@@ -179753,7 +179923,8 @@
         "materials": [
           "당근 × 2"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "ed1f7984ef05bfec",
@@ -179780,7 +179951,8 @@
           "설탕 × 1",
           "당근 × 1"
         ]
-      }
+      },
+      "cardColor": "color_73"
     },
     {
       "id": "41647cfe5d8d9481",
@@ -179806,7 +179978,8 @@
           "밀가루 × 1",
           "당근 × 2"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "069f25f31e0828a8",
@@ -179831,7 +180004,8 @@
         "materials": [
           "대나무 토막 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "c2fda55f41ea1305",
@@ -179859,7 +180033,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "ef3e0a363d9738b9",
@@ -179884,7 +180059,8 @@
         "materials": [
           "대나무 토막 × 1"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "f8b62b9eca616e0c",
@@ -179909,7 +180085,8 @@
         "materials": [
           "대나무 토막 × 4"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "011dd370fc3a1705",
@@ -179935,7 +180112,8 @@
           "대나무 토막 × 3",
           "부드러운 목재 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "d878bc192269489e",
@@ -179960,7 +180138,8 @@
         "materials": [
           "대나무 토막 × 7"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "b3ad777e37efde97",
@@ -179985,7 +180164,8 @@
         "materials": [
           "대나무 토막 × 15"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "c3948984218ec639",
@@ -180010,7 +180190,8 @@
         "materials": [
           "대나무 토막 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2661cb105f5f932a",
@@ -180035,7 +180216,8 @@
         "materials": [
           "대나무 토막 × 8"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "703305dbbcc3d0d3",
@@ -180060,7 +180242,8 @@
         "materials": [
           "대나무 토막 × 15"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "b6413e6cdf59c40a",
@@ -180087,7 +180270,8 @@
           "돌 × 8",
           "잡초 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "1b44d059f9131a6d",
@@ -180116,7 +180300,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "a5d6992aea667c0b",
@@ -180141,7 +180326,8 @@
         "materials": [
           "대나무 토막 × 15"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "a0eb72a38db1f294",
@@ -180166,7 +180352,8 @@
         "materials": [
           "대나무 토막 × 5"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "d00b6c41babe4a18",
@@ -180192,7 +180379,8 @@
           "대나무 토막 × 3",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "48da18d40e78b2d0",
@@ -180217,7 +180405,8 @@
         "materials": [
           "대나무 토막 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "11b31c3d74acd547",
@@ -180242,7 +180431,8 @@
         "materials": [
           "대나무 토막 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "544291ccc2d79abb",
@@ -180271,7 +180461,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "d4e8efc14bf995af",
@@ -180297,7 +180488,8 @@
           "대나무 토막 × 3",
           "점토 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "0e3e49bc267b937a",
@@ -180323,7 +180515,8 @@
           "대나무 토막 × 7",
           "돌 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "34fc185e885050bf",
@@ -180348,7 +180541,8 @@
         "materials": [
           "대나무 토막 × 8"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "9e70461c26f71e60",
@@ -180373,7 +180567,8 @@
         "materials": [
           "돌 × 8"
         ]
-      }
+      },
+      "cardColor": "color_51"
     },
     {
       "id": "8c76b43a58e875de",
@@ -180398,7 +180593,8 @@
         "materials": [
           "돌 × 16"
         ]
-      }
+      },
+      "cardColor": "color_51"
     },
     {
       "id": "838238765099f942",
@@ -180423,7 +180619,8 @@
         "materials": [
           "돌 × 8"
         ]
-      }
+      },
+      "cardColor": "color_51"
     },
     {
       "id": "d8f112b91e56e91a",
@@ -180451,7 +180648,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "eac88c7fbc94245f",
@@ -180479,7 +180677,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "347cdf50f3c12348",
@@ -180508,7 +180707,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "210a760e48129a43",
@@ -180536,7 +180736,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "7c317715abf38a51",
@@ -180564,7 +180765,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "d28344e26e235504",
@@ -180593,7 +180795,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "274565b7095b2771",
@@ -180621,7 +180824,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "dd0660a1904c110c",
@@ -180649,7 +180853,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "40626310b96beaf2",
@@ -180677,7 +180882,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "39d13721d2627761",
@@ -180705,7 +180911,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "6f5f6a5f6c7817c2",
@@ -180730,7 +180937,8 @@
         "materials": [
           "점토 × 4"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "6c6322bc580f8733",
@@ -180757,7 +180965,8 @@
           "목재 × 3",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "6412d4dee1a7cd26",
@@ -180782,7 +180991,8 @@
         "materials": [
           "잡초 × 8"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "8aae70ed11768f50",
@@ -180807,7 +181017,8 @@
         "materials": [
           "잡초 × 7"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "b7cb75112ff1a036",
@@ -180833,7 +181044,8 @@
           "단단한 목재 × 2",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "044deb99a97ccbf9",
@@ -180859,7 +181071,8 @@
           "carp × 1",
           "목재 × 1"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "b8e6d7a169596f75",
@@ -180886,7 +181099,8 @@
           "토마토 × 1",
           "바지락 × 1"
         ]
-      }
+      },
+      "cardColor": "color_65"
     },
     {
       "id": "fe78dd3cd23b2c7d",
@@ -180911,7 +181125,8 @@
         "materials": [
           "book × 10"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "dd097888649dd8b7",
@@ -180939,7 +181154,8 @@
         "recipeFilters": [
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "3457279b20f06bf1",
@@ -180967,7 +181183,8 @@
         "recipeFilters": [
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "99ebc4d4572d6713",
@@ -180992,7 +181209,8 @@
         "materials": [
           "99,000 Bells × 3"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "e3f2ac6a1a862c7d",
@@ -181017,7 +181235,8 @@
         "materials": [
           "50,000 Bells × 1"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "016eea2e2e0836c1",
@@ -181042,7 +181261,8 @@
         "materials": [
           "돌 × 10"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "d3828d1bcc93130c",
@@ -181067,7 +181287,8 @@
         "materials": [
           "돌 × 3"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "1249a452644affc4",
@@ -181092,7 +181313,8 @@
         "materials": [
           "돌 × 4"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "d3b050c9fd350bf0",
@@ -181117,7 +181339,8 @@
         "materials": [
           "돌 × 8"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "161083317519657a",
@@ -181143,7 +181366,8 @@
           "돌 × 8",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "ce8afefdd40f2aa0",
@@ -181168,7 +181392,8 @@
         "materials": [
           "돌 × 10"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "6b107ee03672d3f6",
@@ -181194,7 +181419,8 @@
           "flimsy axe × 1",
           "목재 × 3"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "be5377335f34686e",
@@ -181219,7 +181445,8 @@
         "materials": [
           "barred knifejaw × 1"
         ]
-      }
+      },
+      "cardColor": "color_66"
     },
     {
       "id": "3fa7c029d3482c78",
@@ -181244,7 +181471,8 @@
         "materials": [
           "돌 × 24"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "2a218bbd4d8c134b",
@@ -181274,7 +181502,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "cc9f6f0232447576",
@@ -181301,7 +181530,8 @@
           "점토 × 3",
           "돌 × 3"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "d1377a8df7c6d306",
@@ -181328,7 +181558,8 @@
           "campfire × 1",
           "돌 × 2"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "19e8b240b9d7e6c1",
@@ -181356,7 +181587,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "03166488de5f7983",
@@ -181384,7 +181616,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "f124e64f80a145b9",
@@ -181412,7 +181645,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "4274fd76a5e641f0",
@@ -181440,7 +181674,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "3498a86331935c44",
@@ -181469,7 +181704,8 @@
         "recipeFilters": [
           "ingredient:flower"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "423d41d54d3c661c",
@@ -181498,7 +181734,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "02ed42d5d95b01a5",
@@ -181526,7 +181763,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "882515afb7e31bbb",
@@ -181555,7 +181793,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "b4a81fa7da403f0a",
@@ -181581,7 +181820,8 @@
           "돌 × 5",
           "점토 × 5"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "f40738904235ebca",
@@ -181607,7 +181847,8 @@
           "밀가루 × 3",
           "토마토 × 2"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "c53587bf532316cf",
@@ -181632,7 +181873,8 @@
         "materials": [
           "부드러운 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "5d2e4b87a05660b5",
@@ -181661,7 +181903,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "c49d8f282b4165a2",
@@ -181686,7 +181929,8 @@
         "materials": [
           "magazine × 10"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "8bfcb5c359df29ef",
@@ -181711,7 +181955,8 @@
         "materials": [
           "단단한 목재 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "c8e351f6e14f33a6",
@@ -181740,7 +181985,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "ae31d135273526f5",
@@ -181765,7 +182011,8 @@
         "materials": [
           "철광석 × 3"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "45546bf3df06a535",
@@ -181796,7 +182043,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "7c51bea76300aa38",
@@ -181825,7 +182073,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "82cc4602ab6ebaad",
@@ -181855,7 +182104,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "086e12daa62b3a62",
@@ -181886,7 +182136,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "864ec9028be7360f",
@@ -181919,7 +182170,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "48782a522b8225e9",
@@ -181948,7 +182200,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "7aabe3f46a98cd27",
@@ -181978,7 +182231,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "19704ec3c811ae26",
@@ -182008,7 +182262,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "a12443b256f35c38",
@@ -182039,7 +182294,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "a9e9a597d8914281",
@@ -182069,7 +182325,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "559ad011dcb4a035",
@@ -182099,7 +182356,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "adc3f76c52757403",
@@ -182129,7 +182387,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "de7dda92a657dfcf",
@@ -182158,7 +182417,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "bc5b84876687b432",
@@ -182188,7 +182448,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "1a1246264377ceda",
@@ -182219,7 +182480,8 @@
         "recipeFilters": [
           "event:pascal"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "914ec2f775d7a135",
@@ -182245,7 +182507,8 @@
           "밀가루 × 3",
           "squid × 1"
         ]
-      }
+      },
+      "cardColor": "color_77"
     },
     {
       "id": "ca4d9be642f39c99",
@@ -182271,7 +182534,8 @@
           "밀가루 × 3",
           "squid × 1"
         ]
-      }
+      },
+      "cardColor": "color_65"
     },
     {
       "id": "fb9a52e6fb7c6287",
@@ -182296,7 +182560,8 @@
         "materials": [
           "anchovy × 1"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "b0ed8d54a19696c8",
@@ -182322,7 +182587,8 @@
           "목재 × 4",
           "부드러운 목재 × 4"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "e570f16014695df4",
@@ -182347,7 +182613,8 @@
         "materials": [
           "나뭇가지 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "66a62b9cb0fcf200",
@@ -182380,7 +182647,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "4ce736c727069a54",
@@ -182405,7 +182673,8 @@
         "materials": [
           "부드러운 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "7592e34708a64fae",
@@ -182433,7 +182702,8 @@
           "부드러운 목재 × 30",
           "철광석 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "557e18de3f6bbcfa",
@@ -182459,7 +182729,8 @@
           "부드러운 목재 × 4",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "a96bb43b49cb16ec",
@@ -182486,7 +182757,8 @@
           "단단한 목재 × 2",
           "부드러운 목재 × 2"
         ]
-      }
+      },
+      "cardColor": "color_52"
     },
     {
       "id": "12e54e95dff05285",
@@ -182511,7 +182783,8 @@
         "materials": [
           "목재 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "57505fc6c5a9b88a",
@@ -182536,7 +182809,8 @@
         "materials": [
           "목재 × 30"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "2dc7b437a3375aba",
@@ -182561,7 +182835,8 @@
         "materials": [
           "목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "b9296c277069b019",
@@ -182587,7 +182862,8 @@
           "ladder × 1",
           "목재 × 5"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "ec2090241415d3aa",
@@ -182612,7 +182888,8 @@
         "materials": [
           "목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "1e44f392b93d7de2",
@@ -182637,7 +182914,8 @@
         "materials": [
           "목재 × 16"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "3b41f02378bad5a3",
@@ -182662,7 +182940,8 @@
         "materials": [
           "목재 × 4"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "85ce86458281adb3",
@@ -182687,7 +182966,8 @@
         "materials": [
           "목재 × 18"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "2c35d3aa86b76dd2",
@@ -182714,7 +182994,8 @@
           "부드러운 목재 × 3",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "f76f8dcf6f2a36cf",
@@ -182739,7 +183020,8 @@
         "materials": [
           "목재 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "64e88ba247bcd315",
@@ -182764,7 +183046,8 @@
         "materials": [
           "목재 × 12"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "e1cc98230121b4a8",
@@ -182789,7 +183072,8 @@
         "materials": [
           "목재 × 20"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "fea55c46ec600282",
@@ -182814,7 +183098,8 @@
         "materials": [
           "목재 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "b284b0252e197d7e",
@@ -182840,7 +183125,8 @@
           "목재 × 5",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "43c1520fe8ca9c6b",
@@ -182866,7 +183152,8 @@
           "book × 5",
           "목재 × 10"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "6b24ced54520bc83",
@@ -182891,7 +183178,8 @@
         "materials": [
           "목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "99616ffa37f0bee7",
@@ -182918,7 +183206,8 @@
           "단단한 목재 × 3",
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "color_52"
     },
     {
       "id": "6d2db9b775753130",
@@ -182945,7 +183234,8 @@
           "단단한 목재 × 2",
           "부드러운 목재 × 2"
         ]
-      }
+      },
+      "cardColor": "color_52"
     },
     {
       "id": "a07372495ba2b540",
@@ -182970,7 +183260,8 @@
         "materials": [
           "목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "ef109571777fd347",
@@ -182996,7 +183287,8 @@
           "목재 × 3",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "67156d3bfdf0ab78",
@@ -183022,7 +183314,8 @@
           "부드러운 목재 × 6",
           "단단한 목재 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "14d1f6fc32d0a40c",
@@ -183047,7 +183340,8 @@
         "materials": [
           "목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "09720dbec9f5b3ff",
@@ -183073,7 +183367,8 @@
           "10 turnips × 1",
           "토마토 × 1"
         ]
-      }
+      },
+      "cardColor": "color_69"
     },
     {
       "id": "fd25aea2db8e0f79",
@@ -183098,7 +183393,8 @@
         "materials": [
           "30 turnips × 1"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "309022245e736240",
@@ -183129,7 +183425,8 @@
         "recipeFilters": [
           "event:festivale"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "f96a72cdaca731ff",
@@ -183154,7 +183451,8 @@
         "materials": [
           "10 turnips × 1"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "02ae21bd35840911",
@@ -183182,7 +183480,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "3733e19243503e6e",
@@ -183210,7 +183509,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "f78b5f2ff4fc652d",
@@ -183238,7 +183538,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "29c356e9b2dce5b9",
@@ -183263,7 +183564,8 @@
         "materials": [
           "바지락 × 1"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "d56342a714f06e47",
@@ -183294,7 +183596,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "544b77fe0d8f78a6",
@@ -183325,7 +183628,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "7ad927d37fa8db66",
@@ -183351,7 +183655,8 @@
           "flimsy watering can × 1",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "d40e552ff6e763b1",
@@ -183378,7 +183683,8 @@
           "감자 × 1",
           "당근 × 1"
         ]
-      }
+      },
+      "cardColor": "color_67"
     },
     {
       "id": "7ec22da7f6bec913",
@@ -183403,7 +183709,8 @@
         "materials": [
           "seaweed × 2"
         ]
-      }
+      },
+      "cardColor": "color_69"
     },
     {
       "id": "cb837fc4c41b763d",
@@ -183430,7 +183737,8 @@
           "부드러운 목재 × 5",
           "단단한 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "7268f33eee8fc385",
@@ -183455,7 +183763,8 @@
         "materials": [
           "밀 × 5"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "95b3432daf6e638d",
@@ -183483,7 +183792,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "e1372d5fdb0d1bf2",
@@ -183512,7 +183822,8 @@
         "recipeFilters": [
           "season:summer_shell"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "beb8bb4338c5ea04",
@@ -183537,7 +183848,8 @@
         "materials": [
           "철광석 × 10"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "259f35a52be898e5",
@@ -183565,7 +183877,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "45dda2941cbd6a45",
@@ -183593,7 +183906,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "90202e98a0ec26a6",
@@ -183621,7 +183935,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "87386c7fea5856d7",
@@ -183646,7 +183961,8 @@
         "materials": [
           "cardboard box × 3"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "e283bb542592489d",
@@ -183671,7 +183987,8 @@
         "materials": [
           "목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "807bcb7deb49678b",
@@ -183696,7 +184013,8 @@
         "materials": [
           "cardboard box × 2"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "303e9aebdf87016d",
@@ -183721,7 +184039,8 @@
         "materials": [
           "cardboard box × 1"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "81ffd3920611fd8d",
@@ -183746,7 +184065,8 @@
         "materials": [
           "cardboard box × 4"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "60dece34b6bfa4dc",
@@ -183771,7 +184091,8 @@
         "materials": [
           "cardboard box × 4"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "8bedeebb6c763126",
@@ -183796,7 +184117,8 @@
         "materials": [
           "목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "e252a8504feffa1e",
@@ -183824,7 +184146,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "8703a07c4fae80a0",
@@ -183849,7 +184172,8 @@
         "materials": [
           "zen cushion × 3"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "fc95b58dcde60a67",
@@ -183875,7 +184199,8 @@
           "돌 × 10",
           "점토 × 10"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "309f338105a323b6",
@@ -183903,7 +184228,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "01d4fe299899e3b2",
@@ -183931,7 +184257,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "6a9f82e715c0402b",
@@ -183959,7 +184286,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "eaa3e8e62b067968",
@@ -183987,7 +184315,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "28f07d4a5bbdb8ca",
@@ -184015,7 +184344,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "6823866a98f16831",
@@ -184044,7 +184374,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "8c50272f1cfc7372",
@@ -184072,7 +184403,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "a5d456871787d19a",
@@ -184100,7 +184432,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "6dec6a30ecb9e883",
@@ -184128,7 +184461,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_60"
     },
     {
       "id": "b4c00ef690c8fa15",
@@ -184157,7 +184491,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "4603e0b1ee5ac268",
@@ -184187,7 +184522,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "99e95e510e91f3da",
@@ -184217,7 +184553,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_66"
     },
     {
       "id": "ccf9b7ce678eeb5c",
@@ -184244,7 +184581,8 @@
           "철광석 × 3",
           "목재 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "ed2e52fd78b6bb99",
@@ -184271,7 +184609,8 @@
           "빨간 백합 × 3",
           "노란 백합 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "991599eaab6ac545",
@@ -184300,7 +184639,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "efec2e11aaff12c0",
@@ -184327,7 +184667,8 @@
           "노란 백합 × 2",
           "하얀 백합 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "ff65168c35da8ec9",
@@ -184356,7 +184697,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "d55f02445112cf9a",
@@ -184387,7 +184729,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "90295f9c66ee411b",
@@ -184418,7 +184761,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "9b501fb9bff1040c",
@@ -184445,7 +184789,8 @@
           "넓은 버섯 × 1",
           "가는 버섯 × 1"
         ]
-      }
+      },
+      "cardColor": "color_66"
     },
     {
       "id": "c6d68f8fb4f5a3f1",
@@ -184477,7 +184822,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "22e7bc93854aa011",
@@ -184509,7 +184855,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "2236aa3182afafe2",
@@ -184537,7 +184884,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "b287ef1be46065ed",
@@ -184565,7 +184913,8 @@
           "가는 버섯 × 1",
           "희귀 버섯 × 1"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "721ca134defb0175",
@@ -184593,7 +184942,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "4a19bcaaabf3205a",
@@ -184622,7 +184972,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "772c36bf3798ec5d",
@@ -184651,7 +185002,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "fb55631b18b15d34",
@@ -184679,7 +185031,8 @@
           "넓은 버섯 × 1",
           "가는 버섯 × 1"
         ]
-      }
+      },
+      "cardColor": "color_77"
     },
     {
       "id": "c22576dc7cbc34e5",
@@ -184706,7 +185059,8 @@
           "둥근 버섯 × 1",
           "가는 버섯 × 1"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "cb98b09a39419e38",
@@ -184735,7 +185089,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "3e972952a5f4f848",
@@ -184763,7 +185118,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "940ccd8a41002354",
@@ -184791,7 +185147,8 @@
         "recipeFilters": [
           "season:mushroom"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "7195090e4f58bbfb",
@@ -184818,7 +185175,8 @@
           "둥근 버섯 × 1",
           "넓은 버섯 × 1"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "9d3140125efd7569",
@@ -184845,7 +185203,8 @@
           "둥근 버섯 × 2",
           "넓은 버섯 × 2"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "14a82c59d906552c",
@@ -184870,7 +185229,8 @@
         "materials": [
           "가는 버섯 × 2"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "513140788278a926",
@@ -184895,7 +185255,8 @@
         "materials": [
           "감자 × 2"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "4773626dc3309dcd",
@@ -184921,7 +185282,8 @@
           "목재 × 4",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "e126407cce1e27c6",
@@ -184946,7 +185308,8 @@
         "materials": [
           "벌집 × 5"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "5afac077512557d1",
@@ -184971,7 +185334,8 @@
         "materials": [
           "벌집 × 6"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "0d0a76539016e1cb",
@@ -184997,7 +185361,8 @@
           "벌집 × 3",
           "목재 × 5"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "13ad094cfd21c9b7",
@@ -185026,7 +185391,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "a8cd9260cb492a32",
@@ -185054,7 +185420,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "791c4187ca7ca12e",
@@ -185082,7 +185449,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "e7b97e5270d3fbf7",
@@ -185110,7 +185478,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "92ca83f68e95f132",
@@ -185138,7 +185507,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "5e85174a4563da06",
@@ -185167,7 +185537,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "d9b34a490c4fd385",
@@ -185196,7 +185567,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "0c68ec2627209ab5",
@@ -185225,7 +185597,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "8f46f89180db8fb1",
@@ -185254,7 +185627,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "123c4bd7353775df",
@@ -185283,7 +185657,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "f7fd714298b3f0f3",
@@ -185313,7 +185688,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "1a867572e74d8ff9",
@@ -185341,7 +185717,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "167d4d327e05f819",
@@ -185372,7 +185749,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "08d4db36fe8c5c18",
@@ -185401,7 +185779,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "8b33aa1b4ac5ed00",
@@ -185427,7 +185806,8 @@
           "목재 × 5",
           "부드러운 목재 × 7"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "2e8ad66b2d67918a",
@@ -185452,7 +185832,8 @@
         "materials": [
           "잡초 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "05196eb1d6eb35b3",
@@ -185478,7 +185859,8 @@
           "skateboard × 3",
           "단단한 목재 × 2"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "aa120882dca1e8eb",
@@ -185504,7 +185886,8 @@
           "잡초 × 5",
           "점토 × 5"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "8f59c1e55e8eac13",
@@ -185531,7 +185914,8 @@
           "철광석 × 2",
           "목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "9ea34372a7e3b614",
@@ -185556,7 +185940,8 @@
         "materials": [
           "점토 × 4"
         ]
-      }
+      },
+      "cardColor": "color_55"
     },
     {
       "id": "3db999ab78d4bd5a",
@@ -185583,7 +185968,8 @@
           "목재 × 5",
           "flimsy shovel × 1"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "9175293e8d881708",
@@ -185608,7 +185994,8 @@
         "materials": [
           "점토 × 6"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "475a6dcf1980e437",
@@ -185633,7 +186020,8 @@
         "materials": [
           "점토 × 8"
         ]
-      }
+      },
+      "cardColor": "color_55"
     },
     {
       "id": "44254e8bff7106f8",
@@ -185658,7 +186046,8 @@
         "materials": [
           "점토 × 4"
         ]
-      }
+      },
+      "cardColor": "color_55"
     },
     {
       "id": "1f04b21beeeb7e06",
@@ -185685,7 +186074,8 @@
           "점토 × 15",
           "철광석 × 10"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "0dc0291dd1f5790c",
@@ -185713,7 +186103,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "e5b2d66ea68fc272",
@@ -185742,7 +186133,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "7a1f01613b4aaf34",
@@ -185771,7 +186163,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "b60bfad1b869e068",
@@ -185799,7 +186192,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "549eaa535ca08657",
@@ -185828,7 +186222,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "06396017b7911cab",
@@ -185856,7 +186251,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "193cc2e4004e8920",
@@ -185884,7 +186280,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "a2a75b45724f8d45",
@@ -185913,7 +186310,8 @@
         "recipeFilters": [
           "season:summer_shell"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "ba523acb1fe51efa",
@@ -185942,7 +186340,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "ba2cc4b6bfd51513",
@@ -185971,7 +186370,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "2808ede5e8fea8cd",
@@ -185996,7 +186396,8 @@
         "materials": [
           "보라색 히아신스 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "9af0f5b48ec8be91",
@@ -186021,7 +186422,8 @@
         "materials": [
           "단단한 목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "57f49e4b314eac98",
@@ -186050,7 +186452,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "8fa695bd4f900e39",
@@ -186078,7 +186481,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "46d9ed87224d454e",
@@ -186106,7 +186510,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "0ef0ca7ad06047e7",
@@ -186134,7 +186539,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "c8fdd9c97a850c41",
@@ -186162,7 +186568,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "8d1fb12bd7a06b69",
@@ -186190,7 +186597,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "fd55eb8bde22e14b",
@@ -186218,7 +186626,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "8d238cf4ebd82f4c",
@@ -186246,7 +186655,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "96c9ebf3a2288482",
@@ -186274,7 +186684,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_60"
     },
     {
       "id": "5161dc7517e71e12",
@@ -186303,7 +186714,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "beda31fc6d47685f",
@@ -186333,7 +186745,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_66"
     },
     {
       "id": "fc7ca7ff8ba0a578",
@@ -186363,7 +186776,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_70"
     },
     {
       "id": "ef75a54ed3bb32b7",
@@ -186392,7 +186806,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "cff67827dd6b6e0a",
@@ -186417,7 +186832,8 @@
         "materials": [
           "단단한 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "d000d3c4f076122e",
@@ -186444,7 +186860,8 @@
           "돌 × 20",
           "철광석 × 8"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "ead71f338c1f2b1f",
@@ -186471,7 +186888,8 @@
           "pine bonsai tree × 1",
           "목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "103e3d19ef70ef48",
@@ -186496,7 +186914,8 @@
         "materials": [
           "파란 장미 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "ced4897ba25b3932",
@@ -186522,7 +186941,8 @@
           "밀가루 × 1",
           "설탕 × 2"
         ]
-      }
+      },
+      "cardColor": "color_67"
     },
     {
       "id": "d4a9ef889906297e",
@@ -186547,7 +186967,8 @@
         "materials": [
           "돌 × 12"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "483f716cc81ebb93",
@@ -186575,7 +186996,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "ced276f9738c6b96",
@@ -186603,7 +187025,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "489d8f58ee910153",
@@ -186632,7 +187055,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "ccb61fed4d879541",
@@ -186660,7 +187084,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "d86a5ddc02388b4b",
@@ -186688,7 +187113,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "f841d903f1f9ff93",
@@ -186716,7 +187142,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "46564a371453582a",
@@ -186744,7 +187171,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "d927fe3704e1d624",
@@ -186772,7 +187200,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "b27de6890cde2717",
@@ -186800,7 +187229,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "2f2a410bff73c882",
@@ -186828,7 +187258,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "77d8efad09c2446b",
@@ -186856,7 +187287,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "f08a57a103ef25f3",
@@ -186885,7 +187317,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "a228a097687f3bf2",
@@ -186914,7 +187347,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "f415625e27f6aabe",
@@ -186944,7 +187378,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "31d76019994595a4",
@@ -186973,7 +187408,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "9e499c0aa2ed498e",
@@ -187001,7 +187437,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "66832c0990778954",
@@ -187030,7 +187467,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "62ce230090838eb3",
@@ -187058,7 +187496,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "c8e8e3549e893c77",
@@ -187084,7 +187523,8 @@
           "glowing-moss jar × 6",
           "철광석 × 6"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "6f56b8aae71d40e5",
@@ -187112,7 +187552,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "2f37283e4a8b4ecd",
@@ -187141,7 +187582,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "4fba8048085f7671",
@@ -187170,7 +187612,8 @@
         "recipeFilters": [
           "season:maple_leaf"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "b2e996a26efe0ed5",
@@ -187195,7 +187638,8 @@
         "materials": [
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "1762e79ae13c5800",
@@ -187220,7 +187664,8 @@
         "materials": [
           "나뭇가지 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "75428eddd3e15dda",
@@ -187245,7 +187690,8 @@
         "materials": [
           "밀가루 × 3"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "4bbaa35f46639707",
@@ -187271,7 +187717,8 @@
           "밀가루 × 2",
           "통밀 가루 × 2"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "4f51d69550f54e45",
@@ -187296,7 +187743,8 @@
         "materials": [
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "36c5af60b6060c3c",
@@ -187321,7 +187769,8 @@
         "materials": [
           "단단한 목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "404c34a5ce80d99e",
@@ -187349,7 +187798,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "red"
     },
     {
       "id": "605770f62edaa456",
@@ -187377,7 +187827,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "red"
     },
     {
       "id": "919d399fe445bc8f",
@@ -187405,7 +187856,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "red"
     },
     {
       "id": "8a50e6ed7300137b",
@@ -187433,7 +187885,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "1e94c2afa4d570b3",
@@ -187461,7 +187914,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "red"
     },
     {
       "id": "b1ac5b5d2c6bcdb7",
@@ -187489,7 +187943,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "red"
     },
     {
       "id": "19edd95002984022",
@@ -187517,7 +187972,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "27dd7784b382a32c",
@@ -187545,7 +188001,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_60"
     },
     {
       "id": "55ff7c2b248c8065",
@@ -187574,7 +188031,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "red"
     },
     {
       "id": "c4d042c5ff54fb7b",
@@ -187604,7 +188062,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "8dafad36da12f95f",
@@ -187633,7 +188092,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "red"
     },
     {
       "id": "b4c8e9941a1d327d",
@@ -187660,7 +188120,8 @@
           "단단한 목재 × 4",
           "부드러운 목재 × 4"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "d50b40de5a574c00",
@@ -187690,7 +188151,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "e0b2b8dc691f7694",
@@ -187715,7 +188177,8 @@
         "materials": [
           "부드러운 목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "1cbcd81234cf70bd",
@@ -187742,7 +188205,8 @@
           "철광석 × 3",
           "목재 × 3"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "64e4c26c1569b1e4",
@@ -187773,7 +188237,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "d845b8d2e55cb21f",
@@ -187798,7 +188263,8 @@
         "materials": [
           "죽순 × 3"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "7168acd5ba4d7971",
@@ -187823,7 +188289,8 @@
         "materials": [
           "잡초 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "55ed7067cec419c1",
@@ -187849,7 +188316,8 @@
           "flimsy shovel × 1",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "cd8244c501c04f3b",
@@ -187874,7 +188342,8 @@
         "materials": [
           "잡초 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "35fabfa8de312763",
@@ -187899,7 +188368,8 @@
         "materials": [
           "목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "6f38ab15119cda1b",
@@ -187925,7 +188395,8 @@
           "목재 × 2",
           "부드러운 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "d990a250e161785b",
@@ -187950,7 +188421,8 @@
         "materials": [
           "단단한 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "bf26e87a7bcfba60",
@@ -187978,7 +188450,8 @@
           "감자 × 1",
           "주황색 호박 × 1"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "849cd1582c7594ac",
@@ -188003,7 +188476,8 @@
         "materials": [
           "scattered papers × 1"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "baf579b3c809d53c",
@@ -188028,7 +188502,8 @@
         "materials": [
           "돌 × 30"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "8233ac8e5f2ad6bf",
@@ -188053,7 +188528,8 @@
         "materials": [
           "돌 × 18"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "7d749f750c60d969",
@@ -188078,7 +188554,8 @@
         "materials": [
           "돌 × 90"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "5cda800603533a02",
@@ -188108,7 +188585,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "3a3537557b933126",
@@ -188138,7 +188616,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "15447477f0b57678",
@@ -188163,7 +188642,8 @@
         "materials": [
           "사탕수수 × 5"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "18804bf380b70e12",
@@ -188189,7 +188669,8 @@
           "단단한 목재 × 4",
           "부드러운 목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "5ded1f6ca81e5c09",
@@ -188215,7 +188696,8 @@
           "잡초 × 3",
           "별의 조각 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2778120a13b593b3",
@@ -188240,7 +188722,8 @@
         "materials": [
           "목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "b9723fb664141947",
@@ -188269,7 +188752,8 @@
         "recipeFilters": [
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "c470275cf5e41911",
@@ -188294,7 +188778,8 @@
         "materials": [
           "목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "695dde3afe8232f8",
@@ -188319,7 +188804,8 @@
         "materials": [
           "부드러운 목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "c5e6c2d5a68936ff",
@@ -188346,7 +188832,8 @@
           "점토 × 4",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "75bc2869562ef401",
@@ -188372,7 +188859,8 @@
           "단단한 목재 × 5",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "65e70e426408f32f",
@@ -188398,7 +188886,8 @@
           "철광석 × 2",
           "점토 × 6"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "ce2bea83cba9dd8a",
@@ -188426,7 +188915,8 @@
         "recipeFilters": [
           "season:summer_shell"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "93cc031d591f2b2a",
@@ -188451,7 +188941,8 @@
         "materials": [
           "돌 × 6"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "695a39901b7dba80",
@@ -188480,7 +188971,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "e70f89afbdb53b59",
@@ -188509,7 +189001,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "e213b162fafb421e",
@@ -188535,7 +189028,8 @@
           "밀가루 × 2",
           "설탕 × 2"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "f6a7a27abbf8af85",
@@ -188561,7 +189055,8 @@
           "밀가루 × 2",
           "설탕 × 1"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "16d8029f36df972c",
@@ -188589,7 +189084,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "d6ad89444f350cbd",
@@ -188617,7 +189113,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "b7683f2f49dd01c5",
@@ -188643,7 +189140,8 @@
           "upright piano × 1",
           "painting set × 1"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "ec74ed308c2d72fd",
@@ -188668,7 +189166,8 @@
         "materials": [
           "철광석 × 4"
         ]
-      }
+      },
+      "cardColor": "color_53"
     },
     {
       "id": "3471a58c8289a7c5",
@@ -188693,7 +189192,8 @@
         "materials": [
           "철광석 × 8"
         ]
-      }
+      },
+      "cardColor": "color_53"
     },
     {
       "id": "e172d6b14f05a18d",
@@ -188718,7 +189218,8 @@
         "materials": [
           "철광석 × 4"
         ]
-      }
+      },
+      "cardColor": "color_53"
     },
     {
       "id": "a15d587c96a3d678",
@@ -188744,7 +189245,8 @@
           "철광석 × 3",
           "단단한 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "a5ad3c5d58200099",
@@ -188770,7 +189272,8 @@
           "보라색 국화 × 3",
           "핑크색 국화 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2cdbfb822ac43f8c",
@@ -188795,7 +189298,8 @@
         "materials": [
           "보라색 아네모네 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "42db13d730515bc2",
@@ -188821,7 +189325,8 @@
           "보라색 장미 × 3",
           "검정 장미 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "5d2800e3b28578af",
@@ -188849,7 +189354,8 @@
         "recipeFilters": [
           "ingredient:flower"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "84d3f463653bc783",
@@ -188876,7 +189382,8 @@
           "핑크색 튤립 × 2",
           "오렌지색 튤립 × 1"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2aca8017473019f5",
@@ -188902,7 +189409,8 @@
           "squid × 1",
           "sweet shrimp × 1"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "57c4e2223381a8d7",
@@ -188929,7 +189437,8 @@
           "squid × 1",
           "scallop × 1"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "2971968b831b8399",
@@ -188956,7 +189465,8 @@
           "tiger prawn × 1",
           "바지락 × 2"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "8279944ec567db1a",
@@ -188981,7 +189491,8 @@
         "materials": [
           "초록색 국화 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "787fdffbf65a6ec5",
@@ -189007,7 +189518,8 @@
           "점토 × 2",
           "돌 × 2"
         ]
-      }
+      },
+      "cardColor": "color_55"
     },
     {
       "id": "9a818e86cbe062c3",
@@ -189033,7 +189545,8 @@
           "점토 × 4",
           "돌 × 4"
         ]
-      }
+      },
+      "cardColor": "color_55"
     },
     {
       "id": "01186763251adba7",
@@ -189059,7 +189572,8 @@
           "점토 × 2",
           "돌 × 2"
         ]
-      }
+      },
+      "cardColor": "color_55"
     },
     {
       "id": "46e1861bc9c42be4",
@@ -189085,7 +189599,8 @@
           "돌 × 15",
           "flimsy shovel × 1"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "0944697cbfc12e93",
@@ -189116,7 +189631,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "83a27eaaab1259bc",
@@ -189141,7 +189657,8 @@
         "materials": [
           "senmaizuke barrel × 2"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "1f8c9f97e9a6aed8",
@@ -189166,7 +189683,8 @@
         "materials": [
           "fish container × 3"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "2702b3ba51da35e5",
@@ -189192,7 +189710,8 @@
           "bottle crate × 2",
           "목재 × 1"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "af86418ee6b7afda",
@@ -189217,7 +189736,8 @@
         "materials": [
           "shopping basket × 5"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "f7c277d0cdccc058",
@@ -189242,7 +189762,8 @@
         "materials": [
           "magazine × 6"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "5eca4d8722e0eccd",
@@ -189267,7 +189788,8 @@
         "materials": [
           "book × 5"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "de2dab083c71b72e",
@@ -189292,7 +189814,8 @@
         "materials": [
           "타이어 × 3"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "cafa7e67b5ac59e9",
@@ -189317,7 +189840,8 @@
         "materials": [
           "목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "a503496bbfa3fcfc",
@@ -189344,7 +189868,8 @@
           "장화 × 2",
           "타이어 × 2"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "3b0373df8df32d86",
@@ -189371,7 +189896,8 @@
           "장화 × 1",
           "타이어 × 1"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "2c41a64b0812e33a",
@@ -189398,7 +189924,8 @@
           "장화 × 2",
           "타이어 × 2"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "19e47f757398c471",
@@ -189425,7 +189952,8 @@
           "하얀 아네모네 × 3",
           "오렌지색 아네모네 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "700bc631eac28e4d",
@@ -189451,7 +189979,8 @@
           "빨간 아네모네 × 3",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "c3834158373f4032",
@@ -189480,7 +190009,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "23a150107a0a044a",
@@ -189507,7 +190037,8 @@
           "오렌지색 아네모네 × 2",
           "하얀 아네모네 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "3deacb5f119d834e",
@@ -189532,7 +190063,8 @@
         "materials": [
           "점토 × 3"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "3a5daf5e7e6cdd93",
@@ -189561,7 +190093,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "ccc8edaf76e8684c",
@@ -189590,7 +190123,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "de7cf6b713cb0c14",
@@ -189616,7 +190150,8 @@
           "밀가루 × 1",
           "설탕 × 2"
         ]
-      }
+      },
+      "cardColor": "color_75"
     },
     {
       "id": "131d48e2755b9983",
@@ -189642,7 +190177,8 @@
           "밀가루 × 1",
           "설탕 × 2"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "58066ab51ca43941",
@@ -189667,7 +190203,8 @@
         "materials": [
           "철광석 × 8"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "4abd0ab236d217e7",
@@ -189692,7 +190229,8 @@
         "materials": [
           "철광석 × 3"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "ba0d742694b72601",
@@ -189717,7 +190255,8 @@
         "materials": [
           "철광석 × 5"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "dc804fd9750bcbb2",
@@ -189742,7 +190281,8 @@
         "materials": [
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "83f36826730f7fe1",
@@ -189768,7 +190308,8 @@
           "철광석 × 4",
           "점토 × 2"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "a8a367dd4c9dee9c",
@@ -189794,7 +190335,8 @@
           "철광석 × 3",
           "점토 × 1"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "2603438c4d1f56fe",
@@ -189819,7 +190361,8 @@
         "materials": [
           "철광석 × 14"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "56713e3c624f9e1c",
@@ -189844,7 +190387,8 @@
         "materials": [
           "철광석 × 3"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "cf825c2b05167054",
@@ -189870,7 +190414,8 @@
           "돌 × 6",
           "철광석 × 3"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "9170a867be87f852",
@@ -189895,7 +190440,8 @@
         "materials": [
           "철광석 × 8"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "bca1e6defbe170af",
@@ -189920,7 +190466,8 @@
         "materials": [
           "철광석 × 4"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "f1947bab820d1a78",
@@ -189945,7 +190492,8 @@
         "materials": [
           "철광석 × 12"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "34411b56f804fd32",
@@ -189970,7 +190518,8 @@
         "materials": [
           "철광석 × 10"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "bf5df80e31ec515c",
@@ -189996,7 +190545,8 @@
           "목재 × 6",
           "철광석 × 4"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "2b18817cb682c320",
@@ -190022,7 +190572,8 @@
           "목재 × 7",
           "철광석 × 4"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "36d94d888594fa81",
@@ -190048,7 +190599,8 @@
           "목재 × 2",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "0016467b3d467f78",
@@ -190074,7 +190626,8 @@
           "목재 × 6",
           "철광석 × 4"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "a4d611d31d4de77e",
@@ -190101,7 +190654,8 @@
           "철광석 × 6",
           "ironwood dresser × 1"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "fbfd9af5fadd991d",
@@ -190127,7 +190681,8 @@
           "목재 × 3",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "21b8aa664d290365",
@@ -190153,7 +190708,8 @@
           "목재 × 20",
           "철광석 × 10"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "ea887e837c40092e",
@@ -190181,7 +190737,8 @@
           "ironwood dresser × 1",
           "cutting board × 1"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "b9729021a8ab6447",
@@ -190207,7 +190764,8 @@
           "목재 × 12",
           "철광석 × 6"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "2811ae620d7d2ceb",
@@ -190234,7 +190792,8 @@
           "철광석 × 6",
           "mini DIY workbench × 1"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "0f81e0acbbc23ce9",
@@ -190259,7 +190818,8 @@
         "materials": [
           "anchovy × 2"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "fe408834b0f1c957",
@@ -190289,7 +190849,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "54eed538735ebb2c",
@@ -190317,7 +190878,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "b7dbdc6f4e685d03",
@@ -190346,7 +190908,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "3f69fe7fd2e68fba",
@@ -190376,7 +190939,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2e6241f8e3c0d897",
@@ -190403,7 +190967,8 @@
           "토마토 × 1",
           "당근 × 1"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "03c7e066485ba768",
@@ -190432,7 +190997,8 @@
           "당근 × 1",
           "감자 × 1"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "549d2dc8cbc5ea42",
@@ -190461,7 +191027,8 @@
           "당근 × 1",
           "주황색 호박 × 1"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "1280974f1723f95c",
@@ -190488,7 +191055,8 @@
           "토마토 × 1",
           "주황색 호박 × 1"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "3335cf9e8c7782da",
@@ -190515,7 +191083,8 @@
           "감자 × 1",
           "주황색 호박 × 1"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "36887d44cec7552d",
@@ -190543,7 +191112,8 @@
           "토마토 × 1",
           "주황색 호박 × 1"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "5d78a48240b21b9b",
@@ -190569,7 +191139,8 @@
           "벌집 × 1",
           "잡초 × 3"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "1e10ca4e974b004c",
@@ -190600,7 +191171,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "e54eed23f85a22ad",
@@ -190625,7 +191197,8 @@
         "materials": [
           "대나무 토막 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "c51956b0da0c68f5",
@@ -190651,7 +191224,8 @@
           "부드러운 목재 × 8",
           "철광석 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "73393d62d3c1ee3e",
@@ -190680,7 +191254,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "abf58b0e52bc24fa",
@@ -190709,7 +191284,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "6620b139de5ee52a",
@@ -190738,7 +191314,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "798fe6eb7916b77a",
@@ -190766,7 +191343,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "7f927357b679fc18",
@@ -190795,7 +191373,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "d91236ab7b46b1a6",
@@ -190824,7 +191403,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "0eae168531be9e3f",
@@ -190853,7 +191433,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "3211837d0513f894",
@@ -190882,7 +191463,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "769248a75502436b",
@@ -190911,7 +191493,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "a40b06af7ac04ca7",
@@ -190940,7 +191523,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "da1e0fe1617608aa",
@@ -190969,7 +191553,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "06da19ceddf3bdf4",
@@ -190998,7 +191583,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "c416073450e725c9",
@@ -191026,7 +191612,8 @@
         "recipeFilters": [
           "season:winter_snowflake"
         ]
-      }
+      },
+      "cardColor": "blue"
     },
     {
       "id": "3c374e41ff12e478",
@@ -191051,7 +191638,8 @@
         "materials": [
           "나뭇가지 × 5"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "cb1011424af9fa66",
@@ -191077,7 +191665,8 @@
           "나뭇가지 × 5",
           "돌 × 1"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "f40279d8da10089a",
@@ -191102,7 +191691,8 @@
         "materials": [
           "부드러운 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "30d2c3de1028091f",
@@ -191127,7 +191717,8 @@
         "materials": [
           "단단한 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "4043fd7fbcc2b8a0",
@@ -191152,7 +191743,8 @@
         "materials": [
           "나뭇가지 × 5"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "064ee5a857eb633c",
@@ -191177,7 +191769,8 @@
         "materials": [
           "철광석 × 4"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "0be3dd326f2a5518",
@@ -191205,7 +191798,8 @@
         "recipeFilters": [
           "season:summer_shell"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "9599c15b4d353ba8",
@@ -191231,7 +191825,8 @@
           "목재 × 5",
           "부드러운 목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "ac268f8774ab7f8e",
@@ -191257,7 +191852,8 @@
           "목재 × 4",
           "부드러운 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "20a379add2449318",
@@ -191283,7 +191879,8 @@
           "목재 × 2",
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "9b379a341b7eaae7",
@@ -191309,7 +191906,8 @@
           "목재 × 2",
           "부드러운 목재 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "55adcc38d0953cc5",
@@ -191334,7 +191932,8 @@
         "materials": [
           "잡초 × 15"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "f2fd403d969826ec",
@@ -191360,7 +191959,8 @@
           "밀가루 × 2",
           "salmon × 1"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "b2dab96de3f137da",
@@ -191386,7 +191986,8 @@
           "통밀 가루 × 2",
           "salmon × 1"
         ]
-      }
+      },
+      "cardColor": "color_66"
     },
     {
       "id": "fdbd3d89120e11ce",
@@ -191411,7 +192012,8 @@
         "materials": [
           "salmon × 1"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "39f6dd11364e60ad",
@@ -191437,7 +192039,8 @@
           "목재 × 3",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "49e4d0577bd45202",
@@ -191468,7 +192071,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "a93f3a218ceddae7",
@@ -191499,7 +192103,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "93f5ec0cc46d1396",
@@ -191528,7 +192133,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "24aec71fc17c610f",
@@ -191559,7 +192165,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "e15a373a187e0748",
@@ -191589,7 +192196,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "85eabe1726c0900a",
@@ -191618,7 +192226,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "a6a41d8e8fb652e8",
@@ -191649,7 +192258,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "996ccf987311260c",
@@ -191677,7 +192287,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "010eaa7135469134",
@@ -191706,7 +192317,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "3a990c7ac0b5d550",
@@ -191734,7 +192346,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "cbfe9dae86aa205b",
@@ -191763,7 +192376,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "e5b7f74661d0efc1",
@@ -191791,7 +192405,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "161d4a0c190febb1",
@@ -191819,7 +192434,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "9b2a93f75b7f74e9",
@@ -191847,7 +192463,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "orange"
     },
     {
       "id": "b9476577e37663c3",
@@ -191875,7 +192492,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "2c72dad77dd84215",
@@ -191903,7 +192521,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_60"
     },
     {
       "id": "d4ffa116aaa80196",
@@ -191933,7 +192552,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_65"
     },
     {
       "id": "101def283e5c007f",
@@ -191963,7 +192583,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "f17b0d0543ac56c9",
@@ -191993,7 +192614,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_65"
     },
     {
       "id": "5f429c3735e57b45",
@@ -192019,7 +192641,8 @@
           "목재 × 6",
           "부드러운 목재 × 4"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "2557acb2077b916d",
@@ -192044,7 +192667,8 @@
         "materials": [
           "점토 × 5"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "cd566c5db7ced2db",
@@ -192069,7 +192693,8 @@
         "materials": [
           "단단한 목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "4e4eaf7ed7dbd0c3",
@@ -192094,7 +192719,8 @@
         "materials": [
           "단단한 목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "3b4b7f3fed6e2bef",
@@ -192119,7 +192745,8 @@
         "materials": [
           "철광석 × 3"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "3819d47efeed7e16",
@@ -192148,7 +192775,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "e1c33f5dc9cff5fa",
@@ -192177,7 +192805,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "9f8de973548c06fc",
@@ -192206,7 +192835,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "73a8cb4be7ead2d7",
@@ -192235,7 +192865,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "d7c9533ee359e251",
@@ -192260,7 +192891,8 @@
         "materials": [
           "단단한 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "299e266ea41ea2ad",
@@ -192289,7 +192921,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "bbbc04249284612d",
@@ -192315,7 +192948,8 @@
           "잡초 × 15",
           "부드러운 목재 × 9"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "aa36c7064d727747",
@@ -192340,7 +192974,8 @@
         "materials": [
           "단단한 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "9adb108e48ba89b6",
@@ -192372,7 +193007,8 @@
         "recipeFilters": [
           "ingredient:flower"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "faa599553fe989f1",
@@ -192402,7 +193038,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "4c13dd205d7c339a",
@@ -192431,7 +193068,8 @@
         "recipeFilters": [
           "event:wedding_season"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "253248dc9222e640",
@@ -192460,7 +193098,8 @@
         "recipeFilters": [
           "event:wedding_season"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "cc4add0fab927c96",
@@ -192485,7 +193124,8 @@
         "materials": [
           "통밀 가루 × 3"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "68d306dc1be300be",
@@ -192514,7 +193154,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "2a88879e9b40dc8a",
@@ -192539,7 +193180,8 @@
         "materials": [
           "부드러운 목재 × 4"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "6b3fb283ad534517",
@@ -192568,7 +193210,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "f2e61a1d8a503f6d",
@@ -192597,7 +193240,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "6b9f72f661d45fb8",
@@ -192626,7 +193270,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "5195d322002843e9",
@@ -192655,7 +193300,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "a10eac2c2dfb4fa9",
@@ -192681,7 +193327,8 @@
           "돌 × 8",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "0fe630c8cff72840",
@@ -192707,7 +193354,8 @@
           "돌 × 15",
           "잡초 × 15"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "525e506064a72782",
@@ -192732,7 +193380,8 @@
         "materials": [
           "cardboard box × 5"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "f814c7874591aa65",
@@ -192757,7 +193406,8 @@
         "materials": [
           "cardboard box × 4"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "c4e4c8e5e8a253ce",
@@ -192782,7 +193432,8 @@
         "materials": [
           "cardboard box × 2"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "4a68a158a0c015ff",
@@ -192815,7 +193466,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "5c8081aa33f80686",
@@ -192848,7 +193500,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "8269de4d18633a7e",
@@ -192876,7 +193529,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "77e3154db3d4fded",
@@ -192909,7 +193563,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "8e3881aa17cf91b0",
@@ -192942,7 +193597,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "5c731cf96d9173ca",
@@ -192975,7 +193631,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "bc2b003812d8241a",
@@ -193003,7 +193660,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "de50cf5c414f2f4d",
@@ -193036,7 +193694,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "abbb57ec53185e6f",
@@ -193064,7 +193723,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "e7666ba902fd52cc",
@@ -193097,7 +193757,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "1322029271668df1",
@@ -193125,7 +193786,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "7d272c2bf9e0fd22",
@@ -193158,7 +193820,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "307192c377e61c39",
@@ -193187,7 +193850,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "58a58ebcdd9c2df2",
@@ -193220,7 +193884,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "5e4b5641564f8dba",
@@ -193248,7 +193913,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "66ac4f572f8d6607",
@@ -193278,7 +193944,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "f1547abcda9d2cca",
@@ -193308,7 +193975,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "836427bcd0a80541",
@@ -193341,7 +194009,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "c1d193528b9779a9",
@@ -193369,7 +194038,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "dd2ecfae17c4d9db",
@@ -193395,7 +194065,8 @@
           "단단한 목재 × 2",
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "5e3f89cb561305e4",
@@ -193424,7 +194095,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "a5b322742406310f",
@@ -193449,7 +194121,8 @@
         "materials": [
           "돌 × 30"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "235525352df2cecc",
@@ -193474,7 +194147,8 @@
         "materials": [
           "목재 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "501a37872db189a9",
@@ -193504,7 +194178,8 @@
         "recipeFilters": [
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "f124d4fdebe1f928",
@@ -193530,7 +194205,8 @@
           "book × 3",
           "목재 × 5"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "5e02f51bd09f5534",
@@ -193558,7 +194234,8 @@
           "부드러운 목재 × 3",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "4d6142846f8d2f6c",
@@ -193583,7 +194260,8 @@
         "materials": [
           "잡초 × 30"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "d64286757f1fdd83",
@@ -193609,7 +194287,8 @@
           "flimsy net × 1",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "c197f395b1cd8933",
@@ -193635,7 +194314,8 @@
           "magazine × 2",
           "목재 × 4"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "6787897ed5d7ddbb",
@@ -193661,7 +194341,8 @@
           "단단한 목재 × 2",
           "부드러운 목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "1e04628b728b05ba",
@@ -193688,7 +194369,8 @@
           "하얀 장미 × 3",
           "노란 장미 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "8a11393d14de96f9",
@@ -193717,7 +194399,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2ffd36500309d7b1",
@@ -193743,7 +194426,8 @@
           "빨간 장미 × 10",
           "목재 × 5"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "47e86983c90f517e",
@@ -193770,7 +194454,8 @@
           "노란 장미 × 2",
           "하얀 장미 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "f119547a3337ed0f",
@@ -193795,7 +194480,8 @@
         "materials": [
           "목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "d2d93355ed16a29d",
@@ -193820,7 +194506,8 @@
         "materials": [
           "단단한 목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "22b08150be84a2a9",
@@ -193845,7 +194532,8 @@
         "materials": [
           "장화 × 2"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "8d70ea369840eb00",
@@ -193871,7 +194559,8 @@
           "밀가루 × 1",
           "설탕 × 1"
         ]
-      }
+      },
+      "cardColor": "color_70"
     },
     {
       "id": "11b693456af66f14",
@@ -193899,7 +194588,8 @@
           "점토 × 12",
           "돌 × 12"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "c6c3e2cddf24f723",
@@ -193924,7 +194614,8 @@
         "materials": [
           "나뭇가지 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "1ed19e242c04de4d",
@@ -193955,7 +194646,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "e53b7f2a86668629",
@@ -193981,7 +194673,8 @@
           "horse mackerel × 1",
           "밀가루 × 1"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "d33343fe3136f310",
@@ -194006,7 +194699,8 @@
         "materials": [
           "점토 × 2"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "59d3c3d47da5a31e",
@@ -194032,7 +194726,8 @@
           "잡초 × 10",
           "점토 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "65978f0f1dccd07e",
@@ -194060,7 +194755,8 @@
           "단단한 목재 × 3",
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "26b4dc65a9bd95d8",
@@ -194089,7 +194785,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "2c460a53ffe3b466",
@@ -194118,7 +194815,8 @@
         "recipeFilters": [
           "season:summer_shell"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "9db119a15f298a12",
@@ -194147,7 +194845,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "70e28aca2a4e8972",
@@ -194175,7 +194874,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "fd4c08a2766bb2c5",
@@ -194204,7 +194904,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "0dce965674c7ee16",
@@ -194237,7 +194938,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "f4b96748901f99fd",
@@ -194266,7 +194968,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "cd88fbcddb3d3140",
@@ -194296,7 +194999,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "35bf6260e129c857",
@@ -194325,7 +195029,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "7d6a7f13048abbf1",
@@ -194354,7 +195059,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "9517bda5554756a4",
@@ -194382,7 +195088,8 @@
         "recipeFilters": [
           "ingredient:shell_non_mermaid"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "1ab7637018ea5387",
@@ -194415,7 +195122,8 @@
         "recipeFilters": [
           "season:summer_shell"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "4094d3f572f882ca",
@@ -194444,7 +195152,8 @@
         "recipeFilters": [
           "season:summer_shell"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "1d1ce6527db4a420",
@@ -194474,7 +195183,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "75b5cc7a9fe6f782",
@@ -194499,7 +195209,8 @@
         "materials": [
           "죽순 × 2"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "bc68e9390dda18bf",
@@ -194524,7 +195235,8 @@
         "materials": [
           "철광석 × 3"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "1e99a80ff9efe249",
@@ -194550,7 +195262,8 @@
           "목재 × 3",
           "단단한 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "0a9e026587ddce3d",
@@ -194578,7 +195291,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "379fe2954be26f07",
@@ -194603,7 +195317,8 @@
         "materials": [
           "돌 × 10"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "02885a410ddf067a",
@@ -194628,7 +195343,8 @@
         "materials": [
           "점토 × 3"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "b5b2baf1303376a8",
@@ -194654,7 +195370,8 @@
           "철광석 × 6",
           "목재 × 5"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "752c190abb7d2fd6",
@@ -194679,7 +195396,8 @@
         "materials": [
           "목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "f2454d3781760478",
@@ -194705,7 +195423,8 @@
           "잡초 × 10",
           "목재 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "840e416442a0727e",
@@ -194730,7 +195449,8 @@
         "materials": [
           "밀가루 × 2"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "1fd976af7db8ae6f",
@@ -194760,7 +195480,8 @@
           "밀 × 1",
           "사탕수수 × 1"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "a2c0689f3670235e",
@@ -194791,7 +195512,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "fc9b13f87e3ca5ee",
@@ -194816,7 +195538,8 @@
         "materials": [
           "목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "6686812278b3ef39",
@@ -194846,7 +195569,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "0995d02428b66289",
@@ -194875,7 +195599,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "ff5c31ce8b2b561a",
@@ -194900,7 +195625,8 @@
         "materials": [
           "철광석 × 20"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "6bb59100a0923f13",
@@ -194925,7 +195651,8 @@
         "materials": [
           "철광석 × 8"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "d451f228c02f238e",
@@ -194951,7 +195678,8 @@
           "ladder × 1",
           "철광석 × 5"
         ]
-      }
+      },
+      "cardColor": "beige"
     },
     {
       "id": "1e8e452390ee74f2",
@@ -194976,7 +195704,8 @@
         "materials": [
           "철광석 × 6"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "6502d81c40cbee70",
@@ -195001,7 +195730,8 @@
         "materials": [
           "철광석 × 7"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "55af7bda2359a063",
@@ -195026,7 +195756,8 @@
         "materials": [
           "blue marlin × 1"
         ]
-      }
+      },
+      "cardColor": "color_65"
     },
     {
       "id": "c50dbed6046b774f",
@@ -195055,7 +195786,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "4555d742a18bb594",
@@ -195083,7 +195815,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "8802e0ea48d5279a",
@@ -195111,7 +195844,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "b10f0871da9d3602",
@@ -195139,7 +195873,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "5b5376da46efd8b1",
@@ -195167,7 +195902,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "a78dcb27aaf2eacd",
@@ -195196,7 +195932,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "e10267f022257fbd",
@@ -195224,7 +195961,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "550a53fc1ecb8f75",
@@ -195252,7 +195990,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "5868ead7ef5a8b7d",
@@ -195280,7 +196019,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "b133120325909cbb",
@@ -195308,7 +196048,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_60"
     },
     {
       "id": "34293610baba8740",
@@ -195338,7 +196079,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_70"
     },
     {
       "id": "1dea2c7b6749a719",
@@ -195368,7 +196110,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "04f901a40f305565",
@@ -195397,7 +196140,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "630d6c90677fbcf8",
@@ -195422,7 +196166,8 @@
         "materials": [
           "대나무 토막 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "4f25ca1fc389d353",
@@ -195447,7 +196192,8 @@
         "materials": [
           "대나무 토막 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "582c3542db775ec4",
@@ -195472,7 +196218,8 @@
         "materials": [
           "잡초 × 7"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "6abda59aa4008ec5",
@@ -195497,7 +196244,8 @@
         "materials": [
           "festival lantern × 4"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "fcc60707e34d8c98",
@@ -195526,7 +196274,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "36503f427fade484",
@@ -195555,7 +196304,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "1bfe1d6ff0fdfd70",
@@ -195581,7 +196331,8 @@
           "목재 × 3",
           "점토 × 3"
         ]
-      }
+      },
+      "cardColor": "color_52"
     },
     {
       "id": "24f761d0f5698a1a",
@@ -195607,7 +196358,8 @@
           "campfire × 1",
           "목재 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "75efa99884eecf50",
@@ -195635,7 +196387,8 @@
           "단단한 목재 × 15",
           "철광석 × 15"
         ]
-      }
+      },
+      "cardColor": null
     },
     {
       "id": "5fdd9a8d8c614095",
@@ -195660,7 +196413,8 @@
         "materials": [
           "부드러운 목재 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "7303369df39b886c",
@@ -195686,7 +196440,8 @@
           "금광석 × 1",
           "decorative plate × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "8d11f79ba35a3d56",
@@ -195719,7 +196474,8 @@
           "season:maple_leaf",
           "season:tree_bounty"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "0491611e737f052f",
@@ -195747,7 +196503,8 @@
         "recipeFilters": [
           "ingredient:vine_moss"
         ]
-      }
+      },
+      "cardColor": "color_56"
     },
     {
       "id": "67338db6d4705081",
@@ -195774,7 +196531,8 @@
           "당근 × 1",
           "감자 × 1"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "9e15921a7582b543",
@@ -195799,7 +196557,8 @@
         "materials": [
           "철광석 × 5"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "8b57361305a085d7",
@@ -195829,7 +196588,8 @@
         "recipeFilters": [
           "ingredient:flower"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "19a33ecf375a3e8d",
@@ -195858,7 +196618,8 @@
         "recipeFilters": [
           "ingredient:flower"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "8bbd0009e7bc3306",
@@ -195888,7 +196649,8 @@
           "event:celeste",
           "ingredient:flower"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "58f4276adbd2478c",
@@ -195918,7 +196680,8 @@
         "recipeFilters": [
           "ingredient:flower"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "671b9990b5a16835",
@@ -195946,7 +196709,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "3a854bf6422a7a7e",
@@ -195974,7 +196738,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "3b550466268868d6",
@@ -196002,7 +196767,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "84b2ea1ed38ef4eb",
@@ -196032,7 +196798,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "6ea12d1df6a7d071",
@@ -196062,7 +196829,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "5fba1a463fa4528e",
@@ -196091,7 +196859,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "color_60"
     },
     {
       "id": "83ad5acf9b2014bb",
@@ -196117,7 +196886,8 @@
           "돌 × 3",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "color_51"
     },
     {
       "id": "dfc9a155f59a6422",
@@ -196143,7 +196913,8 @@
           "돌 × 6",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "color_51"
     },
     {
       "id": "d62e84032ee115ea",
@@ -196169,7 +196940,8 @@
           "돌 × 3",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "color_51"
     },
     {
       "id": "f0dcbe331b055d97",
@@ -196195,7 +196967,8 @@
           "밀가루 × 1",
           "설탕 × 1"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "2a95be04e5e00df6",
@@ -196222,7 +196995,8 @@
           "핑크색 아네모네 × 3",
           "하얀 아네모네 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "d5583dc79cd5a1bb",
@@ -196248,7 +197022,8 @@
           "파란 아네모네 × 3",
           "핑크색 아네모네 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "175792f3c601ac43",
@@ -196273,7 +197048,8 @@
         "materials": [
           "보라색 팬지 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "29dd282d8d1eb54d",
@@ -196299,7 +197075,8 @@
           "2색 팬지 × 3",
           "파란 팬지 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "08837929067f3fdb",
@@ -196326,7 +197103,8 @@
           "파란 히아신스 × 3",
           "핑크색 히아신스 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "6cd00363949d3a83",
@@ -196353,7 +197131,8 @@
           "핑크색 히아신스 × 2",
           "오렌지색 히아신스 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "f69ccc8c8716c678",
@@ -196380,7 +197159,8 @@
           "오렌지색 백합 × 2",
           "하얀 백합 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "a30014c17b9ca433",
@@ -196406,7 +197186,8 @@
           "핑크색 장미 × 3",
           "오렌지색 장미 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "e5432b065e6c1fb4",
@@ -196436,7 +197217,8 @@
         "recipeFilters": [
           "ingredient:flower"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "932c2feac59dd327",
@@ -196463,7 +197245,8 @@
           "핑크색 튤립 × 3",
           "보라색 튤립 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "0e100e2b8fe80e8e",
@@ -196493,7 +197276,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "99cb3f750ba7fe11",
@@ -196524,7 +197308,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "a679078c4f0f77f8",
@@ -196553,7 +197338,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "bc274c6636a3f191",
@@ -196583,7 +197369,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "d12f407a615c7e7f",
@@ -196615,7 +197402,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "ee98d01853ac8dc2",
@@ -196644,7 +197432,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "eb83813467a11e12",
@@ -196669,7 +197458,8 @@
         "materials": [
           "돌 × 60"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "433017d5342ea690",
@@ -196694,7 +197484,8 @@
         "materials": [
           "타이어 × 1"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "1eee86f38bb16543",
@@ -196724,7 +197515,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "239546ba3154862a",
@@ -196750,7 +197542,8 @@
           "잡초 × 12",
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2089e18c929b6e64",
@@ -196776,7 +197569,8 @@
           "밀가루 × 2",
           "토마토 × 3"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "3bca6f9aa65cfddf",
@@ -196801,7 +197595,8 @@
         "materials": [
           "토마토 × 3"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "1c4bb1af98e7fd7c",
@@ -196826,7 +197621,8 @@
         "materials": [
           "토마토 × 2"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "4907aae7d0381a4f",
@@ -196852,7 +197648,8 @@
           "밀가루 × 3",
           "토마토 × 3"
         ]
-      }
+      },
+      "cardColor": "color_77"
     },
     {
       "id": "4729ac5d8c61d07d",
@@ -196878,7 +197675,8 @@
           "밀가루 × 3",
           "tomato puree × 1"
         ]
-      }
+      },
+      "cardColor": "color_66"
     },
     {
       "id": "a9433ec60a057d7b",
@@ -196903,7 +197701,8 @@
         "materials": [
           "토마토 × 3"
         ]
-      }
+      },
+      "cardColor": "color_76"
     },
     {
       "id": "e3f8bc153d30b36f",
@@ -196936,7 +197735,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "5dae78d1a05af6f1",
@@ -196961,7 +197761,8 @@
         "materials": [
           "gears × 3"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "4e864bf4b11c35d0",
@@ -196986,7 +197787,8 @@
         "materials": [
           "gears × 4"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "7842a58ec2687e93",
@@ -197011,7 +197813,8 @@
         "materials": [
           "토마토 × 3"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "530152a87d997d01",
@@ -197036,7 +197839,8 @@
         "materials": [
           "단단한 목재 × 12"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "ceeb5c1647020662",
@@ -197061,7 +197865,8 @@
         "materials": [
           "log chair × 2"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "0b788d2f680869a3",
@@ -197086,7 +197891,8 @@
         "materials": [
           "단단한 목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "7dfcd3ca2393c312",
@@ -197111,7 +197917,8 @@
         "materials": [
           "단단한 목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "e71259110350d9c0",
@@ -197136,7 +197943,8 @@
         "materials": [
           "목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "7372a6269d52649c",
@@ -197162,7 +197970,8 @@
           "목재 × 2",
           "핑크색 장미 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "741e6c5f982432e8",
@@ -197187,7 +197996,8 @@
         "materials": [
           "단단한 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "3e8baa029681c128",
@@ -197212,7 +198022,8 @@
         "materials": [
           "단단한 목재 × 10"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "4c90f8d97951fd63",
@@ -197238,7 +198049,8 @@
           "단단한 목재 × 2",
           "철광석 × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "13d979ca23c609b4",
@@ -197263,7 +198075,8 @@
         "materials": [
           "단단한 목재 × 8"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "d95cee2f76d216de",
@@ -197289,7 +198102,8 @@
           "log bench × 2",
           "단단한 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "0ec02c260d85fdd2",
@@ -197314,7 +198128,8 @@
         "materials": [
           "단단한 목재 × 4"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "048d6a0c84ae6b80",
@@ -197339,7 +198154,8 @@
         "materials": [
           "단단한 목재 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "39efe515bf85a976",
@@ -197364,7 +198180,8 @@
         "materials": [
           "단단한 목재 × 30"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "2789f86b64dcb8a0",
@@ -197389,7 +198206,8 @@
         "materials": [
           "단단한 목재 × 15"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "2a236a9f954f157d",
@@ -197414,7 +198232,8 @@
         "materials": [
           "밀 × 5"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "badf6cae0382a2b3",
@@ -197440,7 +198259,8 @@
           "빨간 튤립 × 5",
           "부드러운 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "da8bb96ab369046f",
@@ -197467,7 +198287,8 @@
           "노란 튤립 × 3",
           "하얀 튤립 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "d7d5aa75d723ccd6",
@@ -197496,7 +198317,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "ddf6f49ae48c4e57",
@@ -197523,7 +198345,8 @@
           "노란 튤립 × 2",
           "하얀 튤립 × 1"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "6714ac439c78f95c",
@@ -197550,7 +198373,8 @@
           "금광석 × 3",
           "철광석 × 6"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "24594547840e2217",
@@ -197580,7 +198404,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "ecd11902c64e58aa",
@@ -197607,7 +198432,8 @@
           "Mama bear × 1",
           "Baby bear × 1"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "c7d21532dfd47e51",
@@ -197635,7 +198461,8 @@
         "recipeFilters": [
           "season:christmas_ornament"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "97fb96a401317a60",
@@ -197660,7 +198487,8 @@
         "materials": [
           "파란 장미 × 10"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "1a03ca67e3db2239",
@@ -197686,7 +198514,8 @@
           "밀가루 × 2",
           "설탕 × 1"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "ffb4d13ad4de45f2",
@@ -197713,7 +198542,8 @@
           "파란 팬지 × 3",
           "노란 팬지 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "1e10bd0125d5d36d",
@@ -197740,7 +198570,8 @@
           "보라색 국화 × 3",
           "빨간 국화 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "e0b2068788f18628",
@@ -197767,7 +198598,8 @@
           "핑크색 백합 × 3",
           "노란 백합 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "125d9c1b9f52732f",
@@ -197794,7 +198626,8 @@
           "핑크색 장미 × 3",
           "노란 장미 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "2ecc344260b7687d",
@@ -197821,7 +198654,8 @@
           "하얀 팬지 × 3",
           "빨간 팬지 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "9d67cd87cb6ae0c5",
@@ -197850,7 +198684,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "ed1eefb2e87b2bf5",
@@ -197876,7 +198711,8 @@
           "노란 팬지 × 5",
           "단단한 목재 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "ae5f38bc74006085",
@@ -197903,7 +198739,8 @@
           "노란 팬지 × 2",
           "하얀 팬지 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "ff8ce4a4f1873e4c",
@@ -197929,7 +198766,8 @@
           "밀가루 × 2",
           "설탕 × 2"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "40c2afc70b86234a",
@@ -197957,7 +198795,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "ff94f1162c1159a3",
@@ -197982,7 +198821,8 @@
         "materials": [
           "보라색 아네모네 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "005ed9c10bd91e14",
@@ -198007,7 +198847,8 @@
         "materials": [
           "보라색 팬지 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "b696cdb76b78de59",
@@ -198032,7 +198873,8 @@
         "materials": [
           "보라색 히아신스 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "a65068c675f5cf7c",
@@ -198057,7 +198899,8 @@
         "materials": [
           "철광석 × 4"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "e28d7d305463c30a",
@@ -198082,7 +198925,8 @@
         "materials": [
           "돌 × 15"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "994f4eca1c83e113",
@@ -198108,7 +198952,8 @@
           "salmon × 1",
           "토마토 × 1"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "8223b4f220ccee3f",
@@ -198133,7 +198978,8 @@
         "materials": [
           "잡초 × 20"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "cd8fb73e33cab5f8",
@@ -198158,7 +199004,8 @@
         "materials": [
           "철광석 × 2"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "1ea2cab6e3f81d00",
@@ -198184,7 +199031,8 @@
           "밀가루 × 1",
           "설탕 × 1"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "1f245d60b33babf7",
@@ -198217,7 +199065,8 @@
         "recipeFilters": [
           "ingredient:fruit"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "196f7b6ada2add3b",
@@ -198247,7 +199096,8 @@
           "노란 백합 × 1",
           "보라색 아네모네 × 4"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "bdd4d21855b08892",
@@ -198272,7 +199122,8 @@
         "materials": [
           "철광석 × 10"
         ]
-      }
+      },
+      "cardColor": "dark gray"
     },
     {
       "id": "3d77e379db4f269e",
@@ -198298,7 +199149,8 @@
           "밀가루 × 1",
           "설탕 × 1"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "0425443cea824be2",
@@ -198324,7 +199176,8 @@
           "감자 × 2",
           "dab × 1"
         ]
-      }
+      },
+      "cardColor": "color_69"
     },
     {
       "id": "f0f2bd18ee3ccd0c",
@@ -198352,7 +199205,8 @@
         "recipeFilters": [
           "season:cherry_blossom"
         ]
-      }
+      },
+      "cardColor": "pink"
     },
     {
       "id": "5788ffcd03e540f2",
@@ -198381,7 +199235,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "e955e5b745f8d041",
@@ -198409,7 +199264,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "11ac5bed268120b3",
@@ -198437,7 +199293,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "618de98478daf381",
@@ -198465,7 +199322,8 @@
         "recipeFilters": [
           "event:bunny_day"
         ]
-      }
+      },
+      "cardColor": "yellow"
     },
     {
       "id": "2f55237458e3dd18",
@@ -198494,7 +199352,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "cream"
     },
     {
       "id": "934fe090f3b2d8d9",
@@ -198524,7 +199383,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "cream"
     },
     {
       "id": "1e1a19a97d016243",
@@ -198554,7 +199414,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "cream"
     },
     {
       "id": "b4eac2060e92cfbd",
@@ -198582,7 +199443,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "cream"
     },
     {
       "id": "5532305c3f8bad18",
@@ -198612,7 +199474,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "cream"
     },
     {
       "id": "a8d500a939b402de",
@@ -198641,7 +199504,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "cream"
     },
     {
       "id": "426d23bf0447405c",
@@ -198670,7 +199534,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "cream"
     },
     {
       "id": "f88bc3b40437c32a",
@@ -198699,7 +199564,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "cream"
     },
     {
       "id": "20de74a63b3456ff",
@@ -198729,7 +199595,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "d71b74b76df9ffaf",
@@ -198758,7 +199625,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "6b8c5f8fdccb8401",
@@ -198786,7 +199654,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "13d988b5171628a5",
@@ -198815,7 +199684,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "7c3d27a7ae79458f",
@@ -198847,7 +199717,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "6a17774c6e3b46c2",
@@ -198876,7 +199747,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "7f9f1dd7e7ce7e58",
@@ -198906,7 +199778,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "acacebea5be46d0b",
@@ -198936,7 +199809,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "8c1e05159f3ec02a",
@@ -198965,7 +199839,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "db62046b0cd556ca",
@@ -198994,7 +199869,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "0c74cb3129385c1d",
@@ -199023,7 +199899,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "1b8f981fe0c1a50a",
@@ -199055,7 +199932,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "color_74"
     },
     {
       "id": "ce01c559c875bd39",
@@ -199083,7 +199961,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "48edf813a0a17ada",
@@ -199112,7 +199991,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "07db2aae12e64e6f",
@@ -199142,7 +200022,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "5666e463e76731ef",
@@ -199171,7 +200052,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "f2fedf4f4ddc23a8",
@@ -199200,7 +200082,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "ca28a3ec29a1617d",
@@ -199229,7 +200112,8 @@
         "recipeFilters": [
           "event:halloween"
         ]
-      }
+      },
+      "cardColor": "purple"
     },
     {
       "id": "4d98f3337010dfd5",
@@ -199255,7 +200139,8 @@
           "잡초 × 4",
           "나뭇가지 × 6"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "15aecfcb1a1d2328",
@@ -199280,7 +200165,8 @@
         "materials": [
           "점토 × 5"
         ]
-      }
+      },
+      "cardColor": "brick"
     },
     {
       "id": "d72c2c6014f51a4d",
@@ -199309,7 +200195,8 @@
         "recipeFilters": [
           "season:summer_shell"
         ]
-      }
+      },
+      "cardColor": "white"
     },
     {
       "id": "e08ea37f5b898d1e",
@@ -199335,7 +200222,8 @@
           "잡초 × 12",
           "철광석 × 4"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "a19ec96481dd294b",
@@ -199361,7 +200249,8 @@
           "나뭇가지 × 3",
           "잡초 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "4b21e4582b01707a",
@@ -199387,7 +200276,8 @@
           "밀가루 × 2",
           "주황색 호박 × 3"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "7b7c718dc36e58b8",
@@ -199413,7 +200303,8 @@
           "밀가루 × 2",
           "주황색 호박 × 3"
         ]
-      }
+      },
+      "cardColor": "color_65"
     },
     {
       "id": "7deb4c30f3f117d5",
@@ -199438,7 +200329,8 @@
         "materials": [
           "주황색 호박 × 3"
         ]
-      }
+      },
+      "cardColor": "color_63"
     },
     {
       "id": "0cbf4bc134a4310c",
@@ -199465,7 +200357,8 @@
           "설탕 × 1",
           "주황색 호박 × 2"
         ]
-      }
+      },
+      "cardColor": "color_66"
     },
     {
       "id": "2b3976694293ddab",
@@ -199491,7 +200384,8 @@
           "밀가루 × 3",
           "주황색 호박 × 3"
         ]
-      }
+      },
+      "cardColor": "color_77"
     },
     {
       "id": "5bac7f222157a14e",
@@ -199518,7 +200412,8 @@
           "설탕 × 1",
           "주황색 호박 × 2"
         ]
-      }
+      },
+      "cardColor": "color_68"
     },
     {
       "id": "862e0fca6411a96e",
@@ -199545,7 +200440,8 @@
           "설탕 × 1",
           "주황색 호박 × 2"
         ]
-      }
+      },
+      "cardColor": "color_62"
     },
     {
       "id": "b366643205e2be9b",
@@ -199575,7 +200471,8 @@
         "recipeFilters": [
           "event:turkey_day"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "a3d6f3b6a07edb54",
@@ -199601,7 +200498,8 @@
           "화석 × 1",
           "돌 × 2"
         ]
-      }
+      },
+      "cardColor": "light gray"
     },
     {
       "id": "74065c0cbce926b8",
@@ -199626,7 +200524,8 @@
         "materials": [
           "금광석 × 8"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "a7db7efee9af1282",
@@ -199652,7 +200551,8 @@
           "금광석 × 2",
           "screen wall × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "b8404ba38073397c",
@@ -199677,7 +200577,8 @@
         "materials": [
           "금광석 × 4"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "6eb3ecd0c836931a",
@@ -199702,7 +200603,8 @@
         "materials": [
           "금광석 × 5"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "ef3a719c5acc9c8c",
@@ -199727,7 +200629,8 @@
         "materials": [
           "금광석 × 4"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "7d79c10fa688961f",
@@ -199752,7 +200655,8 @@
         "materials": [
           "금광석 × 6"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "277a269f3339289d",
@@ -199778,7 +200682,8 @@
           "ladder × 1",
           "금광석 × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "df7860e69fa8a375",
@@ -199803,7 +200708,8 @@
         "materials": [
           "금광석 × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "d1ef8ffb67d1b2d5",
@@ -199829,7 +200735,8 @@
           "금광석 × 5",
           "forbidden altar × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "ce6090c9935b7dcc",
@@ -199858,7 +200765,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "c7704680fd913687",
@@ -199883,7 +200791,8 @@
         "materials": [
           "금광석 × 2"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "e786b14602d9eb7b",
@@ -199909,7 +200818,8 @@
           "금광석 × 1",
           "철광석 × 3"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "78db17d0e2f29568",
@@ -199935,7 +200845,8 @@
           "금광석 × 1",
           "fine vase × 1"
         ]
-      }
+      },
+      "cardColor": "gold"
     },
     {
       "id": "9f6285cee17d1aa2",
@@ -199966,7 +200877,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "fbdf26a00522d823",
@@ -199992,7 +200904,8 @@
           "나뭇가지 × 5",
           "목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "7a2d0326f1c2644f",
@@ -200021,7 +200934,8 @@
         "recipeFilters": [
           "season:young_spring_bamboo"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "82249428d822ccfd",
@@ -200047,7 +200961,8 @@
           "통밀 가루 × 1",
           "흑설탕 × 1"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "93d1b4d463a87989",
@@ -200073,7 +200988,8 @@
           "밀가루 × 2",
           "흑설탕 × 1"
         ]
-      }
+      },
+      "cardColor": "color_64"
     },
     {
       "id": "a87e7c226622f820",
@@ -200098,7 +201014,8 @@
         "materials": [
           "사탕수수 × 5"
         ]
-      }
+      },
+      "cardColor": "color_61"
     },
     {
       "id": "9b43fe849794f8bb",
@@ -200124,7 +201041,8 @@
           "목재 × 3",
           "부드러운 목재 × 5"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "f554bdda178b514e",
@@ -200151,7 +201069,8 @@
           "빨간 히아신스 × 3",
           "노란 히아신스 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "e96d86c844fafb64",
@@ -200177,7 +201096,8 @@
           "보라색 히아신스 × 5",
           "점토 × 3"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "8956d9312a381861",
@@ -200206,7 +201126,8 @@
         "recipeFilters": [
           "event:celeste"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "610746e3e35e4acd",
@@ -200233,7 +201154,8 @@
           "노란 히아신스 × 2",
           "하얀 히아신스 × 2"
         ]
-      }
+      },
+      "cardColor": "green"
     },
     {
       "id": "60a93937c7443395",
@@ -200262,7 +201184,8 @@
           "철광석 × 90",
           "금광석 × 10"
         ]
-      }
+      },
+      "cardColor": "silver"
     },
     {
       "id": "49cb863618dd58d0",
@@ -200291,7 +201214,8 @@
           "철광석 × 3",
           "mini DIY workbench × 1"
         ]
-      }
+      },
+      "cardColor": "brown"
     },
     {
       "id": "bf7a042153477ea7",
