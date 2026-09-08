@@ -12,6 +12,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" />
         <Stack.Screen name="onboarding" />
         <Stack.Screen name="islands" />
+        <Stack.Screen name="routines/edit" />
         <Stack.Screen name="(tabs)" />
       </Stack>
     </ThemeProvider>

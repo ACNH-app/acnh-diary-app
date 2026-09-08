@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { ReactNode } from 'react';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 import { AppColors } from '@/constants/theme';
 
@@ -15,6 +16,8 @@ export type CollectionHomeMetric = {
   label: string;
   total: number;
 };
+
+export type CollectionHomeIconName = keyof typeof MaterialCommunityIcons.glyphMap;
 
 export function CollectionHomeShell({ children }: { children: ReactNode }) {
   return <View style={styles.background}>{children}</View>;
@@ -75,7 +78,7 @@ export function CollectionHomeCategoryCard({
   tone,
 }: {
   accessibilityLabel: string;
-  icon: string;
+  icon: CollectionHomeIconName;
   label: string;
   metrics: CollectionHomeMetric[];
   onPress: () => void;
@@ -95,7 +98,7 @@ export function CollectionHomeCategoryCard({
         pressed && styles.categoryCardPressed,
       ]}>
       <View style={[styles.categoryIcon, { backgroundColor: tone.icon }]}>
-        <Text style={styles.categoryIconText}>{icon}</Text>
+        <MaterialCommunityIcons color="#FFFFFF" name={icon} size={20} />
       </View>
       <View style={styles.categoryCopy}>
         <Text numberOfLines={1} style={styles.categoryLabel}>
@@ -219,14 +222,9 @@ const styles = StyleSheet.create({
   categoryIcon: {
     alignItems: 'center',
     borderRadius: 17,
-    height: 34,
+    height: 36,
     justifyContent: 'center',
-    width: 34,
-  },
-  categoryIconText: {
-    color: '#FFFFFF',
-    fontSize: 17,
-    fontWeight: '800',
+    width: 36,
   },
   categoryCopy: {
     flex: 1,

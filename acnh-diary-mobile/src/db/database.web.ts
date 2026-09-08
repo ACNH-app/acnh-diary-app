@@ -107,7 +107,13 @@ function seedDefaultRoutinesForIsland(islandId: string) {
   const existingRoutines = getRoutinesForIsland(islandId);
   const migratedRoutines = existingRoutines.map((routine) => {
     const migratedTitle = ROUTINE_TITLE_MIGRATIONS[routine.title];
-    return migratedTitle ? { ...routine, title: migratedTitle } : routine;
+    const title = migratedTitle ?? routine.title;
+    return {
+      ...routine,
+      title,
+      iconKey: routine.iconKey ?? title,
+      isEnabled: routine.isEnabled ?? true,
+    };
   });
   const activeRoutines = migratedRoutines.filter((routine) => !LEGACY_ROUTINE_TITLES.has(routine.title));
   const hasTitleMigration = migratedRoutines.some((routine, index) => routine.title !== existingRoutines[index]?.title);
@@ -121,7 +127,9 @@ function seedDefaultRoutinesForIsland(islandId: string) {
       id: createId(`routine-${index + 1}`),
       islandId,
       title: routine.title,
+      iconKey: routine.iconKey,
       goalCount: routine.goalCount,
+      isEnabled: true,
       repeatType: 'daily',
       createdAt: now,
     })),
@@ -226,24 +234,26 @@ export function setRoutineProgress(
   });
 }
 
-export function addRoutine(islandId: string, title: string, goalCount = 1) {
+export function addRoutine(islandId: string, title: string, goalCount = 1, iconKey = title, isEnabled = true) {
   const nextRoutine: Routine = {
     id: createId('routine'),
     islandId,
     title,
+    iconKey,
     goalCount,
+    isEnabled,
     repeatType: 'daily',
     createdAt: new Date().toISOString(),
   };
   routines.set(islandId, [...getRoutinesForIsland(islandId), nextRoutine]);
 }
 
-export function updateRoutine(routineId: string, title: string, goalCount: number) {
+export function updateRoutine(routineId: string, title: string, goalCount: number, iconKey = title, isEnabled = true) {
   const islandId = getActiveIslandId();
   routines.set(
     islandId,
     getRoutinesForIsland(islandId).map((routine) =>
-      routine.id === routineId ? { ...routine, goalCount, title } : routine,
+      routine.id === routineId ? { ...routine, goalCount, iconKey, isEnabled, title } : routine,
     ),
   );
 }

@@ -8,6 +8,7 @@ import { AppColors } from '@/constants/theme';
 import {
   CollectionHomeCategoryCard,
   CollectionHomeCategoryGrid,
+  type CollectionHomeIconName,
   CollectionHomeSectionHeading,
   CollectionHomeShell,
   CollectionHomeSummaryCard,
@@ -28,12 +29,12 @@ const EMPTY_STATE: EncyclopediaState = {
   fakeOwned: false,
 };
 
-const CATEGORY_ICONS: Record<EncyclopediaCategory, string> = {
-  bugs: '✦',
-  fish: '≈',
-  sea: '◒',
-  fossils: '◇',
-  art: '▱',
+const CATEGORY_ICONS: Record<EncyclopediaCategory, CollectionHomeIconName> = {
+  bugs: 'bug',
+  fish: 'fish',
+  sea: 'jellyfish',
+  fossils: 'bone',
+  art: 'palette',
 };
 
 const CATEGORY_TONES: Record<EncyclopediaCategory, { accent: string; card: string; icon: string; track: string }> = {

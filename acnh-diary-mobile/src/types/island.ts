@@ -35,7 +35,9 @@ export type Routine = {
   id: string;
   islandId: string;
   title: string;
+  iconKey: string | null;
   goalCount: number;
+  isEnabled: boolean;
   repeatType: 'daily';
   createdAt: string | null;
 };

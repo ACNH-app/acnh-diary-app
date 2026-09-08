@@ -65,6 +65,7 @@ import type { Island, NpcVisit, Routine, RoutineProgress } from '@/types/island'
 import type { VillagerState } from '@/types/villager-state';
 
 type TodayScreenProps = { island?: Island | null; routines?: Routine[] };
+type RoutineEditorMode = 'list' | 'form';
 type CalendarMode = 'week' | 'month';
 type CalendarPickerKind = 'year' | 'month';
 type TimePickerKind = 'hour' | 'minute';
@@ -92,7 +93,6 @@ const ZODIAC_ICON_ASSETS: Record<string, ImageSourcePropType> = {
   taurus: require('../data/assets/icons/zodiac/taurus.png'),
   virgo: require('../data/assets/icons/zodiac/virgo.png'),
 };
-const DEFAULT_ROUTINE_TITLES = new Set(DEFAULT_ROUTINE_OPTIONS.map((routine) => routine.title));
 const CRITTER_CATEGORIES: CritterCategory[] = ['bugs', 'fish', 'sea'];
 const CRITTER_BROWSER_TABS: Array<{ key: CritterTab; label: string }> = [
   { key: 'bugs', label: '곤충' },
@@ -724,8 +724,11 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const [timePickerKind, setTimePickerKind] = useState<TimePickerKind | null>(null);
   const [routineModalOpen, setRoutineModalOpen] = useState(false);
   const [editingRoutine, setEditingRoutine] = useState<Routine | null>(null);
+  const [routineEditorMode, setRoutineEditorMode] = useState<RoutineEditorMode>('list');
   const [routineTitle, setRoutineTitle] = useState('');
   const [routineGoal, setRoutineGoal] = useState('1');
+  const [routineIconKey, setRoutineIconKey] = useState(DEFAULT_ROUTINE_OPTIONS[0]?.iconKey ?? '화석 캐기');
+  const [routineEnabled, setRoutineEnabled] = useState(true);
   const [clockNow, setClockNow] = useState(() => new Date());
   const [critterBrowserOpen, setCritterBrowserOpen] = useState(false);
   const [critterBrowserTab, setCritterBrowserTab] = useState<CritterTab>('bugs');
@@ -827,9 +830,10 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
     () => new Set(Object.entries(villagerStates).filter(([, state]) => state.islandResident).map(([key]) => key.split('/').pop() ?? key)),
     [villagerStates],
   );
-  const selectedDefaultRoutineTitles = useMemo(
-    () => routines.filter((routine) => DEFAULT_ROUTINE_TITLES.has(routine.title)).map((routine) => routine.title),
-    [routines],
+  const activeRoutines = useMemo(() => routines.filter((routine) => routine.isEnabled), [routines]);
+  const completedRoutineCount = useMemo(
+    () => activeRoutines.filter((routine) => (routineProgress[routine.id]?.currentCount ?? 0) >= routine.goalCount).length,
+    [activeRoutines, routineProgress],
   );
   const activeRecipeSeasons = getActiveRecipeSeasons(month, day, hemisphere);
   const allSeasonalRecipeItems = [...getCatalogItems('seasonal_recipes')].sort((left, right) => left.nameKo.localeCompare(right.nameKo, 'ko-KR'));
@@ -877,7 +881,7 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   const toggleRoutine = (routine: Routine) => {
     if (!island || !gameDate) return;
     const current = routineProgress[routine.id]?.currentCount ?? 0;
-    const next = current >= routine.goalCount ? 0 : routine.goalCount;
+    const next = current >= routine.goalCount ? 0 : current + 1;
     try {
       setRoutineProgress(island.id, routine.id, gameDate, next, routine.goalCount);
       setRoutineProgressState((currentState) => ({ ...currentState, [routine.id]: { currentCount: next, isComplete: next >= routine.goalCount } }));
@@ -887,7 +891,7 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
   };
 
   const resetRoutineProgress = () => {
-    if (!island || !gameDate || !routines.length) return;
+    if (!island || !gameDate || !activeRoutines.length) return;
     Alert.alert('루틴 체크 초기화', '오늘 체크한 루틴을 모두 초기화할까요?', [
       { text: '취소', style: 'cancel' },
       {
@@ -895,9 +899,9 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
         style: 'destructive',
         onPress: () => {
           try {
-            routines.forEach((routine) => setRoutineProgress(island.id, routine.id, gameDate, 0, routine.goalCount));
+            activeRoutines.forEach((routine) => setRoutineProgress(island.id, routine.id, gameDate, 0, routine.goalCount));
             setRoutineProgressState(
-              Object.fromEntries(routines.map((routine) => [routine.id, { currentCount: 0, isComplete: false }])),
+              Object.fromEntries(activeRoutines.map((routine) => [routine.id, { currentCount: 0, isComplete: false }])),
             );
           } catch {
             Alert.alert('루틴을 초기화하지 못했어요', '잠시 후 다시 시도해 주세요.');
@@ -907,51 +911,39 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
     ]);
   };
 
-  const saveRoutineEdit = () => {
+  const openRoutineEditor = () => {
+    router.push('/routines/edit');
+  };
+
+  const openRoutineForm = (routine?: Routine) => {
+    const defaultIconKey = DEFAULT_ROUTINE_OPTIONS[0]?.iconKey ?? '화석 캐기';
+    setEditingRoutine(routine ?? null);
+    setRoutineTitle(routine?.title ?? '');
+    setRoutineGoal(String(routine?.goalCount ?? 1));
+    setRoutineIconKey(routine?.iconKey ?? routine?.title ?? defaultIconKey);
+    setRoutineEnabled(routine?.isEnabled ?? true);
+    setRoutineEditorMode('form');
+  };
+
+  const saveRoutine = () => {
     if (!island) return;
     try {
       const goal = Number(routineGoal);
-      if (editingRoutine) updateRoutine(editingRoutine.id, routineTitle, goal);
+      if (editingRoutine) {
+        updateRoutine(editingRoutine.id, routineTitle, goal, routineIconKey, routineEnabled);
+      } else {
+        addRoutine(island.id, routineTitle, goal, routineIconKey, routineEnabled);
+      }
       setRoutines(getRoutinesForIsland(island.id));
-      setRoutineModalOpen(false);
+      setEditingRoutine(null);
+      setRoutineEditorMode('list');
     } catch {
       Alert.alert('루틴을 저장하지 못했어요', '이름과 목표 횟수를 확인해 주세요.');
     }
   };
 
-  const saveRoutineSelection = (selectedTitles: string[], customTitle: string, customGoal: string) => {
-    if (!island) return;
-    try {
-      const selectedTitleSet = new Set(selectedTitles);
-      const currentDefaultRoutines = new Map(
-        routines
-          .filter((routine) => DEFAULT_ROUTINE_TITLES.has(routine.title))
-          .map((routine) => [routine.title, routine]),
-      );
-
-      for (const option of DEFAULT_ROUTINE_OPTIONS) {
-        const existingRoutine = currentDefaultRoutines.get(option.title);
-        if (selectedTitleSet.has(option.title) && !existingRoutine) {
-          addRoutine(island.id, option.title, option.goalCount);
-        }
-        if (!selectedTitleSet.has(option.title) && existingRoutine) {
-          deleteRoutine(existingRoutine.id);
-        }
-      }
-
-      if (customTitle.trim()) {
-        addRoutine(island.id, customTitle, Number(customGoal));
-      }
-
-      setRoutines(getRoutinesForIsland(island.id));
-      setRoutineModalOpen(false);
-    } catch {
-      Alert.alert('루틴을 저장하지 못했어요', '선택한 루틴과 목표 횟수를 확인해 주세요.');
-    }
-  };
-
   const removeRoutine = (routine: Routine) => {
-    Alert.alert('루틴 삭제', `${routine.title}을(를) 삭제할까요?`, [{ text: '취소', style: 'cancel' }, { text: '삭제', style: 'destructive', onPress: () => { deleteRoutine(routine.id); if (island) setRoutines(getRoutinesForIsland(island.id)); } }]);
+    Alert.alert('루틴 삭제', `${routine.title}을(를) 삭제할까요?`, [{ text: '취소', style: 'cancel' }, { text: '삭제', style: 'destructive', onPress: () => { deleteRoutine(routine.id); if (island) setRoutines(getRoutinesForIsland(island.id)); setEditingRoutine(null); setRoutineEditorMode('list'); } }]);
   };
 
   const updateCritterStatus = (item: EncyclopediaItem, status: EncyclopediaStatus) => {
@@ -1061,14 +1053,15 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
               actionIcon="edit"
               actionLabel="루틴 편집"
               icon="routine"
-              onAction={() => { setEditingRoutine(null); setRoutineTitle(''); setRoutineGoal('1'); setRoutineModalOpen(true); }}
+              metaLabel={`${completedRoutineCount} / ${activeRoutines.length}`}
+              onAction={openRoutineEditor}
               onSecondaryAction={resetRoutineProgress}
               secondaryActionIcon="reset"
               secondaryActionLabel="루틴 체크 초기화"
               title="루틴 체크"
             />
             <SectionCard>
-              <RoutineGrid progressById={routineProgress} routines={routines} onToggle={toggleRoutine} />
+              <RoutineGrid progressById={routineProgress} routines={activeRoutines} onToggle={toggleRoutine} />
             </SectionCard>
           </View>
 
@@ -1112,7 +1105,26 @@ export function TodayScreen({ island: initialIsland, routines: initialRoutines }
           onClose={() => setDateTimeModalOpen(false)}
         />
         <NpcModal date={npcDate} selectedNames={npcDate ? getResolvedNpcNames(npcDate, npcVisits) : []} visible={Boolean(npcDate)} onClose={() => setNpcDate(null)} onSave={saveNpc} />
-        <RoutineModal visible={routineModalOpen} editingRoutine={editingRoutine} title={routineTitle} goal={routineGoal} selectedDefaultTitles={selectedDefaultRoutineTitles} onChangeTitle={setRoutineTitle} onChangeGoal={setRoutineGoal} onClose={() => setRoutineModalOpen(false)} onSaveEdit={saveRoutineEdit} onSaveSelection={saveRoutineSelection} onDelete={editingRoutine ? () => { setRoutineModalOpen(false); removeRoutine(editingRoutine); } : undefined} />
+        <RoutineModal
+          editingRoutine={editingRoutine}
+          enabled={routineEnabled}
+          goal={routineGoal}
+          iconKey={routineIconKey}
+          mode={routineEditorMode}
+          onBack={() => { setEditingRoutine(null); setRoutineEditorMode('list'); }}
+          onChangeEnabled={setRoutineEnabled}
+          onChangeGoal={setRoutineGoal}
+          onChangeIconKey={setRoutineIconKey}
+          onChangeTitle={setRoutineTitle}
+          onClose={() => setRoutineModalOpen(false)}
+          onDelete={editingRoutine ? () => removeRoutine(editingRoutine) : undefined}
+          onOpenAdd={() => openRoutineForm()}
+          onOpenRoutine={openRoutineForm}
+          onSave={saveRoutine}
+          routines={routines}
+          title={routineTitle}
+          visible={routineModalOpen}
+        />
         <TodayCritterBrowserSheet
           hemisphere={island.hemisphere === 'south' ? 'south' : 'north'}
           items={availableCritters}
@@ -1152,6 +1164,7 @@ function SectionHeader({
   actionIcon,
   actionLabel,
   icon,
+  metaLabel,
   onSecondaryAction,
   title,
   tone = 'leaf',
@@ -1162,6 +1175,7 @@ function SectionHeader({
   actionIcon?: TodayActionIcon;
   actionLabel?: string;
   icon: TodaySectionIcon;
+  metaLabel?: string;
   onSecondaryAction?: () => void;
   title: string;
   tone?: TileTone;
@@ -1175,6 +1189,7 @@ function SectionHeader({
         <SectionGlyph kind={icon} tone={tone} />
         <Text adjustsFontSizeToFit minimumFontScale={0.86} numberOfLines={1} style={todayStyles.sectionTitle}>{title}</Text>
       </View>
+      {metaLabel ? <Text style={todayStyles.sectionMeta}>{metaLabel}</Text> : null}
       <View style={todayStyles.sectionActions}>
         {secondaryActionLabel && onSecondaryAction ? (
           <Pressable accessibilityLabel={secondaryActionLabel} accessibilityRole="button" onPress={onSecondaryAction} style={secondaryActionIcon ? todayStyles.sectionIconActionButton : todayStyles.sectionActionButton}>
@@ -1642,10 +1657,22 @@ function ActionGlyph({ kind, tone }: { kind: TodayActionIcon; tone: TileTone }) 
   );
 }
 
-function RoutineIcon({ title, complete = false, variant = 'card', selected = false }: { title: string; complete?: boolean; variant?: 'card' | 'edit'; selected?: boolean }) {
-  const source = getRoutineIconSource(title);
+function RoutineIcon({
+  title,
+  iconKey,
+  complete = false,
+  variant = 'card',
+  selected = false,
+}: {
+  title: string;
+  iconKey?: string | null;
+  complete?: boolean;
+  variant?: 'card' | 'edit';
+  selected?: boolean;
+}) {
+  const source = getRoutineIconSource(iconKey, title);
   const isEdit = variant === 'edit';
-  const isCompactImage = title === '나무 흔들기 · 가구';
+  const isCompactImage = iconKey === '나무 흔들기 · 가구' || (!iconKey && title === '나무 흔들기 · 가구');
   const iconColor = complete || selected ? AppColors.leaf : AppColors.inkMuted;
 
   return (
@@ -1687,16 +1714,23 @@ function RoutineGrid({ routines, progressById, onToggle }: { routines: Routine[]
             const complete = progress >= routine.goalCount;
             return (
               <Pressable
-                accessibilityLabel={`${routine.title} ${complete ? '완료' : '미완료'}`}
-                accessibilityRole="checkbox"
-                accessibilityState={{ checked: complete }}
+                accessibilityLabel={`${routine.title}, ${progress} / ${routine.goalCount}회 ${complete ? '완료' : '기록'}`}
+                accessibilityRole="button"
                 key={routine.id}
                 onPress={() => onToggle(routine)}
-                style={todayStyles.routineTile}>
-                <RoutineIcon complete={complete} title={routine.title} />
+                style={({ pressed }) => [
+                  todayStyles.routineTile,
+                  complete && todayStyles.routineTileComplete,
+                  pressed && todayStyles.routineTilePressed,
+                ]}>
+                <RoutineIcon complete={complete} iconKey={routine.iconKey} title={routine.title} />
                 {complete ? (
                   <View style={todayStyles.routineCheckBadge}>
                     <MaterialCommunityIcons color={AppColors.card} name="check" size={10} />
+                  </View>
+                ) : routine.goalCount > 1 ? (
+                  <View style={todayStyles.routineProgressBadge}>
+                    <Text style={todayStyles.routineProgressText}>{progress}/{routine.goalCount}</Text>
                   </View>
                 ) : null}
               </Pressable>
@@ -2966,108 +3000,142 @@ function NpcModal({
 }
 function RoutineModal({
   visible,
+  mode,
+  routines,
   editingRoutine,
   title,
   goal,
-  selectedDefaultTitles,
+  iconKey,
+  enabled,
   onChangeTitle,
   onChangeGoal,
+  onChangeIconKey,
+  onChangeEnabled,
   onClose,
-  onSaveEdit,
-  onSaveSelection,
+  onBack,
+  onOpenAdd,
+  onOpenRoutine,
+  onSave,
   onDelete,
 }: {
   visible: boolean;
+  mode: RoutineEditorMode;
+  routines: Routine[];
   editingRoutine: Routine | null;
   title: string;
   goal: string;
-  selectedDefaultTitles: string[];
+  iconKey: string;
+  enabled: boolean;
   onChangeTitle: (value: string) => void;
   onChangeGoal: (value: string) => void;
+  onChangeIconKey: (value: string) => void;
+  onChangeEnabled: (value: boolean) => void;
   onClose: () => void;
-  onSaveEdit: () => void;
-  onSaveSelection: (selectedTitles: string[], customTitle: string, customGoal: string) => void;
+  onBack: () => void;
+  onOpenAdd: () => void;
+  onOpenRoutine: (routine: Routine) => void;
+  onSave: () => void;
   onDelete?: () => void;
 }) {
-  const [draftTitles, setDraftTitles] = useState<string[]>([]);
-  const [customTitle, setCustomTitle] = useState('');
-  const [customGoal, setCustomGoal] = useState('1');
-
-  useEffect(() => {
-    if (!visible || editingRoutine) return;
-    setDraftTitles(selectedDefaultTitles);
-    setCustomTitle('');
-    setCustomGoal('1');
-  }, [editingRoutine, selectedDefaultTitles, visible]);
-
-  const toggleTitle = (routineTitle: string) => {
-    setDraftTitles((current) => current.includes(routineTitle)
-      ? current.filter((item) => item !== routineTitle)
-      : [...current, routineTitle]);
-  };
-
-  const routineRows = Array.from(
-    { length: Math.ceil(DEFAULT_ROUTINE_OPTIONS.length / 6) },
-    (_, index) => DEFAULT_ROUTINE_OPTIONS.slice(index * 6, index * 6 + 6),
-  );
+  const activeCount = routines.filter((routine) => routine.isEnabled).length;
 
   return (
     <Modal animationType="slide" onRequestClose={onClose} transparent visible={visible}>
       <View style={styles.modalBackdrop}>
         <Pressable onPress={onClose} style={StyleSheet.absoluteFill} />
         <View style={styles.bottomSheet}>
-          <Text style={styles.sheetTitle}>{editingRoutine ? '루틴 수정' : '루틴 편집'}</Text>
-          {editingRoutine ? (
+          {mode === 'list' ? (
             <>
-              <Text style={styles.modalLabel}>루틴 이름</Text>
-              <TextInput accessibilityLabel="루틴 이름" onChangeText={onChangeTitle} placeholder="예: 매일 산책" placeholderTextColor="#A2AAA0" style={styles.modalInput} value={title} />
-              <Text style={styles.modalLabel}>목표 횟수</Text>
-              <TextInput accessibilityLabel="목표 횟수" keyboardType="number-pad" onChangeText={onChangeGoal} style={styles.modalInput} value={goal} />
-              <View style={styles.modalActions}>
-                {onDelete ? <Pressable onPress={onDelete} style={styles.deleteButton}><Text style={styles.deleteButtonText}>삭제</Text></Pressable> : null}
-                <Pressable onPress={onClose} style={styles.cancelButton}><Text style={styles.cancelButtonText}>취소</Text></Pressable>
-                <Pressable onPress={onSaveEdit} style={styles.saveButton}><Text style={styles.saveButtonText}>저장</Text></Pressable>
+              <View style={todayStyles.routineEditorHeader}>
+                <View>
+                  <Text style={styles.sheetTitle}>루틴 편집</Text>
+                  <Text style={todayStyles.routineEditorHint}>오늘 화면에 표시할 루틴과 목표 횟수를 관리해요.</Text>
+                </View>
+                <Pressable accessibilityLabel="루틴 편집 닫기" accessibilityRole="button" onPress={onClose} style={todayStyles.routineEditorClose}>
+                  <MaterialCommunityIcons color={AppColors.ink} name="close" size={20} />
+                </Pressable>
               </View>
+              <ScrollView contentContainerStyle={todayStyles.routineEditorList} showsVerticalScrollIndicator={false}>
+                <View style={todayStyles.routineEditorSectionHeader}>
+                  <Text style={todayStyles.routineEditorSectionTitle}>내 루틴</Text>
+                  <Text style={todayStyles.routineEditorSectionMeta}>{activeCount}개 사용 중</Text>
+                </View>
+                {routines.map((routine) => (
+                  <Pressable
+                    accessibilityLabel={`${routine.title} 수정`}
+                    accessibilityRole="button"
+                    key={routine.id}
+                    onPress={() => onOpenRoutine(routine)}
+                    style={({ pressed }) => [todayStyles.routineEditorRow, pressed && todayStyles.routineEditorRowPressed]}>
+                    <RoutineIcon iconKey={routine.iconKey} title={routine.title} variant="edit" />
+                    <View style={todayStyles.routineEditorCopy}>
+                      <Text numberOfLines={1} style={todayStyles.routineEditorTitle}>{routine.title}</Text>
+                      <Text style={todayStyles.routineEditorMeta}>{routine.goalCount}회 목표 · {routine.isEnabled ? '오늘 표시' : '숨김'}</Text>
+                    </View>
+                    <View style={todayStyles.routineEditorGoalBadge}>
+                      <Text style={todayStyles.routineEditorGoalText}>{routine.goalCount}</Text>
+                    </View>
+                    <MaterialCommunityIcons color={AppColors.inkMuted} name="chevron-right" size={21} />
+                  </Pressable>
+                ))}
+                <Pressable accessibilityLabel="새 루틴 추가" accessibilityRole="button" onPress={onOpenAdd} style={todayStyles.routineAddButton}>
+                  <MaterialCommunityIcons color={AppColors.leaf} name="plus" size={20} />
+                  <Text style={todayStyles.routineAddButtonText}>새 루틴 추가</Text>
+                </Pressable>
+              </ScrollView>
             </>
           ) : (
             <>
-              <Text style={styles.npcModalHint}>기본 루틴을 선택하면 오늘의 루틴에 바로 표시돼요.</Text>
-              <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.optionGroupTitle}>기본 루틴</Text>
-                <View style={todayStyles.routineEditGrid}>
-                  {routineRows.map((row, rowIndex) => (
-                    <View key={`routine-edit-row-${rowIndex}`} style={todayStyles.routineEditRow}>
-                      {row.map((routine) => {
-                        const selected = draftTitles.includes(routine.title);
-                        return (
-                          <Pressable
-                            accessibilityLabel={`${routine.title} ${routine.goalLabel ?? `${routine.goalCount}회`} ${selected ? '선택됨' : '선택 안 됨'}`}
-                            accessibilityRole="checkbox"
-                            accessibilityState={{ checked: selected }}
-                            key={routine.title}
-                            onPress={() => toggleTitle(routine.title)}
-                            style={[todayStyles.routineEditTile, selected && todayStyles.routineEditTileSelected]}>
-                            <RoutineIcon selected={selected} title={routine.title} variant="edit" />
-                            <Text numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.72} style={[todayStyles.routineEditLabel, selected && todayStyles.routineEditLabelSelected]}>
-                              {routine.title}
-                            </Text>
-                          </Pressable>
-                        );
-                      })}
-                      {row.length < 6 ? Array.from({ length: 6 - row.length }, (_, spacerIndex) => (
-                        <View key={`routine-edit-spacer-${rowIndex}-${spacerIndex}`} style={todayStyles.routineEditTileSpacer} />
-                      )) : null}
-                    </View>
-                  ))}
+              <View style={todayStyles.routineFormHeader}>
+                <Pressable accessibilityLabel="루틴 목록으로 돌아가기" accessibilityRole="button" onPress={onBack} style={todayStyles.routineEditorClose}>
+                  <MaterialCommunityIcons color={AppColors.ink} name="arrow-left" size={20} />
+                </Pressable>
+                <Text style={todayStyles.routineFormTitle}>{editingRoutine ? '루틴 수정' : '새 루틴 추가'}</Text>
+                <Pressable accessibilityLabel="루틴 편집 닫기" accessibilityRole="button" onPress={onClose} style={todayStyles.routineEditorClose}>
+                  <MaterialCommunityIcons color={AppColors.ink} name="close" size={20} />
+                </Pressable>
                 </View>
-                <Text style={styles.optionGroupTitle}>직접 추가</Text>
-                <TextInput accessibilityLabel="직접 추가할 루틴 이름" onChangeText={setCustomTitle} placeholder="예: 꽃 물주기" placeholderTextColor="#A2AAA0" style={styles.modalInput} value={customTitle} />
+              <ScrollView contentContainerStyle={todayStyles.routineFormContent} showsVerticalScrollIndicator={false}>
+                <Text style={styles.modalLabel}>아이콘</Text>
+                <View style={todayStyles.routineIconPicker}>
+                  {DEFAULT_ROUTINE_OPTIONS.map((option) => {
+                    const selected = option.iconKey === iconKey;
+                    return (
+                      <Pressable
+                        accessibilityLabel={`${option.title} 아이콘 ${selected ? '선택됨' : '선택 안 됨'}`}
+                        accessibilityRole="radio"
+                        accessibilityState={{ selected }}
+                        key={option.iconKey}
+                        onPress={() => onChangeIconKey(option.iconKey)}
+                        style={[todayStyles.routineIconPickerItem, selected && todayStyles.routineIconPickerItemSelected]}>
+                        <RoutineIcon iconKey={option.iconKey} selected={selected} title={option.title} variant="edit" />
+                      </Pressable>
+                    );
+                  })}
+                </View>
+                <Text style={styles.modalLabel}>루틴 이름</Text>
+                <TextInput accessibilityLabel="루틴 이름" onChangeText={onChangeTitle} placeholder="예: 꽃 물주기" placeholderTextColor="#A2AAA0" style={styles.modalInput} value={title} />
                 <Text style={styles.modalLabel}>목표 횟수</Text>
-                <TextInput accessibilityLabel="직접 추가할 루틴 목표 횟수" keyboardType="number-pad" onChangeText={setCustomGoal} style={styles.modalInput} value={customGoal} />
+                <TextInput accessibilityLabel="루틴 목표 횟수" keyboardType="number-pad" maxLength={2} onChangeText={onChangeGoal} style={styles.modalInput} value={goal} />
+                <Pressable
+                  accessibilityLabel={`오늘 화면 표시 ${enabled ? '켜짐' : '꺼짐'}`}
+                  accessibilityRole="switch"
+                  accessibilityState={{ checked: enabled }}
+                  onPress={() => onChangeEnabled(!enabled)}
+                  style={todayStyles.routineEnabledRow}>
+                  <View>
+                    <Text style={todayStyles.routineEnabledTitle}>오늘 화면에 표시</Text>
+                    <Text style={todayStyles.routineEnabledHint}>꺼두면 기록은 유지하고 오늘의 루틴에서만 숨겨요.</Text>
+                  </View>
+                  <View style={[todayStyles.routineEnabledSwitch, enabled && todayStyles.routineEnabledSwitchOn]}>
+                    <View style={[todayStyles.routineEnabledThumb, enabled && todayStyles.routineEnabledThumbOn]} />
+                  </View>
+                </Pressable>
               </ScrollView>
               <View style={styles.modalActions}>
-                <Pressable onPress={onClose} style={styles.cancelButton}><Text style={styles.cancelButtonText}>취소</Text></Pressable>
-                <Pressable onPress={() => onSaveSelection(draftTitles, customTitle, customGoal)} style={styles.saveButton}><Text style={styles.saveButtonText}>저장</Text></Pressable>
+                {onDelete ? <Pressable onPress={onDelete} style={styles.deleteButton}><Text style={styles.deleteButtonText}>삭제</Text></Pressable> : null}
+                <Pressable onPress={onBack} style={styles.cancelButton}><Text style={styles.cancelButtonText}>취소</Text></Pressable>
+                <Pressable onPress={onSave} style={styles.saveButton}><Text style={styles.saveButtonText}>{editingRoutine ? '저장' : '추가'}</Text></Pressable>
               </View>
             </>
           )}
@@ -3225,6 +3293,7 @@ const todayStyles = StyleSheet.create({
   sectionActions: { alignItems: 'center', flexDirection: 'row', gap: 2 },
   sectionTitleWrap: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 9, minWidth: 0 },
   sectionTitle: { color: AppColors.ink, flex: 1, fontFamily: Fonts.rounded, fontSize: 15, fontWeight: '900', lineHeight: 19 },
+  sectionMeta: { color: AppColors.leaf, fontFamily: Fonts.sans, fontSize: 11, fontVariant: ['tabular-nums'], fontWeight: '900' },
   sectionGlyph: { alignItems: 'center', height: 30, justifyContent: 'center', width: 30 },
   sectionGlyphImage: { height: 23, resizeMode: 'contain', width: 23 },
   sectionActionButton: { alignItems: 'center', borderRadius: AppRadii.pill, flexDirection: 'row', gap: 2, minHeight: 34, paddingHorizontal: 4, paddingVertical: 6 },
@@ -3234,12 +3303,16 @@ const todayStyles = StyleSheet.create({
   actionGlyph: { alignItems: 'center', height: 20, justifyContent: 'center', width: 20 },
   routineCard: { gap: 8 },
   routineRowGrid: { flexDirection: 'row' },
-  routineTile: { alignItems: 'center', flex: 1, justifyContent: 'center', marginHorizontal: 3, minHeight: 58, position: 'relative' },
+  routineTile: { alignItems: 'center', borderRadius: 16, flex: 1, justifyContent: 'center', marginHorizontal: 3, minHeight: 58, position: 'relative' },
+  routineTilePressed: { backgroundColor: AppColors.paperRaised },
+  routineTileComplete: { backgroundColor: AppColors.leafSoft },
   routineTileSpacer: { flex: 1, marginHorizontal: 3, minHeight: 58 },
   routineIcon: { alignItems: 'center', height: 58, justifyContent: 'center', width: '100%' },
   routineIconImage: { height: 48, width: 48 },
   routineIconImageCompact: { height: 32, width: 32 },
   routineCheckBadge: { alignItems: 'center', backgroundColor: AppColors.leaf, borderRadius: AppRadii.pill, height: 14, justifyContent: 'center', position: 'absolute', right: 3, top: 3, width: 14 },
+  routineProgressBadge: { alignItems: 'center', backgroundColor: AppColors.catalog, borderRadius: AppRadii.pill, minWidth: 24, paddingHorizontal: 4, paddingVertical: 2, position: 'absolute', right: 0, top: 1 },
+  routineProgressText: { color: AppColors.card, fontFamily: Fonts.sans, fontSize: 8, fontVariant: ['tabular-nums'], fontWeight: '900' },
   routineEditGrid: { marginTop: 8, rowGap: 8 },
   routineEditRow: { flexDirection: 'row' },
   routineEditTile: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: 10, borderWidth: 1, flex: 1, justifyContent: 'center', minHeight: 64, paddingHorizontal: 1, paddingVertical: 6 },
@@ -3251,6 +3324,35 @@ const todayStyles = StyleSheet.create({
   routineEditCheckBadge: { alignItems: 'center', backgroundColor: AppColors.leaf, borderRadius: AppRadii.pill, height: 14, justifyContent: 'center', position: 'absolute', right: -2, top: -2, width: 14 },
   routineEditLabel: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 7, fontWeight: '900', lineHeight: 9, textAlign: 'center' },
   routineEditLabelSelected: { color: AppColors.ink },
+  routineEditorHeader: { alignItems: 'flex-start', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
+  routineEditorHint: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 10, fontWeight: '700', lineHeight: 14, maxWidth: 250 },
+  routineEditorClose: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: AppRadii.pill, height: 34, justifyContent: 'center', width: 34 },
+  routineEditorList: { gap: 8, paddingBottom: 8 },
+  routineEditorSectionHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 4 },
+  routineEditorSectionTitle: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 13, fontWeight: '900' },
+  routineEditorSectionMeta: { color: AppColors.leaf, fontFamily: Fonts.sans, fontSize: 10, fontVariant: ['tabular-nums'], fontWeight: '800' },
+  routineEditorRow: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: 14, borderWidth: 1, flexDirection: 'row', gap: 9, minHeight: 66, paddingHorizontal: 10, paddingVertical: 7 },
+  routineEditorRowPressed: { backgroundColor: AppColors.paperRaised },
+  routineEditorCopy: { flex: 1, minWidth: 0 },
+  routineEditorTitle: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 13, fontWeight: '900' },
+  routineEditorMeta: { color: AppColors.inkMuted, fontFamily: Fonts.sans, fontSize: 10, fontVariant: ['tabular-nums'], fontWeight: '700', marginTop: 3 },
+  routineEditorGoalBadge: { alignItems: 'center', backgroundColor: AppColors.leafSoft, borderRadius: AppRadii.pill, height: 26, justifyContent: 'center', width: 26 },
+  routineEditorGoalText: { color: AppColors.leaf, fontFamily: Fonts.sans, fontSize: 11, fontVariant: ['tabular-nums'], fontWeight: '900' },
+  routineAddButton: { alignItems: 'center', borderColor: AppColors.primaryBorder, borderRadius: 14, borderStyle: 'dashed', borderWidth: 1, flexDirection: 'row', gap: 6, justifyContent: 'center', minHeight: 54, marginTop: 4 },
+  routineAddButtonText: { color: AppColors.leaf, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
+  routineFormHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 },
+  routineFormTitle: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 18, fontWeight: '900' },
+  routineFormContent: { paddingBottom: 4 },
+  routineIconPicker: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginBottom: 3, rowGap: 7 },
+  routineIconPickerItem: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderColor: 'transparent', borderRadius: 13, borderWidth: 1, height: 50, justifyContent: 'center', width: '15%' },
+  routineIconPickerItemSelected: { backgroundColor: AppColors.leafSoft, borderColor: AppColors.leaf },
+  routineEnabledRow: { alignItems: 'center', backgroundColor: AppColors.paperRaised, borderRadius: 13, flexDirection: 'row', justifyContent: 'space-between', marginTop: 17, paddingHorizontal: 12, paddingVertical: 11 },
+  routineEnabledTitle: { color: AppColors.ink, fontFamily: Fonts.rounded, fontSize: 12, fontWeight: '900' },
+  routineEnabledHint: { color: AppColors.inkMuted, fontFamily: Fonts.rounded, fontSize: 9, fontWeight: '700', marginTop: 3 },
+  routineEnabledSwitch: { backgroundColor: AppColors.line, borderRadius: AppRadii.pill, height: 26, padding: 3, width: 46 },
+  routineEnabledSwitchOn: { backgroundColor: AppColors.leaf },
+  routineEnabledThumb: { backgroundColor: AppColors.card, borderRadius: AppRadii.pill, height: 20, width: 20 },
+  routineEnabledThumbOn: { alignSelf: 'flex-end' },
   npcCard: { flexDirection: 'row', overflow: 'hidden', paddingTop: 2 },
   npcDayCell: { alignItems: 'center', borderRightColor: AppColors.line, borderRightWidth: 1, flex: 1, minHeight: 88, minWidth: 0, paddingHorizontal: 2, paddingVertical: 8 },
   npcDayCellToday: { backgroundColor: AppColors.residentSoft },

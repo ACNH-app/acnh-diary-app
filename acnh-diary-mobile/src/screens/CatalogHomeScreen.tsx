@@ -8,6 +8,7 @@ import { AppColors } from '@/constants/theme';
 import {
   CollectionHomeCategoryCard,
   CollectionHomeCategoryGrid,
+  type CollectionHomeIconName,
   CollectionHomeSectionHeading,
   CollectionHomeShell,
   CollectionHomeSummaryCard,
@@ -17,19 +18,19 @@ import { getActiveIsland, getCollectionStatesForIsland, initializeDatabase } fro
 import type { CatalogCategory } from '@/types/catalog';
 import type { EncyclopediaState } from '@/types/encyclopedia';
 
-const CATEGORY_ICONS: Record<CatalogCategory, string> = {
-  furniture: '⌂',
-  interior: '▦',
-  clothing: '◌',
-  music: '♫',
-  items: '✦',
-  tools: '⌁',
-  special_items: '◇',
-  gyroids: '◉',
-  photos: '▣',
-  recipes: '♨',
-  seasonal_recipes: '✿',
-  reactions: '✋',
+const CATEGORY_ICONS: Record<CatalogCategory, CollectionHomeIconName> = {
+  furniture: 'sofa-single',
+  interior: 'wall',
+  clothing: 'tshirt-crew',
+  music: 'music',
+  items: 'shopping',
+  tools: 'tools',
+  special_items: 'star-four-points',
+  gyroids: 'human-greeting-variant',
+  photos: 'image',
+  recipes: 'book-open-variant',
+  seasonal_recipes: 'flower-tulip',
+  reactions: 'emoticon-happy-outline',
 };
 
 const CATEGORY_TONES: Record<CatalogCategory, { card: string; icon: string; accent: string; track: string }> = {

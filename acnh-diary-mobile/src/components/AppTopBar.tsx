@@ -28,6 +28,12 @@ export type AppTopBarSearch = {
   value: string;
 };
 
+export type AppTopBarAction = {
+  label: string;
+  onPress: () => void;
+  disabled?: boolean;
+};
+
 type AppTopBarProps = {
   title: string;
   breadcrumbs?: string[];
@@ -42,6 +48,7 @@ type AppTopBarProps = {
   onBack?: () => void;
   onMenuPress?: () => void;
   onSectionTabChange?: (key: string) => void;
+  rightAction?: AppTopBarAction;
 };
 
 export function AppTopBar({
@@ -58,6 +65,7 @@ export function AppTopBar({
   onBack,
   onMenuPress,
   onSectionTabChange,
+  rightAction,
 }: AppTopBarProps) {
   const insets = useSafeAreaInsets();
   const searchInputRef = useRef<TextInput>(null);
@@ -195,6 +203,21 @@ export function AppTopBar({
               <MaterialCommunityIcons color={AppColors.ink} name="magnify" size={22} />
             </Pressable>
           </View>
+        ) : null}
+
+        {rightAction ? (
+          <Pressable
+            accessibilityLabel={rightAction.label}
+            accessibilityRole="button"
+            disabled={rightAction.disabled}
+            onPress={rightAction.onPress}
+            style={({ pressed }) => [
+              styles.headerActionButton,
+              rightAction.disabled && styles.headerActionButtonDisabled,
+              pressed && styles.pressed,
+            ]}>
+            <Text style={styles.headerActionText}>{rightAction.label}</Text>
+          </Pressable>
         ) : null}
 
         {showMenu ? (
@@ -342,6 +365,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: AppControlSizes.navMin,
   },
+  headerActionButton: { alignItems: 'center', backgroundColor: AppColors.primaryAction, borderRadius: AppRadii.pill, justifyContent: 'center', minHeight: 38, paddingHorizontal: 14 },
+  headerActionButtonDisabled: { opacity: 0.45 },
+  headerActionText: { color: AppColors.card, fontSize: 12, fontWeight: '900' },
   searchActions: { alignItems: 'center', flexDirection: 'row', gap: 6 },
   searchField: { alignItems: 'center', backgroundColor: AppColors.card, borderColor: AppColors.line, borderRadius: AppRadii.control, borderWidth: 1, flexDirection: 'row', height: 38, paddingHorizontal: 8, width: 152 },
   searchInput: { color: AppColors.ink, flex: 1, fontSize: 12, height: 36, marginLeft: 5, minWidth: 0, paddingVertical: 0 },

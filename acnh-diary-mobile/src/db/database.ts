@@ -52,7 +52,9 @@ type RoutineRow = {
   id: string;
   island_id: string;
   title: string;
+  icon_key: string | null;
   goal_count: number;
+  is_enabled: number;
   repeat_type: 'daily';
   created_at: string | null;
 };
@@ -198,7 +200,9 @@ function toRoutine(row: RoutineRow): Routine {
     id: row.id,
     islandId: row.island_id,
     title: row.title,
+    iconKey: row.icon_key ?? row.title,
     goalCount: row.goal_count,
+    isEnabled: row.is_enabled !== 0,
     repeatType: row.repeat_type,
     createdAt: row.created_at,
   };
@@ -249,7 +253,9 @@ export function initializeDatabase() {
       id TEXT PRIMARY KEY,
       island_id TEXT NOT NULL REFERENCES islands(id) ON DELETE CASCADE,
       title TEXT NOT NULL,
+      icon_key TEXT,
       goal_count INTEGER NOT NULL DEFAULT 1,
+      is_enabled INTEGER NOT NULL DEFAULT 1 CHECK(is_enabled IN (0, 1)),
       repeat_type TEXT NOT NULL DEFAULT 'daily' CHECK(repeat_type = 'daily'),
       created_at TEXT DEFAULT CURRENT_TIMESTAMP
     );
@@ -333,6 +339,8 @@ export function initializeDatabase() {
   ensureColumn('islands', 'is_active', 'INTEGER NOT NULL DEFAULT 0');
   ensureColumn('islands', 'updated_at', 'TEXT');
   ensureColumn('villager_states', 'poster_owned', 'INTEGER NOT NULL DEFAULT 0');
+  ensureColumn('routines', 'icon_key', 'TEXT');
+  ensureColumn('routines', 'is_enabled', 'INTEGER NOT NULL DEFAULT 1');
   ensureColumn('routine_logs', 'current_count', 'INTEGER NOT NULL DEFAULT 0');
   ensureColumn('collection_records', 'quantity', 'INTEGER');
 
@@ -465,7 +473,7 @@ export function getFirstIslandName() {
 
 export function getRoutinesForIsland(islandId: string) {
   const result = db.getAllSync<RoutineRow>(
-    `SELECT id, island_id, title, goal_count, repeat_type, created_at
+    `SELECT id, island_id, title, icon_key, goal_count, is_enabled, repeat_type, created_at
      FROM routines
      WHERE island_id = ?
      ORDER BY created_at ASC, id ASC;`,
@@ -508,24 +516,29 @@ export function setRoutineProgress(
   );
 }
 
-export function addRoutine(islandId: string, title: string, goalCount = 1) {
+export function addRoutine(islandId: string, title: string, goalCount = 1, iconKey = title, isEnabled = true) {
   const trimmedTitle = title.trim();
-  if (!trimmedTitle || trimmedTitle.length > 40 || !Number.isInteger(goalCount) || goalCount < 1 || goalCount > 99) {
+  const trimmedIconKey = iconKey.trim() || trimmedTitle;
+  if (!trimmedTitle || trimmedTitle.length > 40 || trimmedIconKey.length > 80 || !Number.isInteger(goalCount) || goalCount < 1 || goalCount > 99) {
     throw new Error('VALIDATION_ERROR');
   }
   db.runSync(
-    `INSERT INTO routines (id, island_id, title, goal_count, repeat_type)
-     VALUES (?, ?, ?, ?, 'daily');`,
-    [createId('routine'), islandId, trimmedTitle, goalCount],
+    `INSERT INTO routines (id, island_id, title, icon_key, goal_count, is_enabled, repeat_type)
+     VALUES (?, ?, ?, ?, ?, ?, 'daily');`,
+    [createId('routine'), islandId, trimmedTitle, trimmedIconKey, goalCount, isEnabled ? 1 : 0],
   );
 }
 
-export function updateRoutine(routineId: string, title: string, goalCount: number) {
+export function updateRoutine(routineId: string, title: string, goalCount: number, iconKey = title, isEnabled = true) {
   const trimmedTitle = title.trim();
-  if (!trimmedTitle || trimmedTitle.length > 40 || !Number.isInteger(goalCount) || goalCount < 1 || goalCount > 99) {
+  const trimmedIconKey = iconKey.trim() || trimmedTitle;
+  if (!trimmedTitle || trimmedTitle.length > 40 || trimmedIconKey.length > 80 || !Number.isInteger(goalCount) || goalCount < 1 || goalCount > 99) {
     throw new Error('VALIDATION_ERROR');
   }
-  db.runSync('UPDATE routines SET title = ?, goal_count = ? WHERE id = ?;', [trimmedTitle, goalCount, routineId]);
+  db.runSync(
+    'UPDATE routines SET title = ?, icon_key = ?, goal_count = ?, is_enabled = ? WHERE id = ?;',
+    [trimmedTitle, trimmedIconKey, goalCount, isEnabled ? 1 : 0, routineId],
+  );
 }
 
 export function deleteRoutine(routineId: string) {
@@ -901,9 +914,9 @@ export function createIsland(input: IslandInput) {
 
     for (const [index, routine] of DEFAULT_ROUTINE_OPTIONS.entries()) {
       db.runSync(
-        `INSERT INTO routines (id, island_id, title, goal_count, repeat_type, created_at)
-         VALUES (?, ?, ?, ?, 'daily', ?);`,
-        [createId(`routine-${index + 1}`), id, routine.title, routine.goalCount, now]
+        `INSERT INTO routines (id, island_id, title, icon_key, goal_count, is_enabled, repeat_type, created_at)
+         VALUES (?, ?, ?, ?, ?, 1, 'daily', ?);`,
+        [createId(`routine-${index + 1}`), id, routine.title, routine.iconKey, routine.goalCount, now]
       );
     }
   });

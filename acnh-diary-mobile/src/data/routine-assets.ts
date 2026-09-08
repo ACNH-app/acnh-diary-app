@@ -53,16 +53,19 @@ function findEncyclopediaAsset(lookup: EncyclopediaLookup) {
   return item ? getEncyclopediaAsset(item.category, item.id) : undefined;
 }
 
-export function getRoutineIconSource(title: string): ImageSourcePropType | undefined {
-  const directAsset = ROUTINE_ICON_OVERRIDES[title];
+export function getRoutineIconSource(iconKey: string | null | undefined, fallbackTitle?: string): ImageSourcePropType | undefined {
+  const lookupKey = iconKey?.trim() || fallbackTitle?.trim();
+  if (!lookupKey) return undefined;
+
+  const directAsset = ROUTINE_ICON_OVERRIDES[lookupKey];
   if (directAsset) return directAsset;
 
-  const catalogLookup = ROUTINE_CATALOG_LOOKUPS[title];
+  const catalogLookup = ROUTINE_CATALOG_LOOKUPS[lookupKey];
   if (catalogLookup) return findCatalogAsset(catalogLookup);
 
-  const encyclopediaLookup = ROUTINE_ENCYCLOPEDIA_LOOKUPS[title];
+  const encyclopediaLookup = ROUTINE_ENCYCLOPEDIA_LOOKUPS[lookupKey];
   if (encyclopediaLookup) return findEncyclopediaAsset(encyclopediaLookup);
 
-  const npcKey = ROUTINE_NPC_LOOKUPS[title];
+  const npcKey = ROUTINE_NPC_LOOKUPS[lookupKey];
   return npcKey ? npcAssets[npcKey]?.icon : undefined;
 }
